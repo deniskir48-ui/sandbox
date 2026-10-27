@@ -1,0 +1,10 @@
+anthropic>=2.3.0,<3
+pydantic>=2.7
+PyYAML>=6.0
+python-dotenv>=1.0
+requests>=2.31
+edge-tts>=7.3.1
+google-api-python-client>=2.130
+google-auth>=2.30
+google-auth-oauthlib>=1.2
+pytest>=8.0
