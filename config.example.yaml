@@ -39,6 +39,7 @@ subtitles:
   highlight_color: "#FFD700"
   max_words: 3
   uppercase: true
+  show_scene_text: false  # короткая надпись сцены вверху кадра; выключена, потому что дублирует субтитры
 
 video:
   music_dir: assets/music # фоновые треки (mp3/m4a); берётся случайный. Только музыка с правом использования!

@@ -15,7 +15,12 @@ SYSTEM = """Ты - монтажёр коротких роликов. Тебе п
 - кадр противоречит смыслу (текст «не делай так», а на видео это показано как пример для подражания - допустимо,
   только если это и есть иллюстрация ошибки).
 
-Если ни один вариант не подходит, честно ответь 0 - тогда поищем по другому запросу."""
+Если ни один вариант не подходит, честно ответь 0 - тогда поищем по другому запросу.
+Лучше ответить 0, чем выбрать кадр про другое: случайная картинка ломает ролик."""
+
+RELAXED = """Точного кадра к этой сцене не нашлось. Выбери нейтральный кадр, который подходит хотя бы
+к общей теме ролика и не сбивает зрителя с толку. Если все варианты про другое (например, косметика
+в ролике про питание), ответь 0."""
 
 
 class ClipChoice(BaseModel):
@@ -35,8 +40,11 @@ class FootageEditorAgent:
     def __init__(self, llm):
         self.llm = llm
 
-    def choose(self, narration: str, title: str, previews: list[bytes]) -> int | None:
-        """Индекс лучшего превью (с нуля) или None, если ни одно не подходит."""
+    def choose(self, narration: str, title: str, previews: list[bytes], relaxed: bool = False) -> int | None:
+        """Индекс лучшего превью (с нуля) или None, если ни одно не подходит.
+
+        relaxed - второй проход: годится любой кадр по теме ролика, лишь бы не про другое.
+        """
         content: list[dict] = []
         for number, image in enumerate(previews, 1):
             content.append({"type": "text", "text": f"Вариант {number}:"})
@@ -48,7 +56,8 @@ class FootageEditorAgent:
         content.append({
             "type": "text",
             "text": f"Ролик: {title}\nДиктор в этой сцене говорит: «{narration}»\n\n"
-                    f"Какой из {len(previews)} вариантов лучше всего подходит к этим словам?",
+                    f"Какой из {len(previews)} вариантов лучше всего подходит к этим словам?"
+                    + (f"\n\n{RELAXED}" if relaxed else ""),
         })
         choice = self.llm.structured(system=SYSTEM, prompt=content, output_model=ClipChoice,
                                      effort="low", max_tokens=8000)

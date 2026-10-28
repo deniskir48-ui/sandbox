@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from ..models import Script
-from .ffmpeg import probe_duration, run_ffmpeg
+from .ffmpeg import detect_black_borders, probe_duration, run_ffmpeg
 from .footage import Clip
 from .subtitles import build_ass
 from .tts import TTSProvider, Word
@@ -31,6 +31,14 @@ class RenderResult:
     duration: float
 
 
+@dataclass
+class ClipPlan:
+    """Какое видео ставить в сцену и с какой секунды (продолжение кадра предыдущей сцены)."""
+
+    path: Path
+    start: float = 0.0
+
+
 def _first_long_enough(clips: list[Clip], duration: float) -> Clip:
     """Самый релевантный из достаточно длинных (порядок поиска = релевантность)."""
     return next((clip for clip in clips if clip.duration >= duration), clips[0])
@@ -45,6 +53,7 @@ class VideoProducer:
         self.tts = tts
         self.footage = footage
         self.editor = editor
+        self._crop_cache: dict[Path, str | None] = {}
 
     def produce(self, script: Script, job_dir: Path) -> RenderResult:
         job_dir.mkdir(parents=True, exist_ok=True)
@@ -55,6 +64,7 @@ class VideoProducer:
         scene_video: list[Path] = []
         captions: list[tuple[float, float, str]] = []
         used_footage: set[int] = set()
+        previous: ClipPlan | None = None
         cursor = 0.0
 
         for i, scene in enumerate(script.scenes):
@@ -69,12 +79,14 @@ class VideoProducer:
             scene_audio.append(audio_path)
 
             words.extend(Word(w.text, w.start + cursor, w.end + cursor) for w in speech.words)
-            if scene.on_screen_text.strip():
+            if self.subs.show_scene_text and scene.on_screen_text.strip():
                 captions.append((cursor, cursor + duration, scene.on_screen_text.strip()))
 
-            clip = self._find_clip(scene, script.title, duration, used_footage)
+            plan = self._find_clip(scene, script, duration, used_footage, previous)
             video_path = job_dir / f"scene_{i:02d}.mp4"
-            self._render_scene(clip, duration, video_path, self.colors[i % len(self.colors)])
+            self._render_scene(plan, duration, video_path, self.colors[i % len(self.colors)])
+            if plan:
+                previous = ClipPlan(plan.path, plan.start + duration)
             scene_video.append(video_path)
             cursor += duration
 
@@ -90,13 +102,19 @@ class VideoProducer:
         self._final_mix(job_dir, raw_video, narration, final)
         return RenderResult(final, probe_duration(final))
 
-    def _find_clip(self, scene, title: str, duration: float, used: set[int]) -> Path | None:
-        """Перебирает запросы сцены; монтажёр выбирает подходящее видео по превью."""
+    def _find_clip(self, scene, script: Script, duration: float, used: set[int],
+                   previous: ClipPlan | None) -> ClipPlan | None:
+        """Ищет видео к сцене: запросы сцены, затем общие запросы ролика.
+
+        Монтажёр сначала ищет точный кадр, потом - хотя бы подходящий по теме. Если подходящего нет,
+        продолжаем видео предыдущей сцены: это лучше, чем случайный кадр про другое.
+        """
         if not self.footage:
             return None
-        fallback: list[Clip] = []
+        queries = list(dict.fromkeys(scene.visual_queries + script.backup_queries))
+        pool: list[Clip] = []
         chosen = None
-        for query in scene.visual_queries:
+        for query in queries:
             try:
                 clips = [c for c in self.footage.search(query) if c.id not in used][:self.candidates]
             except Exception as exc:
@@ -104,30 +122,34 @@ class VideoProducer:
                 continue
             if not clips:
                 continue
-            fallback = fallback or clips
             if not self.editor:
                 chosen = _first_long_enough(clips, duration)
                 break
-            chosen = self._ask_editor(clips, scene.narration, title)
+            pool.extend(c for c in clips[:2] if c.id not in {p.id for p in pool})
+            chosen = self._ask_editor(clips, scene.narration, script.title)
             if chosen:
                 log.info("Монтажёр выбрал видео по запросу '%s'", query)
                 break
             log.info("Монтажёр не нашёл подходящего видео по запросу '%s'", query)
-        if not chosen and fallback:
-            log.warning("Подходящего видео нет - берём лучшее по поиску для: %s", scene.narration[:60])
-            chosen = _first_long_enough(fallback, duration)
+        if not chosen and pool:
+            chosen = self._ask_editor(pool[:10], scene.narration, script.title, relaxed=True)
+            if chosen:
+                log.info("Монтажёр взял кадр, подходящий к общей теме ролика")
         if not chosen:
-            log.warning("Видео не найдено - будет цветной фон")
+            if previous:
+                log.info("Подходящего видео нет - продолжаем кадр предыдущей сцены")
+                return previous
+            log.warning("Подходящего видео нет - будет цветной фон")
             return None
         try:
             path = self.footage.download(chosen)
         except Exception as exc:
             log.warning("Не удалось скачать видео %s: %s", chosen.id, exc)
-            return None
+            return previous
         used.add(chosen.id)
-        return path
+        return ClipPlan(path)
 
-    def _ask_editor(self, clips: list[Clip], narration: str, title: str) -> Clip | None:
+    def _ask_editor(self, clips: list[Clip], narration: str, title: str, relaxed: bool = False) -> Clip | None:
         with_previews = []
         for clip in clips:
             try:
@@ -138,27 +160,41 @@ class VideoProducer:
             if image:
                 with_previews.append((clip, image))
         if not with_previews:
-            return clips[0]
+            return None
         try:
-            index = self.editor.choose(narration, title, [image for _, image in with_previews])
+            index = self.editor.choose(narration, title, [image for _, image in with_previews], relaxed=relaxed)
         except Exception as exc:
-            log.warning("Монтажёр не ответил (%s), берём первое видео по поиску", exc)
-            return with_previews[0][0]
+            log.warning("Монтажёр не ответил: %s", exc)
+            return None
         return with_previews[index][0] if index is not None else None
 
-    def _render_scene(self, clip: Path | None, duration: float, out: Path, color: str) -> None:
+    def _render_scene(self, plan: ClipPlan | None, duration: float, out: Path, color: str) -> None:
         w, h, fps = self.video.width, self.video.height, self.video.fps
         encode = ["-t", f"{duration:.3f}", "-an", "-c:v", "libx264", "-preset", "veryfast",
                   "-crf", "20", "-pix_fmt", "yuv420p", str(out)]
-        if clip:
-            # Заполняем кадр 9:16 с обрезкой лишнего и лёгким наездом камеры.
-            vf = (f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
+        if plan:
+            # Убираем чёрные полосы исходника, заполняем кадр 9:16 и даём лёгкий наезд камеры.
+            borders = self._borders(plan.path)
+            vf = (f"{borders + ',' if borders else ''}"
+                  f"scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
                   f"scale=w='{w}*(1+0.04*t/{duration:.3f})':h=-2:eval=frame,crop={w}:{h},"
                   f"fps={fps},setsar=1")
-            run_ffmpeg(["-stream_loop", "-1", "-i", str(clip), "-vf", vf, *encode])
+            start = plan.start % max(self._duration(plan.path), 0.1)
+            run_ffmpeg(["-stream_loop", "-1", "-ss", f"{start:.3f}", "-i", str(plan.path), "-vf", vf, *encode])
         else:
             source = f"color=c={color.replace('#', '0x')}:s={w}x{h}:r={fps}:d={duration:.3f}"
             run_ffmpeg(["-f", "lavfi", "-i", source, *encode])
+
+    def _borders(self, path: Path) -> str | None:
+        if path not in self._crop_cache:
+            self._crop_cache[path] = detect_black_borders(path)
+        return self._crop_cache[path]
+
+    def _duration(self, path: Path) -> float:
+        try:
+            return probe_duration(path)
+        except Exception:
+            return 0.0
 
     @staticmethod
     def _concat(parts: list[Path], out: Path, list_file: Path) -> None:
