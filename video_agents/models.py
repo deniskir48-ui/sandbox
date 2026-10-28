@@ -124,3 +124,5 @@ class Job(BaseModel):
     duration: float | None = None
     uploads: dict[str, UploadResult] = Field(default_factory=dict)
     error: str | None = None
+    cost_usd: float = 0.0  # примерная стоимость обращений к Claude API
+    cost_by_stage: dict[str, float] = Field(default_factory=dict)

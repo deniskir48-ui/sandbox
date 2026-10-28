@@ -118,10 +118,19 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "list":
-        for job in pipeline.store.all():
+        jobs = pipeline.store.all()
+        for job in jobs:
             _print_job(job)
+        paid = [job for job in jobs if job.cost_usd]
+        if paid:
+            total = sum(job.cost_usd for job in paid)
+            print(f"\nРасходы на Claude: ${total:.2f} за {len(paid)} ролик(ов), в среднем ${total / len(paid):.2f}")
         return 0
     return 1
+
+
+STAGE_NAMES = {"ideas": "идеи", "script": "сценарий", "critic": "редактор", "footage": "подбор видео",
+               "metadata": "подписи"}
 
 
 def parse_selection(answer: str, total: int) -> list[int]:
@@ -153,6 +162,9 @@ def _print_job(job) -> None:
     print(f"[{job.status}] {job.id}  {topic}")
     if job.video_path:
         print(f"    видео: {job.video_path} ({job.duration or 0:.1f} с)")
+    if job.cost_usd:
+        parts = " · ".join(f"{STAGE_NAMES.get(stage, stage)} ${cost:.2f}" for stage, cost in job.cost_by_stage.items())
+        print(f"    стоимость: ${job.cost_usd:.2f} ({parts})")
     for upload in job.uploads.values():
         print(f"    {upload.platform}: {'OK ' + (upload.url or upload.id or '') if upload.ok else 'ОШИБКА ' + str(upload.error)}")
     if job.error:

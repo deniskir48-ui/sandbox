@@ -24,10 +24,19 @@ class ChannelConfig(BaseModel):
 
 
 class LLMConfig(BaseModel):
-    model: str = "claude-opus-5-5"
+    model: str = "claude-opus-5-5"  # модель по умолчанию для всех агентов
+    # Модели отдельных агентов; пусто - берётся model.
+    ideas_model: str | None = None
+    script_model: str | None = None
+    critic_model: str | None = None
+    footage_model: str | None = None
+    metadata_model: str | None = None
     web_research: bool = True
     max_revisions: int = 2
     min_score: int = 8
+
+    def model_for(self, role: str) -> str:
+        return getattr(self, f"{role}_model", None) or self.model
 
 
 class VoiceConfig(BaseModel):
