@@ -32,8 +32,8 @@ class FakeLLM:
             return Script(
                 title="Почему Венера крутится назад",
                 scenes=[
-                    Scene(narration="Венера вращается в обратную сторону.", visual_query="venus planet", on_screen_text="Венера"),
-                    Scene(narration="Подпишись, чтобы узнать почему!", visual_query="night sky", on_screen_text=""),
+                    Scene(narration="Венера вращается в обратную сторону.", visual_queries=["venus planet"], on_screen_text="Венера"),
+                    Scene(narration="Подпишись, чтобы узнать почему!", visual_queries=["night sky", "stars"], on_screen_text=""),
                 ],
                 call_to_action="Подпишись",
             )
@@ -160,3 +160,84 @@ def test_windows_copies_system_arial(settings, tmp_path, monkeypatch):
     result = VideoProducer(settings, FakeTTS()).produce(script, tmp_path / "job")
     assert result.video_path.exists()
     assert [p.name for p in (tmp_path / "job" / "fonts").iterdir()] == ["arialbd.ttf"]
+
+
+def test_legacy_visual_query_is_loaded():
+    scene = Scene.model_validate({"narration": "x", "visual_query": "gym", "on_screen_text": ""})
+    assert scene.visual_queries == ["gym"]
+
+
+def test_long_script_is_shortened(settings):
+    class LongLLM(FakeLLM):
+        def structured(self, *, output_model, prompt, **kw):
+            if output_model is Script and "Сократи" not in prompt:
+                self.calls.append("Script")
+                long_text = " ".join(["word"] * 200)
+                return Script(title="t", call_to_action="c",
+                              scenes=[Scene(narration=long_text, visual_queries=["gym"], on_screen_text="")])
+            if output_model is Script:
+                self.calls.append("Shorten")
+            return super().structured(output_model=output_model, prompt=prompt, **kw)
+
+    settings.channel.video_length_seconds = 10
+    settings.channel.max_video_length_seconds = 30  # максимум 75 слов
+    llm = LongLLM()
+    pipeline = Pipeline(settings, llm=llm, producer=VideoProducer(settings, FakeTTS()))
+    [job] = pipeline.run(topic="Тема", publish=False)
+    assert "Shorten" in llm.calls
+    assert len(job.script.full_text.split()) <= 75
+
+
+class FakeFootage:
+    def __init__(self, results):
+        self.results = results  # запрос -> список Clip
+        self.downloaded = []
+
+    def search(self, query):
+        return self.results.get(query, [])
+
+    def preview(self, clip):
+        return b"\xff\xd8 fake jpeg " + str(clip.id).encode()
+
+    def download(self, clip):
+        self.downloaded.append(clip.id)
+        path = Path(self._dir) / f"{clip.id}.mp4"
+        run_ffmpeg(["-f", "lavfi", "-i", "testsrc2=s=640x360:r=15:d=1", "-pix_fmt", "yuv420p", str(path)])
+        return path
+
+
+class FakeEditor:
+    def __init__(self, answers):
+        self.answers = list(answers)
+        self.seen = []
+
+    def choose(self, narration, title, previews):
+        self.seen.append(len(previews))
+        return self.answers.pop(0)
+
+
+def test_editor_rejects_first_query_and_picks_from_second(settings, tmp_path):
+    from video_agents.production.footage import Clip
+
+    footage = FakeFootage({
+        "venus planet": [Clip(1, 10, "u1"), Clip(2, 10, "u2")],
+        "night sky": [Clip(3, 10, "u3"), Clip(4, 10, "u4")],
+    })
+    footage._dir = tmp_path
+    editor = FakeEditor([1, None, 1])  # сцена 1: вариант 2; сцена 2: «night sky» отклонён, из «stars» нет
+    footage.results["stars"] = [Clip(5, 10, "u5"), Clip(6, 10, "u6")]
+    script = FakeLLM().structured(output_model=Script, prompt="")
+    VideoProducer(settings, FakeTTS(), footage, editor).produce(script, tmp_path / "job")
+    assert footage.downloaded == [2, 6]
+    assert editor.seen == [2, 2, 2]
+
+
+def test_without_editor_takes_first_long_enough(settings, tmp_path):
+    from video_agents.production.footage import Clip
+
+    footage = FakeFootage({"venus planet": [Clip(1, 0.5, "u1"), Clip(2, 30, "u2"), Clip(3, 60, "u3")],
+                           "night sky": [Clip(4, 30, "u4")]})
+    footage._dir = tmp_path
+    script = FakeLLM().structured(output_model=Script, prompt="")
+    VideoProducer(settings, FakeTTS(), footage).produce(script, tmp_path / "job")
+    assert footage.downloaded == [2, 4]  # релевантность важнее длины, слишком короткие пропускаем

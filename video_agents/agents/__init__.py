@@ -1,8 +1,9 @@
 """LLM-агенты: идеи -> сценарий -> критика -> подписи для платформ."""
 
 from .critic import CriticAgent
+from .footage_editor import FootageEditorAgent
 from .ideas import IdeaAgent
 from .metadata import MetadataAgent
 from .scriptwriter import ScriptwriterAgent
 
-__all__ = ["IdeaAgent", "ScriptwriterAgent", "CriticAgent", "MetadataAgent"]
+__all__ = ["IdeaAgent", "ScriptwriterAgent", "CriticAgent", "MetadataAgent", "FootageEditorAgent"]

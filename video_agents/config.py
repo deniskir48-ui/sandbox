@@ -16,7 +16,8 @@ class ChannelConfig(BaseModel):
     audience: str = "Люди 18-35 лет, которые листают ленту и любят узнавать новое"
     language: str = "ru"
     tone: str = "Живой, разговорный, с интригой; без канцелярита и воды"
-    video_length_seconds: int = 45
+    video_length_seconds: int = 10  # обычная длина ролика
+    max_video_length_seconds: int = 20  # потолок для по-настоящему сильных роликов
     extra_rules: list[str] = Field(default_factory=list)
     # Добавляется в конец описания YouTube и подписи Instagram (например, «not medical advice»).
     disclaimer: str = ""
@@ -38,6 +39,8 @@ class VoiceConfig(BaseModel):
 
 class FootageConfig(BaseModel):
     provider: Literal["auto", "pexels", "pixabay", "none"] = "auto"
+    ai_selection: bool = True  # агент-монтажёр смотрит превью и выбирает подходящее видео
+    candidates: int = 6  # сколько вариантов показывать ему на каждый запрос
     fallback_colors: list[str] = Field(default_factory=lambda: ["#0f2027", "#203a43", "#2c5364"])
 
 

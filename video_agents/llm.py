@@ -30,12 +30,12 @@ class LLM:
         self,
         *,
         system: str,
-        prompt: str,
+        prompt: str | list[dict],
         output_model: type[T],
         effort: str = "high",
         max_tokens: int = 16000,
     ) -> T:
-        """Один запрос, ответ валидируется по pydantic-модели."""
+        """Один запрос, ответ валидируется по pydantic-модели. prompt - текст или блоки (текст + картинки)."""
         response = self.client.beta.messages.parse(
             model=self.model,
             max_tokens=max_tokens,

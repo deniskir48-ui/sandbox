@@ -6,7 +6,8 @@ import logging
 from pathlib import Path
 from typing import Callable
 
-from .agents import CriticAgent, IdeaAgent, MetadataAgent, ScriptwriterAgent
+from .agents import CriticAgent, FootageEditorAgent, IdeaAgent, MetadataAgent, ScriptwriterAgent
+from .agents.brief import word_budget
 from .config import Settings
 from .models import Job, UploadResult, VideoIdea
 from .publishers import Publisher, make_publisher
@@ -29,6 +30,7 @@ class Pipeline:
             from .llm import LLM
 
             llm = LLM(settings.llm.model)
+        self.llm = llm
         channel = settings.channel
         self.idea_agent = IdeaAgent(llm, channel, web_research=settings.llm.web_research)
         self.writer = ScriptwriterAgent(llm, channel)
@@ -45,7 +47,8 @@ class Pipeline:
 
             tts = make_tts(self.settings.voice, self.settings.secrets)
             footage = make_footage(self.settings.footage, self.settings.secrets, Path(self.settings.workspace) / "footage_cache")
-            self._producer = VideoProducer(self.settings, tts, footage)
+            editor = FootageEditorAgent(self.llm) if footage and self.settings.footage.ai_selection else None
+            self._producer = VideoProducer(self.settings, tts, footage, editor)
         return self._producer
 
     # --- Этапы ---
@@ -66,6 +69,7 @@ class Pipeline:
                 log.warning("Лимит правок исчерпан, берём последнюю версию сценария")
                 break
             script = self.writer.revise(job.idea, script, review)
+        script = self._fit_length(job, script)
         job.script = script
         job.meta = self.meta_agent.generate(script)
         disclaimer = self.settings.channel.disclaimer.strip()
@@ -75,6 +79,17 @@ class Pipeline:
         job.status = "scripted"
         self.store.save(job)
         return job
+
+    def _fit_length(self, job: Job, script):
+        """Жёсткая проверка длины: модель не всегда считает слова, поэтому считаем сами."""
+        budget = word_budget(self.settings.channel)
+        for _ in range(2):
+            words = len(script.full_text.split())
+            if words <= budget * 1.1:
+                break
+            log.info("Сценарий длиннее лимита (%d слов при лимите %d), сокращаем", words, budget)
+            script = self.writer.shorten(job.idea, script)
+        return script
 
     def produce(self, job: Job) -> Job:
         result = self.producer.produce(job.script, self.store.job_dir(job))

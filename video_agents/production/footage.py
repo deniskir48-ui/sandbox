@@ -16,10 +16,11 @@ class Clip:
     id: int
     duration: float
     url: str
+    preview_url: str = ""
 
 
 class StockFootage:
-    """Общая логика: поиск, выбор ролика нужной длины, скачивание в кэш."""
+    """Общая логика: поиск, превью и скачивание роликов в кэш."""
 
     name = "stock"
 
@@ -28,22 +29,18 @@ class StockFootage:
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(parents=True, exist_ok=True)
 
-    def find(self, query: str, min_duration: float, exclude: set[int]) -> tuple[int, Path] | None:
-        """Возвращает (id видео, путь к файлу) или None, если ничего не нашлось."""
-        for attempt in (query, " ".join(query.split()[:2])):
-            candidates = [clip for clip in self._search(attempt) if clip.id not in exclude]
-            if not candidates:
-                continue
-            # Предпочитаем ролики, которые не придётся зацикливать.
-            candidates.sort(key=lambda clip: (clip.duration < min_duration, -clip.duration))
-            clip = candidates[0]
-            return clip.id, self._download(clip)
-        return None
-
-    def _search(self, query: str) -> list[Clip]:
+    def search(self, query: str) -> list[Clip]:
+        """Ролики в порядке релевантности, как их отдаёт сток."""
         raise NotImplementedError
 
-    def _download(self, clip: Clip) -> Path:
+    def preview(self, clip: Clip) -> bytes | None:
+        if not clip.preview_url:
+            return None
+        response = requests.get(clip.preview_url, timeout=30)
+        response.raise_for_status()
+        return response.content
+
+    def download(self, clip: Clip) -> Path:
         path = self.cache_dir / f"{self.name}_{clip.id}.mp4"
         if path.exists() and path.stat().st_size > 0:
             return path
@@ -61,7 +58,7 @@ class PexelsFootage(StockFootage):
     name = "pexels"
     SEARCH_URL = "https://api.pexels.com/videos/search"
 
-    def _search(self, query: str) -> list[Clip]:
+    def search(self, query: str) -> list[Clip]:
         response = requests.get(
             self.SEARCH_URL,
             headers={"Authorization": self.api_key},
@@ -79,7 +76,7 @@ class PexelsFootage(StockFootage):
             if files:
                 # Ближайший к 1920 по высоте, но не огромный 4K - экономим трафик и время рендера.
                 best = min(files, key=lambda f: abs(f["height"] - 1920))
-                clips.append(Clip(video["id"], video["duration"], best["link"]))
+                clips.append(Clip(video["id"], video["duration"], best["link"], video.get("image", "")))
         return clips
 
 
@@ -90,7 +87,7 @@ class PixabayFootage(StockFootage):
     SEARCH_URL = "https://pixabay.com/api/videos/"
     MAX_SIZE = 80 * 1024 * 1024
 
-    def _search(self, query: str) -> list[Clip]:
+    def search(self, query: str) -> list[Clip]:
         response = requests.get(
             self.SEARCH_URL,
             params={"key": self.api_key, "q": query[:100], "video_type": "film",
@@ -102,10 +99,12 @@ class PixabayFootage(StockFootage):
         for hit in response.json().get("hits", []):
             sizes = hit.get("videos", {})
             # large - обычно Full HD или 4K; слишком тяжёлые файлы заменяем на medium.
+            preview = next((sizes[k]["thumbnail"] for k in ("medium", "small", "large")
+                            if (sizes.get(k) or {}).get("thumbnail")), "")
             for key in ("large", "medium"):
                 video = sizes.get(key) or {}
                 if video.get("url") and 0 < video.get("size", 0) <= self.MAX_SIZE:
-                    clips.append(Clip(hit["id"], hit.get("duration", 0), video["url"]))
+                    clips.append(Clip(hit["id"], hit.get("duration", 0), video["url"], preview))
                     break
         return clips
 

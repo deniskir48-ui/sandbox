@@ -65,7 +65,7 @@ def test_pixabay_search_picks_large_or_medium(monkeypatch, tmp_path):
 
     calls = []
     monkeypatch.setattr(footage.requests, "get", lambda url, params, timeout: calls.append(params) or Response())
-    clips = footage.PixabayFootage("KEY", tmp_path)._search("woman running beach")
+    clips = footage.PixabayFootage("KEY", tmp_path).search("woman running beach")
     assert [(c.id, c.url) for c in clips] == [(1, "https://x/1-large.mp4"), (2, "https://x/2-medium.mp4")]
     assert calls[0]["key"] == "KEY" and calls[0]["q"] == "woman running beach"
 
@@ -79,3 +79,46 @@ def test_make_footage_auto_prefers_available_key(tmp_path):
     assert isinstance(make_footage(auto, Secrets(pexels_api_key="x", pixabay_api_key="p"), tmp_path), PexelsFootage)
     assert make_footage(auto, Secrets(), tmp_path) is None
     assert make_footage(FootageConfig(provider="pexels"), Secrets(pixabay_api_key="p"), tmp_path) is None
+
+
+def test_updater_overwrites_code_but_keeps_user_files(monkeypatch, tmp_path):
+    import io
+    import zipfile
+
+    from video_agents import updater
+
+    (tmp_path / "requirements.txt").write_text("x\n")
+    (tmp_path / ".env").write_text("SECRET=1\n")
+    (tmp_path / "video_agents").mkdir()
+    (tmp_path / "video_agents" / "a.py").write_text("old")
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("sandbox-main/requirements.txt", "x\n")
+        z.writestr("sandbox-main/.env", "SECRET=from-github\n")
+        z.writestr("sandbox-main/config.yaml", "x: 1\n")
+        z.writestr("sandbox-main/video_agents/a.py", "new")
+        z.writestr("sandbox-main/video_agents/b.py", "added")
+        z.writestr("sandbox-main/../evil.py", "no")
+
+    class Response:
+        content = buf.getvalue()
+
+        def raise_for_status(self):
+            pass
+
+    monkeypatch.setattr(updater.requests, "get", lambda url, timeout: Response())
+    changed = updater.update(tmp_path)
+    assert sorted(changed) == ["video_agents/a.py", "video_agents/b.py"]
+    assert (tmp_path / ".env").read_text() == "SECRET=1\n"
+    assert not (tmp_path / "config.yaml").exists()
+    assert not (tmp_path.parent / "evil.py").exists()
+
+
+def test_word_budget_uses_target_and_ceiling():
+    from video_agents.agents.brief import target_words, word_budget
+    from video_agents.config import ChannelConfig
+
+    channel = ChannelConfig()
+    assert (target_words(channel), word_budget(channel)) == (25, 50)  # 10 с и потолок 20 с
+    channel.max_video_length_seconds = 5  # потолок меньше цели - берём цель
+    assert word_budget(channel) == 25
