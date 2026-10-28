@@ -45,6 +45,7 @@ class IdeaAgent:
             return self.llm.research(
                 system=RESEARCH_SYSTEM,
                 prompt=f"{channel_brief(self.channel)}\n\nСобери 5-10 актуальных поводов для роликов.",
+                max_searches=3,  # каждый поиск добавляет тысячи токенов результатов
             )
         except Exception as exc:  # ресёрч - необязательный шаг
             log.warning("Ресёрч трендов не удался, работаем без него: %s", exc)

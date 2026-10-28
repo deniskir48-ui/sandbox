@@ -274,3 +274,50 @@ def test_all_temporary_hosts_failing_is_reported_briefly(monkeypatch, tmp_path):
         hosting.upload_temporary(video)
     message = str(error.value)
     assert "uguu.se: HTTP 412" in message and "tmpfiles.org" in message and "<html>" not in message
+
+
+def test_scheduler_builds_schtasks_commands(monkeypatch):
+    import subprocess
+
+    import pytest
+
+    from video_agents import scheduler
+
+    calls = []
+
+    class Result:
+        returncode = 0
+        stderr = ""
+
+        def __init__(self, stdout=""):
+            self.stdout = stdout
+
+    def fake_run(cmd, **kw):
+        calls.append(cmd)
+        if "/Query" in cmd:
+            return Result('"\\\\VideoAgents 10-00","29.10.2026 10:00:00","Готово"\n'
+                          '"\\\\Other task","N/A","Готово"\n')
+        return Result()
+
+    monkeypatch.setattr(scheduler.os, "name", "nt")
+    monkeypatch.setattr(subprocess, "run", fake_run)
+
+    assert scheduler.add(["9:05", "18:30"], count=2) == ["VideoAgents 09-05", "VideoAgents 18-30"]
+    create = calls[0]
+    assert create[:2] == ["schtasks", "/Create"] and create[create.index("/ST") + 1] == "09:05"
+    assert create[create.index("/TR") + 1] == f'"{scheduler.LAUNCHER}" -n 2'
+
+    assert scheduler.list_tasks() == [("VideoAgents 10-00", "29.10.2026 10:00:00")]
+    assert scheduler.remove_all() == ["VideoAgents 10-00"]
+    assert calls[-1] == ["schtasks", "/Delete", "/F", "/TN", "VideoAgents 10-00"]
+
+    with pytest.raises(scheduler.ScheduleError):
+        scheduler.normalize_time("25:00")
+
+
+def test_launcher_bat_uses_windows_line_endings():
+    from video_agents.scheduler import LAUNCHER
+
+    data = LAUNCHER.read_bytes()
+    assert b"\r\n" in data and b"\n" not in data.replace(b"\r\n", b"")
+    assert b"run --publish %*" in data

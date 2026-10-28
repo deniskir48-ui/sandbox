@@ -106,7 +106,16 @@ python -m video_agents update                     # обновить прогр�
 
 ## Запуск по расписанию
 
-Cron (2 ролика в 10:00 и 18:00):
+Windows (Планировщик задач): каждый день в 10:00 и 18:00 сделать и опубликовать по ролику:
+```
+python -m video_agents schedule add 10:00 18:00
+python -m video_agents schedule list      # посмотреть
+python -m video_agents schedule remove    # убрать всё
+```
+Запуск выполняет `run_scheduled.bat`: сначала берёт тему из очереди, отчёт пишет в `workspace\schedule.log`.
+Компьютер в это время должен быть включён, а пользователь - вошёл в Windows.
+
+Mac/Linux - cron (2 ролика в 10:00 и 18:00):
 ```cron
 0 10,18 * * * cd /path/to/sandbox && .venv/bin/python -m video_agents run --publish >> workspace/cron.log 2>&1
 ```
@@ -135,6 +144,10 @@ Cron (2 ролика в 10:00 и 18:00):
 подбор видео, подписи); `python -m video_agents list` показывает её и средний расход на ролик.
 Модель можно задать каждому агенту отдельно: `llm.ideas_model`, `script_model`, `critic_model`,
 `footage_model`, `metadata_model` (пусто — `llm.model`).
+
+По умолчанию включён экономный режим: идеи и сценарий — на Opus, редактор — на Sonnet, подбор видео
+и подписи — на Haiku, не больше одного круга правок, 4 варианта видео на запрос, 3 поиска в интернете.
+Чтобы вернуть агента на `llm.model`, поставьте его модели значение `null`.
 
 ## Правила платформ
 
