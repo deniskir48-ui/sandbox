@@ -353,3 +353,29 @@ def test_failed_queued_idea_goes_back_to_queue(settings):
     [job] = pipeline.run(publish=False)
     assert job.status == "failed"
     assert [i.topic for i in pipeline.store.queue()] == ["Важная тема"]
+
+
+def test_generated_ideas_are_logged(settings):
+    import json
+
+    pipeline = Pipeline(settings, llm=FakeLLM(), producer=VideoProducer(settings, FakeTTS()))
+    pipeline.ideas(3)
+    lines = pipeline.store.ideas_log.read_text(encoding="utf-8").splitlines()
+    assert [json.loads(line)["idea"]["topic"] for line in lines] == ["Тема 0", "Тема 1", "Тема 2"]
+
+
+def test_queue_cli_add_remove_clear(tmp_path, monkeypatch, capsys):
+    from video_agents import cli
+
+    monkeypatch.chdir(tmp_path)
+    monkeypatch.setenv("ANTHROPIC_API_KEY", "test")
+    (tmp_path / "config.yaml").write_text("workspace: ws\n", encoding="utf-8")
+    cli.main(["queue", "add", "Why crunches won't give you abs", "Best time to train"])
+    cli.main(["queue", "add", "Protein myths"])
+    cli.main(["queue", "remove", "2"])
+    out = capsys.readouterr().out.split("Why crunches won't give you abs")[-1]  # вывод после последней команды
+    assert "2. Protein myths" in out and "Best time to train" not in out
+    from video_agents.storage import JobStore
+    assert [i.topic for i in JobStore(tmp_path / "ws").queue()] == ["Why crunches won't give you abs", "Protein myths"]
+    cli.main(["queue", "clear"])
+    assert JobStore(tmp_path / "ws").queue() == []

@@ -50,6 +50,7 @@ python -m video_agents run                        # сделать 1 ролик 
 python -m video_agents run --topic "Почему небо голубое"
 python -m video_agents run --choose               # показать 5 идей и выбрать одну, несколько или «все»
 python -m video_agents queue                      # темы, которые ждут в очереди
+python -m video_agents queue add "Тема"         # добавить свою тему в очередь (remove 2 / clear)
 python -m video_agents list                       # все ролики и их статусы
 python -m video_agents publish <id>               # опубликовать проверенный ролик
 python -m video_agents publish <id> --platform youtube

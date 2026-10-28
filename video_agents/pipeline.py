@@ -9,7 +9,7 @@ from typing import Callable
 from .agents import CriticAgent, FootageEditorAgent, IdeaAgent, MetadataAgent, ScriptwriterAgent
 from .agents.brief import word_budget
 from .config import Settings
-from .models import Job, UploadResult, VideoIdea
+from .models import Job, UploadResult, VideoIdea, manual_idea
 from .publishers import Publisher, is_configured, make_publisher
 from .storage import JobStore
 
@@ -59,7 +59,9 @@ class Pipeline:
     # --- Этапы ---
 
     def ideas(self, count: int) -> list[VideoIdea]:
-        return self.idea_agent.generate(count, self.store.past_topics())
+        ideas = self.idea_agent.generate(count, self.store.past_topics())
+        self.store.log_ideas(ideas)
+        return ideas
 
     def enqueue(self, ideas: list[VideoIdea]) -> None:
         self.store.save_queue(self.store.queue() + ideas)
@@ -152,8 +154,7 @@ class Pipeline:
             ideas: list[VideoIdea] | None = None) -> list[Job]:
         publish = self.settings.publish.auto_publish if publish is None else publish
         if not ideas and topic:
-            ideas = [VideoIdea(viewer_problem=topic, relatability=10, topic=topic, angle="на усмотрение сценариста",
-                               hook="на усмотрение сценариста", why_it_works="тема задана вручную")]
+            ideas = [manual_idea(topic)]
         elif not ideas:
             ideas = self._next_ideas(count)
         jobs = []

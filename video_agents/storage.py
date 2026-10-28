@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from pathlib import Path
 
 from pydantic import TypeAdapter
@@ -55,6 +56,17 @@ class JobStore:
         if not self.queue_file.exists():
             return []
         return _IDEAS.validate_json(self.queue_file.read_bytes())
+
+    @property
+    def ideas_log(self) -> Path:
+        return self.root / "ideas_log.jsonl"
+
+    def log_ideas(self, ideas: list[VideoIdea]) -> None:
+        """Все придуманные агентом идеи, по строке на идею: ни одна хорошая тема не потеряется."""
+        stamp = datetime.now().isoformat(timespec="seconds")
+        with open(self.ideas_log, "a", encoding="utf-8") as fh:
+            for idea in ideas:
+                fh.write(f'{{"at": "{stamp}", "idea": {idea.model_dump_json()}}}\n')
 
     def save_queue(self, ideas: list[VideoIdea]) -> None:
         tmp = self.queue_file.with_suffix(".tmp")

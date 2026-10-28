@@ -7,6 +7,7 @@ import logging
 import sys
 
 from .config import load_settings
+from .models import manual_idea
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -34,7 +35,10 @@ def main(argv: list[str] | None = None) -> int:
     render.add_argument("job_id")
 
     sub.add_parser("list", help="список роликов")
-    sub.add_parser("queue", help="темы, которые ждут в очереди")
+    queue = sub.add_parser("queue", help="очередь тем: показать, добавить, убрать")
+    queue.add_argument("action", nargs="?", choices=["add", "remove", "clear"],
+                       help="add \"тема\" - добавить; remove 2 - убрать №2; clear - очистить")
+    queue.add_argument("items", nargs="*", help="темы для add или номера для remove")
     sub.add_parser("update", help="обновить программу до последней версии с GitHub")
 
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
@@ -100,6 +104,13 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "queue":
+        if args.action == "add":
+            pipeline.enqueue([manual_idea(text) for text in args.items if text.strip()])
+        elif args.action == "remove":
+            drop = {int(n) - 1 for n in args.items if n.isdigit()}
+            pipeline.store.save_queue([idea for i, idea in enumerate(pipeline.store.queue()) if i not in drop])
+        elif args.action == "clear":
+            pipeline.store.save_queue([])
         queue = pipeline.store.queue()
         if not queue:
             print("Очередь пуста: при следующем запуске агент придумает новые темы.")

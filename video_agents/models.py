@@ -33,6 +33,12 @@ class VideoIdea(BaseModel):
         return data
 
 
+def manual_idea(topic: str) -> VideoIdea:
+    """Тема, заданная человеком: детали подачи сценарист решит сам."""
+    return VideoIdea(viewer_problem=topic, relatability=10, topic=topic, angle="на усмотрение сценариста",
+                     hook="на усмотрение сценариста", why_it_works="тема задана вручную")
+
+
 class IdeaList(BaseModel):
     ideas: list[VideoIdea] = Field(description="Идеи, отсортированные от самой сильной к слабой")
 
