@@ -42,7 +42,9 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("update", help="обновить программу до последней версии с GitHub")
 
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
-    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok"])
+    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok", "telegram"])
+
+    sub.add_parser("bot", help="запустить Telegram-бота (управление с телефона)")
 
     schedule = sub.add_parser("schedule", help="запуск по расписанию (Планировщик задач Windows)")
     schedule.add_argument("action", choices=["add", "list", "remove"],
@@ -78,6 +80,9 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "schedule":
         return _schedule(args)
 
+    if args.command == "bot":
+        return _bot(settings)
+
     from .pipeline import Pipeline
 
     pipeline = Pipeline(settings)
@@ -96,6 +101,9 @@ def main(argv: list[str] | None = None) -> int:
         jobs = pipeline.run(count=args.count, topic=args.topic, publish=args.publish)
         for job in jobs:
             _print_job(job)
+        from .telegram.messages import notify_jobs
+
+        notify_jobs(settings, jobs)  # если подключён Telegram - пришлём ролики туда
         return 0 if all(job.status != "failed" for job in jobs) else 1
 
     if args.command == "ideas":
@@ -208,7 +216,44 @@ def _schedule(args) -> int:
     return 0
 
 
+def _bot(settings) -> int:
+    from pathlib import Path
+
+    from .pipeline import Pipeline
+    from .telegram.api import TelegramAccess, TelegramAPI
+    from .telegram.bot import Bot
+
+    access = TelegramAccess.load(settings.secrets)
+    if not access:
+        print("Бот не подключён. Выполните: python -m video_agents auth telegram")
+        return 1
+    log_file = Path(settings.workspace) / "bot.log"
+    log_file.parent.mkdir(parents=True, exist_ok=True)
+    handler = logging.FileHandler(log_file, encoding="utf-8")
+    handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-7s %(name)s: %(message)s"))
+    logging.getLogger().addHandler(handler)
+    Bot(TelegramAPI(access.token), access.chat_id, Pipeline(settings)).run_forever()
+    return 0
+
+
 def _auth(platform: str, settings) -> int:
+    if platform == "telegram":
+        from .telegram import setup
+
+        print("1. В Telegram откройте @BotFather, отправьте /newbot и придумайте имя боту.")
+        print("2. BotFather пришлёт токен - длинную строку вида 123456:ABC-DEF...")
+        token = input("Вставьте токен и нажмите Enter:\n").strip()
+        setup.connect(token, settings.secrets)
+        print("\nГотово! Бот привязан к вашему чату.")
+        launcher = setup.install_autostart()
+        if launcher:
+            setup.start_now(launcher)
+            print("Бот запущен в свёрнутом окне и будет запускаться сам при включении компьютера.\n"
+                  "Окно «Video Agents bot» не закрывайте - его можно просто свернуть.")
+        else:
+            print("Запустите бота командой: python -m video_agents bot")
+        return 0
+
     if platform == "youtube":
         from .publishers.youtube import authorize
 

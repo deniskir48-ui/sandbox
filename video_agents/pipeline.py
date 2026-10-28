@@ -27,8 +27,11 @@ class Pipeline:
         producer=None,
         publisher_factory: Callable[[str], Publisher] | None = None,
         platform_ready: Callable[[str], bool] | None = None,
+        progress: Callable[[str], None] | None = None,
     ):
         self.settings = settings
+        # Сообщения о ходе работы (например, для Telegram): «пишу сценарий», «монтирую видео».
+        self.progress = progress or (lambda text: None)
         self.store = JobStore(settings.workspace)
         self.ledger = None
         if llm is None:
@@ -73,27 +76,32 @@ class Pipeline:
         return ideas
 
     def enqueue(self, ideas: list[VideoIdea]) -> None:
-        self.store.save_queue(self.store.queue() + ideas)
+        with self.store.lock:
+            self.store.save_queue(self.store.queue() + ideas)
 
     def _next_ideas(self, count: int) -> list[VideoIdea]:
         """Сначала темы из очереди, недостающие придумывает агент идей."""
-        queue = self.store.queue()
-        taken, rest = queue[:count], queue[count:]
-        self.store.save_queue(rest)
+        with self.store.lock:
+            queue = self.store.queue()
+            taken, rest = queue[:count], queue[count:]
+            self.store.save_queue(rest)
         if taken:
             log.info("Берём %d тем(ы) из очереди, осталось %d", len(taken), len(rest))
         if len(taken) < count:
+            self.progress("Придумываю темы")
             taken += self.ideas(count - len(taken))
         return taken
 
     def write(self, job: Job) -> Job:
         """Сценарист пишет, редактор критикует, до max_revisions кругов правок."""
         with self._costs(job):
+            self.progress(f"Пишу сценарий: {job.idea.topic}")
             script = self.writer.write(job.idea)
             for round_ in range(self.settings.llm.max_revisions + 1):
                 review = self.critic.review(job.idea, script)
                 job.reviews.append(review)
                 log.info("Редактор: %d/10 (%s)", review.score, "одобрено" if review.approved else "на доработку")
+                self.progress(f"Редактор: {review.score}/10, " + ("одобрено" if review.approved else "на доработку"))
                 if review.approved and review.score >= self.settings.llm.min_score:
                     break
                 if round_ == self.settings.llm.max_revisions:
@@ -140,6 +148,7 @@ class Pipeline:
 
     def produce(self, job: Job) -> Job:
         with self._costs(job):
+            self.progress("Монтирую видео: озвучка, подбор кадров, субтитры")
             result = self.producer.produce(job.script, self.store.job_dir(job))
             job.video_path = str(result.video_path)
             job.duration = result.duration
@@ -160,6 +169,7 @@ class Pipeline:
                 log.info("%s: не подключён, пропускаем (python -m video_agents auth %s)", platform, platform)
                 continue
             try:
+                self.progress(f"Публикую в {platform}")
                 result = self.publisher_factory(platform).publish(Path(job.video_path), job.meta)
                 log.info("%s: опубликовано %s", platform, result.url or result.id)
             except Exception as exc:
