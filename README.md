@@ -106,7 +106,16 @@ python -m video_agents update                     # обновить прогр�
 
 ## Запуск по расписанию
 
-Cron (2 ролика в 10:00 и 18:00):
+Windows (Планировщик задач): каждый день в 10:00 и 18:00 сделать и опубликовать по ролику:
+```
+python -m video_agents schedule add 10:00 18:00
+python -m video_agents schedule list      # посмотреть
+python -m video_agents schedule remove    # убрать всё
+```
+Запуск выполняет `run_scheduled.bat`: сначала берёт тему из очереди, отчёт пишет в `workspace\schedule.log`.
+Компьютер в это время должен быть включён, а пользователь - вошёл в Windows.
+
+Mac/Linux - cron (2 ролика в 10:00 и 18:00):
 ```cron
 0 10,18 * * * cd /path/to/sandbox && .venv/bin/python -m video_agents run --publish >> workspace/cron.log 2>&1
 ```

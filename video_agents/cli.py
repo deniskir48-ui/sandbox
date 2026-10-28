@@ -44,6 +44,12 @@ def main(argv: list[str] | None = None) -> int:
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
     auth.add_argument("platform", choices=["youtube", "instagram", "tiktok"])
 
+    schedule = sub.add_parser("schedule", help="запуск по расписанию (Планировщик задач Windows)")
+    schedule.add_argument("action", choices=["add", "list", "remove"],
+                          help="add 10:00 18:00 - каждый день в это время; list - показать; remove - убрать всё")
+    schedule.add_argument("times", nargs="*", help="время запуска, например 10:00 18:30")
+    schedule.add_argument("-n", "--count", type=int, default=1, help="сколько роликов за один запуск")
+
     args = parser.parse_args(argv)
     logging.basicConfig(
         level=logging.DEBUG if args.verbose else logging.INFO,
@@ -68,6 +74,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "auth":
         return _auth(args.platform, settings)
+
+    if args.command == "schedule":
+        return _schedule(args)
 
     from .pipeline import Pipeline
 
@@ -169,6 +178,34 @@ def _print_job(job) -> None:
         print(f"    {upload.platform}: {'OK ' + (upload.url or upload.id or '') if upload.ok else 'ОШИБКА ' + str(upload.error)}")
     if job.error:
         print(f"    ошибка: {job.error}")
+
+
+def _schedule(args) -> int:
+    from . import scheduler
+
+    try:
+        if args.action == "add":
+            if not args.times:
+                print("Укажите время, например: python -m video_agents schedule add 10:00 18:00")
+                return 1
+            for name in scheduler.add(args.times, args.count):
+                print(f"Создана задача «{name}»")
+            print("Каждый запуск делает ролик (сначала из очереди тем) и публикует его. "
+                  "Отчёт пишется в workspace\\schedule.log.\n"
+                  "Компьютер в это время должен быть включён, а вы - вошли в Windows.")
+        elif args.action == "list":
+            tasks = scheduler.list_tasks()
+            if not tasks:
+                print("Расписание пустое.")
+            for name, next_run in tasks:
+                print(f"{name}: следующий запуск {next_run}")
+        else:
+            removed = scheduler.remove_all()
+            print(f"Удалено задач: {len(removed)}")
+    except scheduler.ScheduleError as exc:
+        print(f"Ошибка: {exc}")
+        return 1
+    return 0
 
 
 def _auth(platform: str, settings) -> int:
