@@ -42,7 +42,7 @@ class FootageConfig(BaseModel):
 
 
 class SubtitleConfig(BaseModel):
-    font: str = "DejaVu Sans"
+    font: str = "Arial"
     font_size: int = 86
     color: str = "#FFFFFF"
     highlight_color: str = "#FFD700"

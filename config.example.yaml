@@ -31,7 +31,7 @@ footage:
   provider: pexels        # pexels | none (цветной фон, удобно для теста)
 
 subtitles:
-  font: "DejaVu Sans"     # положите свой .ttf в assets/fonts и укажите его название
+  font: "Arial"           # или свой .ttf: положите его в assets/fonts и укажите название шрифта
   font_size: 86
   color: "#FFFFFF"
   highlight_color: "#FFD700"

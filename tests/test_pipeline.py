@@ -144,3 +144,19 @@ def test_render_with_custom_fonts_dir(settings, tmp_path):
     script = FakeLLM().structured(output_model=Script, prompt="")
     result = VideoProducer(settings, FakeTTS()).produce(script, tmp_path / "job")
     assert result.video_path.exists()
+
+
+@pytest.mark.skipif(not SYSTEM_FONT.exists(), reason="нет системного шрифта DejaVu")
+def test_windows_copies_system_arial(settings, tmp_path, monkeypatch):
+    from video_agents.production import render
+
+    windir = tmp_path / "Windows"
+    (windir / "Fonts").mkdir(parents=True)
+    (windir / "Fonts" / "arialbd.ttf").write_bytes(SYSTEM_FONT.read_bytes())
+    monkeypatch.setenv("WINDIR", str(windir))
+    monkeypatch.setattr(render, "IS_WINDOWS", True)
+    settings.video.fonts_dir = str(tmp_path / "no_fonts")
+    script = FakeLLM().structured(output_model=Script, prompt="")
+    result = VideoProducer(settings, FakeTTS()).produce(script, tmp_path / "job")
+    assert result.video_path.exists()
+    assert [p.name for p in (tmp_path / "job" / "fonts").iterdir()] == ["arialbd.ttf"]
