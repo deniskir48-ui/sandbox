@@ -379,3 +379,48 @@ def test_queue_cli_add_remove_clear(tmp_path, monkeypatch, capsys):
     assert [i.topic for i in JobStore(tmp_path / "ws").queue()] == ["Why crunches won't give you abs", "Protein myths"]
     cli.main(["queue", "clear"])
     assert JobStore(tmp_path / "ws").queue() == []
+
+
+class FakeAnthropic:
+    """Подменяет клиент Anthropic: отвечает заготовками FakeLLM и сообщает расход токенов."""
+
+    def __init__(self, *args, **kwargs):
+        from types import SimpleNamespace
+
+        self.requests = []
+        canned = FakeLLM()
+        outer = self
+
+        class Messages:
+            def parse(self, **kw):
+                outer.requests.append(kw)
+                usage = SimpleNamespace(input_tokens=10_000, output_tokens=1_000, server_tool_use=None)
+                return SimpleNamespace(parsed_output=canned.structured(output_model=kw["output_format"], prompt=""),
+                                       stop_reason="end_turn", model=kw["model"], usage=usage, _request_id="r")
+
+        self.beta = SimpleNamespace(messages=Messages())
+
+
+def test_costs_are_tracked_per_job_and_stage(settings, monkeypatch):
+    import anthropic
+
+    clients = []
+    monkeypatch.setattr(anthropic, "Anthropic", lambda *a, **k: clients.append(FakeAnthropic()) or clients[-1])
+    settings.llm.web_research = False
+    settings.llm.metadata_model = "claude-haiku-5-5"
+    pipeline = Pipeline(settings, producer=VideoProducer(settings, FakeTTS()))
+    [job] = pipeline.run(publish=False)
+
+    opus = 10_000 * 4 / 1e6 + 1_000 * 20 / 1e6  # $0.06 за вызов
+    haiku = 10_000 * 0.10 / 1e6 + 1_000 * 0.50 / 1e6
+    assert job.cost_by_stage["ideas"] == pytest.approx(opus)
+    assert job.cost_by_stage["script"] == pytest.approx(2 * opus)  # сценарий + одна переделка
+    assert job.cost_by_stage["critic"] == pytest.approx(2 * opus)
+    assert job.cost_by_stage["metadata"] == pytest.approx(haiku)
+    assert job.cost_usd == pytest.approx(5 * opus + haiku, abs=1e-3)
+    assert pipeline.store.load(job.id).cost_usd == job.cost_usd
+
+    requests = clients[0].requests
+    haiku_request = next(r for r in requests if r["model"] == "claude-haiku-5-5")
+    assert "fallbacks" not in haiku_request and "betas" not in haiku_request
+    assert all(r.get("fallbacks") == "default" for r in requests if r["model"] == "claude-opus-5-5")

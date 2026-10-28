@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from contextlib import contextmanager
 from pathlib import Path
 from typing import Callable
 
@@ -14,6 +15,8 @@ from .publishers import Publisher, is_configured, make_publisher
 from .storage import JobStore
 
 log = logging.getLogger(__name__)
+
+ROLES = ("ideas", "script", "critic", "footage", "metadata")
 
 
 class Pipeline:
@@ -27,16 +30,22 @@ class Pipeline:
     ):
         self.settings = settings
         self.store = JobStore(settings.workspace)
+        self.ledger = None
         if llm is None:
-            from .llm import LLM
+            import anthropic
 
-            llm = LLM(settings.llm.model)
-        self.llm = llm
+            from .llm import LLM, CostLedger
+
+            self.ledger = CostLedger()
+            client = anthropic.Anthropic()
+            self.llms = {role: LLM(settings.llm.model_for(role), client, self.ledger, role) for role in ROLES}
+        else:
+            self.llms = dict.fromkeys(ROLES, llm)
         channel = settings.channel
-        self.idea_agent = IdeaAgent(llm, channel, web_research=settings.llm.web_research)
-        self.writer = ScriptwriterAgent(llm, channel)
-        self.critic = CriticAgent(llm, channel)
-        self.meta_agent = MetadataAgent(llm, channel)
+        self.idea_agent = IdeaAgent(self.llms["ideas"], channel, web_research=settings.llm.web_research)
+        self.writer = ScriptwriterAgent(self.llms["script"], channel)
+        self.critic = CriticAgent(self.llms["critic"], channel)
+        self.meta_agent = MetadataAgent(self.llms["metadata"], channel)
         self._producer = producer
         self.publisher_factory = publisher_factory or (lambda platform: make_publisher(platform, settings))
         if platform_ready is None:
@@ -52,7 +61,7 @@ class Pipeline:
 
             tts = make_tts(self.settings.voice, self.settings.secrets)
             footage = make_footage(self.settings.footage, self.settings.secrets, Path(self.settings.workspace) / "footage_cache")
-            editor = FootageEditorAgent(self.llm) if footage and self.settings.footage.ai_selection else None
+            editor = FootageEditorAgent(self.llms["footage"]) if footage and self.settings.footage.ai_selection else None
             self._producer = VideoProducer(self.settings, tts, footage, editor)
         return self._producer
 
@@ -79,27 +88,44 @@ class Pipeline:
 
     def write(self, job: Job) -> Job:
         """Сценарист пишет, редактор критикует, до max_revisions кругов правок."""
-        script = self.writer.write(job.idea)
-        for round_ in range(self.settings.llm.max_revisions + 1):
-            review = self.critic.review(job.idea, script)
-            job.reviews.append(review)
-            log.info("Редактор: %d/10 (%s)", review.score, "одобрено" if review.approved else "на доработку")
-            if review.approved and review.score >= self.settings.llm.min_score:
-                break
-            if round_ == self.settings.llm.max_revisions:
-                log.warning("Лимит правок исчерпан, берём последнюю версию сценария")
-                break
-            script = self.writer.revise(job.idea, script, review)
-        script = self._fit_length(job, script)
-        job.script = script
-        job.meta = self.meta_agent.generate(script)
-        disclaimer = self.settings.channel.disclaimer.strip()
-        if disclaimer:
-            job.meta.youtube_description += f"\n\n{disclaimer}"
-            job.meta.instagram_caption += f"\n\n{disclaimer}"
-        job.status = "scripted"
-        self.store.save(job)
-        return job
+        with self._costs(job):
+            script = self.writer.write(job.idea)
+            for round_ in range(self.settings.llm.max_revisions + 1):
+                review = self.critic.review(job.idea, script)
+                job.reviews.append(review)
+                log.info("Редактор: %d/10 (%s)", review.score, "одобрено" if review.approved else "на доработку")
+                if review.approved and review.score >= self.settings.llm.min_score:
+                    break
+                if round_ == self.settings.llm.max_revisions:
+                    log.warning("Лимит правок исчерпан, берём последнюю версию сценария")
+                    break
+                script = self.writer.revise(job.idea, script, review)
+            script = self._fit_length(job, script)
+            job.script = script
+            job.meta = self.meta_agent.generate(script)
+            disclaimer = self.settings.channel.disclaimer.strip()
+            if disclaimer:
+                job.meta.youtube_description += f"\n\n{disclaimer}"
+                job.meta.instagram_caption += f"\n\n{disclaimer}"
+            job.status = "scripted"
+            return job
+
+    @contextmanager
+    def _costs(self, job: Job):
+        """Записывает в ролик, сколько стоили обращения к Claude внутри блока (даже при сбое)."""
+        mark = self.ledger.mark() if self.ledger else 0
+        try:
+            yield
+        finally:
+            if self.ledger:
+                self._add_cost(job, self.ledger.since(mark))
+            self.store.save(job)
+
+    @staticmethod
+    def _add_cost(job: Job, costs: dict[str, float]) -> None:
+        for stage, cost in costs.items():
+            job.cost_by_stage[stage] = round(job.cost_by_stage.get(stage, 0.0) + cost, 4)
+        job.cost_usd = round(sum(job.cost_by_stage.values()), 4)
 
     def _fit_length(self, job: Job, script):
         """Жёсткая проверка длины: модель не всегда считает слова, поэтому считаем сами."""
@@ -113,11 +139,11 @@ class Pipeline:
         return script
 
     def produce(self, job: Job) -> Job:
-        result = self.producer.produce(job.script, self.store.job_dir(job))
-        job.video_path = str(result.video_path)
-        job.duration = result.duration
-        job.status = "produced"
-        self.store.save(job)
+        with self._costs(job):
+            result = self.producer.produce(job.script, self.store.job_dir(job))
+            job.video_path = str(result.video_path)
+            job.duration = result.duration
+            job.status = "produced"
         log.info("Ролик готов: %s (%.1f с)", result.video_path, result.duration)
         return job
 
@@ -153,13 +179,18 @@ class Pipeline:
     def run(self, count: int = 1, topic: str | None = None, publish: bool | None = None,
             ideas: list[VideoIdea] | None = None) -> list[Job]:
         publish = self.settings.publish.auto_publish if publish is None else publish
+        ideas_cost: dict[str, float] = {}
         if not ideas and topic:
             ideas = [manual_idea(topic)]
         elif not ideas:
+            mark = self.ledger.mark() if self.ledger else 0
             ideas = self._next_ideas(count)
+            ideas_cost = self.ledger.since(mark) if self.ledger else {}
         jobs = []
-        for idea in ideas:
+        for index, idea in enumerate(ideas):
             job = Job(idea=idea)
+            if index == 0 and ideas_cost:
+                self._add_cost(job, ideas_cost)  # поиск идей на всю пачку - в счёт первого ролика
             self.store.save(job)
             log.info("=== Ролик %s: %s ===", job.id, idea.topic)
             try:
