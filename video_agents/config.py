@@ -37,7 +37,7 @@ class VoiceConfig(BaseModel):
 
 
 class FootageConfig(BaseModel):
-    provider: Literal["pexels", "none"] = "pexels"
+    provider: Literal["auto", "pexels", "pixabay", "none"] = "auto"
     fallback_colors: list[str] = Field(default_factory=lambda: ["#0f2027", "#203a43", "#2c5364"])
 
 
@@ -96,6 +96,7 @@ class PublishConfig(BaseModel):
 
 class Secrets(BaseModel):
     pexels_api_key: str | None = None
+    pixabay_api_key: str | None = None
     elevenlabs_api_key: str | None = None
     youtube_client_secrets: str = "secrets/youtube_client_secret.json"
     youtube_token_file: str = "secrets/youtube_token.json"
