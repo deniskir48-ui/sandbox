@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import logging
 import math
+import os
 import random
 from dataclasses import dataclass
 from pathlib import Path
@@ -16,6 +17,7 @@ from .tts import TTSProvider, Word
 log = logging.getLogger(__name__)
 
 MUSIC_EXTENSIONS = {".mp3", ".m4a", ".wav", ".aac", ".ogg"}
+FONT_EXTENSIONS = {".ttf", ".otf"}
 
 
 @dataclass
@@ -121,8 +123,10 @@ class VideoProducer:
     def _final_mix(self, job_dir: Path, video: Path, narration: Path, out: Path) -> None:
         subs_filter = "ass=subs.ass"
         fonts_dir = Path(self.video.fonts_dir)
-        if fonts_dir.is_dir() and any(fonts_dir.iterdir()):
-            subs_filter += f":fontsdir={fonts_dir.resolve()}"
+        if fonts_dir.is_dir() and any(p.suffix.lower() in FONT_EXTENSIONS for p in fonts_dir.iterdir()):
+            # Относительный путь с прямыми слэшами: «C:\...» ломает синтаксис фильтров ffmpeg на Windows.
+            relative = os.path.relpath(fonts_dir.resolve(), job_dir.resolve())
+            subs_filter += f":fontsdir={Path(relative).as_posix()}"
 
         args = ["-i", video.name, "-i", narration.name]
         music = self._pick_music()

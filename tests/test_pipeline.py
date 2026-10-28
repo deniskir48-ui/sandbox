@@ -130,3 +130,17 @@ def test_failed_job_is_saved(settings):
     [job] = pipeline.run(topic="Своя тема", publish=False)
     assert job.status == "failed"
     assert pipeline.store.load(job.id).error == "ffmpeg сломался"
+
+
+SYSTEM_FONT = Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf")
+
+
+@pytest.mark.skipif(not SYSTEM_FONT.exists(), reason="нет системного шрифта DejaVu")
+def test_render_with_custom_fonts_dir(settings, tmp_path):
+    fonts = tmp_path / "fonts"
+    fonts.mkdir()
+    (fonts / SYSTEM_FONT.name).write_bytes(SYSTEM_FONT.read_bytes())
+    settings.video.fonts_dir = str(fonts)
+    script = FakeLLM().structured(output_model=Script, prompt="")
+    result = VideoProducer(settings, FakeTTS()).produce(script, tmp_path / "job")
+    assert result.video_path.exists()

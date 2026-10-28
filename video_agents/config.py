@@ -18,6 +18,8 @@ class ChannelConfig(BaseModel):
     tone: str = "Живой, разговорный, с интригой; без канцелярита и воды"
     video_length_seconds: int = 45
     extra_rules: list[str] = Field(default_factory=list)
+    # Добавляется в конец описания YouTube и подписи Instagram (например, «not medical advice»).
+    disclaimer: str = ""
 
 
 class LLMConfig(BaseModel):

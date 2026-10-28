@@ -3,6 +3,9 @@
 Система агентов, которая сама придумывает темы, пишет и вычитывает сценарии, монтирует
 вертикальные ролики и публикует их в **YouTube Shorts**, **Instagram Reels** и **TikTok**.
 
+> 👉 Впервые запускаете? Откройте **[ИНСТРУКЦИЯ.md](ИНСТРУКЦИЯ.md)**: там всё по шагам, без программирования.
+> Пример конфига уже настроен под англоязычный канал про спорт, питание и ЗОЖ.
+
 ```
  ┌──────────────┐   ┌──────────────┐   ┌──────────────┐   ┌──────────────┐
  │ Агент идей   │──▶│ Сценарист    │◀─▶│ Редактор     │──▶│ SMM-агент    │
@@ -94,10 +97,11 @@ Cron (2 ролика в 10:00 и 18:00):
 
 ## Настройка качества
 
-- **Ниша и стиль** — `channel` в `config.yaml`; `extra_rules` попадают во все агенты.
+- **Ниша и стиль** — `channel` в `config.yaml`; `extra_rules` попадают во все агенты,
+  `disclaimer` дописывается в описания (для тем о здоровье: «not medical advice»).
 - **Промпты агентов** — константы `SYSTEM` в `video_agents/agents/*.py`.
 - **Строгость редактора** — `llm.min_score` и `llm.max_revisions`.
-- **Голос** — `edge` бесплатен (ru-RU-SvetlanaNeural, ru-RU-DmitryNeural); `elevenlabs` звучит
+- **Голос** — `edge` бесплатен (en-US-AndrewMultilingualNeural, en-US-AvaMultilingualNeural, ru-RU-SvetlanaNeural и др.); `elevenlabs` звучит
   заметно живее, в `voice.voice` укажите voice_id.
 - **Шрифт субтитров** — положите `.ttf` в `assets/fonts/` и укажите имя в `subtitles.font`
   (хорошо смотрятся Montserrat ExtraBold, Inter Black).

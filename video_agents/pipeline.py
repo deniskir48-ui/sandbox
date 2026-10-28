@@ -68,6 +68,10 @@ class Pipeline:
             script = self.writer.revise(job.idea, script, review)
         job.script = script
         job.meta = self.meta_agent.generate(script)
+        disclaimer = self.settings.channel.disclaimer.strip()
+        if disclaimer:
+            job.meta.youtube_description += f"\n\n{disclaimer}"
+            job.meta.instagram_caption += f"\n\n{disclaimer}"
         job.status = "scripted"
         self.store.save(job)
         return job
