@@ -406,21 +406,22 @@ def test_costs_are_tracked_per_job_and_stage(settings, monkeypatch):
 
     clients = []
     monkeypatch.setattr(anthropic, "Anthropic", lambda *a, **k: clients.append(FakeAnthropic()) or clients[-1])
-    settings.llm.web_research = False
-    settings.llm.metadata_model = "claude-haiku-5-5"
+    settings.llm.web_research = False  # экономный режим по умолчанию: редактор - Sonnet, подписи - Haiku
     pipeline = Pipeline(settings, producer=VideoProducer(settings, FakeTTS()))
     [job] = pipeline.run(publish=False)
 
     opus = 10_000 * 4 / 1e6 + 1_000 * 20 / 1e6  # $0.06 за вызов
+    sonnet = 10_000 * 2 / 1e6 + 1_000 * 10 / 1e6
     haiku = 10_000 * 0.10 / 1e6 + 1_000 * 0.50 / 1e6
     assert job.cost_by_stage["ideas"] == pytest.approx(opus)
     assert job.cost_by_stage["script"] == pytest.approx(2 * opus)  # сценарий + одна переделка
-    assert job.cost_by_stage["critic"] == pytest.approx(2 * opus)
+    assert job.cost_by_stage["critic"] == pytest.approx(2 * sonnet)
     assert job.cost_by_stage["metadata"] == pytest.approx(haiku)
-    assert job.cost_usd == pytest.approx(5 * opus + haiku, abs=1e-3)
+    assert job.cost_usd == pytest.approx(3 * opus + 2 * sonnet + haiku, abs=1e-3)
     assert pipeline.store.load(job.id).cost_usd == job.cost_usd
 
     requests = clients[0].requests
     haiku_request = next(r for r in requests if r["model"] == "claude-haiku-5-5")
     assert "fallbacks" not in haiku_request and "betas" not in haiku_request
-    assert all(r.get("fallbacks") == "default" for r in requests if r["model"] == "claude-opus-5-5")
+    assert all(r.get("fallbacks") == "default" for r in requests if r["model"] != "claude-haiku-5-5")
+    assert {r["model"] for r in requests} == {"claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"}

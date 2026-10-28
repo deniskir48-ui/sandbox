@@ -25,14 +25,15 @@ class ChannelConfig(BaseModel):
 
 class LLMConfig(BaseModel):
     model: str = "claude-opus-5-5"  # модель по умолчанию для всех агентов
-    # Модели отдельных агентов; пусто - берётся model.
+    # Модели отдельных агентов; пусто - берётся model. Экономный режим: на дорогой модели только
+    # идеи и сценарий, проверка - на средней Sonnet, простые задачи - на дешёвой Haiku.
     ideas_model: str | None = None
     script_model: str | None = None
-    critic_model: str | None = None
-    footage_model: str | None = None
-    metadata_model: str | None = None
+    critic_model: str | None = "claude-sonnet-5-5"
+    footage_model: str | None = "claude-haiku-5-5"
+    metadata_model: str | None = "claude-haiku-5-5"
     web_research: bool = True
-    max_revisions: int = 2
+    max_revisions: int = 1
     min_score: int = 8
 
     def model_for(self, role: str) -> str:
@@ -49,7 +50,7 @@ class VoiceConfig(BaseModel):
 class FootageConfig(BaseModel):
     provider: Literal["auto", "pexels", "pixabay", "none"] = "auto"
     ai_selection: bool = True  # агент-монтажёр смотрит превью и выбирает подходящее видео
-    candidates: int = 6  # сколько вариантов показывать ему на каждый запрос
+    candidates: int = 4  # сколько вариантов показывать ему на каждый запрос
     fallback_colors: list[str] = Field(default_factory=lambda: ["#0f2027", "#203a43", "#2c5364"])
 
 
