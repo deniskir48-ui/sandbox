@@ -18,6 +18,7 @@ def main(argv: list[str] | None = None) -> int:
     run = sub.add_parser("run", help="полный цикл: идеи -> сценарий -> ролик -> (публикация)")
     run.add_argument("-n", "--count", type=int, default=1, help="сколько роликов сделать")
     run.add_argument("--topic", help="задать тему вручную вместо генерации идей")
+    run.add_argument("--choose", action="store_true", help="показать 5 идей и выбрать, какую снимать")
     group = run.add_mutually_exclusive_group()
     group.add_argument("--publish", dest="publish", action="store_true", default=None, help="опубликовать сразу")
     group.add_argument("--no-publish", dest="publish", action="store_false", help="только смонтировать")
@@ -68,14 +69,19 @@ def main(argv: list[str] | None = None) -> int:
     pipeline = Pipeline(settings)
 
     if args.command == "run":
-        jobs = pipeline.run(count=args.count, topic=args.topic, publish=args.publish)
+        ideas = None
+        if args.choose:
+            options = pipeline.ideas(5)
+            _print_ideas(options)
+            answer = input("Номер идеи (Enter - первая): ").strip()
+            ideas = [options[int(answer) - 1 if answer.isdigit() and 0 < int(answer) <= len(options) else 0]]
+        jobs = pipeline.run(count=args.count, topic=args.topic, publish=args.publish, ideas=ideas)
         for job in jobs:
             _print_job(job)
         return 0 if all(job.status != "failed" for job in jobs) else 1
 
     if args.command == "ideas":
-        for i, idea in enumerate(pipeline.ideas(args.count), 1):
-            print(f"{i}. {idea.topic}\n   Угол: {idea.angle}\n   Хук: {idea.hook}\n")
+        _print_ideas(pipeline.ideas(args.count))
         return 0
 
     if args.command == "publish":
@@ -93,6 +99,12 @@ def main(argv: list[str] | None = None) -> int:
             _print_job(job)
         return 0
     return 1
+
+
+def _print_ideas(ideas) -> None:
+    for i, idea in enumerate(ideas, 1):
+        print(f"{i}. {idea.topic}  (узнаваемость {idea.relatability}/10)\n"
+              f"   Проблема зрителя: {idea.viewer_problem}\n   Хук: {idea.hook}\n")
 
 
 def _print_job(job) -> None:

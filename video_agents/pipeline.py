@@ -134,12 +134,13 @@ class Pipeline:
 
     # --- Полный цикл ---
 
-    def run(self, count: int = 1, topic: str | None = None, publish: bool | None = None) -> list[Job]:
+    def run(self, count: int = 1, topic: str | None = None, publish: bool | None = None,
+            ideas: list[VideoIdea] | None = None) -> list[Job]:
         publish = self.settings.publish.auto_publish if publish is None else publish
-        if topic:
-            ideas = [VideoIdea(topic=topic, angle="на усмотрение сценариста", hook="на усмотрение сценариста",
-                               why_it_works="тема задана вручную")]
-        else:
+        if not ideas and topic:
+            ideas = [VideoIdea(viewer_problem=topic, relatability=10, topic=topic, angle="на усмотрение сценариста",
+                               hook="на усмотрение сценариста", why_it_works="тема задана вручную")]
+        elif not ideas:
             ideas = self.ideas(count)
         jobs = []
         for idea in ideas:

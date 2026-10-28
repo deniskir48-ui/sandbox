@@ -24,7 +24,7 @@
 
 | Агент | Что делает | Где |
 |---|---|---|
-| Агент идей | Ищет свежие инфоповоды (веб-поиск Claude), предлагает темы, не повторяя старые | `video_agents/agents/ideas.py` |
+| Агент идей | Ищет, что волнует аудиторию (частые вопросы, ошибки, мифы), предлагает темы с массовой знакомой проблемой и ранжирует их по узнаваемости | `video_agents/agents/ideas.py` |
 | Сценарист | Пишет сценарий по сценам: текст диктора, запрос для стоков, надпись на экране | `video_agents/agents/scriptwriter.py` |
 | Редактор | Оценивает хук, удержание, факты, риски модерации; возвращает на доработку | `video_agents/agents/critic.py` |
 | SMM-агент | Заголовки, описания, хэштеги под каждую платформу | `video_agents/agents/metadata.py` |
@@ -48,6 +48,7 @@ cp .env.example .env                 # минимум: ANTHROPIC_API_KEY и PIXA
 python -m video_agents ideas -n 5                 # посмотреть, что предлагает агент идей
 python -m video_agents run                        # сделать 1 ролик (без публикации)
 python -m video_agents run --topic "Почему небо голубое"
+python -m video_agents run --choose               # показать 5 идей и выбрать, какую снимать
 python -m video_agents list                       # все ролики и их статусы
 python -m video_agents publish <id>               # опубликовать проверенный ролик
 python -m video_agents publish <id> --platform youtube

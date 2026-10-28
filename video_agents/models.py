@@ -13,10 +13,24 @@ from pydantic import BaseModel, Field, model_validator
 
 
 class VideoIdea(BaseModel):
+    viewer_problem: str = Field(
+        description="Знакомая зрителю проблема или вопрос - так, как сказал бы он сам (например 'I can't lose belly fat')"
+    )
+    relatability: int = Field(
+        description="Сколько людей из аудитории узнают в этом себя, от 1 до 10 (10 - почти каждый)"
+    )
     topic: str = Field(description="Тема ролика одной фразой")
-    angle: str = Field(description="Неочевидный угол подачи: чем ролик отличается от тысячи похожих")
-    hook: str = Field(description="Первая фраза ролика, которая останавливает скролл")
+    angle: str = Field(description="Чем ответ полезен и неожидан: простое конкретное решение знакомой проблемы")
+    hook: str = Field(description="Первая фраза ролика: называет проблему зрителя и останавливает скролл")
     why_it_works: str = Field(description="Почему это зайдёт аудитории, 1-2 предложения")
+
+    @model_validator(mode="before")
+    @classmethod
+    def _legacy_fields(cls, data):
+        # Идеи, сохранённые до появления этих полей.
+        if isinstance(data, dict):
+            data = {"viewer_problem": data.get("topic", ""), "relatability": 0, **data}
+        return data
 
 
 class IdeaList(BaseModel):

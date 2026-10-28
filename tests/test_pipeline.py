@@ -312,3 +312,13 @@ def test_unconfigured_platforms_are_skipped(settings):
     # Явно запрошенная, но не подключённая площадка - пробуем и сообщаем об ошибке, а не молчим.
     job = pipeline.publish(job, ["youtube"])
     assert publishers["youtube"].calls == 1
+
+
+def test_run_with_chosen_idea_skips_idea_generation(settings):
+    llm = FakeLLM()
+    pipeline = Pipeline(settings, llm=llm, producer=VideoProducer(settings, FakeTTS()))
+    chosen = VideoIdea(viewer_problem="I can't lose belly fat", relatability=9, topic="Belly fat",
+                       angle="a", hook="h", why_it_works="w")
+    [job] = pipeline.run(ideas=[chosen], publish=False)
+    assert job.idea.topic == "Belly fat"
+    assert "IdeaList" not in llm.calls
