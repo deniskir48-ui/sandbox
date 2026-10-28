@@ -6,6 +6,8 @@ import logging
 import math
 import os
 import random
+import shutil
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -18,6 +20,8 @@ log = logging.getLogger(__name__)
 
 MUSIC_EXTENSIONS = {".mp3", ".m4a", ".wav", ".aac", ".ogg"}
 FONT_EXTENSIONS = {".ttf", ".otf"}
+WINDOWS_FONTS = ("arial.ttf", "arialbd.ttf")
+IS_WINDOWS = sys.platform == "win32"
 
 
 @dataclass
@@ -120,6 +124,17 @@ class VideoProducer:
         tracks = [p for p in music_dir.iterdir() if p.suffix.lower() in MUSIC_EXTENSIONS]
         return random.choice(tracks).resolve() if tracks else None
 
+    def _copy_windows_fonts(self, target: Path) -> bool:
+        """Копирует Arial из системной папки шрифтов Windows рядом с роликом."""
+        system_fonts = Path(os.environ.get("WINDIR", r"C:\Windows")) / "Fonts"
+        files = [system_fonts / name for name in WINDOWS_FONTS if (system_fonts / name).exists()]
+        if not files:
+            return False
+        target.mkdir(exist_ok=True)
+        for font in files:
+            shutil.copyfile(font, target / font.name)
+        return True
+
     def _final_mix(self, job_dir: Path, video: Path, narration: Path, out: Path) -> None:
         subs_filter = "ass=subs.ass"
         fonts_dir = Path(self.video.fonts_dir)
@@ -127,6 +142,9 @@ class VideoProducer:
             # Относительный путь с прямыми слэшами: «C:\...» ломает синтаксис фильтров ffmpeg на Windows.
             relative = os.path.relpath(fonts_dir.resolve(), job_dir.resolve())
             subs_filter += f":fontsdir={Path(relative).as_posix()}"
+        elif IS_WINDOWS and self._copy_windows_fonts(job_dir / "fonts"):
+            # Сборки ffmpeg под Windows часто не находят системные шрифты сами.
+            subs_filter += ":fontsdir=fonts"
 
         args = ["-i", video.name, "-i", narration.name]
         music = self._pick_music()
