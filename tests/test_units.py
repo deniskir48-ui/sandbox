@@ -195,42 +195,45 @@ def test_parse_selection():
     assert parse_selection("абв", 5) == [0]
 
 
+class _HostResponse:
+    def __init__(self, status, text="", payload=None):
+        self.status_code, self.text, self.payload = status, text, payload
+        self.ok = status < 400
+
+    def json(self):
+        if self.payload is None:
+            raise ValueError("not json")
+        return self.payload
+
+
 def test_instagram_login_publishes_by_temporary_url(monkeypatch, tmp_path):
     from video_agents.config import InstagramConfig, Secrets
     from video_agents.models import PlatformMeta
-    from video_agents.publishers import hosting, instagram
+    from video_agents.publishers import instagram
 
     video = tmp_path / "final.mp4"
     video.write_bytes(b"fake mp4")
     calls = []
 
-    class Response:
-        ok = True
-        status_code = 200
-
-        def __init__(self, payload=None, text=""):
-            self.payload, self.text = payload, text
-
-        def json(self):
-            return self.payload
-
-    def fake_post(url, data=None, files=None, timeout=None, **kw):  # файлообменник; прямой загрузки быть не должно
-        assert url == hosting.LITTERBOX_API
-        calls.append(("host", data["time"], files["fileToUpload"][0]))
-        return Response(text="https://litter.catbox.moe/abc123.mp4\n")
+    def fake_post(url, headers=None, data=None, files=None, timeout=None, **kw):  # файлообменники
+        calls.append(("host", url))
+        assert "Mozilla" in headers["User-Agent"]
+        if "uguu" in url:
+            return _HostResponse(412, "<html><title>412 Precondition Failed</title></html>")
+        return _HostResponse(200, "https://litter.catbox.moe/abc123.mp4\n")
 
     def fake_request(method, url, params=None, timeout=None, data=None):  # Instagram API
         path = url.split("/v23.0/")[1]
         calls.append((method, path, dict(data or {})))
         if path == "17841/media":
-            return Response({"id": "C1"})
+            return _HostResponse(200, payload={"id": "C1"})
         if path == "C1":
-            return Response({"status_code": "FINISHED"})
+            return _HostResponse(200, payload={"status_code": "FINISHED"})
         if path == "17841/media_publish":
-            return Response({"id": "M1"})
-        return Response({"permalink": "https://www.instagram.com/reel/xyz/"})
+            return _HostResponse(200, payload={"id": "M1"})
+        return _HostResponse(200, payload={"permalink": "https://www.instagram.com/reel/xyz/"})
 
-    monkeypatch.setattr(hosting.requests, "post", fake_post)
+    monkeypatch.setattr(instagram.requests, "post", fake_post)
     monkeypatch.setattr(instagram.requests, "request", fake_request)
     secrets = Secrets(instagram_access_token="T", instagram_user_id="17841", instagram_token_file=str(tmp_path / "x"))
     meta = PlatformMeta(youtube_title="t", youtube_description="d", youtube_tags=[], instagram_caption="Caption",
@@ -239,14 +242,25 @@ def test_instagram_login_publishes_by_temporary_url(monkeypatch, tmp_path):
     result = instagram.InstagramPublisher(InstagramConfig(), secrets).publish(video, meta)
 
     assert result.ok and result.url == "https://www.instagram.com/reel/xyz/"
-    assert calls[0] == ("host", "1h", "final.mp4")
-    method, path, data = calls[1]
+    assert [c[1] for c in calls[:2]] == ["https://uguu.se/upload?output=text",
+                                         "https://litterbox.catbox.moe/resources/internals/api.php"]
+    method, path, data = calls[2]
     assert (method, path) == ("POST", "17841/media")
     assert data["video_url"] == "https://litter.catbox.moe/abc123.mp4" and "upload_type" not in data
     assert data["media_type"] == "REELS" and data["caption"] == "Caption"
 
 
-def test_temporary_upload_error_is_reported(monkeypatch, tmp_path):
+def test_tmpfiles_link_is_converted_to_direct_download(monkeypatch, tmp_path):
+    from video_agents.publishers import hosting
+
+    video = tmp_path / "v.mp4"
+    video.write_bytes(b"x")
+    monkeypatch.setattr(hosting.requests, "post", lambda *a, **k: _HostResponse(
+        200, payload={"status": "success", "data": {"url": "http://tmpfiles.org/123/v.mp4"}}))
+    assert hosting._tmpfiles(video) == "https://tmpfiles.org/dl/123/v.mp4"
+
+
+def test_all_temporary_hosts_failing_is_reported_briefly(monkeypatch, tmp_path):
     import pytest
 
     from video_agents.publishers import hosting
@@ -254,12 +268,9 @@ def test_temporary_upload_error_is_reported(monkeypatch, tmp_path):
 
     video = tmp_path / "v.mp4"
     video.write_bytes(b"x")
-
-    class Response:
-        ok = False
-        status_code = 503
-        text = "Service Unavailable"
-
-    monkeypatch.setattr(hosting.requests, "post", lambda *a, **k: Response())
-    with pytest.raises(PublishError, match="временную ссылку"):
+    monkeypatch.setattr(hosting.requests, "post", lambda *a, **k: _HostResponse(
+        412, "<html><head><title>412 Precondition Failed</title></head><body>nginx</body></html>"))
+    with pytest.raises(PublishError) as error:
         hosting.upload_temporary(video)
+    message = str(error.value)
+    assert "uguu.se: HTTP 412" in message and "tmpfiles.org" in message and "<html>" not in message
