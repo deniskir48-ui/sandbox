@@ -4,7 +4,11 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from .models import Job
+from pydantic import TypeAdapter
+
+from .models import Job, VideoIdea
+
+_IDEAS = TypeAdapter(list[VideoIdea])
 
 
 class JobStore:
@@ -37,4 +41,22 @@ class JobStore:
         ]
 
     def past_topics(self) -> list[str]:
-        return [job.idea.topic for job in self.all() if job.idea and job.status != "failed"]
+        """Темы, которые уже сняты или ждут в очереди: их не нужно предлагать снова."""
+        done = [job.idea.topic for job in self.all() if job.idea and job.status != "failed"]
+        return done + [idea.topic for idea in self.queue()]
+
+    # --- Очередь тем: выбранные идеи, которые снимаются в следующих запусках ---
+
+    @property
+    def queue_file(self) -> Path:
+        return self.root / "ideas_queue.json"
+
+    def queue(self) -> list[VideoIdea]:
+        if not self.queue_file.exists():
+            return []
+        return _IDEAS.validate_json(self.queue_file.read_bytes())
+
+    def save_queue(self, ideas: list[VideoIdea]) -> None:
+        tmp = self.queue_file.with_suffix(".tmp")
+        tmp.write_bytes(_IDEAS.dump_json(ideas, indent=2))
+        tmp.replace(self.queue_file)
