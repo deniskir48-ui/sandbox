@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import threading
 from datetime import datetime
 from pathlib import Path
 
@@ -17,6 +18,8 @@ class JobStore:
         self.root = Path(root)
         self.jobs_dir = self.root / "jobs"
         self.jobs_dir.mkdir(parents=True, exist_ok=True)
+        # Очередь тем меняют и бот, и фоновая работа: чтение-изменение-запись - под замком.
+        self.lock = threading.RLock()
 
     def job_dir(self, job: Job | str) -> Path:
         job_id = job if isinstance(job, str) else job.id

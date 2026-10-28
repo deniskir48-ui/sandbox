@@ -100,7 +100,7 @@ class PlatformMeta(BaseModel):
 # --- Состояние ролика ---
 
 
-JobStatus = Literal["new", "scripted", "produced", "published", "partially_published", "failed"]
+JobStatus = Literal["new", "scripted", "produced", "published", "partially_published", "failed", "rejected"]
 
 
 class UploadResult(BaseModel):
