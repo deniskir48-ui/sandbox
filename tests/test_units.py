@@ -181,3 +181,15 @@ def test_legacy_idea_loads():
 
     idea = VideoIdea.model_validate({"topic": "t", "angle": "a", "hook": "h", "why_it_works": "w"})
     assert (idea.viewer_problem, idea.relatability) == ("t", 0)
+
+
+def test_parse_selection():
+    from video_agents.cli import parse_selection
+
+    assert parse_selection("", 5) == [0]
+    assert parse_selection("все", 5) == [0, 1, 2, 3, 4]
+    assert parse_selection("ALL", 3) == [0, 1, 2]
+    assert parse_selection("1 3 5", 5) == [0, 2, 4]
+    assert parse_selection("2-4", 5) == [1, 2, 3]
+    assert parse_selection("5, 1, 5, 9", 5) == [4, 0]
+    assert parse_selection("абв", 5) == [0]

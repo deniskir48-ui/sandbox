@@ -322,3 +322,34 @@ def test_run_with_chosen_idea_skips_idea_generation(settings):
     [job] = pipeline.run(ideas=[chosen], publish=False)
     assert job.idea.topic == "Belly fat"
     assert "IdeaList" not in llm.calls
+
+
+def test_queue_is_used_before_new_ideas(settings):
+    llm = FakeLLM()
+    pipeline = Pipeline(settings, llm=llm, producer=VideoProducer(settings, FakeTTS()))
+    queued = [VideoIdea(viewer_problem=f"p{i}", relatability=9, topic=f"Очередь {i}", angle="a", hook="h",
+                        why_it_works="w") for i in range(3)]
+    pipeline.enqueue(queued)
+    assert "Очередь 1" in pipeline.store.past_topics()  # очередь не предлагается повторно
+
+    jobs = pipeline.run(count=2, publish=False)
+    assert [j.idea.topic for j in jobs] == ["Очередь 0", "Очередь 1"]
+    assert [i.topic for i in pipeline.store.queue()] == ["Очередь 2"]
+    assert "IdeaList" not in llm.calls
+
+    jobs = pipeline.run(count=2, publish=False)  # 1 из очереди + 1 новая
+    assert [j.idea.topic for j in jobs] == ["Очередь 2", "Тема 0"]
+    assert pipeline.store.queue() == []
+
+
+def test_failed_queued_idea_goes_back_to_queue(settings):
+    class BrokenProducer:
+        def produce(self, script, job_dir):
+            raise RuntimeError("сбой")
+
+    pipeline = Pipeline(settings, llm=FakeLLM(), producer=BrokenProducer())
+    pipeline.enqueue([VideoIdea(viewer_problem="p", relatability=9, topic="Важная тема", angle="a", hook="h",
+                                why_it_works="w")])
+    [job] = pipeline.run(publish=False)
+    assert job.status == "failed"
+    assert [i.topic for i in pipeline.store.queue()] == ["Важная тема"]

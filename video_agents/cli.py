@@ -34,6 +34,7 @@ def main(argv: list[str] | None = None) -> int:
     render.add_argument("job_id")
 
     sub.add_parser("list", help="список роликов")
+    sub.add_parser("queue", help="темы, которые ждут в очереди")
     sub.add_parser("update", help="обновить программу до последней версии с GitHub")
 
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
@@ -69,13 +70,17 @@ def main(argv: list[str] | None = None) -> int:
     pipeline = Pipeline(settings)
 
     if args.command == "run":
-        ideas = None
         if args.choose:
             options = pipeline.ideas(5)
             _print_ideas(options)
-            answer = input("Номер идеи (Enter - первая): ").strip()
-            ideas = [options[int(answer) - 1 if answer.isdigit() and 0 < int(answer) <= len(options) else 0]]
-        jobs = pipeline.run(count=args.count, topic=args.topic, publish=args.publish, ideas=ideas)
+            answer = input("Какие снимать? Номера через пробел (1 3 5), диапазон (2-4) или «все». "
+                           "Enter - первая: ")
+            chosen = [options[i] for i in parse_selection(answer, len(options))]
+            pipeline.enqueue(chosen)
+            later = max(len(chosen) - args.count, 0)
+            print(f"\nВыбрано тем: {len(chosen)}. Сейчас делаю {len(chosen) - later}"
+                  + (f", остальные {later} ждут в очереди и пойдут в следующие запуски." if later else ".") + "\n")
+        jobs = pipeline.run(count=args.count, topic=args.topic, publish=args.publish)
         for job in jobs:
             _print_job(job)
         return 0 if all(job.status != "failed" for job in jobs) else 1
@@ -94,11 +99,36 @@ def main(argv: list[str] | None = None) -> int:
         _print_job(job)
         return 0
 
+    if args.command == "queue":
+        queue = pipeline.store.queue()
+        if not queue:
+            print("Очередь пуста: при следующем запуске агент придумает новые темы.")
+        _print_ideas(queue)
+        return 0
+
     if args.command == "list":
         for job in pipeline.store.all():
             _print_job(job)
         return 0
     return 1
+
+
+def parse_selection(answer: str, total: int) -> list[int]:
+    """«1 3 5», «2-4», «1,2», «все» -> индексы с нуля; пустой ответ - первая идея."""
+    answer = answer.strip().lower()
+    if not answer:
+        return [0]
+    if answer in ("все", "всё", "all", "*"):
+        return list(range(total))
+    picked: list[int] = []
+    for part in answer.replace(",", " ").split():
+        start, _, end = part.partition("-")
+        if not start.isdigit() or (end and not end.isdigit()):
+            continue
+        for number in range(int(start), int(end or start) + 1):
+            if 1 <= number <= total and number - 1 not in picked:
+                picked.append(number - 1)
+    return picked or [0]
 
 
 def _print_ideas(ideas) -> None:

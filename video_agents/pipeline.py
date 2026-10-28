@@ -61,6 +61,20 @@ class Pipeline:
     def ideas(self, count: int) -> list[VideoIdea]:
         return self.idea_agent.generate(count, self.store.past_topics())
 
+    def enqueue(self, ideas: list[VideoIdea]) -> None:
+        self.store.save_queue(self.store.queue() + ideas)
+
+    def _next_ideas(self, count: int) -> list[VideoIdea]:
+        """Сначала темы из очереди, недостающие придумывает агент идей."""
+        queue = self.store.queue()
+        taken, rest = queue[:count], queue[count:]
+        self.store.save_queue(rest)
+        if taken:
+            log.info("Берём %d тем(ы) из очереди, осталось %d", len(taken), len(rest))
+        if len(taken) < count:
+            taken += self.ideas(count - len(taken))
+        return taken
+
     def write(self, job: Job) -> Job:
         """Сценарист пишет, редактор критикует, до max_revisions кругов правок."""
         script = self.writer.write(job.idea)
@@ -141,7 +155,7 @@ class Pipeline:
             ideas = [VideoIdea(viewer_problem=topic, relatability=10, topic=topic, angle="на усмотрение сценариста",
                                hook="на усмотрение сценариста", why_it_works="тема задана вручную")]
         elif not ideas:
-            ideas = self.ideas(count)
+            ideas = self._next_ideas(count)
         jobs = []
         for idea in ideas:
             job = Job(idea=idea)
@@ -154,6 +168,9 @@ class Pipeline:
                     self.publish(job)
             except Exception as exc:
                 log.exception("Ролик %s упал", job.id)
+                if not topic:
+                    # Хорошая тема не должна пропасть из-за сбоя: возвращаем её в конец очереди.
+                    self.enqueue([idea])
                 job.status = "failed"
                 job.error = str(exc)
                 self.store.save(job)

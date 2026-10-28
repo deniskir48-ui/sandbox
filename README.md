@@ -48,7 +48,8 @@ cp .env.example .env                 # минимум: ANTHROPIC_API_KEY и PIXA
 python -m video_agents ideas -n 5                 # посмотреть, что предлагает агент идей
 python -m video_agents run                        # сделать 1 ролик (без публикации)
 python -m video_agents run --topic "Почему небо голубое"
-python -m video_agents run --choose               # показать 5 идей и выбрать, какую снимать
+python -m video_agents run --choose               # показать 5 идей и выбрать одну, несколько или «все»
+python -m video_agents queue                      # темы, которые ждут в очереди
 python -m video_agents list                       # все ролики и их статусы
 python -m video_agents publish <id>               # опубликовать проверенный ролик
 python -m video_agents publish <id> --platform youtube
@@ -92,6 +93,9 @@ python -m video_agents update                     # обновить прогр�
 Важно: до прохождения аудита TikTok публикует видео от непроверенных приложений **только приватно**
 (`SELF_ONLY`) — система делает это автоматически. Альтернатива — `mode: inbox`: ролик попадёт
 в черновики приложения TikTok, и вы опубликуете его в один тап (там же можно добавить трендовый звук).
+
+Выбранные через `--choose` темы встают в очередь: `run` (в том числе по расписанию) сначала берёт темы
+из очереди и только потом просит агента придумать новые.
 
 Подключать площадки можно по одной: при публикации неподключённые площадки просто пропускаются.
 
