@@ -36,7 +36,7 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("update", help="обновить программу до последней версии с GitHub")
 
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
-    auth.add_argument("platform", choices=["youtube", "tiktok"])
+    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok"])
 
     args = parser.parse_args(argv)
     logging.basicConfig(
@@ -112,6 +112,14 @@ def _auth(platform: str, settings) -> int:
 
         authorize(settings.secrets.youtube_client_secrets, settings.secrets.youtube_token_file)
         print(f"Готово, токен сохранён в {settings.secrets.youtube_token_file}")
+        return 0
+
+    if platform == "instagram":
+        from .publishers.instagram import InstagramAuth
+
+        token = input("Вставьте токен Instagram (длинная строка из кабинета разработчика) и нажмите Enter:\n").strip()
+        data = InstagramAuth(settings.publish.instagram, settings.secrets).save(token)
+        print(f"Готово! Подключён аккаунт @{data['username']}. Токен будет продлеваться автоматически.")
         return 0
 
     from .publishers.tiktok import TikTokAuth

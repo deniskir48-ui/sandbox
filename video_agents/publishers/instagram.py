@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import json
 import logging
+import time
 from pathlib import Path
 
 import requests
@@ -13,14 +15,71 @@ from .base import PublishError, Publisher, wait_until
 log = logging.getLogger(__name__)
 
 
+REFRESH_AFTER = 7 * 24 * 3600  # долгоживущий токен живёт 60 дней; продлеваем раз в неделю
+
+
+class InstagramAuth:
+    """Токен Instagram: сохраняется в файл, ID аккаунта определяется сам, токен продлевается сам."""
+
+    def __init__(self, config, secrets):
+        self.config = config
+        self.secrets = secrets
+        self.token_file = Path(secrets.instagram_token_file)
+        self.base = f"https://{config.graph_host}/{config.api_version}"
+
+    def is_configured(self) -> bool:
+        return self.token_file.exists() or bool(self.secrets.instagram_access_token)
+
+    def save(self, token: str) -> dict:
+        """Проверяет токен и сохраняет его вместе с ID и именем аккаунта."""
+        me = self._get(f"{self.base}/me", token, fields="user_id,username")
+        data = {"access_token": token, "user_id": str(me["user_id"]), "username": me.get("username"),
+                "saved_at": time.time()}
+        self.token_file.parent.mkdir(parents=True, exist_ok=True)
+        self.token_file.write_text(json.dumps(data), encoding="utf-8")
+        return data
+
+    def credentials(self) -> tuple[str, str]:
+        """(токен, ID аккаунта)."""
+        if self.token_file.exists():
+            data = json.loads(self.token_file.read_text(encoding="utf-8"))
+        elif self.secrets.instagram_access_token and self.secrets.instagram_user_id:
+            data = {"access_token": self.secrets.instagram_access_token,
+                    "user_id": self.secrets.instagram_user_id, "saved_at": time.time()}
+        elif self.secrets.instagram_access_token:
+            data = self.save(self.secrets.instagram_access_token)
+        else:
+            raise PublishError("Instagram не подключён. Выполните: python -m video_agents auth instagram")
+        if self.config.graph_host == "graph.instagram.com" and time.time() - data["saved_at"] > REFRESH_AFTER:
+            data = self._refresh(data)
+        return data["access_token"], data["user_id"]
+
+    def _refresh(self, data: dict) -> dict:
+        try:
+            fresh = self._get("https://graph.instagram.com/refresh_access_token", data["access_token"],
+                              grant_type="ig_refresh_token")
+        except PublishError as exc:
+            log.warning("Не удалось продлить токен Instagram: %s", exc)
+            return data
+        data = {**data, "access_token": fresh["access_token"], "saved_at": time.time()}
+        self.token_file.write_text(json.dumps(data), encoding="utf-8")
+        log.info("Токен Instagram продлён ещё на 60 дней")
+        return data
+
+    @staticmethod
+    def _get(url: str, token: str, **params) -> dict:
+        response = requests.get(url, params={**params, "access_token": token}, timeout=30)
+        payload = response.json()
+        if not response.ok or "error" in payload:
+            raise PublishError(f"Instagram API: {payload.get('error', payload)}")
+        return payload
+
+
 class InstagramPublisher(Publisher):
     name = "instagram"
 
     def __init__(self, config, secrets):
-        if not (secrets.instagram_access_token and secrets.instagram_user_id):
-            raise PublishError("Нужны INSTAGRAM_ACCESS_TOKEN и INSTAGRAM_USER_ID в .env")
-        self.token = secrets.instagram_access_token
-        self.user_id = secrets.instagram_user_id
+        self.token, self.user_id = InstagramAuth(config, secrets).credentials()
         self.config = config
         self.base = f"https://{config.graph_host}/{config.api_version}"
 

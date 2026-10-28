@@ -10,7 +10,7 @@ from .agents import CriticAgent, FootageEditorAgent, IdeaAgent, MetadataAgent, S
 from .agents.brief import word_budget
 from .config import Settings
 from .models import Job, UploadResult, VideoIdea
-from .publishers import Publisher, make_publisher
+from .publishers import Publisher, is_configured, make_publisher
 from .storage import JobStore
 
 log = logging.getLogger(__name__)
@@ -23,6 +23,7 @@ class Pipeline:
         llm=None,
         producer=None,
         publisher_factory: Callable[[str], Publisher] | None = None,
+        platform_ready: Callable[[str], bool] | None = None,
     ):
         self.settings = settings
         self.store = JobStore(settings.workspace)
@@ -38,6 +39,10 @@ class Pipeline:
         self.meta_agent = MetadataAgent(llm, channel)
         self._producer = producer
         self.publisher_factory = publisher_factory or (lambda platform: make_publisher(platform, settings))
+        if platform_ready is None:
+            platform_ready = (lambda platform: True) if publisher_factory else (
+                lambda platform: is_configured(platform, settings))
+        self.platform_ready = platform_ready
 
     @property
     def producer(self):
@@ -103,9 +108,14 @@ class Pipeline:
     def publish(self, job: Job, platforms: list[str] | None = None) -> Job:
         if not job.video_path or not job.meta:
             raise RuntimeError(f"Ролик {job.id} ещё не смонтирован")
+        explicit = bool(platforms)
         for platform in platforms or self.settings.publish.platforms:
             if job.uploads.get(platform, UploadResult(platform=platform, ok=False)).ok:
                 log.info("%s: уже опубликовано, пропускаем", platform)
+                continue
+            if not explicit and not self.platform_ready(platform):
+                # Неподключённые площадки молча пропускаем: можно подключать их по одной.
+                log.info("%s: не подключён, пропускаем (python -m video_agents auth %s)", platform, platform)
                 continue
             try:
                 result = self.publisher_factory(platform).publish(Path(job.video_path), job.meta)
@@ -115,6 +125,8 @@ class Pipeline:
                 result = UploadResult(platform=platform, ok=False, error=str(exc))
             job.uploads[platform] = result
             self.store.save(job)
+        if not job.uploads:
+            log.warning("Ни одна площадка не подключена - ролик не опубликован")
         oks = [u.ok for u in job.uploads.values()]
         job.status = "published" if oks and all(oks) else "partially_published" if any(oks) else job.status
         self.store.save(job)

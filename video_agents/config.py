@@ -106,6 +106,7 @@ class Secrets(BaseModel):
     youtube_token_file: str = "secrets/youtube_token.json"
     instagram_access_token: str | None = None
     instagram_user_id: str | None = None
+    instagram_token_file: str = "secrets/instagram_token.json"
     tiktok_client_key: str | None = None
     tiktok_client_secret: str | None = None
     tiktok_redirect_uri: str | None = None
