@@ -112,3 +112,13 @@ def test_updater_overwrites_code_but_keeps_user_files(monkeypatch, tmp_path):
     assert (tmp_path / ".env").read_text() == "SECRET=1\n"
     assert not (tmp_path / "config.yaml").exists()
     assert not (tmp_path.parent / "evil.py").exists()
+
+
+def test_word_budget_uses_target_and_ceiling():
+    from video_agents.agents.brief import target_words, word_budget
+    from video_agents.config import ChannelConfig
+
+    channel = ChannelConfig()
+    assert (target_words(channel), word_budget(channel)) == (25, 50)  # 10 с и потолок 20 с
+    channel.max_video_length_seconds = 5  # потолок меньше цели - берём цель
+    assert word_budget(channel) == 25

@@ -43,7 +43,7 @@ class Scene(BaseModel):
 class Script(BaseModel):
     title: str = Field(description="Рабочее название ролика")
     scenes: list[Scene] = Field(description="Сцены по порядку; первая сцена - хук")
-    call_to_action: str = Field(description="Финальная фраза-призыв (подписка/комментарий), уже включена в последнюю сцену")
+    call_to_action: str = Field(description="Короткий призыв до 4 слов (уже включён в последнюю сцену) или пустая строка")
 
     @property
     def full_text(self) -> str:

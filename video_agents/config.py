@@ -16,7 +16,8 @@ class ChannelConfig(BaseModel):
     audience: str = "Люди 18-35 лет, которые листают ленту и любят узнавать новое"
     language: str = "ru"
     tone: str = "Живой, разговорный, с интригой; без канцелярита и воды"
-    video_length_seconds: int = 30
+    video_length_seconds: int = 10  # обычная длина ролика
+    max_video_length_seconds: int = 20  # потолок для по-настоящему сильных роликов
     extra_rules: list[str] = Field(default_factory=list)
     # Добавляется в конец описания YouTube и подписи Instagram (например, «not medical advice»).
     disclaimer: str = ""

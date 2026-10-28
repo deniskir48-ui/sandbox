@@ -1,17 +1,19 @@
 from __future__ import annotations
 
-from .brief import channel_brief, word_budget
+from .brief import channel_brief, target_words, word_budget
 from ..models import Review, Script, VideoIdea
 
 SYSTEM = """Ты - сценарист коротких вертикальных роликов с закадровым голосом.
 
 Правила сценария:
 - первая сцена - хук, который за 2 секунды объясняет, зачем смотреть дальше;
-- каждая сцена - 1-2 коротких предложения для озвучки, разговорный язык, без сложных оборотов;
-- темп: новая мысль каждые 3-5 секунд, никакой воды и вступлений «привет, сегодня...»;
-- лимит слов из задания - жёсткий: короткий плотный ролик лучше длинного, его чаще досматривают;
+- каждая сцена - одна короткая фраза на 2-3 секунды, разговорный язык, без сложных оборотов;
+- никакой воды и вступлений «привет, сегодня...»: ролики очень короткие, сразу к сути;
+- короче - лучше: короткий ролик чаще досматривают и пересматривают, а это главный сигнал для алгоритмов;
+  выходи за обычную длину, только если без этого теряется по-настоящему сильная мысль;
 - числа пиши словами, как их произнесёт диктор; без эмодзи, хэштегов и ремарок в тексте диктора;
-- последняя сцена завершает мысль и содержит призыв (подписаться/написать в комментариях);
+- последняя сцена завершает мысль; призыв - максимум 3-4 слова (например "Follow for more") и только
+  если на него есть время; вопрос зрителю лучше оставить для подписи к ролику;
 - только проверенные факты.
 
 Правила для visual_queries (по ним ищут видео на бесплатных стоках):
@@ -33,10 +35,14 @@ class ScriptwriterAgent:
             f"Тема: {idea.topic}\nУгол подачи: {idea.angle}\nХук: {idea.hook}"
         )
 
+    def _length(self) -> str:
+        return (f"Текст диктора суммарно - около {target_words(self.channel)} слов, "
+                f"абсолютный максимум {word_budget(self.channel)}.")
+
     def write(self, idea: VideoIdea) -> Script:
         prompt = (
             f"{self._brief(idea)}\n\n"
-            f"Напиши сценарий ролика. Текст диктора суммарно - не больше {word_budget(self.channel)} слов."
+            f"Напиши сценарий ролика. {self._length()}"
         )
         return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Script, effort="high")
 
@@ -47,7 +53,7 @@ class ScriptwriterAgent:
             f"Текущий сценарий (JSON):\n{script.model_dump_json(indent=2)}\n\n"
             f"Редактор поставил {review.score}/10. Проблемы:\n{problems}\n\n"
             f"Указания редактора: {review.rewrite_instructions}\n\n"
-            f"Перепиши сценарий целиком с учётом замечаний, не больше {word_budget(self.channel)} слов диктора."
+            f"Перепиши сценарий целиком с учётом замечаний. {self._length()}"
         )
         return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Script, effort="high")
 
@@ -57,7 +63,7 @@ class ScriptwriterAgent:
         prompt = (
             f"{self._brief(idea)}\n\n"
             f"Сценарий (JSON):\n{script.model_dump_json(indent=2)}\n\n"
-            f"В тексте диктора {words} слов, а лимит - {budget}. Сократи до {budget} слов или меньше: "
-            "убери второстепенное, сохрани хук, главный совет и призыв в конце."
+            f"В тексте диктора {words} слов, а максимум - {budget}. Сократи, лучше всего до "
+            f"~{target_words(self.channel)} слов: убери второстепенное, сохрани хук и главный совет."
         )
         return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Script, effort="medium")

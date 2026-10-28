@@ -179,7 +179,8 @@ def test_long_script_is_shortened(settings):
                 self.calls.append("Shorten")
             return super().structured(output_model=output_model, prompt=prompt, **kw)
 
-    settings.channel.video_length_seconds = 30  # лимит 75 слов
+    settings.channel.video_length_seconds = 10
+    settings.channel.max_video_length_seconds = 30  # максимум 75 слов
     llm = LongLLM()
     pipeline = Pipeline(settings, llm=llm, producer=VideoProducer(settings, FakeTTS()))
     [job] = pipeline.run(topic="Тема", publish=False)

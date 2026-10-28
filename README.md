@@ -103,8 +103,9 @@ Cron (2 ролика в 10:00 и 18:00):
   `disclaimer` дописывается в описания (для тем о здоровье: «not medical advice»).
 - **Промпты агентов** — константы `SYSTEM` в `video_agents/agents/*.py`.
 - **Строгость редактора** — `llm.min_score` и `llm.max_revisions`.
-- **Длина ролика** — `channel.video_length_seconds`; сценарист получает жёсткий лимит слов (2.5 слова/с),
-  а слишком длинный сценарий автоматически сокращается.
+- **Длина ролика** — `channel.video_length_seconds` (обычная, 10 с) и `channel.max_video_length_seconds`
+  (потолок для сильных роликов, 20 с). Сценарист считает по 2.5 слова в секунду, а сценарий длиннее потолка
+  автоматически сокращается.
 - **Подбор видео** — `footage.ai_selection` (монтажёр смотрит превью, ~несколько центов за ролик)
   и `footage.candidates` (сколько вариантов показывать на каждый запрос).
 - **Голос** — `edge` бесплатен (en-US-AndrewMultilingualNeural, en-US-AvaMultilingualNeural, ru-RU-SvetlanaNeural и др.); `elevenlabs` звучит

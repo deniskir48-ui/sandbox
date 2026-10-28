@@ -5,14 +5,15 @@ channel:
   audience: "English-speaking people 18-40 who want to get fitter, eat better and feel more energetic, mostly beginners and intermediates"
   language: "en"          # код языка (en, ru, es...) - так требует YouTube
   tone: "Energetic, motivating, friendly coach; simple words, practical takeaways, myth-busting with science; no fat-shaming"
-  video_length_seconds: 30   # длина ролика в секундах; сценарист получает жёсткий лимит слов
+  video_length_seconds: 10       # обычная длина ролика в секундах
+  max_video_length_seconds: 20   # потолок: так долго - только для по-настоящему сильных роликов
   extra_rules:
     - "Only evidence-based claims that match current scientific consensus; never invent studies or numbers"
     - "No medical diagnoses, no promises to cure or treat diseases, no extreme diets or fasting advice"
     - "No specific supplement or medication dosages; for supplements say 'talk to a doctor'"
     - "No body-shaming or content that could trigger eating disorders; no 'lose 10 kg in a week' style promises"
     - "Every video must give one practical tip the viewer can apply today"
-    - "End with a question to the viewer to drive comments"
+    - "Videos are very short: put the question to the viewer in the caption, not in the narration"
     - "Do not mention brands"
   disclaimer: "This video is for educational purposes only and is not medical advice. Consult a professional before changing your diet or training."
 

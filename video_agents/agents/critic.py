@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .brief import WORDS_PER_SECOND, channel_brief, word_budget
+from .brief import WORDS_PER_SECOND, channel_brief, target_words, word_budget
 from ..models import Review, Script, VideoIdea
 
 SYSTEM = """Ты - строгий шеф-редактор коротких роликов. Оцениваешь сценарий так, как его
@@ -11,7 +11,8 @@ SYSTEM = """Ты - строгий шеф-редактор коротких ро�
 2. Удержание: нет ли провисаний, повторов, воды; есть ли напряжение до конца?
 3. Факты: нет ли ошибок, сомнительных утверждений, выдуманных цифр?
 4. Озвучка: легко ли произносить, нет ли длинных фраз и непроизносимых символов?
-5. Длина: превышение лимита слов - серьёзная проблема, такой сценарий не одобряй;
+5. Длина: короче - лучше. Если ролик длиннее обычной длины, каждая лишняя секунда должна работать,
+   иначе требуй сократить. Превышение максимума слов - не одобряй;
 6. Визуал: описывают ли visual_queries конкретный кадр к тексту сцены (люди, действия, предметы),
    а не абстракции; найдутся ли такие видео на бесплатных стоках?
 7. Риски: нарушения правил YouTube/Instagram/TikTok, авторские права, опасные советы.
@@ -31,7 +32,7 @@ class CriticAgent:
             f"Тема: {idea.topic}\n"
             f"Сценарий (JSON):\n{script.model_dump_json(indent=2)}\n\n"
             f"В тексте диктора {words} слов (~{words / WORDS_PER_SECOND:.0f} секунд), "
-            f"лимит - {word_budget(self.channel)} слов.\n"
+            f"обычно ~{target_words(self.channel)} слов, максимум - {word_budget(self.channel)}.\n"
             "Дай оценку и конкретные правки."
         )
         return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Review, effort="medium")
