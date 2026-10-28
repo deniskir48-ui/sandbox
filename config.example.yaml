@@ -28,7 +28,7 @@ voice:
   rate: "+5%"
 
 footage:
-  provider: pexels        # pexels | none (цветной фон, удобно для теста)
+  provider: auto          # auto (Pexels или Pixabay - чей ключ есть) | pexels | pixabay | none (цветной фон)
 
 subtitles:
   font: "Arial"           # или свой .ttf: положите его в assets/fonts и укажите название шрифта
