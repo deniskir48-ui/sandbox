@@ -54,6 +54,7 @@ class SubtitleConfig(BaseModel):
     max_words: int = 3
     uppercase: bool = True
     margin_v: int = 700
+    show_scene_text: bool = False  # короткая надпись сцены вверху кадра (дублирует субтитры)
 
 
 class VideoConfig(BaseModel):

@@ -211,8 +211,8 @@ class FakeEditor:
         self.answers = list(answers)
         self.seen = []
 
-    def choose(self, narration, title, previews):
-        self.seen.append(len(previews))
+    def choose(self, narration, title, previews, relaxed=False):
+        self.seen.append((len(previews), relaxed))
         return self.answers.pop(0)
 
 
@@ -229,7 +229,7 @@ def test_editor_rejects_first_query_and_picks_from_second(settings, tmp_path):
     script = FakeLLM().structured(output_model=Script, prompt="")
     VideoProducer(settings, FakeTTS(), footage, editor).produce(script, tmp_path / "job")
     assert footage.downloaded == [2, 6]
-    assert editor.seen == [2, 2, 2]
+    assert editor.seen == [(2, False), (2, False), (2, False)]
 
 
 def test_without_editor_takes_first_long_enough(settings, tmp_path):
@@ -241,3 +241,58 @@ def test_without_editor_takes_first_long_enough(settings, tmp_path):
     script = FakeLLM().structured(output_model=Script, prompt="")
     VideoProducer(settings, FakeTTS(), footage).produce(script, tmp_path / "job")
     assert footage.downloaded == [2, 4]  # релевантность важнее длины, слишком короткие пропускаем
+
+
+def _two_scene_script(backup=()):
+    script = FakeLLM().structured(output_model=Script, prompt="")
+    return script.model_copy(update={"backup_queries": list(backup)})
+
+
+def test_backup_queries_then_relaxed_pass(settings, tmp_path):
+    from video_agents.production.footage import Clip
+
+    footage = FakeFootage({
+        "venus planet": [Clip(1, 10, "u1"), Clip(2, 10, "u2"), Clip(3, 10, "u3")],
+        "night sky": [Clip(4, 10, "u4")],
+        "stars": [],
+        "space": [Clip(7, 10, "u7"), Clip(8, 10, "u8")],
+    })
+    footage._dir = tmp_path
+    # Сцена 1: точный кадр не найден ни по запросу сцены, ни по общему -> мягкий проход берёт №2 из пула.
+    # Сцена 2: «night sky» отклонён, общий запрос «space» подошёл: индекс 0 - клип 7.
+    editor = FakeEditor([None, None, 1, None, 0])
+    VideoProducer(settings, FakeTTS(), footage, editor).produce(_two_scene_script(["space"]), tmp_path / "job")
+    assert editor.seen == [(3, False), (2, False), (4, True), (1, False), (2, False)]
+    assert footage.downloaded == [2, 7]
+
+
+def test_nothing_fits_continues_previous_scene(settings, tmp_path):
+    from video_agents.production import render
+    from video_agents.production.footage import Clip
+
+    footage = FakeFootage({"venus planet": [Clip(1, 10, "u1")], "night sky": [Clip(2, 10, "u2")]})
+    footage._dir = tmp_path
+    editor = FakeEditor([0, None, None, None])  # сцена 1: берём вариант 1; сцена 2: ничего не подходит
+    plans = []
+    original = render.VideoProducer._render_scene
+    monkey = lambda self, plan, *a: plans.append(plan) or original(self, plan, *a)
+    render.VideoProducer._render_scene = monkey
+    try:
+        VideoProducer(settings, FakeTTS(), footage, editor).produce(_two_scene_script(), tmp_path / "job")
+    finally:
+        render.VideoProducer._render_scene = original
+    assert footage.downloaded == [1]  # помаду (клип 2) не скачиваем
+    assert plans[1].path == plans[0].path and plans[1].start > 0  # продолжение кадра с того же места
+
+
+def test_detect_black_borders(tmp_path):
+    from video_agents.production.ffmpeg import detect_black_borders
+
+    boxed = tmp_path / "boxed.mp4"
+    run_ffmpeg(["-f", "lavfi", "-i", "testsrc2=s=400x360:r=15:d=4", "-vf", "pad=640:360:0:0:black",
+                "-pix_fmt", "yuv420p", str(boxed)])
+    crop = detect_black_borders(boxed)
+    assert crop and crop.startswith("crop=400:360")
+    plain = tmp_path / "plain.mp4"
+    run_ffmpeg(["-f", "lavfi", "-i", "testsrc2=s=640x360:r=15:d=4", "-pix_fmt", "yuv420p", str(plain)])
+    assert detect_black_borders(plain) is None

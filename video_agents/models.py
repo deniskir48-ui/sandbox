@@ -44,6 +44,17 @@ class Script(BaseModel):
     title: str = Field(description="Рабочее название ролика")
     scenes: list[Scene] = Field(description="Сцены по порядку; первая сцена - хук")
     call_to_action: str = Field(description="Короткий призыв до 4 слов (уже включён в последнюю сцену) или пустая строка")
+    backup_queries: list[str] = Field(
+        description="2-3 общих запроса НА АНГЛИЙСКОМ по теме всего ролика (например 'coffee cup kitchen morning') - "
+        "запасной видеоряд, если для сцены не найдётся точного кадра"
+    )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _legacy_backup(cls, data):
+        if isinstance(data, dict) and "backup_queries" not in data:
+            data = {**data, "backup_queries": []}
+        return data
 
     @property
     def full_text(self) -> str:
