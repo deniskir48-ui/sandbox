@@ -193,3 +193,73 @@ def test_parse_selection():
     assert parse_selection("2-4", 5) == [1, 2, 3]
     assert parse_selection("5, 1, 5, 9", 5) == [4, 0]
     assert parse_selection("абв", 5) == [0]
+
+
+def test_instagram_login_publishes_by_temporary_url(monkeypatch, tmp_path):
+    from video_agents.config import InstagramConfig, Secrets
+    from video_agents.models import PlatformMeta
+    from video_agents.publishers import hosting, instagram
+
+    video = tmp_path / "final.mp4"
+    video.write_bytes(b"fake mp4")
+    calls = []
+
+    class Response:
+        ok = True
+        status_code = 200
+
+        def __init__(self, payload=None, text=""):
+            self.payload, self.text = payload, text
+
+        def json(self):
+            return self.payload
+
+    def fake_post(url, data=None, files=None, timeout=None, **kw):  # файлообменник; прямой загрузки быть не должно
+        assert url == hosting.LITTERBOX_API
+        calls.append(("host", data["time"], files["fileToUpload"][0]))
+        return Response(text="https://litter.catbox.moe/abc123.mp4\n")
+
+    def fake_request(method, url, params=None, timeout=None, data=None):  # Instagram API
+        path = url.split("/v23.0/")[1]
+        calls.append((method, path, dict(data or {})))
+        if path == "17841/media":
+            return Response({"id": "C1"})
+        if path == "C1":
+            return Response({"status_code": "FINISHED"})
+        if path == "17841/media_publish":
+            return Response({"id": "M1"})
+        return Response({"permalink": "https://www.instagram.com/reel/xyz/"})
+
+    monkeypatch.setattr(hosting.requests, "post", fake_post)
+    monkeypatch.setattr(instagram.requests, "request", fake_request)
+    secrets = Secrets(instagram_access_token="T", instagram_user_id="17841", instagram_token_file=str(tmp_path / "x"))
+    meta = PlatformMeta(youtube_title="t", youtube_description="d", youtube_tags=[], instagram_caption="Caption",
+                        tiktok_caption="c")
+
+    result = instagram.InstagramPublisher(InstagramConfig(), secrets).publish(video, meta)
+
+    assert result.ok and result.url == "https://www.instagram.com/reel/xyz/"
+    assert calls[0] == ("host", "1h", "final.mp4")
+    method, path, data = calls[1]
+    assert (method, path) == ("POST", "17841/media")
+    assert data["video_url"] == "https://litter.catbox.moe/abc123.mp4" and "upload_type" not in data
+    assert data["media_type"] == "REELS" and data["caption"] == "Caption"
+
+
+def test_temporary_upload_error_is_reported(monkeypatch, tmp_path):
+    import pytest
+
+    from video_agents.publishers import hosting
+    from video_agents.publishers.base import PublishError
+
+    video = tmp_path / "v.mp4"
+    video.write_bytes(b"x")
+
+    class Response:
+        ok = False
+        status_code = 503
+        text = "Service Unavailable"
+
+    monkeypatch.setattr(hosting.requests, "post", lambda *a, **k: Response())
+    with pytest.raises(PublishError, match="временную ссылку"):
+        hosting.upload_temporary(video)

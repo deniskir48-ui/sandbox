@@ -1,4 +1,4 @@
-"""Instagram Reels через Instagram Graph API (контейнер -> загрузка файла -> публикация)."""
+"""Instagram Reels через Instagram Graph API (контейнер -> передача видео -> публикация)."""
 
 from __future__ import annotations
 
@@ -11,6 +11,7 @@ import requests
 
 from ..models import PlatformMeta, UploadResult
 from .base import PublishError, Publisher, wait_until
+from .hosting import upload_temporary
 
 log = logging.getLogger(__name__)
 
@@ -93,29 +94,16 @@ class InstagramPublisher(Publisher):
         return data
 
     def publish(self, video_path: Path, meta: PlatformMeta) -> UploadResult:
-        # 1. Контейнер для Reels с загрузкой файла напрямую (без публичного URL).
-        container = self._call("POST", f"{self.user_id}/media", data={
+        fields = {
             "media_type": "REELS",
-            "upload_type": "resumable",
             "caption": meta.instagram_caption[:2200],
             "share_to_feed": str(self.config.share_to_feed).lower(),
-        })
-        container_id = container["id"]
-        upload_uri = container.get("uri") or (
-            f"https://rupload.facebook.com/ig-api-upload/{self.config.api_version}/{container_id}"
-        )
-
-        # 2. Загрузка файла.
-        size = video_path.stat().st_size
-        with open(video_path, "rb") as fh:
-            response = requests.post(
-                upload_uri,
-                headers={"Authorization": f"OAuth {self.token}", "offset": "0", "file_size": str(size)},
-                data=fh,
-                timeout=600,
-            )
-        if not response.ok:
-            raise PublishError(f"Instagram upload: {response.status_code} {response.text[:500]}")
+        }
+        # 1-2. Контейнер Reels и передача видео.
+        if self.config.graph_host == "graph.instagram.com":
+            container_id = self._container_from_url(video_path, fields)
+        else:
+            container_id = self._container_with_upload(video_path, fields)
 
         # 3. Ждём, пока Instagram обработает видео.
         def ready() -> bool:
@@ -134,3 +122,27 @@ class InstagramPublisher(Publisher):
         except PublishError as exc:
             log.warning("Не удалось получить ссылку на Reels: %s", exc)
         return UploadResult(platform=self.name, ok=True, id=media_id, url=permalink)
+
+    def _container_from_url(self, video_path: Path, fields: dict) -> str:
+        """Вход через Instagram: API принимает видео только по публичной ссылке, загрузку файла не умеет."""
+        video_url = upload_temporary(video_path)
+        return self._call("POST", f"{self.user_id}/media", data={**fields, "video_url": video_url})["id"]
+
+    def _container_with_upload(self, video_path: Path, fields: dict) -> str:
+        """Вход через Facebook: файл загружается напрямую (resumable upload), без публичной ссылки."""
+        container = self._call("POST", f"{self.user_id}/media", data={**fields, "upload_type": "resumable"})
+        container_id = container["id"]
+        upload_uri = container.get("uri") or (
+            f"https://rupload.facebook.com/ig-api-upload/{self.config.api_version}/{container_id}"
+        )
+        size = video_path.stat().st_size
+        with open(video_path, "rb") as fh:
+            response = requests.post(
+                upload_uri,
+                headers={"Authorization": f"OAuth {self.token}", "offset": "0", "file_size": str(size)},
+                data=fh,
+                timeout=600,
+            )
+        if not response.ok:
+            raise PublishError(f"Instagram upload: {response.status_code} {response.text[:500]}")
+        return container_id

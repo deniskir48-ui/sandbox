@@ -81,6 +81,9 @@ python -m video_agents update                     # обновить прогр�
 3. `python -m video_agents auth instagram` — вставьте токен. Программа сама определит аккаунт,
    сохранит токен в `secrets/instagram_token.json` и будет продлевать его раз в неделю (токен живёт 60 дней).
 
+При входе через Instagram API принимает видео только по публичной ссылке, поэтому перед публикацией
+ролик выкладывается на litterbox.catbox.moe по секретной ссылке, которая удаляется через час.
+
 Если вы подключаете Instagram через Facebook-страницу, поставьте `graph_host: graph.facebook.com`
 и укажите в `.env` `INSTAGRAM_ACCESS_TOKEN` и `INSTAGRAM_USER_ID` (автопродление в этом режиме не работает).
 Лимит API — около 50 публикаций в сутки.
