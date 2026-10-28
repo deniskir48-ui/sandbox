@@ -47,7 +47,7 @@ video:
 
 publish:
   auto_publish: false     # false = ролик ждёт вашей проверки и команды publish
-  platforms: [youtube, instagram, tiktok]
+  platforms: [youtube, instagram, tiktok]   # неподключённые площадки пропускаются автоматически
   ai_disclosure: true     # пометка «создано с ИИ» на YouTube и TikTok
   youtube:
     privacy: private      # public | unlisted | private

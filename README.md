@@ -75,9 +75,11 @@ python -m video_agents update                     # обновить прогр�
 2. [Meta for Developers](https://developers.facebook.com/) → приложение → продукт **Instagram** →
    «API setup with Instagram login» → сгенерируйте токен с правами `instagram_business_basic`,
    `instagram_business_content_publish`.
-3. В `.env`: `INSTAGRAM_ACCESS_TOKEN` (долгоживущий, 60 дней — продлевайте) и `INSTAGRAM_USER_ID`.
+3. `python -m video_agents auth instagram` — вставьте токен. Программа сама определит аккаунт,
+   сохранит токен в `secrets/instagram_token.json` и будет продлевать его раз в неделю (токен живёт 60 дней).
 
-Если вы подключаете Instagram через Facebook-страницу, поставьте `graph_host: graph.facebook.com`.
+Если вы подключаете Instagram через Facebook-страницу, поставьте `graph_host: graph.facebook.com`
+и укажите в `.env` `INSTAGRAM_ACCESS_TOKEN` и `INSTAGRAM_USER_ID` (автопродление в этом режиме не работает).
 Лимит API — около 50 публикаций в сутки.
 
 ### TikTok
@@ -89,6 +91,8 @@ python -m video_agents update                     # обновить прогр�
 Важно: до прохождения аудита TikTok публикует видео от непроверенных приложений **только приватно**
 (`SELF_ONLY`) — система делает это автоматически. Альтернатива — `mode: inbox`: ролик попадёт
 в черновики приложения TikTok, и вы опубликуете его в один тап (там же можно добавить трендовый звук).
+
+Подключать площадки можно по одной: при публикации неподключённые площадки просто пропускаются.
 
 ## Запуск по расписанию
 

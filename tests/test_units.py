@@ -122,3 +122,38 @@ def test_word_budget_uses_target_and_ceiling():
     assert (target_words(channel), word_budget(channel)) == (25, 50)  # 10 с и потолок 20 с
     channel.max_video_length_seconds = 5  # потолок меньше цели - берём цель
     assert word_budget(channel) == 25
+
+
+def test_instagram_auth_saves_and_refreshes_token(monkeypatch, tmp_path):
+    import time
+
+    from video_agents.config import InstagramConfig, Secrets
+    from video_agents.publishers import instagram
+
+    calls = []
+
+    class Response:
+        ok = True
+
+        def __init__(self, payload):
+            self.payload = payload
+
+        def json(self):
+            return self.payload
+
+    def fake_get(url, params, timeout):
+        calls.append(url)
+        if url.endswith("/me"):
+            return Response({"user_id": 17841400000, "username": "fit.daily"})
+        return Response({"access_token": "NEW", "expires_in": 5184000})
+
+    monkeypatch.setattr(instagram.requests, "get", fake_get)
+    secrets = Secrets(instagram_token_file=str(tmp_path / "ig.json"))
+    auth = instagram.InstagramAuth(InstagramConfig(), secrets)
+    assert not auth.is_configured()
+    assert auth.save("OLD")["username"] == "fit.daily"
+    assert auth.credentials() == ("OLD", "17841400000")  # свежий - не продлеваем
+
+    monkeypatch.setattr(time, "time", lambda: 10**12)  # прошло много времени
+    assert auth.credentials() == ("NEW", "17841400000")
+    assert calls[-1] == "https://graph.instagram.com/refresh_access_token"

@@ -296,3 +296,19 @@ def test_detect_black_borders(tmp_path):
     plain = tmp_path / "plain.mp4"
     run_ffmpeg(["-f", "lavfi", "-i", "testsrc2=s=640x360:r=15:d=4", "-pix_fmt", "yuv420p", str(plain)])
     assert detect_black_borders(plain) is None
+
+
+def test_unconfigured_platforms_are_skipped(settings):
+    publishers = {"youtube": FakePublisher("youtube"), "instagram": FakePublisher("instagram"),
+                  "tiktok": FakePublisher("tiktok")}
+    pipeline = Pipeline(settings, llm=FakeLLM(), producer=VideoProducer(settings, FakeTTS()),
+                        publisher_factory=publishers.__getitem__,
+                        platform_ready=lambda platform: platform == "instagram")
+    [job] = pipeline.run(topic="Тема", publish=True)
+    assert list(job.uploads) == ["instagram"]
+    assert job.status == "published"
+    assert publishers["youtube"].calls == publishers["tiktok"].calls == 0
+
+    # Явно запрошенная, но не подключённая площадка - пробуем и сообщаем об ошибке, а не молчим.
+    job = pipeline.publish(job, ["youtube"])
+    assert publishers["youtube"].calls == 1
