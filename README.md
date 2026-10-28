@@ -28,6 +28,7 @@
 | Сценарист | Пишет сценарий по сценам: текст диктора, запрос для стоков, надпись на экране | `video_agents/agents/scriptwriter.py` |
 | Редактор | Оценивает хук, удержание, факты, риски модерации; возвращает на доработку | `video_agents/agents/critic.py` |
 | SMM-агент | Заголовки, описания, хэштеги под каждую платформу | `video_agents/agents/metadata.py` |
+| Монтажёр | Смотрит превью найденных видео и выбирает то, что иллюстрирует слова диктора | `video_agents/agents/footage_editor.py` |
 | Продюсер | Озвучка, подбор видео, субтитры, музыка, сборка | `video_agents/production/` |
 | Публикаторы | Загрузка через официальные API платформ | `video_agents/publishers/` |
 
@@ -51,6 +52,7 @@ python -m video_agents list                       # все ролики и их 
 python -m video_agents publish <id>               # опубликовать проверенный ролик
 python -m video_agents publish <id> --platform youtube
 python -m video_agents render <id>                # пересобрать видео после ручной правки job.json
+python -m video_agents update                     # обновить программу до последней версии с GitHub
 ```
 
 По умолчанию `auto_publish: false`: агенты делают ролик, вы смотрите `final.mp4` и запускаете
@@ -101,6 +103,10 @@ Cron (2 ролика в 10:00 и 18:00):
   `disclaimer` дописывается в описания (для тем о здоровье: «not medical advice»).
 - **Промпты агентов** — константы `SYSTEM` в `video_agents/agents/*.py`.
 - **Строгость редактора** — `llm.min_score` и `llm.max_revisions`.
+- **Длина ролика** — `channel.video_length_seconds`; сценарист получает жёсткий лимит слов (2.5 слова/с),
+  а слишком длинный сценарий автоматически сокращается.
+- **Подбор видео** — `footage.ai_selection` (монтажёр смотрит превью, ~несколько центов за ролик)
+  и `footage.candidates` (сколько вариантов показывать на каждый запрос).
 - **Голос** — `edge` бесплатен (en-US-AndrewMultilingualNeural, en-US-AvaMultilingualNeural, ru-RU-SvetlanaNeural и др.); `elevenlabs` звучит
   заметно живее, в `voice.voice` укажите voice_id.
 - **Шрифт субтитров** — положите `.ttf` в `assets/fonts/` и укажите имя в `subtitles.font`

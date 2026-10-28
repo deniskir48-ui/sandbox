@@ -13,6 +13,7 @@ from pathlib import Path
 
 from ..models import Script
 from .ffmpeg import probe_duration, run_ffmpeg
+from .footage import Clip
 from .subtitles import build_ass
 from .tts import TTSProvider, Word
 
@@ -30,13 +31,20 @@ class RenderResult:
     duration: float
 
 
+def _first_long_enough(clips: list[Clip], duration: float) -> Clip:
+    """Самый релевантный из достаточно длинных (порядок поиска = релевантность)."""
+    return next((clip for clip in clips if clip.duration >= duration), clips[0])
+
+
 class VideoProducer:
-    def __init__(self, settings, tts: TTSProvider, footage=None):
+    def __init__(self, settings, tts: TTSProvider, footage=None, editor=None):
         self.video = settings.video
         self.subs = settings.subtitles
         self.colors = settings.footage.fallback_colors
+        self.candidates = settings.footage.candidates
         self.tts = tts
         self.footage = footage
+        self.editor = editor
 
     def produce(self, script: Script, job_dir: Path) -> RenderResult:
         job_dir.mkdir(parents=True, exist_ok=True)
@@ -64,7 +72,7 @@ class VideoProducer:
             if scene.on_screen_text.strip():
                 captions.append((cursor, cursor + duration, scene.on_screen_text.strip()))
 
-            clip = self._find_clip(scene.visual_query, duration, used_footage)
+            clip = self._find_clip(scene, script.title, duration, used_footage)
             video_path = job_dir / f"scene_{i:02d}.mp4"
             self._render_scene(clip, duration, video_path, self.colors[i % len(self.colors)])
             scene_video.append(video_path)
@@ -82,20 +90,61 @@ class VideoProducer:
         self._final_mix(job_dir, raw_video, narration, final)
         return RenderResult(final, probe_duration(final))
 
-    def _find_clip(self, query: str, duration: float, used: set[int]) -> Path | None:
+    def _find_clip(self, scene, title: str, duration: float, used: set[int]) -> Path | None:
+        """Перебирает запросы сцены; монтажёр выбирает подходящее видео по превью."""
         if not self.footage:
             return None
+        fallback: list[Clip] = []
+        chosen = None
+        for query in scene.visual_queries:
+            try:
+                clips = [c for c in self.footage.search(query) if c.id not in used][:self.candidates]
+            except Exception as exc:
+                log.warning("Поиск видео '%s' не удался: %s", query, exc)
+                continue
+            if not clips:
+                continue
+            fallback = fallback or clips
+            if not self.editor:
+                chosen = _first_long_enough(clips, duration)
+                break
+            chosen = self._ask_editor(clips, scene.narration, title)
+            if chosen:
+                log.info("Монтажёр выбрал видео по запросу '%s'", query)
+                break
+            log.info("Монтажёр не нашёл подходящего видео по запросу '%s'", query)
+        if not chosen and fallback:
+            log.warning("Подходящего видео нет - берём лучшее по поиску для: %s", scene.narration[:60])
+            chosen = _first_long_enough(fallback, duration)
+        if not chosen:
+            log.warning("Видео не найдено - будет цветной фон")
+            return None
         try:
-            found = self.footage.find(query, duration, used)
+            path = self.footage.download(chosen)
         except Exception as exc:
-            log.warning("Не удалось найти футаж '%s': %s", query, exc)
+            log.warning("Не удалось скачать видео %s: %s", chosen.id, exc)
             return None
-        if not found:
-            log.warning("Футаж по запросу '%s' не найден - будет фон", query)
-            return None
-        video_id, path = found
-        used.add(video_id)
+        used.add(chosen.id)
         return path
+
+    def _ask_editor(self, clips: list[Clip], narration: str, title: str) -> Clip | None:
+        with_previews = []
+        for clip in clips:
+            try:
+                image = self.footage.preview(clip)
+            except Exception as exc:
+                log.debug("Нет превью для %s: %s", clip.id, exc)
+                continue
+            if image:
+                with_previews.append((clip, image))
+        if not with_previews:
+            return clips[0]
+        try:
+            index = self.editor.choose(narration, title, [image for _, image in with_previews])
+        except Exception as exc:
+            log.warning("Монтажёр не ответил (%s), берём первое видео по поиску", exc)
+            return with_previews[0][0]
+        return with_previews[index][0] if index is not None else None
 
     def _render_scene(self, clip: Path | None, duration: float, out: Path, color: str) -> None:
         w, h, fps = self.video.width, self.video.height, self.video.fps

@@ -5,7 +5,7 @@ channel:
   audience: "English-speaking people 18-40 who want to get fitter, eat better and feel more energetic, mostly beginners and intermediates"
   language: "en"          # код языка (en, ru, es...) - так требует YouTube
   tone: "Energetic, motivating, friendly coach; simple words, practical takeaways, myth-busting with science; no fat-shaming"
-  video_length_seconds: 40
+  video_length_seconds: 30   # длина ролика в секундах; сценарист получает жёсткий лимит слов
   extra_rules:
     - "Only evidence-based claims that match current scientific consensus; never invent studies or numbers"
     - "No medical diagnoses, no promises to cure or treat diseases, no extreme diets or fasting advice"
@@ -29,6 +29,7 @@ voice:
 
 footage:
   provider: auto          # auto (Pexels или Pixabay - чей ключ есть) | pexels | pixabay | none (цветной фон)
+  ai_selection: true      # агент-монтажёр смотрит превью и выбирает видео, подходящее к тексту
 
 subtitles:
   font: "Arial"           # или свой .ttf: положите его в assets/fonts и укажите название шрифта

@@ -33,6 +33,7 @@ def main(argv: list[str] | None = None) -> int:
     render.add_argument("job_id")
 
     sub.add_parser("list", help="список роликов")
+    sub.add_parser("update", help="обновить программу до последней версии с GitHub")
 
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
     auth.add_argument("platform", choices=["youtube", "tiktok"])
@@ -47,6 +48,17 @@ def main(argv: list[str] | None = None) -> int:
         logging.getLogger(noisy).setLevel(logging.WARNING)
 
     settings = load_settings(args.config)
+
+    if args.command == "update":
+        from pathlib import Path
+
+        from .updater import update
+
+        changed = update(Path(__file__).resolve().parent.parent)
+        print(f"Обновлено файлов: {len(changed)}")
+        for path in changed:
+            print(f"    {path}")
+        return 0
 
     if args.command == "auth":
         return _auth(args.platform, settings)

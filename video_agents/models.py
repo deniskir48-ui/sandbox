@@ -6,7 +6,7 @@ from datetime import datetime, timezone
 from typing import Literal
 from uuid import uuid4
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, model_validator
 
 
 # --- Ответы агентов (structured outputs) ---
@@ -25,10 +25,19 @@ class IdeaList(BaseModel):
 
 class Scene(BaseModel):
     narration: str = Field(description="Текст диктора для сцены, 1-2 коротких предложения")
-    visual_query: str = Field(
-        description="Запрос для стокового видео НА АНГЛИЙСКОМ, 2-4 слова, что конкретно видно в кадре"
+    visual_queries: list[str] = Field(
+        description="2-3 запроса для поиска стокового видео НА АНГЛИЙСКОМ, по 2-4 слова, "
+        "от самого точного к более общему; описывают то, что буквально видно в кадре"
     )
     on_screen_text: str = Field(description="Короткая надпись на экране (до 5 слов) или пустая строка")
+
+    @model_validator(mode="before")
+    @classmethod
+    def _legacy_query(cls, data):
+        # Ролики, сохранённые до появления нескольких запросов, хранили один visual_query.
+        if isinstance(data, dict) and "visual_query" in data and "visual_queries" not in data:
+            data = {**data, "visual_queries": [data.pop("visual_query")]}
+        return data
 
 
 class Script(BaseModel):
