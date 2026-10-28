@@ -6,7 +6,7 @@ import os
 from pathlib import Path
 from typing import Literal
 
-import yaml
+from ruamel.yaml import YAML
 from dotenv import load_dotenv
 from pydantic import BaseModel, Field
 
@@ -132,7 +132,7 @@ def load_settings(path: str | Path | None = "config.yaml") -> Settings:
     load_dotenv()
     data = {}
     if path and Path(path).exists():
-        data = yaml.safe_load(Path(path).read_text(encoding="utf-8")) or {}
+        data = YAML(typ="safe").load(Path(path).read_text(encoding="utf-8")) or {}
     settings = Settings(**data)
     settings.secrets = Secrets.from_env()
     return settings
