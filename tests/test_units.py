@@ -157,3 +157,27 @@ def test_instagram_auth_saves_and_refreshes_token(monkeypatch, tmp_path):
     monkeypatch.setattr(time, "time", lambda: 10**12)  # прошло много времени
     assert auth.credentials() == ("NEW", "17841400000")
     assert calls[-1] == "https://graph.instagram.com/refresh_access_token"
+
+
+def test_ideas_ranked_by_relatability():
+    from video_agents.agents.ideas import IdeaAgent
+    from video_agents.config import ChannelConfig
+    from video_agents.models import IdeaList, VideoIdea
+
+    def idea(name, score):
+        return VideoIdea(viewer_problem=name, relatability=score, topic=name, angle="a", hook="h", why_it_works="w")
+
+    class LLM:
+        def structured(self, **_):
+            return IdeaList(ideas=[idea("creamer additive", 3), idea("belly fat", 9), idea("sore knees", 6),
+                                   idea("no energy", 9)])
+
+    ideas = IdeaAgent(LLM(), ChannelConfig(), web_research=False).generate(3, [])
+    assert [i.topic for i in ideas] == ["belly fat", "no energy", "sore knees"]
+
+
+def test_legacy_idea_loads():
+    from video_agents.models import VideoIdea
+
+    idea = VideoIdea.model_validate({"topic": "t", "angle": "a", "hook": "h", "why_it_works": "w"})
+    assert (idea.viewer_problem, idea.relatability) == ("t", 0)
