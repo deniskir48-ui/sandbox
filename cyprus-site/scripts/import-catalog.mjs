@@ -21,7 +21,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { stringify } from 'yaml';
 
-const COL = { id: 0, category: 1, name: 3, city: 4, website: 6, channel: 7, network: 9 };
+const COL = { id: 0, category: 1, type: 2, name: 3, city: 4, note: 5, website: 6, channel: 7, languages: 8, network: 9 };
 
 // Соответствие исходных категорий разделам сайта (дублирует src/data/taxonomy.ts).
 const MAP = {
@@ -89,26 +89,49 @@ function channel(v) {
   return undefined;
 }
 
+/** Тип услуги из колонки 3 без служебных пометок «(группа CRM)», «(уточнить)» и т. п. */
+function serviceType(v) {
+  const s = clean(v).replace(/\s*\((группа CRM|категория CRM|CRM|из черновика|уточнить|тип уточнить)\)\s*/gi, '').trim();
+  // Не обещаем подготовку к экзамену, пока она не подтверждена официальным источником.
+  if (/подготовка A2/i.test(s)) return 'Курсы греческого языка';
+  return s || undefined;
+}
+
+/** Короткая фактическая пометка о формате из колонки 6 (например, «Баня на дровах»). Служебные заметки отбрасываются. */
+function formatNote(v) {
+  const s = clean(v);
+  if (!s || /^Языки по базе|отзыв/i.test(s)) return undefined; // служебное или личный отзыв
+  if (/не подтвержд|уточнить/i.test(s)) return clean(s.split(';')[0]) || undefined; // оставляем только факт до «;»
+  return s.replace(/;\s*/g, '. ');
+}
+
 function main() {
   const args = process.argv.slice(2);
   const file = args.find((a) => !a.startsWith('--'));
   const dry = args.includes('--dry-run');
+  const refresh = args.includes('--refresh-drafts'); // обновить поля в файлах, которые ещё в статусе draft
   if (!file) { console.error('Использование: npm run import:catalog -- <путь к CSV> [--dry-run]'); process.exit(1); }
 
   const rows = parseCSV(fs.readFileSync(file, 'utf8')).filter((r) => r.some((c) => c.trim()));
   const outDir = path.resolve('src/content/companies');
   fs.mkdirSync(outDir, { recursive: true });
 
-  const stats = { created: 0, skippedExisting: 0, skippedHeader: 0, unknownCategory: [] };
+  const stats = { created: 0, refreshed: 0, skippedExisting: 0, skippedHeader: 0, unknownCategory: [] };
   // Повторный импорт безопасен: записи узнаются по source_id, уже созданные файлы не трогаем.
   const existingFiles = fs.readdirSync(outDir).filter((f) => /\.ya?ml$/.test(f));
   const used = new Set(existingFiles.map((f) => f.replace(/\.ya?ml$/, '')));
-  const knownIds = new Set(existingFiles.map((f) => fs.readFileSync(path.join(outDir, f), 'utf8').match(/^source_id:\s*(\S+)/m)?.[1]).filter(Boolean));
+  const known = new Map(); // source_id → { file, draft }
+  for (const f of existingFiles) {
+    const txt = fs.readFileSync(path.join(outDir, f), 'utf8');
+    const sid = txt.match(/^source_id:\s*(\S+)/m)?.[1];
+    if (sid) known.set(sid, { file: f, draft: /^status:\s*draft/m.test(txt) });
+  }
 
   for (const r of rows) {
     const id = clean(r[COL.id]);
     if (!/^[A-Z]+-\d+$/.test(id)) { stats.skippedHeader++; continue; } // заголовок или пустая строка
-    if (knownIds.has(id)) { stats.skippedExisting++; continue; }
+    const prev = known.get(id);
+    if (prev && !(refresh && prev.draft)) { stats.skippedExisting++; continue; }
     const mapped = MAP[clean(r[COL.category])];
     if (!mapped) { stats.unknownCategory.push(`${id}: ${r[COL.category]}`); continue; }
 
@@ -116,7 +139,8 @@ function main() {
     const city = clean(r[COL.city]);
     // Уникальный адрес: название → название-город (филиал сети) → название-ID.
     const base = slugify(name) || id.toLowerCase();
-    const slug = [base, city && `${base}-${slugify(city)}`, `${base}-${id.toLowerCase()}`].find((s) => s && !used.has(s));
+    const slug = prev ? prev.file.replace(/\.ya?ml$/, '')
+      : [base, city && `${base}-${slugify(city)}`, `${base}-${id.toLowerCase()}`].find((s) => s && !used.has(s));
     used.add(slug);
 
     const network = clean(r[COL.network]);
@@ -127,6 +151,9 @@ function main() {
       category: mapped[1],
       ...(city && !['Кипр'].includes(city) && { city }),
       ...(network && network !== name && { network }),
+      ...(serviceType(r[COL.type]) && { service_type: serviceType(r[COL.type]) }),
+      ...(clean(r[COL.languages]) && { languages: clean(r[COL.languages]) }),
+      ...(formatNote(r[COL.note]) && { summary: formatNote(r[COL.note]) }),
       ...(website(r[COL.website]) && { website: website(r[COL.website]) }),
       ...(channel(r[COL.channel]) && { channel: channel(r[COL.channel]) }),
       sources: [],
@@ -135,9 +162,9 @@ function main() {
     const header = '# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,\n'
       + '# заполнить summary, description, sources, verified_at и только затем поставить status: published.\n';
     if (!dry) fs.writeFileSync(path.join(outDir, `${slug}.yaml`), header + stringify(doc));
-    stats.created++;
+    prev ? stats.refreshed++ : stats.created++;
   }
-  console.log(`${dry ? '[dry-run] ' : ''}Создано черновиков: ${stats.created}; уже существовали: ${stats.skippedExisting}; пропущено служебных строк: ${stats.skippedHeader}`);
+  console.log(`${dry ? '[dry-run] ' : ''}Создано черновиков: ${stats.created}; обновлено черновиков: ${stats.refreshed}; уже существовали: ${stats.skippedExisting}; пропущено служебных строк: ${stats.skippedHeader}`);
   if (stats.unknownCategory.length) console.log('Неизвестные категории (добавьте в MAP и taxonomy.ts):\n  ' + stats.unknownCategory.join('\n  '));
 }
 

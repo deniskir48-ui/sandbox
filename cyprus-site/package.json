@@ -10,7 +10,9 @@
     "build:fixtures": "USE_FIXTURES=1 astro build --outDir dist-fixtures",
     "preview": "astro preview",
     "check:data": "node scripts/check-data.mjs",
-    "import:catalog": "node scripts/import-catalog.mjs"
+    "import:catalog": "node scripts/import-catalog.mjs",
+    "build:preview": "PREVIEW_DRAFTS=1 astro build --outDir dist-preview",
+    "dev:preview": "PREVIEW_DRAFTS=1 astro dev"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",

@@ -20,19 +20,24 @@ const jsonLd = {
   ...(d.city && { address: { '@type': 'PostalAddress', addressLocality: d.city, addressCountry: 'CY' } }),
 };
 ---
-<Base title={`${d.name} — ${cat.title.toLowerCase()}${d.city ? `, ${d.city}` : ''}`} description={d.summary!} jsonLd={jsonLd}>
+<Base title={`${d.name} — ${cat.title.toLowerCase()}${d.city ? `, ${d.city}` : ''}`} description={d.summary ?? `${d.name}: ${(d.service_type ?? cat.title).toLowerCase()} на Кипре${d.city ? `, ${d.city}` : ''}.`} jsonLd={jsonLd}>
   <Breadcrumbs items={[
     { href: '/', label: 'Главная' }, { href: '/catalog/', label: 'Гид' },
     { href: `/catalog/${cat.section.slug}/`, label: cat.section.title }, { label: d.name },
   ]} />
   <article class="prose">
     <h1>{d.name}</h1>
-    <p class="meta"><span class="chip">{cat.title}</span>{d.city && <span>{d.city}</span>}</p>
-    <p>{d.description ?? d.summary}</p>
+    <p class="meta"><span class="chip">{d.service_type ?? cat.title}</span>{d.city && <span>{d.city}</span>}</p>
+    {d.status === 'draft' && (
+      <p class="notice">Карточка из внутренней базы, данные ещё не проверены. Уточняйте информацию на официальном сайте компании.</p>
+    )}
+    {(d.description ?? d.summary) && <p>{d.description ?? d.summary}</p>}
 
     <dl class="facts">
       <dt>Категория</dt><dd><a href={`/catalog/${cat.section.slug}/`}>{cat.section.title}</a> · {cat.title}</dd>
       {d.city && <><dt>Город / регион</dt><dd>{d.city}</dd></>}
+      {d.service_type && <><dt>Тип услуги</dt><dd>{d.service_type}</dd></>}
+      {d.languages && <><dt>Языки</dt><dd>{d.languages}</dd></>}
       {d.network && <><dt>Сеть</dt><dd>{d.network}</dd></>}
       {d.website && <><dt>Сайт</dt><dd><a href={d.website} rel="noopener" target="_blank">{host(d.website)}</a></dd></>}
       {d.channel && <><dt>Канал</dt><dd><a href={d.channel.url} rel="noopener" target="_blank">{d.channel.label}</a></dd></>}

@@ -4,6 +4,7 @@ name: ASTRY
 status: draft
 section: food
 category: cafes
+service_type: Ресторан
 channel:
   label: Instagram
   url: https://www.instagram.com/astry_bistro/

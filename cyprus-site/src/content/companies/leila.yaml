@@ -4,6 +4,7 @@ name: Leila
 status: draft
 section: food
 category: cafes
+service_type: Ресторан
 channel:
   label: Instagram @leila__cy
   url: https://www.instagram.com/leila__cy/

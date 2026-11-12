@@ -4,6 +4,7 @@ name: AM:PM
 status: draft
 section: food
 category: cafes
+service_type: Кафе / ресторан
 channel:
   label: Instagram
   url: https://www.instagram.com/am.pm_cy/

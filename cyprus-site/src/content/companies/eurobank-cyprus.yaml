@@ -4,6 +4,7 @@ name: Eurobank Cyprus
 status: draft
 section: property-home
 category: mortgage
+service_type: Банки / ипотека
 website: https://www.eurobank.cy/en/personal/housing/home-loan
 sources: []
 source_id: CYP-191

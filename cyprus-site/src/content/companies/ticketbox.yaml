@@ -4,5 +4,6 @@ name: ticketBox
 status: draft
 section: entertainment
 category: tickets
+service_type: Билетные площадки
 sources: []
 source_id: CYP-157

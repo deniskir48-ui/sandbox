@@ -4,6 +4,7 @@ name: Tickets4U Cyprus
 status: draft
 section: entertainment
 category: tickets
+service_type: Билетные площадки
 website: https://tickets4u.cy/
 sources: []
 source_id: CYP-171

@@ -4,6 +4,7 @@ name: Bank of Cyprus
 status: draft
 section: property-home
 category: mortgage
+service_type: Банки / ипотека
 website: https://www.bankofcyprus.com/en-gb/Personal/loans/Housing/
 sources: []
 source_id: CYP-190

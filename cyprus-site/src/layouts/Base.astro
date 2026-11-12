@@ -1,6 +1,6 @@
 ---
 import '../styles/global.css';
-import { SITE, NAV, USE_FIXTURES } from '../config';
+import { SITE, NAV, USE_FIXTURES, PREVIEW_DRAFTS } from '../config';
 
 interface Props {
   title: string; // уникальный заголовок страницы (без названия сайта)
@@ -22,7 +22,7 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
-    {(noindex || USE_FIXTURES) && <meta name="robots" content="noindex, nofollow" />}
+    {(noindex || USE_FIXTURES || PREVIEW_DRAFTS) && <meta name="robots" content="noindex, nofollow" />}
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -33,6 +33,9 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
   </head>
   <body>
     <a class="visually-hidden" href="#main">К содержанию</a>
+    {PREVIEW_DRAFTS && (
+      <div class="fixture-banner preview">Предпросмотр: показаны все записи внутренней базы, включая непроверенные.</div>
+    )}
     {USE_FIXTURES && (
       <div class="fixture-banner">Тестовый режим: на странице технические фикстуры, а не реальные компании и события.</div>
     )}
@@ -77,6 +80,7 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
 
 <style>
   .fixture-banner { background: #b42318; color: #fff; text-align: center; font-size: 0.85rem; padding: 6px 12px; }
+  .fixture-banner.preview { background: #8a5a00; }
   .site-header { border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 10; }
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; }
   .logo { font-weight: 700; color: var(--text); text-decoration: none; font-size: 1.05rem; white-space: nowrap; }

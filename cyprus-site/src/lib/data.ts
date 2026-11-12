@@ -1,5 +1,6 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import { todayInCyprus } from './dates';
+import { PREVIEW_DRAFTS } from '../config';
 
 export type Company = CollectionEntry<'companies'>;
 export type Event = CollectionEntry<'events'>;
@@ -7,9 +8,9 @@ export type Article = CollectionEntry<'articles'>;
 
 const byName = (a: Company, b: Company) => a.data.name.localeCompare(b.data.name, 'ru');
 
-/** Только опубликованные (проверенные) компании. Черновики на сайт не попадают. */
+/** Только опубликованные (проверенные) компании. Черновики видны лишь в режиме предпросмотра PREVIEW_DRAFTS=1. */
 export async function getPublishedCompanies(): Promise<Company[]> {
-  return (await getCollection('companies', (e) => e.data.status === 'published')).sort(byName);
+  return (await getCollection('companies', (e) => PREVIEW_DRAFTS || e.data.status === 'published')).sort(byName);
 }
 
 export async function getPublishedArticles(): Promise<Article[]> {

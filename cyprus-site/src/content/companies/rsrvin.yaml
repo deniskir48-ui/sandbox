@@ -4,6 +4,7 @@ name: RSRVIN
 status: draft
 section: entertainment
 category: tickets
+service_type: Билетные площадки
 website: https://info.rsrvin.com/contact
 sources: []
 source_id: CYP-170

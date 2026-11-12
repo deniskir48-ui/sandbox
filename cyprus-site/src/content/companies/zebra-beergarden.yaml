@@ -4,6 +4,7 @@ name: ZEBRA Beergarden
 status: draft
 section: food
 category: cafes
+service_type: Кафе / ресторан
 channel:
   label: Instagram
   url: https://www.instagram.com/zebra_limassol/

@@ -4,6 +4,7 @@ name: CarCinema Cyprus
 status: draft
 section: entertainment
 category: cinema
+service_type: Автокинотеатр
 channel:
   label: Instagram @carcinemacy
   url: https://www.instagram.com/carcinemacy/

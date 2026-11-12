@@ -4,6 +4,7 @@ name: Choice Flower
 status: draft
 section: other
 category: flowers
+service_type: Цветы
 channel:
   label: Instagram @choice.flower.cy
   url: https://www.instagram.com/choice.flower.cy/

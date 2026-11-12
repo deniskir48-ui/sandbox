@@ -18,3 +18,5 @@ export const NAV = [
 
 // Читается при сборке (весь код страниц выполняется на этапе build, в браузер не попадает).
 export const USE_FIXTURES = process.env.USE_FIXTURES === '1';
+// Предпросмотр: показывать и черновики (непроверенные записи) с пометкой. Только для закрытого просмотра.
+export const PREVIEW_DRAFTS = process.env.PREVIEW_DRAFTS === '1';

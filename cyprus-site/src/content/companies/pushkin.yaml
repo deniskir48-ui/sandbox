@@ -4,6 +4,7 @@ name: Pushkin
 status: draft
 section: food
 category: cafes
+service_type: Ресторан
 website: https://aspushkin.eu/en/contact
 channel:
   label: Instagram

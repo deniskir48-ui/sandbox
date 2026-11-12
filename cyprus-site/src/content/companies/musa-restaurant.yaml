@@ -4,6 +4,7 @@ name: Musa Restaurant
 status: draft
 section: food
 category: cafes
+service_type: Ресторан
 website: https://musa-restaurant.com/
 channel:
   label: Instagram

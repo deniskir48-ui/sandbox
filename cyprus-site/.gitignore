@@ -4,3 +4,4 @@ dist-fixtures/
 .astro/
 import/
 *.xlsx
+dist-preview/

@@ -4,5 +4,6 @@ name: SunCars
 status: draft
 section: cars
 category: car-buying
+service_type: Продажа / аренда авто
 sources: []
 source_id: CYP-194

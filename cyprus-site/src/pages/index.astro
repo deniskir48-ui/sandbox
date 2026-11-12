@@ -27,7 +27,7 @@ const count = (slug: string) => companies.filter((c) => c.data.section === slug)
         <a class="card" href={`/catalog/${s.slug}/`}>
           <h3>{s.title}</h3>
           <p class="small muted">{s.intro}</p>
-          <p class="small">{count(s.slug) > 0 ? `${count(s.slug)} проверенных` : 'Наполняется'}</p>
+          <p class="small">{count(s.slug) > 0 ? `Компаний: ${count(s.slug)}` : 'Наполняется'}</p>
         </a>
       </li>
     ))}

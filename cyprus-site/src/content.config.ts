@@ -32,6 +32,8 @@ const companies = defineCollection({
       category: z.enum(CATEGORY_SLUGS),
       city: z.string().optional(), // город/регион, только подтверждённый
       network: z.string().optional(), // сеть, если это филиал/кампус
+      service_type: z.string().optional(), // тип услуги: «Застройщик», «Баня на дровах»
+      languages: z.string().optional(), // языки обучения/обслуживания: «EN/EL»
       summary: z.string().max(160).optional(), // для списка, до ~150 символов
       description: z.string().optional(), // описание услуг для подробной страницы
       website: z.string().url().optional(), // официальный сайт

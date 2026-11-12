@@ -4,5 +4,6 @@ name: FreshCar
 status: draft
 section: cars
 category: car-buying
+service_type: Автоподбор / доставка авто
 sources: []
 source_id: CYP-195

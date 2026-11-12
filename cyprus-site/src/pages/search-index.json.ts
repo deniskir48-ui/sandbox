@@ -10,7 +10,7 @@ export const GET: APIRoute = async () => {
     return {
       kind: 'company', url: `/services/${c.id}/`, title: c.data.name,
       meta: [cat.section.title, cat.title, c.data.city].filter(Boolean).join(' · '),
-      text: [c.data.summary, c.data.description, c.data.network].filter(Boolean).join(' '),
+      text: [c.data.service_type, c.data.summary, c.data.description, c.data.network].filter(Boolean).join(' '),
     };
   });
   const events = (await getUpcomingEvents()).map((e) => ({
