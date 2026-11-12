@@ -1,12 +1,17 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Interlead
+# Проверено 12.11.2026 по официальному сайту (см. sources). Ждёт утверждения: после «ок» поставить status: published.
+name: "Interlead Language Experts"
 status: draft
 section: education
 category: greek
-city: Лимассол
-service_type: Курсы греческого языка
-summary: Образовательный центр
-website: https://interlead-experts.com/
-sources: []
+city: "Лимассол"
+service_type: "Языковой центр"
+summary: "Языковой центр в Лимассоле с 1994 года: 7 языков, включая греческий, и отдельная программа подготовки к экзамену A2."
+description: "Языковой центр в Лимассоле, работает с 1994 года и преподаёт семь языков, включая греческий. Есть программа подготовки к экзамену по греческому на уровень A2 для работающих на Кипре иностранцев: онлайн или с выездом к клиенту, индивидуально или в группе. Занятия проходят в центре, онлайн и на территории заказчика."
+website: "https://interlead-experts.com/"
+sources:
+  - title: "Официальный сайт Interlead"
+    url: "https://interlead-experts.com/"
+  - title: "Программа подготовки к экзамену Greek A2"
+    url: "https://interlead-experts.com/greek-a2-exam-success-starts-here/"
+verified_at: 2026-11-12
 source_id: GREEK-004

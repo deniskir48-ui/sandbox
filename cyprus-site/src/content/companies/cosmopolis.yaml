@@ -1,9 +1,19 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Cosmopolis
+# Проверено 12.11.2026 по официальному сайту (см. sources). Ждёт утверждения: после «ок» поставить status: published.
+name: "Cosmopolis Language Centre"
 status: draft
 section: education
 category: greek
-service_type: Курсы греческого языка
-sources: []
+city: "Никосия"
+service_type: "Языковой центр"
+summary: "Языковой центр в Никосии с 2010 года: греческий для взрослых от A1 до C1, группы и частные уроки, онлайн-курсы."
+description: "Языковой центр в центре Никосии, работает с 2010 года. Преподаёт взрослым греческий, английский, русский, турецкий и французский. По греческому есть групповые курсы от A1 до C1, разговорный клуб и кипрский диалект для уровня от B1, частные уроки. На сайте расписано, как подготовиться к государственному экзамену A2: три групповых курса (A1, A2.1, A2.2) или частные занятия. Для Ларнаки, Лимассола и Пафоса есть онлайн-курсы."
+website: "https://www.cosmopolis.biz/"
+sources:
+  - title: "Официальный сайт Cosmopolis"
+    url: "https://www.cosmopolis.biz/"
+  - title: "Греческие курсы и расписание"
+    url: "https://www.cosmopolis.biz/greek-courses-registration"
+  - title: "Подготовка к экзамену A2"
+    url: "https://www.cosmopolis.biz/exam-information"
+verified_at: 2026-11-12
 source_id: GREEK-001

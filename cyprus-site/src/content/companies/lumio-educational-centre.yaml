@@ -1,12 +1,16 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Lumio Educational Centre
+# Проверено 12.11.2026 по официальному сайту (см. sources). Ждёт утверждения: после «ок» поставить status: published.
+name: "Lumio Educational Centre"
 status: draft
 section: education
 category: greek
-city: Пафос
-service_type: Курсы греческого языка
-summary: Образовательный центр
-website: https://lumio.school/lumio-educational-center/
-sources: []
+city: "Пафос"
+network: "Lumio Private School"
+service_type: "Курсы для взрослых при школе"
+summary: "Курсы для взрослых на кампусе школы Lumio в Пафосе: подготовка к экзамену по греческому A2 для русскоязычных, B1 и греческий с нуля."
+description: "Образовательный центр для взрослых на кампусе Lumio Private School в Пафосе. В расписании интенсивный курс «Greek A2: Mission Possible» для русскоязычных с подготовкой к государственному экзамену A2, курс B1, греческий для начинающих в англоязычных группах и разговорный клуб для уровня B1. Группы по 6–8 человек, при записи приоритет у семей учеников школы."
+website: "https://lumio.school/lumio-educational-center/"
+sources:
+  - title: "Lumio Edu Centre — страница курсов"
+    url: "https://lumio.school/lumio-educational-center/"
+verified_at: 2026-11-12
 source_id: GREEK-003

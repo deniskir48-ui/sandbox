@@ -1,12 +1,15 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Lambda Lingua
+# Проверено 12.11.2026 по официальному сайту (см. sources). Ждёт утверждения: после «ок» поставить status: published.
+name: "Lambda Lingua"
 status: draft
 section: education
 category: greek
-city: Онлайн
-service_type: Изучение греческого
-summary: Приложение. Материалы на русском, греческий A1–B2
-website: https://lambdalingua.com/ru/
-sources: []
+city: "Онлайн"
+service_type: "Приложение для изучения греческого"
+summary: "Приложение для изучения греческого с A1 до B2: карточки с интервальным повторением, чтение, аудирование и письмо с разбором."
+description: "Мобильное приложение для iOS и Android. Карточки с интервальным повторением и лексикой по уровням CEFR, чтение и аудирование под уровень, практика письма с разбором, грамматические шпаргалки. Начать можно бесплатно и без регистрации. Сайт на русском языке."
+website: "https://lambdalingua.com/ru/"
+sources:
+  - title: "Официальный сайт Lambda Lingua"
+    url: "https://lambdalingua.com/ru/"
+verified_at: 2026-11-12
 source_id: GREEK-011

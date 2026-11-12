@@ -1,12 +1,15 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: GreekBrain
+# Проверено 12.11.2026 по официальному сайту (см. sources). Ждёт утверждения: после «ок» поставить status: published.
+name: "GreekBrain"
 status: draft
 section: education
 category: greek
-city: Онлайн
-service_type: Изучение греческого
-summary: Приложение. Русскоязычный сервис, задания A2/B1
-website: https://greekbrain.app/ru/
-sources: []
+city: "Онлайн"
+service_type: "Приложение для подготовки к экзамену"
+summary: "Приложение для подготовки к официальному экзамену по греческому на Кипре: задания A2 и B1, оценка устной и письменной речи."
+description: "Платформа для подготовки к государственному экзамену по греческому языку на уровни A2 и B1. Тренирует задания экзамена и оценивает устную и письменную речь. Работает на iPhone, Android и в браузере, начать можно бесплатно. Сайт на русском и английском."
+website: "https://greekbrain.app/ru/"
+sources:
+  - title: "Официальный сайт GreekBrain"
+    url: "https://greekbrain.app/ru/"
+verified_at: 2026-11-12
 source_id: GREEK-010

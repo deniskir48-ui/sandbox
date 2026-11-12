@@ -1,12 +1,15 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: LINGRAVIA
+# Проверено 12.11.2026 по официальному сайту (см. sources). Ждёт утверждения: после «ок» поставить status: published.
+name: "LINGRAVIA"
 status: draft
 section: education
 category: greek
-city: Онлайн
-service_type: Изучение греческого
-summary: Онлайн-школа. Русскоязычные группы к экзамену 2027
-website: https://lingravia.com/
-sources: []
+city: "Онлайн"
+service_type: "Онлайн-школа греческого"
+summary: "Онлайн-школа греческого Елены Лимперис: курсы с нуля до уровня A2 и подготовка к экзаменам для гражданства."
+description: "Онлайн-школа преподавателя Елены Лимперис. На сайте заявлены курсы «Научись читать по-гречески» и «Греческий шаг за шагом» (уровни A1–A2), подготовка к экзаменам для получения гражданства и греческий для повседневной жизни, работы и переезда. Сайт на русском языке."
+website: "https://lingravia.com/"
+sources:
+  - title: "Официальный сайт LINGRAVIA"
+    url: "https://lingravia.com/"
+verified_at: 2026-11-12
 source_id: GREEK-008

@@ -12,5 +12,7 @@ const cat = getCategory(d.category);
   <h3>{d.name}</h3>
   {d.city && <p class="loc"><Icon name="pin" size={15} />{d.city}</p>}
   {d.summary && <p class="desc" style="margin-top:6px">{d.summary}</p>}
-  {d.status === 'draft' && <span class="unverified">Не проверено</span>}
+  {d.status === 'draft' && (d.verified_at
+    ? <span class="unverified pending">Проверено · на утверждении</span>
+    : <span class="unverified">Не проверено</span>)}
 </a>

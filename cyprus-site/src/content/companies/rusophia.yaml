@@ -1,12 +1,17 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Rusophia
+# Проверено 12.11.2026 по официальному сайту (см. sources). Ждёт утверждения: после «ок» поставить status: published.
+name: "Rusophia"
 status: draft
 section: education
 category: greek
-city: Ларнака
-service_type: Изучение греческого
-summary: Языковые курсы
-website: https://www.rusophia.com/el/services
-sources: []
+city: "Ларнака"
+service_type: "Языковые курсы и переводы"
+summary: "Онлайн-уроки русского языка и греческий для русскоязычных, плюс сертифицированные переводы между русским, греческим и английским."
+description: "Rusophia в первую очередь преподаёт русский язык и делает сертифицированные переводы между русским, греческим и английским. Для русскоязычных есть занятия греческим. Уроки проходят онлайн, офис находится в Ларнаке. Подготовка к экзамену по греческому на сайте отдельно не заявлена."
+website: "https://www.rusophia.com/"
+sources:
+  - title: "Официальный сайт Rusophia"
+    url: "https://www.rusophia.com/el/services"
+  - title: "Контакты Rusophia"
+    url: "https://www.rusophia.com/el/contact"
+verified_at: 2026-11-12
 source_id: GREEK-009
