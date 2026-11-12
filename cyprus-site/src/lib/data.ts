@@ -14,7 +14,7 @@ export async function getPublishedCompanies(): Promise<Company[]> {
 }
 
 export async function getPublishedArticles(): Promise<Article[]> {
-  const list = await getCollection('articles', (e) => e.data.status === 'published');
+  const list = await getCollection('articles', (e) => PREVIEW_DRAFTS || e.data.status === 'published');
   const ts = (a: Article) => (a.data.updated_at ?? a.data.published_at).getTime();
   return list.sort((a, b) => ts(b) - ts(a));
 }

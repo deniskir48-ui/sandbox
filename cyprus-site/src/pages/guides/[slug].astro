@@ -26,6 +26,7 @@ const jsonLd = {
 <Base title={d.title} description={d.description} jsonLd={jsonLd}>
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/guides/', label: 'Статьи' }, { label: d.title }]} />
   <article class="prose">
+    {d.status === 'draft' && <p class="notice">Черновик статьи: текст ещё не утверждён для публикации на сайте.</p>}
     <h1>{d.title}</h1>
     <p class="small muted">
       Опубликовано <time datetime={isoDate(d.published_at)}>{formatDate(d.published_at)}</time>
