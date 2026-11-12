@@ -1,0 +1,12 @@
+---
+import type { Article } from '../lib/data';
+import { formatDate } from '../lib/dates';
+interface Props { article: Article }
+const { article } = Astro.props;
+const d = article.data;
+---
+<a class="card" href={`/guides/${article.id}/`}>
+  <h3>{d.title}</h3>
+  <p class="muted small">{d.updated_at ? `Обновлено ${formatDate(d.updated_at)}` : formatDate(d.published_at)}</p>
+  <p>{d.description}</p>
+</a>

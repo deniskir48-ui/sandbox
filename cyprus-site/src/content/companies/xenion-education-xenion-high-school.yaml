@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Xenion Education / Xenion High School
+status: draft
+section: education
+category: private-schools
+city: Паралимни
+website: https://www.xenion.ac.cy/
+sources: []
+source_id: SCHOOL-039

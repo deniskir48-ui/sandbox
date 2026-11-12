@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Hamam Omerye
+status: draft
+section: leisure-spa
+category: spa
+city: Никосия
+website: https://hamamomerye.com/
+sources: []
+source_id: SPA-004

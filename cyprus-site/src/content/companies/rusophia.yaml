@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Rusophia
+status: draft
+section: education
+category: greek
+city: Ларнака
+website: https://www.rusophia.com/el/services
+sources: []
+source_id: GREEK-009

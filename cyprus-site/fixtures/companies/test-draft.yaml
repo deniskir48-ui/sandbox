@@ -1,0 +1,5 @@
+# Черновик: не должен появиться ни в списках, ни в поиске.
+name: "Тестовый черновик (фикстура)"
+status: draft
+section: cars
+category: car-buying

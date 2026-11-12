@@ -1,0 +1,12 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Pushkin
+status: draft
+section: food
+category: cafes
+website: https://aspushkin.eu/en/contact
+channel:
+  label: Instagram
+  url: https://www.instagram.com/pushkin.cyprus/
+sources: []
+source_id: CYP-152

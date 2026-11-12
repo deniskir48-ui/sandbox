@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: The Grammar School Nicosia
+status: draft
+section: education
+category: private-schools
+city: Никосия
+website: https://thegrammarschool.eu/explore/our-team/
+sources: []
+source_id: SCHOOL-019

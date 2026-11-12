@@ -1,0 +1,66 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CompanyCard from '../../components/CompanyCard.astro';
+import Empty from '../../components/Empty.astro';
+import { SECTIONS, type Section } from '../../data/taxonomy';
+import { getPublishedCompanies } from '../../lib/data';
+
+export function getStaticPaths() {
+  return SECTIONS.map((section) => ({ params: { section: section.slug }, props: { section } }));
+}
+const { section } = Astro.props as { section: Section };
+const companies = (await getPublishedCompanies()).filter((c) => c.data.section === section.slug);
+const cities = [...new Set(companies.map((c) => c.data.city).filter(Boolean))].sort((a, b) => a!.localeCompare(b!, 'ru'));
+const usedCats = section.categories.filter((cat) => companies.some((c) => c.data.category === cat.slug));
+---
+<Base
+  title={`${section.title} на Кипре`}
+  description={`${section.title}: ${section.intro}`}
+  noindex={companies.length === 0}
+>
+  <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/catalog/', label: 'Гид' }, { label: section.title }]} />
+  <h1>{section.title}</h1>
+  <p class="lead">{section.intro}</p>
+
+  {companies.length > 0 ? (
+    <>
+      {(cities.length > 1 || usedCats.length > 1) && (
+        <form class="filters" id="filters" aria-label="Фильтры">
+          {usedCats.length > 1 && (
+            <label>Категория
+              <select name="category">
+                <option value="">Все</option>
+                {usedCats.map((c) => <option value={c.slug}>{c.title}</option>)}
+              </select>
+            </label>
+          )}
+          {cities.length > 1 && (
+            <label>Город
+              <select name="city">
+                <option value="">Все</option>
+                {cities.map((c) => <option value={c}>{c}</option>)}
+              </select>
+            </label>
+          )}
+        </form>
+      )}
+      <p class="small muted" id="count" aria-live="polite">Найдено: {companies.length}</p>
+      <ul class="grid grid-2" id="list">{companies.map((c) => <li><CompanyCard company={c} /></li>)}</ul>
+      <div id="no-results" hidden><Empty title="Ничего не найдено">Попробуйте сбросить фильтры.</Empty></div>
+    </>
+  ) : (
+    <Empty title="Раздел наполняется">
+      Мы проверяем компании этого раздела: официальный сайт, услуги, город и дату актуальности. Карточки появятся после проверки.
+    </Empty>
+  )}
+</Base>
+
+<script>
+  import { bindFilters } from '../../lib/filters';
+  bindFilters({ form: '#filters', items: '#list > li', count: '#count', empty: '#no-results',
+    match: (el, f) => {
+      const card = el.firstElementChild as HTMLElement;
+      return (!f.category || card.dataset.category === f.category) && (!f.city || card.dataset.city === f.city);
+    } });
+</script>

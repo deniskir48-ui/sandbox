@@ -1,0 +1,14 @@
+title: "Тестовое прошедшее событие (фикстура)"
+status: published
+type: concert
+date: "2020-01-10"
+time: 19:00
+city: "Город А"
+venue: "Тестовая площадка"
+summary: "Техническое событие для проверки афиши. Не настоящее мероприятие."
+ticket_url: "https://example.com/tickets"
+
+sources:
+  - title: "Тестовый источник"
+    url: "https://example.com/source"
+verified_at: 2026-11-12

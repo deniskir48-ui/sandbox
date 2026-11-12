@@ -1,0 +1,11 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: PASCAL International Education — Limassol
+status: draft
+section: education
+category: private-schools
+city: Лимассол
+network: PASCAL International Education
+website: https://www.pascal.ac.cy/admissions/contact-us
+sources: []
+source_id: SCHOOL-005

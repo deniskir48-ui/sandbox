@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: American Academy Limassol
+status: draft
+section: education
+category: private-schools
+city: Лимассол
+website: https://americanacademy.ac.cy/ru/about-us/информация-для-агентов/
+sources: []
+source_id: SCHOOL-004

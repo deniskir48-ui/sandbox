@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Morfosis Private School
+status: draft
+section: education
+category: private-schools
+city: Лимассол / Пафос
+website: https://www.morfosisschool.com/contact
+sources: []
+source_id: SCHOOL-012

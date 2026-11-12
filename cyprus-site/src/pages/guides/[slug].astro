@@ -1,0 +1,43 @@
+---
+import { render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CompanyCard from '../../components/CompanyCard.astro';
+import SourceList from '../../components/SourceList.astro';
+import { getPublishedArticles, getCompanyMap, type Article } from '../../lib/data';
+import { formatDate, isoDate } from '../../lib/dates';
+import { SITE } from '../../config';
+
+export async function getStaticPaths() {
+  return (await getPublishedArticles()).map((article) => ({ params: { slug: article.id }, props: { article } }));
+}
+const { article } = Astro.props as { article: Article };
+const d = article.data;
+const { Content } = await render(article);
+const map = await getCompanyMap();
+// Показываем только опубликованные компании; ссылки на черновики отбрасываются (их ловит check:data).
+const companies = d.companies.map((s) => map.get(s)).filter((c) => c !== undefined);
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Article', headline: d.title, description: d.description,
+  datePublished: isoDate(d.published_at), ...(d.updated_at && { dateModified: isoDate(d.updated_at) }),
+  inLanguage: 'ru', publisher: { '@type': 'Organization', name: SITE.name },
+};
+---
+<Base title={d.title} description={d.description} jsonLd={jsonLd}>
+  <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/guides/', label: 'Статьи' }, { label: d.title }]} />
+  <article class="prose">
+    <h1>{d.title}</h1>
+    <p class="small muted">
+      Опубликовано <time datetime={isoDate(d.published_at)}>{formatDate(d.published_at)}</time>
+      {d.updated_at && <> · обновлено <time datetime={isoDate(d.updated_at)}>{formatDate(d.updated_at)}</time></>}
+    </p>
+    <Content />
+    {companies.length > 0 && (
+      <section>
+        <h2>Компании из гида</h2>
+        <ul class="grid grid-2">{companies.map((c) => <li><CompanyCard company={c} /></li>)}</ul>
+      </section>
+    )}
+    <SourceList sources={d.sources} />
+  </article>
+</Base>

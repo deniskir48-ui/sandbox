@@ -1,0 +1,14 @@
+title: "Тестовый спектакль (фикстура)"
+status: published
+type: theatre
+date: "2030-06-02"
+time: 19:30
+city: "Город Б"
+venue: "Тестовая площадка"
+summary: "Техническое событие для проверки афиши. Не настоящее мероприятие."
+ticket_url: "https://example.com/tickets"
+
+sources:
+  - title: "Тестовый источник"
+    url: "https://example.com/source"
+verified_at: 2026-11-12

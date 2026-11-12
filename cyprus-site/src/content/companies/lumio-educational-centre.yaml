@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Lumio Educational Centre
+status: draft
+section: education
+category: greek
+city: Пафос
+website: https://lumio.school/lumio-educational-center/
+sources: []
+source_id: GREEK-003

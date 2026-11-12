@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: International School of Nicosia (ISN)
+status: draft
+section: education
+category: private-schools
+city: Никосия
+website: https://www.isnschool-cy.ac/school-info/our-people/
+sources: []
+source_id: SCHOOL-023

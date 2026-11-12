@@ -1,0 +1,54 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SearchForm from '../../components/SearchForm.astro';
+---
+<Base title="Поиск по сайту" description="Поиск по компаниям гида, мероприятиям афиши и статьям." noindex>
+  <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { label: 'Поиск' }]} />
+  <h1>Поиск</h1>
+  <SearchForm autofocus />
+  <p class="small muted" id="status" aria-live="polite" style="margin-top:12px"></p>
+  <ul class="grid" id="results" style="margin-top:8px"></ul>
+  <noscript><p class="notice">Для поиска нужен JavaScript. Разделы доступны через меню: Гид, Афиша, Статьи.</p></noscript>
+</Base>
+
+<script>
+  import { todayCyprus } from '../../lib/filters';
+  type Item = { kind: string; url: string; title: string; meta: string; text: string; end?: string };
+  const KIND: Record<string, string> = { company: 'Гид', event: 'Афиша', article: 'Статья' };
+
+  const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е').normalize('NFKD').replace(/[̀-ͯ]/g, '');
+  const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  const input = document.querySelector<HTMLInputElement>('#q')!;
+  const status = document.querySelector<HTMLElement>('#status')!;
+  const list = document.querySelector<HTMLUListElement>('#results')!;
+  const q = new URLSearchParams(location.search).get('q')?.trim() ?? '';
+  input.value = q;
+
+  async function run() {
+    if (!q) { status.textContent = 'Введите запрос: название компании, услугу, город или тему.'; return; }
+    status.textContent = 'Ищем…';
+    let items: Item[] = [];
+    try { items = await (await fetch('/search-index.json')).json(); } catch { status.textContent = 'Не удалось загрузить поиск. Обновите страницу.'; return; }
+    const today = todayCyprus();
+    const terms = norm(q).split(/\s+/).filter(Boolean);
+    const scored = items
+      .filter((i) => !i.end || i.end >= today)
+      .map((i) => {
+        const title = norm(i.title), hay = norm(`${i.title} ${i.meta} ${i.text}`);
+        if (!terms.every((t) => hay.includes(t))) return null;
+        return { i, score: terms.filter((t) => title.includes(t)).length };
+      })
+      .filter((x) => x !== null)
+      .sort((a, b) => b.score - a.score);
+    status.textContent = scored.length ? `Найдено: ${scored.length}` : `По запросу «${q}» ничего не найдено. Попробуйте другое слово или откройте разделы Гида.`;
+    list.innerHTML = scored.map(({ i }) => `
+      <li><a class="card" href="${esc(i.url)}">
+        <div class="meta"><span class="chip">${KIND[i.kind] ?? ''}</span><span>${esc(i.meta)}</span></div>
+        <h3 style="margin-top:6px">${esc(i.title)}</h3>
+        ${i.text ? `<p class="small muted">${esc(i.text.slice(0, 160))}</p>` : ''}
+      </a></li>`).join('');
+  }
+  run();
+</script>

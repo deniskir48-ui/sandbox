@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import SearchForm from '../components/SearchForm.astro';
+---
+<Base title="Страница не найдена" description="Такой страницы нет. Воспользуйтесь поиском или разделами сайта." noindex>
+  <h1>Страница не найдена</h1>
+  <p class="lead">Возможно, ссылка устарела или запись ещё не опубликована.</p>
+  <SearchForm />
+  <p style="margin-top:20px"><a href="/catalog/">Гид</a> · <a href="/events/">Афиша</a> · <a href="/guides/">Статьи</a> · <a href="/">Главная</a></p>
+</Base>

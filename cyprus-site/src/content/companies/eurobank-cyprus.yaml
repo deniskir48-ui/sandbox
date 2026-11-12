@@ -1,0 +1,9 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Eurobank Cyprus
+status: draft
+section: property-home
+category: mortgage
+website: https://www.eurobank.cy/en/personal/housing/home-loan
+sources: []
+source_id: CYP-191

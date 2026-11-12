@@ -1,0 +1,11 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Cafe Toucan
+status: draft
+section: food
+category: cafes
+channel:
+  label: Instagram
+  url: https://www.instagram.com/cafetoucan.limassol/
+sources: []
+source_id: CYP-173

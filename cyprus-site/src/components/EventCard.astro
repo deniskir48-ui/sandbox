@@ -1,0 +1,16 @@
+---
+import type { Event } from '../lib/data';
+import { eventLastDay } from '../lib/data';
+import { EVENT_TYPES } from '../data/taxonomy';
+import { formatEventWhen } from '../lib/dates';
+interface Props { event: Event }
+const { event } = Astro.props;
+const d = event.data;
+---
+<a class="card event" href={`/events/${event.id}/`}
+   data-city={d.city} data-type={d.type} data-start={d.date} data-end={eventLastDay(event)}>
+  <div class="meta"><span class="chip">{EVENT_TYPES[d.type]}</span><span>{formatEventWhen(d.date, d.time, d.end_date)}</span></div>
+  <h3 style="margin-top:6px">{d.title}</h3>
+  <div class="meta"><span>{d.city}{d.venue ? `, ${d.venue}` : ''}</span>{d.price && <span>· {d.price}</span>}</div>
+  {d.summary && <p>{d.summary}</p>}
+</a>

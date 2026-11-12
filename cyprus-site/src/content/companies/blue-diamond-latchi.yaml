@@ -1,0 +1,8 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Blue Diamond Latchi
+status: draft
+section: leisure-spa
+category: boats
+sources: []
+source_id: BOAT-004

@@ -1,0 +1,11 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Little Sins
+status: draft
+section: food
+category: cafes
+channel:
+  label: Instagram
+  url: https://www.instagram.com/littlesins.cy/
+sources: []
+source_id: CYP-175

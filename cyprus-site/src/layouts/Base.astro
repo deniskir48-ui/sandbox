@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+import { SITE, NAV, USE_FIXTURES } from '../config';
+
+interface Props {
+  title: string; // уникальный заголовок страницы (без названия сайта)
+  description: string;
+  noindex?: boolean;
+  jsonLd?: object;
+}
+const { title, description, noindex = false, jsonLd } = Astro.props;
+const fullTitle = title === SITE.name ? title : `${title} — ${SITE.name}`;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const path = Astro.url.pathname;
+const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/' && path.startsWith('/services/'));
+---
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {canonical && <link rel="canonical" href={canonical} />}
+    {(noindex || USE_FIXTURES) && <meta name="robots" content="noindex, nofollow" />}
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:locale" content="ru_RU" />
+    {canonical && <meta property="og:url" content={canonical} />}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+  </head>
+  <body>
+    <a class="visually-hidden" href="#main">К содержанию</a>
+    {USE_FIXTURES && (
+      <div class="fixture-banner">Тестовый режим: на странице технические фикстуры, а не реальные компании и события.</div>
+    )}
+    <header class="site-header">
+      <div class="container bar">
+        <a class="logo" href="/" aria-label={`${SITE.name} — на главную`}>{SITE.name}</a>
+        <nav class="nav" aria-label="Главное меню">
+          <details class="menu">
+            <summary aria-label="Открыть меню">Меню</summary>
+            <ul>
+              {NAV.map((item) => (
+                <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
+              ))}
+              <li><a href="/search/" aria-current={path.startsWith('/search/') ? 'page' : undefined}>Поиск</a></li>
+            </ul>
+          </details>
+          <a class="search-link" href="/search/" aria-label="Поиск">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
+            <span class="search-text">Поиск</span>
+          </a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="container">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <nav aria-label="Нижнее меню" class="foot-nav">
+          {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
+          <a href="/search/">Поиск</a>
+        </nav>
+        <p class="small muted">
+          Информация о компаниях и мероприятиях собрана из официальных источников; у каждой записи указаны источник и дата проверки.
+          Перед поездкой или покупкой уточняйте детали у организатора. Сайт не продаёт билеты и не получает оплату за размещение без явной пометки.
+        </p>
+        <p class="small muted">© {new Date().getFullYear()} {SITE.name}</p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .fixture-banner { background: #b42318; color: #fff; text-align: center; font-size: 0.85rem; padding: 6px 12px; }
+  .site-header { border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; }
+  .logo { font-weight: 700; color: var(--text); text-decoration: none; font-size: 1.05rem; white-space: nowrap; }
+  .nav { display: flex; align-items: center; gap: 4px; }
+  .menu summary {
+    list-style: none; cursor: pointer; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.95rem;
+  }
+  .menu summary::-webkit-details-marker { display: none; }
+  .menu ul {
+    position: absolute; left: 0; right: 0; top: 56px; margin: 0; padding: 8px 16px 16px; list-style: none;
+    background: var(--bg); border-bottom: 1px solid var(--border);
+  }
+  .menu li a { display: block; padding: 12px 4px; font-size: 1.05rem; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+  .menu a[aria-current='page'] { color: var(--accent); font-weight: 600; }
+  .search-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px; color: var(--text); text-decoration: none; }
+  .search-text { display: none; }
+  @media (min-width: 760px) {
+    .menu summary { display: none; }
+    .menu ul { position: static; display: flex; gap: 4px; padding: 0; border: 0; background: none; }
+    .menu li a { border: 0; padding: 8px 12px; font-size: 0.98rem; border-radius: 8px; }
+    .menu li a:hover { background: var(--surface); }
+    .menu li:last-child { display: none; } /* «Поиск» на десктопе — отдельной кнопкой */
+    .search-text { display: inline; }
+    .search-link { border: 1px solid var(--border); border-radius: 10px; padding: 7px 12px; }
+  }
+  .site-footer { border-top: 1px solid var(--border); padding: 24px 0 32px; background: var(--surface); }
+  .foot-nav { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 12px; }
+</style>
+
+<script>
+  // На десктопе меню всегда открыто; на мобильном закрываем после перехода.
+  const menu = document.querySelector<HTMLDetailsElement>('details.menu');
+  const mq = window.matchMedia('(min-width: 760px)');
+  const sync = () => { if (menu) menu.open = mq.matches; };
+  sync();
+  mq.addEventListener('change', sync);
+</script>

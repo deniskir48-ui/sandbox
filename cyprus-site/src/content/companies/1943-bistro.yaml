@@ -1,0 +1,9 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: 1943 Bistro
+status: draft
+section: food
+category: cafes
+city: Лимассол
+sources: []
+source_id: CYP-196

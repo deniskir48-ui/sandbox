@@ -1,0 +1,11 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Choice Flower
+status: draft
+section: other
+category: flowers
+channel:
+  label: Instagram @choice.flower.cy
+  url: https://www.instagram.com/choice.flower.cy/
+sources: []
+source_id: CYP-147

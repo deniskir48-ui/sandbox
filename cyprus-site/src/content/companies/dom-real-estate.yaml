@@ -1,0 +1,9 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: DOM Real Estate
+status: draft
+section: property-home
+category: real-estate
+website: https://dom.com.cy/about/contacts/
+sources: []
+source_id: CYP-180

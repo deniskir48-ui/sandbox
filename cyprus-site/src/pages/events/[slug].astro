@@ -1,0 +1,45 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SourceList from '../../components/SourceList.astro';
+import { EVENT_TYPES } from '../../data/taxonomy';
+import { getPublishedEvents, getCompanyMap, isUpcoming, eventLastDay, type Event } from '../../lib/data';
+import { formatEventWhen } from '../../lib/dates';
+
+export async function getStaticPaths() {
+  return (await getPublishedEvents()).map((event) => ({ params: { slug: event.id }, props: { event } }));
+}
+const { event } = Astro.props as { event: Event };
+const d = event.data;
+const past = !isUpcoming(event);
+const organizer = d.organizer ? (await getCompanyMap()).get(d.organizer) : undefined;
+const when = formatEventWhen(d.date, d.time, d.end_date);
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'Event', name: d.title,
+  startDate: d.time ? `${d.date}T${d.time}` : d.date,
+  ...(d.end_date && { endDate: d.end_date }),
+  eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+  location: { '@type': 'Place', name: d.venue ?? d.city, address: { '@type': 'PostalAddress', addressLocality: d.city, addressCountry: 'CY' } },
+  ...(d.summary && { description: d.summary }),
+  ...(d.ticket_url && { url: d.ticket_url }),
+};
+---
+<Base title={`${d.title} — ${d.city}, ${when}`} description={d.summary!} noindex={past} jsonLd={jsonLd}>
+  <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/events/', label: 'Афиша' }, { label: d.title }]} />
+  <article class="prose">
+    {past && <p class="notice">Это мероприятие уже прошло. <a href="/events/">Смотреть ближайшие</a></p>}
+    <p class="meta"><span class="chip">{EVENT_TYPES[d.type]}</span></p>
+    <h1>{d.title}</h1>
+    <dl class="facts">
+      <dt>Когда</dt><dd>{when}</dd>
+      <dt>Город</dt><dd>{d.city}</dd>
+      {d.venue && <><dt>Место</dt><dd>{d.venue}</dd></>}
+      {d.price && <><dt>Цена</dt><dd>{d.price}</dd></>}
+      {organizer && <><dt>Организатор</dt><dd><a href={`/services/${organizer.id}/`}>{organizer.data.name}</a></dd></>}
+    </dl>
+    {d.description ? <p>{d.description}</p> : d.summary && <p>{d.summary}</p>}
+    {!past && d.ticket_url && <p><a class="btn" href={d.ticket_url} rel="noopener" target="_blank">Билеты и подробности</a></p>}
+    <p class="small muted">Билеты продаёт организатор или билетная площадка. Перед покупкой проверьте дату и условия на официальной странице.</p>
+    <SourceList sources={d.sources} verifiedAt={d.verified_at} />
+  </article>
+</Base>

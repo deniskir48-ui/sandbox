@@ -1,0 +1,9 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: "bbf:"
+status: draft
+section: property-home
+category: real-estate
+website: https://bbf.com/contacts
+sources: []
+source_id: CYP-182

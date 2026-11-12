@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Greenland
+status: draft
+section: leisure-spa
+category: spa
+city: Эптагония
+website: https://www.greenland.cy/russian-banya/
+sources: []
+source_id: SPA-001

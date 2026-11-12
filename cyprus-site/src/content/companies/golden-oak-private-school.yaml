@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Golden Oak Private School
+status: draft
+section: education
+category: private-schools
+city: Лимассол
+website: https://goldenoakcyprus.com/golden-oak-privacy-policy-private-school-limassol/
+sources: []
+source_id: SCHOOL-015

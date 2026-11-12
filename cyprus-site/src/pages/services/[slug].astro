@@ -1,0 +1,52 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SourceList from '../../components/SourceList.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getCategory } from '../../data/taxonomy';
+import { getPublishedCompanies, getPublishedArticles, type Company } from '../../lib/data';
+
+export async function getStaticPaths() {
+  return (await getPublishedCompanies()).map((company) => ({ params: { slug: company.id }, props: { company } }));
+}
+const { company } = Astro.props as { company: Company };
+const d = company.data;
+const cat = getCategory(d.category)!;
+const related = (await getPublishedArticles()).filter((a) => a.data.companies.includes(company.id));
+const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
+const jsonLd = {
+  '@context': 'https://schema.org', '@type': 'LocalBusiness', name: d.name,
+  ...(d.website && { url: d.website }),
+  ...(d.city && { address: { '@type': 'PostalAddress', addressLocality: d.city, addressCountry: 'CY' } }),
+};
+---
+<Base title={`${d.name} — ${cat.title.toLowerCase()}${d.city ? `, ${d.city}` : ''}`} description={d.summary!} jsonLd={jsonLd}>
+  <Breadcrumbs items={[
+    { href: '/', label: 'Главная' }, { href: '/catalog/', label: 'Гид' },
+    { href: `/catalog/${cat.section.slug}/`, label: cat.section.title }, { label: d.name },
+  ]} />
+  <article class="prose">
+    <h1>{d.name}</h1>
+    <p class="meta"><span class="chip">{cat.title}</span>{d.city && <span>{d.city}</span>}</p>
+    <p>{d.description ?? d.summary}</p>
+
+    <dl class="facts">
+      <dt>Категория</dt><dd><a href={`/catalog/${cat.section.slug}/`}>{cat.section.title}</a> · {cat.title}</dd>
+      {d.city && <><dt>Город / регион</dt><dd>{d.city}</dd></>}
+      {d.network && <><dt>Сеть</dt><dd>{d.network}</dd></>}
+      {d.website && <><dt>Сайт</dt><dd><a href={d.website} rel="noopener" target="_blank">{host(d.website)}</a></dd></>}
+      {d.channel && <><dt>Канал</dt><dd><a href={d.channel.url} rel="noopener" target="_blank">{d.channel.label}</a></dd></>}
+    </dl>
+
+    {d.website && <p><a class="btn" href={d.website} rel="noopener" target="_blank">Официальный сайт</a></p>}
+
+    <SourceList sources={d.sources} verifiedAt={d.verified_at} />
+  </article>
+
+  {related.length > 0 && (
+    <>
+      <h2>Статьи по теме</h2>
+      <ul class="grid grid-2">{related.map((a) => <li><ArticleCard article={a} /></li>)}</ul>
+    </>
+  )}
+</Base>

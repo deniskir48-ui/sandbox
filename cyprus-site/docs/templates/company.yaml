@@ -1,0 +1,18 @@
+# Шаблон карточки компании. Скопируйте в src/content/companies/<slug>.yaml
+# <slug> = адрес страницы: /services/<slug>/ (латиница, цифры, дефисы).
+name: "Официальное название"
+status: draft            # draft — не видна на сайте; published — опубликована
+section: cars            # cars | education | property-home | leisure-spa | health-beauty | food | entertainment | other
+category: car-buying     # подкатегория раздела, список в src/data/taxonomy.ts
+city: "Лимассол"         # только подтверждённый город/регион; нет данных — удалите строку
+# network: "Название сети"   # если это филиал/кампус сети
+summary: "До 150 символов: что делает компания, без рекламных эпитетов."
+description: "2–4 предложения об услугах по официальному источнику."
+website: "https://..."   # только официальный сайт
+# channel:               # официальный публичный канал, если сайта нет
+#   label: "Instagram @..."
+#   url: "https://www.instagram.com/.../"
+sources:
+  - title: "Официальный сайт — страница услуг"
+    url: "https://..."
+verified_at: 2026-11-12  # дата, когда ВЫ проверили данные

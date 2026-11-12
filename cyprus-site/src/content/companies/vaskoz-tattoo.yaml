@@ -1,0 +1,8 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Vaskoz Tattoo
+status: draft
+section: health-beauty
+category: tattoo
+sources: []
+source_id: CYP-125

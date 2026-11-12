@@ -1,0 +1,53 @@
+---
+import Base from '../layouts/Base.astro';
+import SearchForm from '../components/SearchForm.astro';
+import EventCard from '../components/EventCard.astro';
+import ArticleCard from '../components/ArticleCard.astro';
+import Empty from '../components/Empty.astro';
+import { SITE } from '../config';
+import { SECTIONS } from '../data/taxonomy';
+import { getPublishedCompanies, getUpcomingEvents, getPublishedArticles } from '../lib/data';
+
+const companies = await getPublishedCompanies();
+const events = (await getUpcomingEvents()).slice(0, 6);
+const articles = (await getPublishedArticles()).slice(0, 6);
+const count = (slug: string) => companies.filter((c) => c.data.section === slug).length;
+---
+<Base title={SITE.name} description={SITE.tagline}>
+  <section class="hero">
+    <h1>Полезное о жизни на Кипре — в одном месте</h1>
+    <p class="lead">Проверенные компании и сервисы, ближайшие мероприятия и практические статьи для русскоязычных жителей острова.</p>
+    <SearchForm />
+  </section>
+
+  <div class="section-head"><h2>Гид по компаниям и сервисам</h2><a href="/catalog/">Все разделы</a></div>
+  <ul class="grid grid-3 sections">
+    {SECTIONS.map((s) => (
+      <li>
+        <a class="card" href={`/catalog/${s.slug}/`}>
+          <h3>{s.title}</h3>
+          <p class="small muted">{s.intro}</p>
+          <p class="small">{count(s.slug) > 0 ? `${count(s.slug)} проверенных` : 'Наполняется'}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <div class="section-head"><h2>Ближайшие мероприятия</h2><a href="/events/">Вся афиша</a></div>
+  {events.length > 0 ? (
+    <ul class="grid grid-3">{events.map((e) => <li><EventCard event={e} /></li>)}</ul>
+  ) : (
+    <Empty title="Афиша готовится">Добавим ближайшие мероприятия, как только проверим даты и ссылки на билеты.</Empty>
+  )}
+
+  <div class="section-head"><h2>Полезные статьи</h2><a href="/guides/">Все статьи</a></div>
+  {articles.length > 0 ? (
+    <ul class="grid grid-3">{articles.map((a) => <li><ArticleCard article={a} /></li>)}</ul>
+  ) : (
+    <Empty title="Первые статьи в работе">Практические материалы о покупке автомобиля, выборе школы, изучении греческого и других задачах появятся здесь.</Empty>
+  )}
+</Base>
+<style>
+  .hero { padding: 12px 0 8px; }
+  .sections h3 { font-size: 1rem; }
+</style>

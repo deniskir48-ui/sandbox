@@ -1,0 +1,18 @@
+# Шаблон мероприятия. Скопируйте в src/content/events/<slug>.yaml → /events/<slug>/
+# Рекомендуемый slug: <название>-<город>-<ГГГГ-ММ-ДД>
+title: "Название мероприятия"
+status: draft
+type: concert            # concert | theatre | standup | festival | exhibition | cinema | kids | sport | party | tour | other
+date: "2026-12-05"       # дата начала, ГГГГ-ММ-ДД
+time: "20:00"            # время начала по Кипру; неизвестно — удалите строку
+# end_date: "2026-12-07" # для многодневных
+city: "Лимассол"
+venue: "Площадка"
+summary: "1–2 предложения: что это за событие."
+ticket_url: "https://..."  # страница билетов или официальная страница
+# price: "€25–40"        # только проверенная цена
+# organizer: slug-компании   # если организатор опубликован в Гиде
+sources:
+  - title: "Официальная страница события"
+    url: "https://..."
+verified_at: 2026-11-12

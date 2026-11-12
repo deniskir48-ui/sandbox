@@ -1,0 +1,14 @@
+title: "Тестовый концерт (фикстура)"
+status: published
+type: concert
+date: "2030-06-01"
+time: 20:00
+city: "Город А"
+venue: "Тестовая площадка"
+summary: "Техническое событие для проверки афиши. Не настоящее мероприятие."
+ticket_url: "https://example.com/tickets"
+price: €10 (тест)
+sources:
+  - title: "Тестовый источник"
+    url: "https://example.com/source"
+verified_at: 2026-11-12

@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Foley’s School
+status: draft
+section: education
+category: private-schools
+city: Лимассол
+website: https://foleysschool.com/contact-us/
+sources: []
+source_id: SCHOOL-002

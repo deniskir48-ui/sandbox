@@ -1,0 +1,9 @@
+---
+// Пустое состояние: честно сообщаем, что проверенных данных пока нет.
+interface Props { title?: string }
+const { title = 'Пока здесь пусто' } = Astro.props;
+---
+<div class="empty" role="status">
+  <strong>{title}</strong>
+  <p style="margin:.35rem 0 0"><slot /></p>
+</div>

@@ -1,0 +1,9 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: ANYMASTER
+status: draft
+section: property-home
+category: home-repair
+website: https://anymaster.com/
+sources: []
+source_id: CYP-193

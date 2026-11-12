@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Elysium Hotel
+status: draft
+section: leisure-spa
+category: spa
+city: Пафос
+website: https://www.elysium-hotel.com/
+sources: []
+source_id: SPA-011

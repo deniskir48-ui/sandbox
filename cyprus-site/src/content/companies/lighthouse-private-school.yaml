@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Lighthouse Private School
+status: draft
+section: education
+category: private-schools
+city: Лимассол
+website: https://www.ourlighthouse.org/admissions
+sources: []
+source_id: SCHOOL-010

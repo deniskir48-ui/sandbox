@@ -1,0 +1,12 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Tiflis Restaurant
+status: draft
+section: food
+category: cafes
+website: https://tiflisrestaurant.com/
+channel:
+  label: Instagram
+  url: https://www.instagram.com/tiflis_cyprus/
+sources: []
+source_id: CYP-149

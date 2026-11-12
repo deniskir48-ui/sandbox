@@ -1,0 +1,12 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Musa Restaurant
+status: draft
+section: food
+category: cafes
+website: https://musa-restaurant.com/
+channel:
+  label: Instagram
+  url: https://www.instagram.com/musarestaurantcyprus/
+sources: []
+source_id: CYP-150

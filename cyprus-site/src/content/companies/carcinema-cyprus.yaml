@@ -1,0 +1,11 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: CarCinema Cyprus
+status: draft
+section: entertainment
+category: cinema
+channel:
+  label: Instagram @carcinemacy
+  url: https://www.instagram.com/carcinemacy/
+sources: []
+source_id: CYP-155

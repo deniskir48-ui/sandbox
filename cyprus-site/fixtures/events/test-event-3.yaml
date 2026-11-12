@@ -1,0 +1,15 @@
+title: "Тестовый фестиваль (фикстура)"
+status: published
+type: festival
+date: "2030-07-10"
+
+city: "Город Б"
+venue: "Тестовая площадка"
+summary: "Техническое событие для проверки афиши. Не настоящее мероприятие."
+ticket_url: "https://example.com/tickets"
+
+sources:
+  - title: "Тестовый источник"
+    url: "https://example.com/source"
+verified_at: 2026-11-12
+end_date: "2030-07-12"

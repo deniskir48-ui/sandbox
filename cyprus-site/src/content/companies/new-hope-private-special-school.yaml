@@ -1,0 +1,9 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: New Hope Private Special School
+status: draft
+section: education
+category: private-schools
+city: Никосия
+sources: []
+source_id: SCHOOL-035

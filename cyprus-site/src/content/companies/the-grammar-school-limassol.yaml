@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: The Grammar School Limassol
+status: draft
+section: education
+category: private-schools
+city: Лимассол
+website: https://grammarschool.com.cy/faqs/who-can-i-contact-if-i-have-a-general-enquiry-or-need-forms-e-g-newsletters-yearbook/
+sources: []
+source_id: SCHOOL-003

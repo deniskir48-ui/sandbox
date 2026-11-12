@@ -1,0 +1,26 @@
+---
+import Base from '../../layouts/Base.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import SearchForm from '../../components/SearchForm.astro';
+import { SECTIONS } from '../../data/taxonomy';
+import { getPublishedCompanies } from '../../lib/data';
+const companies = await getPublishedCompanies();
+const count = (slug: string) => companies.filter((c) => c.data.section === slug).length;
+---
+<Base title="Гид по компаниям и сервисам Кипра" description="Разделы гида: автомобили, образование, недвижимость, отдых, здоровье, кафе, развлечения и другие сервисы Кипра.">
+  <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { label: 'Гид' }]} />
+  <h1>Гид</h1>
+  <p class="lead">Компании и сервисы Кипра по разделам. В гид попадают только записи с проверенным источником и датой проверки.</p>
+  <SearchForm />
+  <ul class="grid grid-2" style="margin-top:20px">
+    {SECTIONS.map((s) => (
+      <li>
+        <a class="card" href={`/catalog/${s.slug}/`}>
+          <h3>{s.title}</h3>
+          <p class="small muted">{s.categories.map((c) => c.title).join(' · ')}</p>
+          <p class="small">{count(s.slug) > 0 ? `${count(s.slug)} проверенных` : 'Наполняется'}</p>
+        </a>
+      </li>
+    ))}
+  </ul>
+</Base>

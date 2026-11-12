@@ -1,0 +1,11 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: AM:PM
+status: draft
+section: food
+category: cafes
+channel:
+  label: Instagram
+  url: https://www.instagram.com/am.pm_cy/
+sources: []
+source_id: CYP-176

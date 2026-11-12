@@ -1,0 +1,14 @@
+---
+import { formatDate } from '../lib/dates';
+interface Props { sources: { title: string; url: string }[]; verifiedAt?: Date }
+const { sources, verifiedAt } = Astro.props;
+---
+{(sources.length > 0 || verifiedAt) && (
+  <section class="sources small muted" aria-label="Источники">
+    <h2 style="font-size:1rem">Источники и проверка</h2>
+    {sources.length > 0 && (
+      <ul>{sources.map((s) => <li><a href={s.url} rel="noopener" target="_blank">{s.title}</a></li>)}</ul>
+    )}
+    {verifiedAt && <p>Информация проверена: {formatDate(verifiedAt)}</p>}
+  </section>
+)}

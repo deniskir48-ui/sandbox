@@ -1,0 +1,12 @@
+name: "Тестовая компания 2 (фикстура)"
+status: published
+section: education
+category: greek
+city: "Город Б"
+summary: "Техническая запись для проверки вёрстки. Не настоящая компания."
+description: "Подробное описание тестовой записи. Используется только в режиме фикстур."
+website: "https://example.com/"
+sources:
+  - title: "Тестовый источник"
+    url: "https://example.com/source"
+verified_at: 2026-11-12

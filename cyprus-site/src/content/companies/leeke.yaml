@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: LEEKE
+status: draft
+section: education
+category: greek
+city: Онлайн
+website: https://leekegr.online/
+sources: []
+source_id: GREEK-007

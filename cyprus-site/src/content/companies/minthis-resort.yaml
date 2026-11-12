@@ -1,0 +1,10 @@
+# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
+# заполнить summary, description, sources, verified_at и только затем поставить status: published.
+name: Minthis Resort
+status: draft
+section: leisure-spa
+category: spa
+city: Цада
+website: https://www.minthisresort.com/
+sources: []
+source_id: SPA-007
