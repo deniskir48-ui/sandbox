@@ -4,6 +4,8 @@ import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CompanyCard from '../../components/CompanyCard.astro';
 import SourceList from '../../components/SourceList.astro';
+import ArticleCard from '../../components/ArticleCard.astro';
+import { getSection } from '../../data/taxonomy';
 import { getPublishedArticles, getCompanyMap, type Article } from '../../lib/data';
 import { formatDate, isoDate } from '../../lib/dates';
 import { SITE } from '../../config';
@@ -14,6 +16,9 @@ export async function getStaticPaths() {
 const { article } = Astro.props as { article: Article };
 const d = article.data;
 const { Content } = await render(article);
+const section = d.section ? getSection(d.section) : undefined;
+const minutes = Math.max(1, Math.round((article.body ?? '').split(/\s+/).filter(Boolean).length / 180));
+const others = (await getPublishedArticles()).filter((a) => a.id !== article.id).slice(0, 3);
 const map = await getCompanyMap();
 // Показываем только опубликованные компании; ссылки на черновики отбрасываются (их ловит check:data).
 const companies = d.companies.map((s) => map.get(s)).filter((c) => c !== undefined);
@@ -25,20 +30,38 @@ const jsonLd = {
 ---
 <Base title={d.title} description={d.description} jsonLd={jsonLd}>
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/guides/', label: 'Статьи' }, { label: d.title }]} />
-  <article class="prose">
+  <article class="article">
     {d.status === 'draft' && <p class="notice">Черновик статьи: текст ещё не утверждён для публикации на сайте.</p>}
-    <h1>{d.title}</h1>
-    <p class="small muted">
-      Опубликовано <time datetime={isoDate(d.published_at)}>{formatDate(d.published_at)}</time>
-      {d.updated_at && <> · обновлено <time datetime={isoDate(d.updated_at)}>{formatDate(d.updated_at)}</time></>}
-    </p>
-    <Content />
+    <header class="art-head">
+      <p class="eyebrow">{section?.title ?? 'О Кипре'}</p>
+      <h1>{d.title}</h1>
+      <p class="meta">
+        <span>Опубликовано <time datetime={isoDate(d.published_at)}>{formatDate(d.published_at)}</time></span>
+        {d.updated_at && <span>Обновлено <time datetime={isoDate(d.updated_at)}>{formatDate(d.updated_at)}</time></span>}
+        <span>{minutes} мин чтения</span>
+      </p>
+    </header>
+    <div class="prose"><Content /></div>
     {companies.length > 0 && (
-      <section>
+      <section class="art-companies">
         <h2>Компании из гида</h2>
         <ul class="grid grid-2">{companies.map((c) => <li><CompanyCard company={c} /></li>)}</ul>
       </section>
     )}
-    <SourceList sources={d.sources} />
+    <div class="prose"><SourceList sources={d.sources} /></div>
   </article>
+
+  {others.length > 0 && (
+    <>
+      <div class="section-head"><h2>Ещё статьи</h2><a href="/guides/">Все статьи</a></div>
+      <ul class="grid grid-3">{others.map((a) => <li><ArticleCard article={a} /></li>)}</ul>
+    </>
+  )}
 </Base>
+<style>
+  .article { max-width: 42rem; margin: 0 auto; }
+  .art-head { margin-bottom: 22px; padding-bottom: 18px; border-bottom: 1px solid var(--border); }
+  .art-head h1 { margin-top: 8px; }
+  .art-companies { margin-top: 28px; }
+  .art-companies h2 { margin-bottom: 12px; }
+</style>

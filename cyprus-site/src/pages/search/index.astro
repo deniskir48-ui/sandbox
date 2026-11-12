@@ -7,8 +7,8 @@ import SearchForm from '../../components/SearchForm.astro';
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { label: 'Поиск' }]} />
   <h1>Поиск</h1>
   <SearchForm autofocus />
-  <p class="small muted" id="status" aria-live="polite" style="margin-top:12px"></p>
-  <ul class="grid" id="results" style="margin-top:8px"></ul>
+  <p class="result-count" id="status" aria-live="polite" style="margin-top:14px"></p>
+  <ul class="grid grid-2" id="results" style="margin-top:8px"></ul>
   <noscript><p class="notice">Для поиска нужен JavaScript. Разделы доступны через меню: Гид, Афиша, Статьи.</p></noscript>
 </Base>
 

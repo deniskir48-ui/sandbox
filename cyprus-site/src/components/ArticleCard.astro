@@ -1,12 +1,20 @@
 ---
 import type { Article } from '../lib/data';
+import { getSection } from '../data/taxonomy';
 import { formatDate } from '../lib/dates';
 interface Props { article: Article }
 const { article } = Astro.props;
 const d = article.data;
+const section = d.section ? getSection(d.section) : undefined;
+const words = (article.body ?? '').split(/\s+/).filter(Boolean).length;
+const minutes = Math.max(1, Math.round(words / 180));
 ---
-<a class="card" href={`/guides/${article.id}/`}>
+<a class="card article" href={`/guides/${article.id}/`}>
+  <span class="eyebrow">{section?.title ?? 'О Кипре'}</span>
   <h3>{d.title}</h3>
-  <p class="muted small">{d.updated_at ? `Обновлено ${formatDate(d.updated_at)}` : formatDate(d.published_at)}</p>
-  <p>{d.description}</p>
+  <p class="desc">{d.description}</p>
+  <p class="meta" style="margin-top:10px">
+    <span>{formatDate(d.updated_at ?? d.published_at)}</span><span>{minutes} мин чтения</span>
+  </p>
+  {d.status === 'draft' && <span class="unverified">Черновик</span>}
 </a>

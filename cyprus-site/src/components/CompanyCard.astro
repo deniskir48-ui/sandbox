@@ -1,20 +1,16 @@
 ---
 import type { Company } from '../lib/data';
 import { getCategory } from '../data/taxonomy';
+import Icon from './Icon.astro';
 interface Props { company: Company }
 const { company } = Astro.props;
 const d = company.data;
 const cat = getCategory(d.category);
 ---
 <a class="card company" href={`/services/${company.id}/`} data-city={d.city ?? ''} data-category={d.category}>
+  <span class="eyebrow">{d.service_type ?? cat?.title}</span>
   <h3>{d.name}</h3>
-  <div class="meta">
-    <span>{d.service_type ?? cat?.title}</span>
-    {d.city && <span>· {d.city}</span>}
-  </div>
-  {d.summary && <p>{d.summary}</p>}
-  {d.status === 'draft' && <p class="unverified">Данные не проверены</p>}
+  {d.city && <p class="loc"><Icon name="pin" size={15} />{d.city}</p>}
+  {d.summary && <p class="desc" style="margin-top:6px">{d.summary}</p>}
+  {d.status === 'draft' && <span class="unverified">Не проверено</span>}
 </a>
-<style>
-  .unverified { font-size: 0.78rem; color: var(--warn-text); background: var(--warn-bg); display: inline-block; padding: 1px 8px; border-radius: 999px; margin-top: 8px !important; }
-</style>

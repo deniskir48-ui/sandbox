@@ -3,6 +3,8 @@ import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SourceList from '../../components/SourceList.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
+import CompanyCard from '../../components/CompanyCard.astro';
+import Icon from '../../components/Icon.astro';
 import { getCategory } from '../../data/taxonomy';
 import { getPublishedCompanies, getPublishedArticles, type Company } from '../../lib/data';
 
@@ -13,6 +15,11 @@ const { company } = Astro.props as { company: Company };
 const d = company.data;
 const cat = getCategory(d.category)!;
 const related = (await getPublishedArticles()).filter((a) => a.data.companies.includes(company.id));
+// Похожие: та же категория, сначала тот же город. Порядок не зависит от оплаты.
+const similar = (await getPublishedCompanies())
+  .filter((c) => c.id !== company.id && c.data.category === d.category)
+  .sort((a, b) => Number(b.data.city === d.city) - Number(a.data.city === d.city))
+  .slice(0, 3);
 const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
 const jsonLd = {
   '@context': 'https://schema.org', '@type': 'LocalBusiness', name: d.name,
@@ -25,33 +32,48 @@ const jsonLd = {
     { href: '/', label: 'Главная' }, { href: '/catalog/', label: 'Гид' },
     { href: `/catalog/${cat.section.slug}/`, label: cat.section.title }, { label: d.name },
   ]} />
-  <article class="prose">
-    <h1>{d.name}</h1>
-    <p class="meta"><span class="chip">{d.service_type ?? cat.title}</span>{d.city && <span>{d.city}</span>}</p>
-    {d.status === 'draft' && (
-      <p class="notice">Карточка из внутренней базы, данные ещё не проверены. Уточняйте информацию на официальном сайте компании.</p>
-    )}
-    {(d.description ?? d.summary) && <p>{d.description ?? d.summary}</p>}
+  <div class="detail">
+    <article>
+      <p class="eyebrow">{d.service_type ?? cat.title}</p>
+      <h1>{d.name}</h1>
+      {d.city && <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}</p>}
+      {d.status === 'draft' && (
+        <p class="notice">Карточка из внутренней базы, данные ещё не проверены. Уточняйте информацию на официальном сайте компании.</p>
+      )}
+      {(d.description ?? d.summary) && <div class="prose"><p>{d.description ?? d.summary}</p></div>}
+      <SourceList sources={d.sources} verifiedAt={d.verified_at} />
+    </article>
 
-    <dl class="facts">
-      <dt>Категория</dt><dd><a href={`/catalog/${cat.section.slug}/`}>{cat.section.title}</a> · {cat.title}</dd>
-      {d.city && <><dt>Город / регион</dt><dd>{d.city}</dd></>}
-      {d.service_type && <><dt>Тип услуги</dt><dd>{d.service_type}</dd></>}
-      {d.languages && <><dt>Языки</dt><dd>{d.languages}</dd></>}
-      {d.network && <><dt>Сеть</dt><dd>{d.network}</dd></>}
-      {d.website && <><dt>Сайт</dt><dd><a href={d.website} rel="noopener" target="_blank">{host(d.website)}</a></dd></>}
-      {d.channel && <><dt>Канал</dt><dd><a href={d.channel.url} rel="noopener" target="_blank">{d.channel.label}</a></dd></>}
-    </dl>
-
-    {d.website && <p><a class="btn" href={d.website} rel="noopener" target="_blank">Официальный сайт</a></p>}
-
-    <SourceList sources={d.sources} verifiedAt={d.verified_at} />
-  </article>
+    <aside>
+      <div class="side-card">
+        <dl class="facts">
+          <div><dt>Раздел</dt><dd><a href={`/catalog/${cat.section.slug}/`}>{cat.section.title}</a> · {cat.title}</dd></div>
+          {d.city && <div><dt>Город / регион</dt><dd>{d.city}</dd></div>}
+          {d.languages && <div><dt>Языки</dt><dd>{d.languages}</dd></div>}
+          {d.network && <div><dt>Сеть</dt><dd>{d.network}</dd></div>}
+          {d.website && <div><dt>Сайт</dt><dd><a href={d.website} rel="noopener" target="_blank">{host(d.website)}</a></dd></div>}
+          {d.channel && <div><dt>Канал</dt><dd><a href={d.channel.url} rel="noopener" target="_blank">{d.channel.label}</a></dd></div>}
+        </dl>
+        {d.website ? (
+          <a class="btn" href={d.website} rel="noopener" target="_blank">Официальный сайт <Icon name="external" size={16} /></a>
+        ) : d.channel && (
+          <a class="btn" href={d.channel.url} rel="noopener" target="_blank">{d.channel.label} <Icon name="external" size={16} /></a>
+        )}
+      </div>
+    </aside>
+  </div>
 
   {related.length > 0 && (
     <>
-      <h2>Статьи по теме</h2>
-      <ul class="grid grid-2">{related.map((a) => <li><ArticleCard article={a} /></li>)}</ul>
+      <div class="section-head"><h2>Статьи по теме</h2></div>
+      <ul class="grid grid-3">{related.map((a) => <li><ArticleCard article={a} /></li>)}</ul>
+    </>
+  )}
+
+  {similar.length > 0 && (
+    <>
+      <div class="section-head"><h2>Ещё в категории «{cat.title}»</h2><a href={`/catalog/${cat.section.slug}/?category=${cat.slug}`}>Все</a></div>
+      <ul class="grid grid-3">{similar.map((c) => <li><CompanyCard company={c} /></li>)}</ul>
     </>
   )}
 </Base>

@@ -2,21 +2,51 @@
 import type { Event } from '../lib/data';
 import { eventLastDay } from '../lib/data';
 import { EVENT_TYPES } from '../data/taxonomy';
-import { formatEventWhen } from '../lib/dates';
+import { stubParts, formatDay } from '../lib/dates';
+import Icon from './Icon.astro';
 interface Props { event: Event }
 const { event } = Astro.props;
 const d = event.data;
+const stub = stubParts(d.date, d.end_date);
+const isRange = !!d.end_date && d.end_date !== d.date;
+const when = [isRange ? `по ${formatDay(d.end_date!, false).replace(/ \d{4}$/, '')}` : d.time ? `в ${d.time}` : '', d.price ?? '']
+  .filter(Boolean).join(' · ');
 ---
 <a class="card event" href={`/events/${event.id}/`}
    data-city={d.city} data-type={d.type} data-start={d.date} data-end={eventLastDay(event)}
    data-priority={d.priority} data-key={`${d.date}T${d.time ?? '00:00'}`}>
-  <div class="meta">{d.priority === 1 && <span class="chip top">Главное</span>}<span class="chip">{EVENT_TYPES[d.type]}</span><span>{formatEventWhen(d.date, d.time, d.end_date)}</span></div>
-  <h3 style="margin-top:6px">{d.title}</h3>
-  <div class="meta"><span>{d.city}{d.venue ? `, ${d.venue}` : ''}</span>{d.price && <span>· {d.price}</span>}</div>
-  {d.summary && <p>{d.summary}</p>}
-  {d.status === 'draft' && <p class="unverified">Данные не проверены</p>}
+  <div class="stub" aria-hidden="true">
+    <span class:list={['stub-day', isRange && 'range']}>{stub.day}</span>
+    <span class="stub-mon">{stub.month}</span>
+    <span class="stub-wd">{stub.weekday}</span>
+  </div>
+  <div class="ev-body">
+    <div class="ev-tags">
+      {d.priority === 1 && <span class="badge-top">Главное</span>}
+      <span class="tag">{EVENT_TYPES[d.type]}</span>
+    </div>
+    <h3>{d.title}</h3>
+    <p class="loc"><Icon name="pin" size={15} />{d.city}{d.venue ? ` · ${d.venue}` : ''}</p>
+    {when && <p class="ev-when">{when}</p>}
+    {d.summary && <p class="desc">{d.summary}</p>}
+    {d.status === 'draft' && <span class="unverified">Не проверено</span>}
+  </div>
 </a>
 <style>
-  .chip.top { background: var(--accent); color: var(--bg); }
-  .unverified { font-size: 0.78rem; color: var(--warn-text); background: var(--warn-bg); display: inline-block; padding: 1px 8px; border-radius: 999px; margin-top: 8px !important; }
+  .event { display: grid; grid-template-columns: 70px minmax(0, 1fr); gap: 14px; padding: 0; overflow: hidden; }
+  .stub {
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 1px;
+    padding: 16px 4px; background: var(--accent-soft); color: var(--accent-ink);
+    border-right: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+    text-align: center; line-height: 1.1;
+  }
+  .stub-day { font-family: var(--font-display); font-weight: 600; font-size: 1.35rem; letter-spacing: -0.03em; white-space: nowrap; }
+  .stub-day.range { font-size: 1rem; letter-spacing: -0.02em; }
+  .stub-mon { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stub-wd { font-size: 0.74rem; opacity: 0.8; margin-top: 2px; }
+  .ev-body { padding: 14px 16px 16px 0; min-width: 0; }
+  .ev-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ev-body h3 { margin: 8px 0 4px; }
+  .ev-when { font-size: 0.86rem; color: var(--muted); margin: 2px 0 6px !important; }
+  .event .desc { -webkit-line-clamp: 2; }
 </style>

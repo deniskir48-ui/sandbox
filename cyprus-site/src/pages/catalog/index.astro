@@ -2,26 +2,45 @@
 import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SearchForm from '../../components/SearchForm.astro';
+import Icon from '../../components/Icon.astro';
 import { SECTIONS } from '../../data/taxonomy';
 import { getPublishedCompanies } from '../../lib/data';
 const companies = await getPublishedCompanies();
 const count = (slug: string) => companies.filter((c) => c.data.section === slug).length;
+const catCount = (slug: string) => companies.filter((c) => c.data.category === slug).length;
 ---
 <Base title="Гид по компаниям и сервисам Кипра" description="Разделы гида: автомобили, образование, недвижимость, отдых, здоровье, кафе, развлечения и другие сервисы Кипра.">
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { label: 'Гид' }]} />
-  <h1>Гид</h1>
-  <p class="lead">Компании и сервисы Кипра по разделам. В гид попадают только записи с проверенным источником и датой проверки.</p>
+  <div class="page-head">
+    <h1>Гид</h1>
+    <p class="lead">Компании и сервисы Кипра по разделам. В гид попадают записи с проверенным источником и датой проверки.</p>
+  </div>
   <SearchForm />
-  <ul class="grid grid-2" style="margin-top:20px">
+  <ul class="grid grid-2 sections">
     {SECTIONS.map((s) => (
       <li>
-        <a class="card" href={`/catalog/${s.slug}/`}>
-          <h3>{s.title}</h3>
-          <p class="small muted">{s.categories.map((c) => c.title).join(' · ')}</p>
-          <p class="small">{count(s.slug) > 0 ? `Компаний: ${count(s.slug)}` : 'Наполняется'}</p>
+        <a class="card sec" href={`/catalog/${s.slug}/`}>
+          <span class="sec-icon"><Icon name={s.slug} size={24} /></span>
+          <span class="sec-body">
+            <span class="sec-title">{s.title}</span>
+            <span class="sec-cats">
+              {s.categories.map((c) => <span>{c.title}{catCount(c.slug) > 0 && <em>{catCount(c.slug)}</em>}</span>)}
+            </span>
+          </span>
+          <span class="sec-count">{count(s.slug) > 0 ? count(s.slug) : 'скоро'}</span>
         </a>
       </li>
     ))}
   </ul>
   <p class="cta-add">Представляете компанию, которой здесь нет? <a href="/add-company/">Предложите её для гида</a></p>
 </Base>
+<style>
+  .sections { margin-top: 22px; }
+  .sec { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 14px; align-items: start; }
+  .sec-icon { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent-ink); }
+  .sec-title { display: block; font-weight: 700; font-size: 1.05rem; margin: 2px 0 6px; }
+  .sec:hover .sec-title { color: var(--accent-ink); }
+  .sec-cats { display: flex; flex-wrap: wrap; gap: 4px 12px; font-size: 0.88rem; color: var(--muted); }
+  .sec-cats em { font-style: normal; margin-left: 5px; color: var(--text); font-variant-numeric: tabular-nums; }
+  .sec-count { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
+</style>

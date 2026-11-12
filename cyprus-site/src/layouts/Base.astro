@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import Icon from '../components/Icon.astro';
 import { SITE, NAV, USE_FIXTURES, PREVIEW_DRAFTS } from '../config';
 
 interface Props {
@@ -23,6 +24,7 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
     {(noindex || USE_FIXTURES || PREVIEW_DRAFTS) && <meta name="robots" content="noindex, nofollow" />}
+    <meta name="theme-color" content="#0a6b76" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -32,89 +34,136 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
   </head>
   <body>
-    <a class="visually-hidden" href="#main">К содержанию</a>
+    <a class="skip" href="#main">К содержанию</a>
     {PREVIEW_DRAFTS && (
-      <div class="fixture-banner preview">Предпросмотр: показаны все записи внутренней базы, включая непроверенные.</div>
+      <div class="mode-banner preview">Предпросмотр: показаны все записи внутренней базы, включая непроверенные.</div>
     )}
     {USE_FIXTURES && (
-      <div class="fixture-banner">Тестовый режим: на странице технические фикстуры, а не реальные компании и события.</div>
+      <div class="mode-banner">Тестовый режим: на странице технические фикстуры, а не реальные компании и события.</div>
     )}
     <header class="site-header">
       <div class="container bar">
-        <a class="logo" href="/" aria-label={`${SITE.name} — на главную`}>{SITE.name}</a>
+        <a class="logo" href="/" aria-label={`${SITE.name} — на главную`}>
+          <span class="logo-mark" aria-hidden="true">
+            <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="currentColor"/><path d="M6 19c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2" fill="none" style="stroke: var(--bg)" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="11.5" r="3.2" style="fill: var(--sun)"/></svg>
+          </span>
+          <span class="logo-text">{SITE.name}</span>
+        </a>
         <nav class="nav" aria-label="Главное меню">
           <details class="menu">
-            <summary aria-label="Открыть меню">Меню</summary>
+            <summary aria-label="Меню"><Icon name="menu" size={22} /><span>Меню</span></summary>
             <ul>
               {NAV.map((item) => (
                 <li><a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>{item.label}</a></li>
               ))}
-              <li><a href="/search/" aria-current={path.startsWith('/search/') ? 'page' : undefined}>Поиск</a></li>
+              <li class="only-mobile"><a href="/search/" aria-current={path.startsWith('/search/') ? 'page' : undefined}>Поиск</a></li>
             </ul>
           </details>
-          <a class="search-link" href="/search/" aria-label="Поиск">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-3.5-3.5"></path></svg>
-            <span class="search-text">Поиск</span>
-          </a>
+          <a class="search-link" href="/search/" aria-label="Поиск"><Icon name="search" size={20} /><span class="search-text">Поиск</span></a>
         </nav>
       </div>
     </header>
+
     <main id="main" class="container">
       <slot />
     </main>
+
     <footer class="site-footer">
-      <div class="container">
-        <nav aria-label="Нижнее меню" class="foot-nav">
+      <div class="container foot">
+        <div class="foot-brand">
+          <a class="logo" href="/"><span class="logo-text">{SITE.name}</span></a>
+          <p>{SITE.tagline}.</p>
+        </div>
+        <nav aria-label="Разделы сайта" class="foot-col">
+          <span class="foot-title">Разделы</span>
           {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
           <a href="/search/">Поиск</a>
-          <a href="/add-company/">Добавить компанию</a>
         </nav>
-        <p class="small muted">
-          Информация о компаниях и мероприятиях собрана из официальных источников; у каждой записи указаны источник и дата проверки.
-          Перед поездкой или покупкой уточняйте детали у организатора. Сайт не продаёт билеты и не получает оплату за размещение без явной пометки.
+        <div class="foot-col">
+          <span class="foot-title">Компаниям</span>
+          <a href="/add-company/">Добавить компанию</a>
+          <a href="/about/">Как мы проверяем информацию</a>
+        </div>
+        <p class="foot-note">
+          Публикуем компании и события только после проверки по официальным источникам, у каждой записи указаны источник и дата проверки.
+          Перед поездкой или покупкой уточняйте детали у организатора. Билеты не продаём. Платные размещения, если появятся, будут явно помечены.
+          <br />© {new Date().getFullYear()} {SITE.name}
         </p>
-        <p class="small muted">© {new Date().getFullYear()} {SITE.name}</p>
       </div>
     </footer>
   </body>
 </html>
 
 <style>
-  .fixture-banner { background: #b42318; color: #fff; text-align: center; font-size: 0.85rem; padding: 6px 12px; }
-  .fixture-banner.preview { background: #8a5a00; }
-  .site-header { border-bottom: 1px solid var(--border); background: var(--bg); position: sticky; top: 0; z-index: 10; }
-  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px; }
-  .logo { font-weight: 700; color: var(--text); text-decoration: none; font-size: 1.05rem; white-space: nowrap; }
-  .nav { display: flex; align-items: center; gap: 4px; }
+  .skip { position: absolute; left: -9999px; top: 8px; z-index: 50; background: var(--accent); color: var(--on-accent); padding: 8px 12px; border-radius: 8px; }
+  .skip:focus { left: 8px; }
+  .mode-banner { background: #b42318; color: #fff; text-align: center; font-size: 0.84rem; padding: 6px 16px; }
+  .mode-banner.preview { background: #7a5200; }
+
+  .site-header {
+    position: sticky; top: 0; z-index: 20;
+    background: color-mix(in srgb, var(--bg) 88%, transparent);
+    backdrop-filter: saturate(1.4) blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 62px; }
+  .logo { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; min-width: 0; }
+  .logo:hover { color: var(--text); }
+  .logo-mark { color: var(--accent); display: inline-flex; flex: none; }
+  .logo-text { font-family: var(--font-display); font-weight: 600; font-size: 1rem; letter-spacing: -0.01em; white-space: nowrap; }
+
+  .nav { display: flex; align-items: center; gap: 6px; }
   .menu summary {
-    list-style: none; cursor: pointer; padding: 8px 12px; border: 1px solid var(--border); border-radius: 10px; font-size: 0.95rem;
+    list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;
+    padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px; font-size: 0.92rem; font-weight: 600;
   }
   .menu summary::-webkit-details-marker { display: none; }
   .menu ul {
-    position: absolute; left: 0; right: 0; top: 56px; margin: 0; padding: 8px 16px 16px; list-style: none;
-    background: var(--bg); border-bottom: 1px solid var(--border);
+    position: absolute; left: 0; right: 0; top: 62px; margin: 0; padding: 8px 16px 18px; list-style: none;
+    background: var(--bg); border-bottom: 1px solid var(--border); box-shadow: 0 16px 24px -16px rgb(0 0 0 / 0.25);
   }
-  .menu li a { display: block; padding: 12px 4px; font-size: 1.05rem; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
-  .menu a[aria-current='page'] { color: var(--accent); font-weight: 600; }
-  .search-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px; color: var(--text); text-decoration: none; }
+  .menu li a { display: block; padding: 13px 4px; font-size: 1.08rem; font-weight: 600; color: var(--text); text-decoration: none; border-bottom: 1px solid var(--border); }
+  .menu li:last-child a { border-bottom: 0; }
+  .menu a[aria-current='page'] { color: var(--accent); }
+  .search-link {
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 40px; height: 40px;
+    border-radius: 999px; color: var(--text); text-decoration: none; border: 1px solid var(--border);
+  }
   .search-text { display: none; }
-  @media (min-width: 760px) {
+
+  @media (min-width: 820px) {
     .menu summary { display: none; }
-    .menu ul { position: static; display: flex; gap: 4px; padding: 0; border: 0; background: none; }
-    .menu li a { border: 0; padding: 8px 12px; font-size: 0.98rem; border-radius: 8px; }
+    .menu ul { position: static; display: flex; gap: 2px; padding: 0; border: 0; background: none; box-shadow: none; }
+    .menu li a { border: 0; padding: 8px 14px; font-size: 0.97rem; border-radius: 999px; }
     .menu li a:hover { background: var(--surface); }
-    .menu li:last-child { display: none; } /* «Поиск» на десктопе — отдельной кнопкой */
+    .menu a[aria-current='page'] { background: var(--accent-soft); color: var(--accent-ink); }
+    .only-mobile { display: none; }
+    .search-link { width: auto; padding: 8px 14px; font-weight: 600; font-size: 0.95rem; }
+    .search-link:hover { border-color: var(--accent); color: var(--accent-ink); }
     .search-text { display: inline; }
-    .search-link { border: 1px solid var(--border); border-radius: 10px; padding: 7px 12px; }
+    .logo-text { font-size: 1.1rem; }
   }
-  .site-footer { border-top: 1px solid var(--border); padding: 24px 0 32px; background: var(--surface); }
-  .foot-nav { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-bottom: 12px; }
+
+  .site-footer { background: var(--footer-bg); color: var(--footer-text); margin-top: 24px; }
+  .foot { display: grid; gap: 24px; padding-top: 36px; padding-bottom: 36px; grid-template-columns: 1fr 1fr; }
+  .foot-brand { grid-column: 1 / -1; }
+  .foot-brand p { color: var(--footer-muted); margin: 8px 0 0; max-width: 28rem; font-size: 0.95rem; }
+  .site-footer .logo, .site-footer .logo:hover { color: var(--footer-text); }
+  .foot-col { display: flex; flex-direction: column; gap: 8px; }
+  .foot-title { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--footer-muted); margin-bottom: 2px; }
+  .foot-col a { color: var(--footer-text); text-decoration: none; }
+  .foot-col a:hover { text-decoration: underline; color: #fff; }
+  .foot-note { grid-column: 1 / -1; margin: 8px 0 0; padding-top: 18px; border-top: 1px solid rgb(255 255 255 / 0.12); font-size: 0.82rem; color: var(--footer-muted); }
+  @media (min-width: 820px) {
+    .foot { grid-template-columns: 2fr 1fr 1fr; }
+    .foot-brand { grid-column: auto; }
+  }
 </style>
 
 <script>
-  // На десктопе меню всегда открыто; на мобильном закрываем после перехода.
+  // На широком экране меню всегда раскрыто; на телефоне — по кнопке.
   const menu = document.querySelector<HTMLDetailsElement>('details.menu');
-  const mq = window.matchMedia('(min-width: 760px)');
+  const mq = window.matchMedia('(min-width: 820px)');
   const sync = () => { if (menu) menu.open = mq.matches; };
   sync();
   mq.addEventListener('change', sync);

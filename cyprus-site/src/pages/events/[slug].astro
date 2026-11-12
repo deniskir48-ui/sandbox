@@ -3,8 +3,10 @@ import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SourceList from '../../components/SourceList.astro';
 import { EVENT_TYPES } from '../../data/taxonomy';
-import { getPublishedEvents, getCompanyMap, isUpcoming, eventLastDay, type Event } from '../../lib/data';
-import { formatEventWhen } from '../../lib/dates';
+import { getPublishedEvents, getUpcomingEvents, getCompanyMap, isUpcoming, eventLastDay, type Event } from '../../lib/data';
+import { formatEventWhen, stubParts } from '../../lib/dates';
+import Icon from '../../components/Icon.astro';
+import EventCard from '../../components/EventCard.astro';
 
 export async function getStaticPaths() {
   return (await getPublishedEvents()).map((event) => ({ params: { slug: event.id }, props: { event } }));
@@ -14,6 +16,8 @@ const d = event.data;
 const past = !isUpcoming(event);
 const organizer = d.organizer ? (await getCompanyMap()).get(d.organizer) : undefined;
 const when = formatEventWhen(d.date, d.time, d.end_date);
+const stub = stubParts(d.date, d.end_date);
+const more = (await getUpcomingEvents()).filter((e) => e.id !== event.id && e.data.city === d.city).slice(0, 3);
 const jsonLd = {
   '@context': 'https://schema.org', '@type': 'Event', name: d.title,
   startDate: d.time ? `${d.date}T${d.time}` : d.date,
@@ -26,21 +30,52 @@ const jsonLd = {
 ---
 <Base title={`${d.title} — ${d.city}, ${when}`} description={d.summary!} noindex={past} jsonLd={jsonLd}>
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/events/', label: 'Афиша' }, { label: d.title }]} />
-  <article class="prose">
-    {d.status === 'draft' && !past && <p class="notice">Событие из рабочей таблицы афиши, данные ещё не перепроверены. Дату, время и цену уточняйте по ссылке на источник.</p>}
-    {past && <p class="notice">Это мероприятие уже прошло. <a href="/events/">Смотреть ближайшие</a></p>}
-    <p class="meta"><span class="chip">{EVENT_TYPES[d.type]}</span></p>
-    <h1>{d.title}</h1>
-    <dl class="facts">
-      <dt>Когда</dt><dd>{when}</dd>
-      <dt>Город</dt><dd>{d.city}</dd>
-      {d.venue && <><dt>Место</dt><dd>{d.venue}</dd></>}
-      {d.price && <><dt>Цена</dt><dd>{d.price}</dd></>}
-      {organizer && <><dt>Организатор</dt><dd><a href={`/services/${organizer.id}/`}>{organizer.data.name}</a></dd></>}
-    </dl>
-    {d.description ? <p>{d.description}</p> : d.summary && <p>{d.summary}</p>}
-    {!past && d.ticket_url && <p><a class="btn" href={d.ticket_url} rel="noopener" target="_blank">Билеты и подробности</a></p>}
-    <p class="small muted">Билеты продаёт организатор или билетная площадка. Перед покупкой проверьте дату и условия на официальной странице.</p>
-    <SourceList sources={d.sources} verifiedAt={d.verified_at} />
-  </article>
+  <div class="detail">
+    <article>
+      {d.status === 'draft' && !past && <p class="notice">Событие из рабочей таблицы афиши, данные ещё не перепроверены. Дату, время и цену уточняйте по ссылке на источник.</p>}
+      {past && <p class="notice">Это мероприятие уже прошло. <a href="/events/">Смотреть ближайшие</a></p>}
+      <div class="ev-tags">
+        {d.priority === 1 && <span class="badge-top">Главное</span>}
+        <span class="tag">{EVENT_TYPES[d.type]}</span>
+      </div>
+      <h1 style="margin-top:10px">{d.title}</h1>
+      <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}{d.venue ? ` · ${d.venue}` : ''}</p>
+      {(d.description ?? d.summary) && <div class="prose"><p>{d.description ?? d.summary}</p></div>}
+      <SourceList sources={d.sources} verifiedAt={d.verified_at} />
+    </article>
+
+    <aside>
+      <div class="side-card ticket">
+        <div class="ticket-date">
+          <span class="td-day">{stub.day}</span>
+          <span class="td-rest">{stub.month}<br />{stub.weekday}</span>
+        </div>
+        <dl class="facts">
+          <div><dt>Когда</dt><dd>{when}</dd></div>
+          <div><dt>Где</dt><dd>{d.city}{d.venue ? `, ${d.venue}` : ''}</dd></div>
+          {d.price && <div><dt>Цена</dt><dd>{d.price}</dd></div>}
+          {organizer && <div><dt>Организатор</dt><dd><a href={`/services/${organizer.id}/`}>{organizer.data.name}</a></dd></div>}
+        </dl>
+        {!past && d.ticket_url && <a class="btn" href={d.ticket_url} rel="noopener" target="_blank">Билеты и подробности <Icon name="external" size={16} /></a>}
+        <p class="small muted" style="margin:12px 0 0">Билеты продаёт организатор или билетная площадка. Перед покупкой проверьте дату и условия.</p>
+      </div>
+    </aside>
+  </div>
+
+  {more.length > 0 && (
+    <>
+      <div class="section-head"><h2>Ещё в городе {d.city}</h2><a href={`/events/?city=${encodeURIComponent(d.city)}`}>Все</a></div>
+      <ul class="grid grid-3">{more.map((e) => <li><EventCard event={e} /></li>)}</ul>
+    </>
+  )}
 </Base>
+<style>
+  .ev-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .ticket { padding-top: 0; overflow: hidden; }
+  .ticket-date {
+    display: flex; align-items: center; gap: 12px; margin: 0 -18px 16px; padding: 14px 18px;
+    background: var(--accent); color: var(--on-accent);
+  }
+  .td-day { font-family: var(--font-display); font-weight: 600; font-size: 2rem; letter-spacing: -0.03em; line-height: 1; }
+  .td-rest { font-size: 0.85rem; font-weight: 600; line-height: 1.25; text-transform: uppercase; letter-spacing: 0.04em; }
+</style>

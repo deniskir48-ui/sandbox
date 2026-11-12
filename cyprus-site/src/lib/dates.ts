@@ -25,3 +25,24 @@ export function formatDate(d: Date): string {
 }
 
 export const isoDate = (d: Date) => d.toISOString().slice(0, 10);
+
+const MONTHS_SHORT = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
+const WEEKDAYS_FULL = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
+
+/** Части «корешка» карточки события: «14–15» / «ноя» / «сб–вс» и подпись для текста. */
+export function stubParts(date: string, endDate?: string) {
+  const [y, m, d] = date.split('-').map(Number);
+  const wd = new Date(Date.UTC(y, m - 1, d)).getUTCDay();
+  if (endDate && endDate !== date) {
+    const [y2, m2, d2] = endDate.split('-').map(Number);
+    const wd2 = new Date(Date.UTC(y2, m2 - 1, d2)).getUTCDay();
+    const sameMonth = m === m2;
+    return {
+      day: sameMonth ? `${d}–${d2}` : `${d}`,
+      month: sameMonth ? MONTHS_SHORT[m - 1] : `${MONTHS_SHORT[m - 1]}–${MONTHS_SHORT[m2 - 1]}`,
+      weekday: `${WEEKDAYS_FULL[wd]}–${WEEKDAYS_FULL[wd2]}`,
+      label: formatEventWhen(date, undefined, endDate),
+    };
+  }
+  return { day: `${d}`, month: MONTHS_SHORT[m - 1], weekday: WEEKDAYS_FULL[wd], label: formatDay(date) };
+}

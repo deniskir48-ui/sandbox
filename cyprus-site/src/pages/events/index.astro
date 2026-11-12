@@ -12,8 +12,10 @@ const types = [...new Set(events.map((e) => e.data.type))];
 ---
 <Base title="Афиша Кипра: ближайшие мероприятия" description="Предстоящие концерты, спектакли, фестивали и другие события на Кипре с датами, местами и ссылками на официальные источники и билеты.">
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { label: 'Афиша' }]} />
-  <h1>Афиша</h1>
-  <p class="lead">Ближайшие мероприятия на Кипре. Билеты мы не продаём — ведём на официальные страницы организаторов и билетных площадок.</p>
+  <div class="page-head">
+    <h1>Афиша</h1>
+    <p class="lead">Ближайшие мероприятия на Кипре. Сначала главное, потом всё остальное. Билеты мы не продаём, а ведём на официальные страницы организаторов и площадок.</p>
+  </div>
 
   {events.length > 0 ? (
     <>
@@ -46,8 +48,8 @@ const types = [...new Set(events.map((e) => e.data.type))];
           </select>
         </label>
       </form>
-      <p class="small muted" id="count" aria-live="polite">Найдено: {events.length}</p>
-      <ul class="grid grid-2" id="list">{events.map((e) => <li><EventCard event={e} /></li>)}</ul>
+      <p class="result-count" id="count" aria-live="polite">Найдено: {events.length}</p>
+      <ul class="grid grid-3" id="list">{events.map((e) => <li><EventCard event={e} /></li>)}</ul>
       <div id="no-results" hidden><Empty title="Нет мероприятий по этим условиям">Измените дату, город или тип события.</Empty></div>
     </>
   ) : (

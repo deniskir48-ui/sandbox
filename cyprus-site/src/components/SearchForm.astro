@@ -1,9 +1,20 @@
 ---
+import Icon from './Icon.astro';
 interface Props { value?: string; autofocus?: boolean }
 const { value = '', autofocus = false } = Astro.props;
 ---
 <form class="searchbar" action="/search/" method="get" role="search">
   <label for="q" class="visually-hidden">Поиск по сайту</label>
-  <input id="q" type="search" name="q" value={value} placeholder="Компания, услуга, статья или событие" autocomplete="off" autofocus={autofocus} />
+  <div class="search-field">
+    <Icon name="search" size={20} class="search-ico" />
+    <input id="q" type="search" name="q" value={value} placeholder="Компания, услуга или событие" autocomplete="off" autofocus={autofocus} />
+  </div>
   <button class="btn" type="submit">Найти</button>
 </form>
+<style>
+  .searchbar { display: flex; gap: 8px; max-width: 640px; }
+  .search-field { position: relative; flex: 1; min-width: 0; }
+  .search-field :global(.search-ico) { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+  .search-field input { padding-left: 42px; height: 48px; border-radius: 12px; }
+  .searchbar .btn { height: 48px; border-radius: 12px; }
+</style>

@@ -8,10 +8,12 @@ const articles = await getPublishedArticles();
 ---
 <Base title="Практические статьи о жизни на Кипре" description="Пошаговые материалы о покупке автомобиля, недвижимости, выборе школы, изучении греческого и других задачах на Кипре.">
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { label: 'Статьи' }]} />
-  <h1>Статьи</h1>
-  <p class="lead">Практические материалы: как решить конкретную задачу на Кипре и к кому обратиться.</p>
+  <div class="page-head">
+    <h1>Статьи</h1>
+    <p class="lead">Практические материалы и истории о жизни на Кипре: как решить конкретную задачу и к кому обратиться.</p>
+  </div>
   {articles.length > 0 ? (
-    <ul class="grid grid-2">{articles.map((a) => <li><ArticleCard article={a} /></li>)}</ul>
+    <ul class="grid grid-3">{articles.map((a) => <li><ArticleCard article={a} /></li>)}</ul>
   ) : (
     <Empty title="Первые статьи в работе">Публикуем только материалы с проверенными фактами и ссылками на источники.</Empty>
   )}

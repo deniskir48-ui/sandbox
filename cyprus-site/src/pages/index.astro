@@ -4,50 +4,119 @@ import SearchForm from '../components/SearchForm.astro';
 import EventCard from '../components/EventCard.astro';
 import ArticleCard from '../components/ArticleCard.astro';
 import Empty from '../components/Empty.astro';
+import Icon from '../components/Icon.astro';
 import { SITE } from '../config';
 import { SECTIONS } from '../data/taxonomy';
 import { getPublishedCompanies, getUpcomingEvents, getPublishedArticles } from '../lib/data';
 
 const companies = await getPublishedCompanies();
-const events = (await getUpcomingEvents()).slice(0, 6);
-const articles = (await getPublishedArticles()).slice(0, 6);
+const upcoming = await getUpcomingEvents();
+const events = upcoming.slice(0, 6);
+const articles = (await getPublishedArticles()).slice(0, 3);
 const count = (slug: string) => companies.filter((c) => c.data.section === slug).length;
+
+// Быстрые переходы — только в существующие разделы и фильтры.
+const quick = [
+  { href: '/events/?when=weekend', label: 'Афиша на выходные' },
+  { href: '/catalog/education/', label: 'Школы и греческий' },
+  { href: '/catalog/cars/', label: 'Покупка авто' },
+  { href: '/catalog/leisure-spa/', label: 'Бани, SPA и лодки' },
+];
 ---
 <Base title={SITE.name} description={SITE.tagline}>
   <section class="hero">
-    <h1>Полезное о жизни на Кипре — в одном месте</h1>
-    <p class="lead">Проверенные компании и сервисы, ближайшие мероприятия и практические статьи для русскоязычных жителей острова.</p>
+    <p class="eyebrow">Гид · Афиша · Статьи</p>
+    <h1>Полезное о жизни на&nbsp;Кипре — в одном месте</h1>
+    <p class="lead">Компании и сервисы, ближайшие мероприятия и практические статьи для русскоязычных жителей острова.</p>
     <SearchForm />
+    <ul class="quick" aria-label="Быстрые переходы">
+      {quick.map((q) => <li><a href={q.href}>{q.label}</a></li>)}
+    </ul>
+    {(companies.length > 0 || upcoming.length > 0) && (
+      <p class="stats">
+        {companies.length > 0 && <span><strong>{companies.length}</strong> компаний в гиде</span>}
+        {upcoming.length > 0 && <span><strong>{upcoming.length}</strong> событий в афише</span>}
+      </p>
+    )}
   </section>
 
   <div class="section-head"><h2>Гид по компаниям и сервисам</h2><a href="/catalog/">Все разделы</a></div>
-  <ul class="grid grid-3 sections">
+  <ul class="tiles">
     {SECTIONS.map((s) => (
       <li>
-        <a class="card" href={`/catalog/${s.slug}/`}>
-          <h3>{s.title}</h3>
-          <p class="small muted">{s.intro}</p>
-          <p class="small">{count(s.slug) > 0 ? `Компаний: ${count(s.slug)}` : 'Наполняется'}</p>
+        <a class="tile" href={`/catalog/${s.slug}/`}>
+          <span class="tile-icon"><Icon name={s.slug} size={24} /></span>
+          <span class="tile-title">{s.title}</span>
+          <span class="tile-count">{count(s.slug) > 0 ? `${count(s.slug)}` : 'скоро'}</span>
         </a>
       </li>
     ))}
   </ul>
 
-  <div class="section-head"><h2>Ближайшие мероприятия</h2><a href="/events/">Вся афиша</a></div>
+  <div class="section-head"><h2>Главное в афише</h2><a href="/events/">Вся афиша</a></div>
   {events.length > 0 ? (
     <ul class="grid grid-3">{events.map((e) => <li><EventCard event={e} /></li>)}</ul>
   ) : (
     <Empty title="Афиша готовится">Добавим ближайшие мероприятия, как только проверим даты и ссылки на билеты.</Empty>
   )}
 
-  <div class="section-head"><h2>Полезные статьи</h2><a href="/guides/">Все статьи</a></div>
+  <div class="section-head"><h2>Статьи</h2><a href="/guides/">Все статьи</a></div>
   {articles.length > 0 ? (
     <ul class="grid grid-3">{articles.map((a) => <li><ArticleCard article={a} /></li>)}</ul>
   ) : (
     <Empty title="Первые статьи в работе">Практические материалы о покупке автомобиля, выборе школы, изучении греческого и других задачах появятся здесь.</Empty>
   )}
+
+  <section class="add-band">
+    <div>
+      <h2>Представляете компанию на Кипре?</h2>
+      <p>Размещение в гиде бесплатное. Публикуем после проверки по официальному сайту.</p>
+    </div>
+    <a class="btn" href="/add-company/"><Icon name="plus" size={18} />Добавить компанию</a>
+  </section>
 </Base>
+
 <style>
-  .hero { padding: 12px 0 8px; }
-  .sections h3 { font-size: 1rem; }
+  .hero {
+    margin: -20px -16px 0; padding: 30px 16px 26px;
+    background:
+      radial-gradient(120% 90% at 100% 0%, var(--accent-soft) 0%, transparent 60%),
+      var(--surface);
+    border-radius: 0 0 22px 22px;
+  }
+  @media (min-width: 760px) { .hero { margin: 8px 0 0; padding: 44px 40px 36px; border-radius: 22px; } }
+  .hero h1 { max-width: 18em; margin-top: 8px; }
+  .quick { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 16px 0 0; }
+  .quick a {
+    display: inline-block; padding: 7px 13px; border-radius: 999px; font-size: 0.9rem; font-weight: 600;
+    background: var(--bg); border: 1px solid var(--border); color: var(--text); text-decoration: none;
+  }
+  .quick a:hover { border-color: var(--accent); color: var(--accent-ink); }
+  .stats { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 18px 0 0; font-size: 0.92rem; color: var(--muted); }
+  .stats strong { color: var(--text); font-variant-numeric: tabular-nums; }
+
+  .tiles { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  @media (min-width: 760px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } }
+  .tile {
+    display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 10px; align-items: center;
+    height: 100%; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text); text-decoration: none; background: var(--bg);
+  }
+  .tile:hover { border-color: var(--accent); color: var(--text); }
+  .tile-icon {
+    grid-row: 1 / 3; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+    background: var(--accent-soft); color: var(--accent-ink);
+  }
+  .tile-title { font-weight: 650; font-size: 0.95rem; line-height: 1.25; }
+  .tile-count { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  .add-band {
+    margin-top: 48px; padding: 22px; border-radius: var(--radius);
+    background: var(--accent); color: var(--on-accent);
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .add-band h2 { color: var(--on-accent); }
+  .add-band p { margin: 6px 0 0; opacity: 0.85; }
+  .add-band .btn { background: var(--bg); color: var(--accent-ink); }
+  .add-band .btn:hover { background: var(--surface); }
 </style>
