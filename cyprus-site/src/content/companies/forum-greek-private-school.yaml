@@ -1,6 +1,6 @@
-# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Утверждено и опубликовано 12.11.2026.
 name: "Forum Private Greek School"
-status: draft
+status: published
 section: education
 category: private-schools
 city: "Никосия"

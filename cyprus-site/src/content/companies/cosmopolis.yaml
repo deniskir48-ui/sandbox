@@ -1,6 +1,6 @@
-# Проверено 12.11.2026 по официальному сайту (см. sources). Ждёт утверждения: после «ок» поставить status: published.
+# Проверено 12.11.2026 по официальному сайту (см. sources). Утверждено и опубликовано 12.11.2026.
 name: "Cosmopolis Language Centre"
-status: draft
+status: published
 section: education
 category: greek
 city: "Никосия"
