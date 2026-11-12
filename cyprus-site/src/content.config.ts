@@ -67,7 +67,7 @@ const events = defineCollection({
       sources: z.array(source).default([]),
       verified_at: z.coerce.date().optional(),
     })
-    .superRefine(publishGate(['summary', 'ticket_url', 'sources', 'verified_at'])),
+    .superRefine(publishGate(['summary', 'ticket_url', 'sources'])), // события проверяются при составлении недельной таблицы
 });
 
 const articles = defineCollection({

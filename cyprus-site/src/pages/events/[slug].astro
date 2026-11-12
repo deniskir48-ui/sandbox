@@ -32,7 +32,6 @@ const jsonLd = {
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/events/', label: 'Афиша' }, { label: d.title }]} />
   <div class="detail">
     <article>
-      {d.status === 'draft' && !past && <p class="notice">Событие из рабочей таблицы афиши, данные ещё не перепроверены. Дату, время и цену уточняйте по ссылке на источник.</p>}
       {past && <p class="notice">Это мероприятие уже прошло. <a href="/events/">Смотреть ближайшие</a></p>}
       <div class="ev-tags">
         {d.priority === 1 && <span class="badge-top">Главное</span>}

@@ -29,7 +29,6 @@ const when = [isRange ? `по ${formatDay(d.end_date!, false).replace(/ \d{4}$/,
     <p class="loc"><Icon name="pin" size={15} />{d.city}{d.venue ? ` · ${d.venue}` : ''}</p>
     {when && <p class="ev-when">{when}</p>}
     {d.summary && <p class="desc">{d.summary}</p>}
-    {d.status === 'draft' && <span class="unverified">Не проверено</span>}
   </div>
 </a>
 <style>
