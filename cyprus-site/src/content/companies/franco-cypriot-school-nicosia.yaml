@@ -1,12 +1,21 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Franco-Cypriot School — Nicosia
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Lycée franco-chypriote — Никосия"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-network: Franco-Cypriot School
-service_type: Частные и международные школы
-languages: FR/EL
-sources: []
+city: "Никосия"
+network: "Franco-Cypriot School"
+service_type: "Частная школа"
+languages: "FR/EL"
+summary: "Франко-кипрский лицей в Никосии: детский сад, начальная и средняя школа на французском и греческом, французский бакалавриат."
+description: "Школа в Никосии с обучением на французском и греческом языках, английский добавляется с начальной школы. Детский сад, начальная и средняя школа; выпускники сдают экзамены Brevet и французский Baccalauréat. В реестре Министерства образования Кипра значится как начальная и средняя школа."
+website: "https://lycee.cy/"
+sources:
+  - title: "Официальный сайт Lycée franco-chypriote"
+    url: "https://lycee.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-031

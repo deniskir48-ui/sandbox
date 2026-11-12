@@ -1,11 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Forum Greek Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Forum Private Greek School"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EL
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EL"
+summary: "Частная средняя школа с обучением на греческом языке в Нису (район Никосии)."
+description: "Частная греческая средняя школа. В реестре Министерства образования Кипра: средняя ступень, язык обучения греческий, адрес — проспект Лемесу, 290, Нису (район Никосии). Сайт школы на греческом языке."
+website: "https://www.forum.ac.cy/"
+sources:
+  - title: "Официальный сайт Forum School"
+    url: "https://www.forum.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-032

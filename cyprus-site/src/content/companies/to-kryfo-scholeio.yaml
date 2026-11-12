@@ -1,11 +1,16 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: To Kryfo Scholeio
+# Проверено 12.11.2026: реестр Минобразования Кипра. Ждёт утверждения: после «ок» поставить status: published.
+# Официальный сайт не найден (в реестре email на cytanet). Данные — по реестру Минобразования.
+name: "To Kryfo Scholeio"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EL
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EL"
+summary: "Частная начальная школа в Лимассоле с обучением на греческом языке."
+description: "Частная начальная школа в Лимассоле. В реестре Министерства образования Кипра язык обучения — греческий."
+sources:
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-017

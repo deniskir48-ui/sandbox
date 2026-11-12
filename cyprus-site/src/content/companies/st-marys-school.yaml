@@ -1,11 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: St Mary's School
+# Проверено 12.11.2026: реестр Минобразования Кипра. Ждёт утверждения: после «ок» поставить status: published.
+# Официальный сайт не найден (в реестре email на cytanet). Данные — по реестру Минобразования.
+name: "St Mary’s School"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EN/FR/EL
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EN/EL"
+summary: "Частная школа St Mary’s в Лимассоле: начальная школа на английском и греческом, многоязычная средняя школа."
+description: "Частная школа в Лимассоле, проспект Грива Дигени, 1А. В реестре Министерства образования Кипра значатся начальная школа с обучением на английском, начальная школа с обучением на греческом и средняя школа с языками обучения греческий, английский, французский и итальянский."
+sources:
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-011

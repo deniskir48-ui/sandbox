@@ -1,12 +1,19 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Aspire Private British School
+# Проверено 12.11.2026: реестр Минобразования Кипра. Ждёт утверждения: после «ок» поставить status: published.
+# Сайт закрыт защитой от ботов / ошибка сертификата в среде проверки. Данные — по реестру Минобразования.
+name: "Aspire Private British School"
 status: draft
 section: education
 category: private-schools
-city: Пафос
-service_type: Частные и международные школы
-languages: EN
-website: https://aspireschool.ac.cy/contact-us/
-sources: []
+city: "Пафос"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная британская школа в Пафосе с обучением на английском: начальная и средняя ступень."
+description: "Частная британская школа в Пафосе, проспект Тафи тон Василеон. В реестре Министерства образования Кипра: начальная и средняя школа, язык обучения английский. Программу и условия приёма уточняйте на сайте школы."
+website: "https://aspireschool.ac.cy/"
+sources:
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-043

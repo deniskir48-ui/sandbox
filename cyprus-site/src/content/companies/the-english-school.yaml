@@ -1,12 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: The English School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "The English School"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-website: https://englishschool.ac.cy/contact/contact-us/
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EN"
+summary: "The English School в Никосии: средняя школа с обучением на английском, экзамены IGCSE и A Level."
+description: "Средняя школа в Никосии с обучением на английском языке. Ученики сдают экзамены IGCSE и A Level, в программе есть греческий и турецкий языки. В реестре Министерства образования Кипра школа значится как средняя школа с особым статусом."
+website: "https://englishschool.ac.cy/"
+sources:
+  - title: "Официальный сайт The English School"
+    url: "https://englishschool.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-021

@@ -1,11 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: KASA High School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "KASA High School"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная средняя школа в Никосии с обучением на английском, связана с колледжем Casa College."
+description: "Частная средняя школа в Никосии. В реестре Министерства образования Кипра язык обучения — английский. На сайте школы указана связь с Casa College и Casa Training Centre."
+website: "https://www.kasahighschool.ac.cy/"
+sources:
+  - title: "Официальный сайт KASA High School"
+    url: "https://www.kasahighschool.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-029

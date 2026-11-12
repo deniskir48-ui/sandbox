@@ -1,11 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: iCan Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "ICan School"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Школа ICan в Лимассоле: начальная школа на английском, отдельно детский сад ICan Kids и лагерь ICan Camp."
+description: "Образовательная система ICan в Лимассоле: школа ICan School, детский сад и ясли ICan Kids, лагерь ICan Camp. В реестре Министерства образования Кипра ICan School значится как начальная школа с обучением на английском. Сайт на английском и русском."
+website: "https://icanskill.com/"
+sources:
+  - title: "Официальный сайт ICan"
+    url: "https://icanskill.com/"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-014

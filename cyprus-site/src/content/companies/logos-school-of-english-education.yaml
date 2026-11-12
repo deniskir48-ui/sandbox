@@ -1,11 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Logos School of English Education
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "The Logos School of English Education"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная школа в Лимассоле по британской программе на английском языке: начальная и средняя ступень."
+description: "Частная школа в Лимассоле. Обучение по британской программе на английском языке, греческий язык входит в программу. В реестре Министерства образования Кипра значится как начальная и средняя школа."
+website: "https://logos.ac.cy/"
+sources:
+  - title: "Официальный сайт Logos School"
+    url: "https://logos.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-008

@@ -1,11 +1,19 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Med High Private English School
+# Проверено 12.11.2026: реестр Минобразования Кипра. Ждёт утверждения: после «ок» поставить status: published.
+# Сайт закрыт защитой от ботов. Данные — по реестру Минобразования.
+name: "Med High"
 status: draft
 section: education
 category: private-schools
-city: Ларнака
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Ларнака"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная школа в Ларнаке с обучением на английском: начальная (Junior School) и средняя ступень."
+description: "Частная школа в Ларнаке. В реестре Министерства образования Кипра значатся начальная школа Med High Junior School и средняя школа, язык обучения английский. Программу и условия приёма уточняйте на сайте школы."
+website: "https://www.medhigh.com/"
+sources:
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-037

@@ -1,12 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: American Academy Larnaca
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "The American Academy Larnaca"
 status: draft
 section: education
 category: private-schools
-city: Ларнака
-service_type: Частные и международные школы
-languages: EN
-website: https://www.academy.ac.cy/contact-us/
-sources: []
+city: "Ларнака"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная школа в Ларнаке с обучением на английском: ясли и дошкольная группа, начальная и средняя школа."
+description: "Частная школа в Ларнаке. В реестре Министерства образования Кипра здесь значатся начальная школа (American Academy Junior School) и средняя школа с обучением на английском языке. На сайте школы также указаны ясли и дошкольная группа и подготовка к общекипрским экзаменам."
+website: "https://www.academy.ac.cy/"
+sources:
+  - title: "Официальный сайт American Academy Larnaca"
+    url: "https://www.academy.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-036

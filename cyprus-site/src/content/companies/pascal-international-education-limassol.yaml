@@ -1,13 +1,21 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: PASCAL International Education — Limassol
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "PASCAL International Education — Лимассол"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-network: PASCAL International Education
-service_type: Частные и международные школы
-languages: EN/EL
-website: https://www.pascal.ac.cy/admissions/contact-us
-sources: []
+city: "Лимассол"
+network: "PASCAL International Education"
+service_type: "Частная школа"
+languages: "EN/EL"
+summary: "Кампус PASCAL в Лимассоле: английские начальная и средняя школы (IGCSE, A Levels, IB) и греческая средняя школа."
+description: "Кампус в Лимассоле. Сеть PASCAL International Education (с 1978 года, входит в Globeducate) предлагает детский сад, начальную школу по программе Cambridge Primary, среднюю школу с подготовкой к IGCSE, GCE A Levels и IB Diploma, а также кипрский аттестат Apolytirion; конкретные программы кампуса уточняйте у школы. В реестре Министерства образования Кипра в Лимассоле значатся английские начальная и средняя школы PASCAL и греческая средняя школа."
+website: "https://www.pascal.ac.cy/"
+sources:
+  - title: "Официальный сайт PASCAL"
+    url: "https://www.pascal.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-005

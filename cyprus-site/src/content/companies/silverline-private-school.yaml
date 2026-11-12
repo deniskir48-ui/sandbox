@@ -1,11 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Silverline Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Silverline Private School"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Международная школа в Трахони (Лимассол) для детей 3–18 лет: обучение на английском по английской национальной программе."
+description: "Частная международная школа с обучением на английском для детей от 3 до 18 лет. Программа основана на английской национальной программе (English National Curriculum). Адрес — ул. Грива Дигени, 4А, Трахони (Лимассол). В реестре Министерства образования Кипра значится как начальная и средняя школа."
+website: "https://silverlineprivateschool.com/"
+sources:
+  - title: "Официальный сайт Silverline Private School"
+    url: "https://silverlineprivateschool.com/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-007

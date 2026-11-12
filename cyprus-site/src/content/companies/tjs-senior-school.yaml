@@ -1,11 +1,19 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: TJS Senior School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "TJS Senior School"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Никосия"
+network: "The Junior & Senior School"
+service_type: "Частная школа"
+languages: "EN"
+summary: "TJS Senior School в Лацье (Никосия): средняя школа на английском, IGCSE, A Level, аттестат Apolytirion и IB Diploma."
+description: "Старшая школа The Junior & Senior School, ул. Роману, 2, Лацья (Никосия). Программа на основе английской национальной программы (Key Stage 3–5), подготовка к IGCSE, A Level и аттестату Apolytirion; с сентября 2025 года школа авторизована IB на Diploma Programme. В реестре Министерства образования Кипра значится как средняя школа с обучением на английском."
+website: "https://www.tjss.ac.cy/"
+sources:
+  - title: "Официальный сайт The Junior & Senior School"
+    url: "https://www.tjss.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-027

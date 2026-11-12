@@ -1,12 +1,19 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Franco-Cypriot School — Limassol
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Lycée franco-chypriote — Лимассол"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-network: Franco-Cypriot School
-service_type: Частные и международные школы
-languages: FR/EL
-sources: []
+city: "Лимассол"
+network: "Franco-Cypriot School"
+service_type: "Частная школа"
+languages: "FR"
+summary: "Лимассольское отделение франко-кипрской школы: начальная школа с обучением на французском."
+description: "Отделение франко-кипрской школы в Лимассоле. В реестре Министерства образования Кипра значится как начальная школа с обучением на французском языке. Основная школа с детским садом, начальной и средней ступенью находится в Никосии."
+website: "https://lycee.cy/"
+sources:
+  - title: "Официальный сайт Lycée franco-chypriote"
+    url: "https://lycee.cy/"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-016

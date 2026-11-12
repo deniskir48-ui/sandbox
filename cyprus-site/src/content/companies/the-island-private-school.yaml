@@ -1,12 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: The Island Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "The Island Private School"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EN
-website: https://isl.cy/leadershipteam
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EN"
+summary: "The Island Private School в Палодии (Лимассол): программы IB (PYP, MYP, DP, CP), Вальдорф и Монтессори."
+description: "Частная школа в Палодии (Лимассол) с обучением на английском. Аккредитованная школа IB с программами Primary Years, Middle Years, Diploma и Career-related, а также направления Вальдорф и Монтессори. Выпускники могут получить и кипрский аттестат Apolytirion, и диплом IB. В реестре Министерства образования Кипра значится как начальная и средняя школа."
+website: "https://isl.cy/"
+sources:
+  - title: "Официальный сайт The Island Private School"
+    url: "https://isl.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-018

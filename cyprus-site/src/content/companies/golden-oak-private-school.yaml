@@ -1,12 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Golden Oak Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Golden Oak Private School"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EN
-website: https://goldenoakcyprus.com/golden-oak-privacy-policy-private-school-limassol/
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная английская школа в Лимассоле: детский сад и начальная школа по программе Cambridge, ранние годы с элементами Монтессори."
+description: "Частная школа в Лимассоле с обучением на английском. Детский сад и дошкольная группа, начальная школа по программе Cambridge, поддержка в обучении; в дошкольных группах используются элементы методики Монтессори. На сайте опубликованы планы по открытию средней школы. В реестре Министерства образования Кипра значится как начальная школа."
+website: "https://goldenoakcyprus.com/"
+sources:
+  - title: "Официальный сайт Golden Oak"
+    url: "https://goldenoakcyprus.com/"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-015

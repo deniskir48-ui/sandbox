@@ -1,11 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: The Falcon School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "The Falcon School"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная школа в Строволосе (Никосия) на английском: начальная и средняя ступень, программа IB MYP."
+description: "Частная школа в Строволосе (Никосия) с обучением на английском языке; греческий и другие языки изучаются как предметы. Школа авторизована IB для программы Middle Years (MYP) и является кандидатом на Diploma Programme. В реестре Министерства образования Кипра значится как начальная и средняя школа."
+website: "https://www.falconschool.ac.cy/"
+sources:
+  - title: "Официальный сайт The Falcon School"
+    url: "https://www.falconschool.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-025

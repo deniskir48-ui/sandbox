@@ -1,11 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Terra Santa College
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Terra Santa College"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN/EL
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EL/EN"
+summary: "Колледж Терра Санта в Никосии: начальная школа на греческом, средняя школа с греческим и английским языками обучения."
+description: "Частная школа в центре Никосии (Акрополи). В реестре Министерства образования Кипра: начальная школа с обучением на греческом и средняя школа с обучением на греческом и английском. Сайт школы на греческом языке."
+website: "https://terrasantacy.com/"
+sources:
+  - title: "Официальный сайт Terra Santa College"
+    url: "https://terrasantacy.com/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-030

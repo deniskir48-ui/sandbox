@@ -1,12 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: The Grammar School Nicosia
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "The Grammar School Nicosia"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-website: https://thegrammarschool.eu/explore/our-team/
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EN"
+summary: "The Grammar School Nicosia: семилетняя средняя школа на английском с IGCSE, A Level и кипрским аттестатом."
+description: "Частная средняя школа в Никосии, кампус в Пано Дефтера (с 1981 года). Семилетняя программа на английском языке ведёт к экзаменам IGCSE, GCE AS и A Level и школьному аттестату Apolytirion; при поступлении в 1-й класс сдаются вступительные экзамены. Школа — экзаменационный центр GCE. В реестре Министерства образования Кипра значится также младшая школа The Grammar Junior School."
+website: "https://thegrammarschool.eu/"
+sources:
+  - title: "Официальный сайт The Grammar School Nicosia"
+    url: "https://thegrammarschool.eu/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-019

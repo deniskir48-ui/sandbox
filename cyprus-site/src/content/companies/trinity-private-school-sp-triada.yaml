@@ -1,12 +1,19 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Trinity Private School (SP Triada)
+# Проверено 12.11.2026: реестр Минобразования Кипра. Ждёт утверждения: после «ок» поставить status: published.
+# Сайт закрыт защитой от ботов. Данные — по реестру Минобразования.
+name: "Trinity Private School (SP Triada)"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EN/RU
-website: https://trinity.cy/contacts/
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная школа Trinity (SP Triada) в Лимассоле: начальная и средняя ступень с обучением на английском."
+description: "Частная школа в Лимассоле. В реестре Министерства образования Кипра значатся начальная школа (ул. Агиу Андреу, 340) и средняя школа (ул. Спиру Киприану, 104), язык обучения английский. Программу и условия приёма уточняйте на сайте школы."
+website: "https://trinity.cy/"
+sources:
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-006

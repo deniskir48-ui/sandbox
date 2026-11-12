@@ -1,11 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Morningside Montessori Elementary
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Morningside Montessori Elementary"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Начальная школа Монтессори в Никосии на английском: без обязательных домашних заданий, занятия на открытом воздухе."
+description: "Частная начальная школа в Никосии, работающая по методике Монтессори. На сайте отмечены отсутствие обязательных домашних заданий, занятия на открытом воздухе, кружки после уроков и летняя школа. В реестре Министерства образования Кипра значится как начальная школа с обучением на английском."
+website: "https://www.morningsidemontessori.com.cy/en/home"
+sources:
+  - title: "Официальный сайт Morningside Montessori"
+    url: "https://www.morningsidemontessori.com.cy/en/home"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-034

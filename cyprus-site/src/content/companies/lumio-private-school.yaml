@@ -1,12 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Lumio Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Lumio Private School"
 status: draft
 section: education
 category: private-schools
-city: Пафос
-service_type: Частные и международные школы
-languages: EN
-website: https://lumio.school/community/
-sources: []
+city: "Пафос"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Международная школа в Пафосе: детский сад, начальная школа по программе Cambridge, средняя школа IB MYP и IB Diploma."
+description: "Частная международная школа в Ахелии (Пафос). Детский сад, начальная школа по программе Cambridge Primary, средняя школа по программам International Baccalaureate (MYP и Diploma Programme), упор на STEAM-предметы. В реестре Министерства образования Кипра значится как начальная и средняя школа с обучением на английском. При школе работает центр курсов для взрослых Lumio Edu Centre."
+website: "https://lumio.school/"
+sources:
+  - title: "Официальный сайт Lumio Private School"
+    url: "https://lumio.school/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-040

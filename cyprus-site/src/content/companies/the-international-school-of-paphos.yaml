@@ -1,11 +1,19 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: The International School of Paphos
+# Проверено 12.11.2026: реестр Минобразования Кипра. Ждёт утверждения: после «ок» поставить status: published.
+# Сайт не открылся из среды проверки. Данные — по реестру Минобразования.
+name: "The International School of Paphos"
 status: draft
 section: education
 category: private-schools
-city: Пафос
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Пафос"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Международная школа в Анаваргосе (Пафос) с обучением на английском: начальная и средняя ступень."
+description: "Частная школа в Анаваргосе (Пафос), проспект Аристотелус Савва, 100. В реестре Министерства образования Кипра: начальная и средняя школа, язык обучения английский. Программу и условия приёма уточняйте на сайте школы."
+website: "https://www.isop-ed.org/"
+sources:
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-041

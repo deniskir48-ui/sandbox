@@ -1,11 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: IMS Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "IMS Private School"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная средняя школа в Лимассоле с обучением на английском."
+description: "Частная средняя школа в Лимассоле, входит в IMS Group вместе с IMS Institute. В реестре Министерства образования Кипра язык обучения — английский."
+website: "https://ims-edu.com/"
+sources:
+  - title: "Официальный сайт IMS"
+    url: "https://ims-edu.com/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-009

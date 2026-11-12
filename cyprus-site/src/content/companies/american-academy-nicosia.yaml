@@ -1,11 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: American Academy Nicosia
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "The American Academy Nicosia"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная школа в Никосии по английской программе: детский сад, начальная и средняя школа, кипрский аттестат Apolytirion."
+description: "Частная школа в Никосии, по данным школы основана более 100 лет назад. Дошкольная группа и детский сад, начальная и средняя школа по английской программе (English Curriculum), выпускники получают кипрский аттестат Apolytirion. В реестре Министерства образования Кипра значится как начальная и средняя школа с обучением на английском."
+website: "https://www.aan.ac.cy/"
+sources:
+  - title: "Официальный сайт American Academy Nicosia"
+    url: "https://www.aan.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-024

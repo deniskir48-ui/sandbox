@@ -1,11 +1,18 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: The Pupils of Pythagoras
+# Проверено 12.11.2026: реестр Минобразования Кипра. Ждёт утверждения: после «ок» поставить status: published.
+# Официальный сайт не найден (в реестре email на yandex.ru). Данные — по реестру Минобразования.
+name: "The Pupils of Pythagoras"
 status: draft
 section: education
 category: private-schools
-city: Лимассол
-service_type: Частные и международные школы
-languages: RU
-sources: []
+city: "Лимассол"
+service_type: "Частная школа"
+languages: "RU"
+summary: "Русскоязычная частная школа в Лимассоле: начальная и средняя ступень."
+description: "Частная школа «Ученики Пифагора» в Лимассоле, ул. Пафу, 6. В реестре Министерства образования Кипра: начальная и средняя школа, язык обучения русский."
+sources:
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-013

@@ -1,11 +1,16 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: New Hope Private Special School
+# Проверено 12.11.2026: реестр Минобразования Кипра. Ждёт утверждения: после «ок» поставить status: published.
+# Сайт newhope.com.cy в разработке (coming soon). Данные — по реестру Минобразования.
+name: "New Hope Private Special School"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EN"
+summary: "Частная специальная начальная школа в Никосии с обучением на английском."
+description: "Частная специальная школа в Никосии. В реестре Министерства образования Кипра: начальная ступень, язык обучения английский."
+sources:
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-035

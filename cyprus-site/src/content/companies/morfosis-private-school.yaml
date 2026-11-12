@@ -1,12 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Morfosis Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Morfosis Private School"
 status: draft
 section: education
 category: private-schools
-city: Лимассол / Пафос
-service_type: Частные и международные школы
-languages: RU
-website: https://www.morfosisschool.com/contact
-sources: []
+city: "Лимассол / Пафос"
+service_type: "Частная школа"
+languages: "RU"
+summary: "Русскоязычная общеобразовательная школа в Лимассоле и Пафосе с углублённым английским и греческим."
+description: "Русскоязычная общеобразовательная школа с углублённым изучением английского и греческого языков. По данным школы, обучение ведётся по программам Министерства образования и науки Российской Федерации и Республики Кипр; в Лимассоле работают младшая и старшая школы, ещё одна школа — в Пафосе. В реестре Министерства образования Кипра лимассольские начальная и средняя школы значатся с языком обучения русский."
+website: "https://www.morfosisschool.com/"
+sources:
+  - title: "Официальный сайт Morfosis"
+    url: "https://www.morfosisschool.com/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-012

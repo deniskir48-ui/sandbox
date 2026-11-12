@@ -1,11 +1,19 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: The Junior School Nicosia
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "The Junior School (TJS)"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EN
-sources: []
+city: "Никосия"
+network: "The Junior & Senior School"
+service_type: "Частная школа"
+languages: "EN"
+summary: "The Junior School в Никосии: дошкольная и начальная школа на английском для детей 3–12 лет по английской программе."
+description: "Младшая школа The Junior & Senior School в Никосии. Обучение на английском по национальной программе Англии: Early Years Foundation Stage и Key Stage 1–2 для детей от 3 до 12 лет; продолжение — в старшей школе TJS Senior School. В реестре Министерства образования Кипра значится как начальная школа."
+website: "https://www.tjss.ac.cy/"
+sources:
+  - title: "Официальный сайт The Junior & Senior School"
+    url: "https://www.tjss.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-028

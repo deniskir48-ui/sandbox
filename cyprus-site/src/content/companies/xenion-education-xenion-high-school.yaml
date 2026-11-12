@@ -1,12 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Xenion Education / Xenion High School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Xenion Education"
 status: draft
 section: education
 category: private-schools
-city: Паралимни
-service_type: Частные и международные школы
-languages: EN/EL
-website: https://www.xenion.ac.cy/
-sources: []
+city: "Паралимни"
+service_type: "Частная школа"
+languages: "EN/EL"
+summary: "Xenion Education в Паралимни: начальная школа на английском, средние школы на английском и греческом."
+description: "Частная школа в Паралимни, проспект 1-го Апреля, 55. В реестре Министерства образования Кипра значатся начальная школа Xenion Private Junior School и средняя школа Xenion High School с обучением на английском, а также средняя школа Xenion с обучением на греческом."
+website: "https://www.xenion.ac.cy/"
+sources:
+  - title: "Официальный сайт Xenion Education"
+    url: "https://www.xenion.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-039

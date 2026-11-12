@@ -1,11 +1,20 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Olympion Private School
+# Проверено 12.11.2026: реестр Минобразования Кипра + официальный сайт. Ждёт утверждения: после «ок» поставить status: published.
+name: "Olympion"
 status: draft
 section: education
 category: private-schools
-city: Никосия
-service_type: Частные и международные школы
-languages: EL
-sources: []
+city: "Никосия"
+service_type: "Частная школа"
+languages: "EL"
+summary: "Частная греческая школа для детей 6–18 лет в Палеометохо (район Никосии): начальная школа, гимназия и лицей."
+description: "Частная школа с обучением на греческом языке для детей от 6 до 18 лет. В реестре Министерства образования Кипра значатся начальная школа и гимназия-лицей, адрес — ул. 25-го Марта, 85, Палеометохо (район Никосии). Сайт на греческом языке."
+website: "https://www.olympion.ac.cy/"
+sources:
+  - title: "Официальный сайт Olympion"
+    url: "https://www.olympion.ac.cy/"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-12
 source_id: SCHOOL-033
