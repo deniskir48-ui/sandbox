@@ -1,29 +1,41 @@
 /*
  * Визуальная система сайта (временная, до выбора бренда).
- * Концепция: «известняк и море» — светлый каменный фон, глубокий морской акцент,
- * солнечный жёлтый только для отметки «Главное». Широкий Unbounded — логотип и H1, Onest — всё остальное.
+ * Концепция «голубой Urus»: пастельный небесно-голубой как главный цвет (кузов),
+ * чёрный для кнопок, подвала и контрастных деталей (пороги, диски),
+ * оранжевый только для акцентов — метка «Главное» и солнце в знаке (суппорты).
+ * Широкий Unbounded — логотип и H1, Onest — всё остальное.
  */
 @import '@fontsource-variable/onest/index.css';
 @import '@fontsource-variable/unbounded/index.css';
 
 :root {
-  --bg: #fbfbf8;
-  --surface: #f2f4f1;
-  --surface-2: #e8eeea;
-  --text: #14201f;
-  --muted: #586664;
-  --border: #dbe2de;
-  --accent: #0a6b76;
-  --accent-ink: #07525a;
-  --accent-soft: #e0eff0;
-  --on-accent: #ffffff;
-  --sun: #f0b23f;
-  --sun-ink: #3b2600;
-  --warn-bg: #fff3d4;
-  --warn-text: #6a4a00;
-  --footer-bg: #10302f;
-  --footer-text: #d8e6e3;
-  --footer-muted: #9fb7b3;
+  --bg: #fafbfc;
+  --surface: #eef3f7;
+  --surface-2: #e2eaf0;
+  --text: #0e1116;
+  --muted: #566170;
+  --border: #d8e0e7;
+  --accent: #1b6aa5;        /* ссылки и активные элементы — тёмный голубой для читаемости */
+  --accent-ink: #11507f;
+  --accent-soft: #d2ebf8;   /* пастельная подложка */
+  --sky: #9fd5f2;           /* цвет «кузова»: большие плоскости, знак, корешки дат */
+  --sky-text: #0e1116;
+  --btn-bg: #0e1116;        /* кнопки — чёрные, как пороги и диски */
+  --btn-text: #ffffff;
+  --btn-hover: #262c35;
+  --band-btn-bg: #9fd5f2;   /* кнопка на чёрной плашке */
+  --band-btn-text: #0e1116;
+  --sun: #f26b21;           /* оранжевый — только акценты */
+  --sun-ink: #1c0b00;
+  --hero-1: #cfeaf9;
+  --hero-2: #a3d6f2;
+  --hero-text: #0e1116;
+  --hero-muted: #2b3a48;
+  --warn-bg: #fff1dd;
+  --warn-text: #6b3d00;
+  --footer-bg: #0e1116;
+  --footer-text: #e6ecf1;
+  --footer-muted: #98a4b0;
 
   --font: 'Onest Variable', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
   --font-display: 'Unbounded Variable', 'Onest Variable', system-ui, sans-serif;
@@ -34,23 +46,33 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --bg: #0e1514;
-    --surface: #151e1d;
-    --surface-2: #1c2726;
-    --text: #e5eeec;
-    --muted: #9aaba8;
-    --border: #273332;
-    --accent: #5cc3cc;
-    --accent-ink: #8fd9de;
-    --accent-soft: #12333a;
-    --on-accent: #06201f;
-    --sun: #e9a73a;
-    --sun-ink: #2a1a00;
-    --warn-bg: #3a2f12;
-    --warn-text: #f1d58c;
-    --footer-bg: #0a1110;
-    --footer-text: #d8e6e3;
-    --footer-muted: #8ea6a2;
+    --bg: #0c0e11;
+    --surface: #15191e;
+    --surface-2: #1c2128;
+    --text: #e8eef3;
+    --muted: #9aa7b4;
+    --border: #262d35;
+    --accent: #8ecdf0;
+    --accent-ink: #b9e1f7;
+    --accent-soft: #15303f;
+    --sky: #8ecdf0;
+    --sky-text: #0c0e11;
+    --btn-bg: #8ecdf0;
+    --btn-text: #0c0e11;
+    --btn-hover: #b9e1f7;
+    --band-btn-bg: #0c0e11;
+    --band-btn-text: #e8eef3;
+    --sun: #f27a35;
+    --sun-ink: #1c0b00;
+    --hero-1: #14293a;
+    --hero-2: #0f1d2a;
+    --hero-text: #e8eef3;
+    --hero-muted: #a9bccb;
+    --warn-bg: #3a2a12;
+    --warn-text: #f3cf8f;
+    --footer-bg: #07080a;
+    --footer-text: #e6ecf1;
+    --footer-muted: #8b97a3;
     color-scheme: dark;
   }
 }
@@ -146,10 +168,10 @@ a.card:hover h3 { color: var(--accent-ink); }
 /* ---------- Кнопки ---------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  background: var(--accent); color: var(--on-accent); border: 0; border-radius: var(--radius-sm);
+  background: var(--btn-bg); color: var(--btn-text); border: 0; border-radius: var(--radius-sm);
   padding: 11px 18px; font: inherit; font-weight: 650; text-decoration: none; cursor: pointer;
 }
-.btn:hover { background: var(--accent-ink); color: var(--on-accent); }
+.btn:hover { background: var(--btn-hover); color: var(--btn-text); }
 .btn:disabled { opacity: 0.6; cursor: default; }
 .btn-ghost { background: transparent; color: var(--accent-ink); border: 1px solid var(--border); }
 .btn-ghost:hover { background: var(--surface); color: var(--accent-ink); }

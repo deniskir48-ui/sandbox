@@ -79,21 +79,22 @@ const quick = [
 <style>
   .hero {
     margin: -20px -16px 0; padding: 30px 16px 26px;
-    background:
-      radial-gradient(120% 90% at 100% 0%, var(--accent-soft) 0%, transparent 60%),
-      var(--surface);
+    background: linear-gradient(135deg, var(--hero-1) 0%, var(--hero-2) 100%);
+    color: var(--hero-text);
     border-radius: 0 0 22px 22px;
   }
   @media (min-width: 760px) { .hero { margin: 8px 0 0; padding: 44px 40px 36px; border-radius: 22px; } }
   .hero h1 { max-width: 18em; margin-top: 8px; }
+  .hero .eyebrow { color: var(--hero-text); opacity: 0.75; }
+  .hero .lead { color: var(--hero-muted); }
   .quick { list-style: none; display: flex; flex-wrap: wrap; gap: 8px; padding: 0; margin: 16px 0 0; }
   .quick a {
     display: inline-block; padding: 7px 13px; border-radius: 999px; font-size: 0.9rem; font-weight: 600;
     background: var(--bg); border: 1px solid var(--border); color: var(--text); text-decoration: none;
   }
   .quick a:hover { border-color: var(--accent); color: var(--accent-ink); }
-  .stats { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 18px 0 0; font-size: 0.92rem; color: var(--muted); }
-  .stats strong { color: var(--text); font-variant-numeric: tabular-nums; }
+  .stats { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 18px 0 0; font-size: 0.92rem; color: var(--hero-muted); }
+  .stats strong { color: var(--hero-text); font-variant-numeric: tabular-nums; }
 
   .tiles { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
   @media (min-width: 760px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } }
@@ -102,7 +103,7 @@ const quick = [
     height: 100%; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);
     color: var(--text); text-decoration: none; background: var(--bg);
   }
-  .tile:hover { border-color: var(--accent); color: var(--text); }
+  .tile:hover { border-color: var(--text); color: var(--text); }
   .tile-icon {
     grid-row: 1 / 3; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
     background: var(--accent-soft); color: var(--accent-ink);
@@ -112,11 +113,11 @@ const quick = [
 
   .add-band {
     margin-top: 48px; padding: 22px; border-radius: var(--radius);
-    background: var(--accent); color: var(--on-accent);
+    background: var(--btn-bg); color: var(--btn-text);
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px;
   }
-  .add-band h2 { color: var(--on-accent); }
+  .add-band h2 { color: var(--btn-text); }
   .add-band p { margin: 6px 0 0; opacity: 0.85; }
-  .add-band .btn { background: var(--bg); color: var(--accent-ink); }
-  .add-band .btn:hover { background: var(--surface); }
+  .add-band .btn { background: var(--band-btn-bg); color: var(--band-btn-text); }
+  .add-band .btn:hover { background: var(--band-btn-bg); color: var(--band-btn-text); opacity: 0.88; }
 </style>

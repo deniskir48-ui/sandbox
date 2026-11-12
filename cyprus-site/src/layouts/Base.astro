@@ -24,7 +24,7 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
     <meta name="description" content={description} />
     {canonical && <link rel="canonical" href={canonical} />}
     {(noindex || USE_FIXTURES || PREVIEW_DRAFTS) && <meta name="robots" content="noindex, nofollow" />}
-    <meta name="theme-color" content="#0a6b76" />
+    <meta name="theme-color" content="#9fd5f2" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -45,7 +45,7 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
       <div class="container bar">
         <a class="logo" href="/" aria-label={`${SITE.name} — на главную`}>
           <span class="logo-mark" aria-hidden="true">
-            <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="currentColor"/><path d="M6 19c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2" fill="none" style="stroke: var(--bg)" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="11.5" r="3.2" style="fill: var(--sun)"/></svg>
+            <svg width="30" height="30" viewBox="0 0 32 32"><rect width="32" height="32" rx="9" fill="currentColor"/><path d="M6 19c2.5 0 2.5-2 5-2s2.5 2 5 2 2.5-2 5-2 2.5 2 5 2" fill="none" style="stroke: var(--sky-text)" stroke-width="2.2" stroke-linecap="round"/><circle cx="16" cy="11.5" r="3.2" style="fill: var(--sun)"/></svg>
           </span>
           <span class="logo-text">{SITE.name}</span>
         </a>
@@ -95,7 +95,7 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
 </html>
 
 <style>
-  .skip { position: absolute; left: -9999px; top: 8px; z-index: 50; background: var(--accent); color: var(--on-accent); padding: 8px 12px; border-radius: 8px; }
+  .skip { position: absolute; left: -9999px; top: 8px; z-index: 50; background: var(--btn-bg); color: var(--btn-text); padding: 8px 12px; border-radius: 8px; }
   .skip:focus { left: 8px; }
   .mode-banner { background: #b42318; color: #fff; text-align: center; font-size: 0.84rem; padding: 6px 16px; }
   .mode-banner.preview { background: #7a5200; }
@@ -109,7 +109,7 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
   .bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 62px; }
   .logo { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; min-width: 0; }
   .logo:hover { color: var(--text); }
-  .logo-mark { color: var(--accent); display: inline-flex; flex: none; }
+  .logo-mark { color: var(--sky); display: inline-flex; flex: none; }
   .logo-text { font-family: var(--font-display); font-weight: 600; font-size: 1rem; letter-spacing: -0.01em; white-space: nowrap; }
 
   .nav { display: flex; align-items: center; gap: 6px; }
