@@ -104,6 +104,20 @@ select, input[type='search'] {
 .searchbar { display: flex; gap: 8px; max-width: 560px; }
 .searchbar input { flex: 1; }
 
+/* Поля форм */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field > span { font-size: 0.92rem; font-weight: 600; }
+.field small { color: var(--muted); font-size: 0.82rem; }
+input[type='text'], input[type='email'], input[type='url'], textarea {
+  font: inherit; font-size: 16px; color: var(--text); background: var(--bg);
+  border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; width: 100%;
+}
+textarea { min-height: 110px; resize: vertical; }
+input:focus-visible, textarea:focus-visible, select:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.check { display: flex; gap: 10px; align-items: flex-start; font-size: 0.92rem; }
+.check input { margin-top: 4px; width: 18px; height: 18px; flex: none; }
+.cta-add { margin-top: 28px; padding-top: 16px; border-top: 1px solid var(--border); color: var(--muted); }
+
 /* Хлебные крошки */
 .crumbs { font-size: 0.85rem; color: var(--muted); margin: 0 0 12px; }
 .crumbs ol { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 4px; }

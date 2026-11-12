@@ -1,0 +1,147 @@
+---
+import Base from '../layouts/Base.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { SECTIONS } from '../data/taxonomy';
+import { FORM_ENDPOINT } from '../config';
+---
+<Base title="Добавить компанию в гид" description="Заявка на бесплатное размещение компании или сервиса в русскоязычном гиде по Кипру.">
+  <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/catalog/', label: 'Гид' }, { label: 'Добавить компанию' }]} />
+  <div class="prose">
+    <h1>Добавить компанию</h1>
+    <p class="lead">Размещение в гиде бесплатное. Мы проверяем каждую заявку по официальному сайту или странице компании и публикуем карточку после проверки.</p>
+    <ul class="small muted">
+      <li>Публикуем только факты: что делает компания, где работает, ссылку на официальный сайт.</li>
+      <li>Не публикуем отзывы, рейтинги и рекламные обещания.</li>
+      <li>Присутствие в гиде не означает рекомендацию автора.</li>
+    </ul>
+  </div>
+
+  <form id="add-company" class="add-form" novalidate data-endpoint={FORM_ENDPOINT}>
+    <label class="field"><span>Название компании *</span>
+      <input id="f-name" name="name" type="text" required maxlength="120" autocomplete="organization" />
+    </label>
+
+    <label class="field"><span>Раздел гида *</span>
+      <select id="f-section" name="section" required>
+        <option value="">Выберите раздел</option>
+        {SECTIONS.map((s) => <option value={s.slug}>{s.title}</option>)}
+      </select>
+    </label>
+
+    <label class="field"><span>Чем занимается компания *</span>
+      <textarea id="f-about" name="about" required maxlength="500" placeholder="Например: аренда лодок без лицензии в Лимассоле, с капитаном и без"></textarea>
+      <small>До 500 символов. Коротко и по делу, без рекламных эпитетов.</small>
+    </label>
+
+    <label class="field"><span>Город или регион</span>
+      <input id="f-city" name="city" type="text" maxlength="80" placeholder="Лимассол, Пафос, весь Кипр, онлайн" />
+    </label>
+
+    <label class="field"><span>Официальный сайт или страница в соцсетях *</span>
+      <input id="f-website" name="website" type="url" required maxlength="300" placeholder="https://" />
+      <small>По этой ссылке мы проверяем информацию.</small>
+    </label>
+
+    <fieldset class="contact">
+      <legend>Контакт для связи по заявке</legend>
+      <p class="small muted">Не публикуется на сайте. Нужен, только чтобы уточнить детали.</p>
+      <label class="field"><span>Ваше имя *</span>
+        <input id="f-person" name="person" type="text" required maxlength="80" autocomplete="name" />
+      </label>
+      <label class="field"><span>Email, телефон или Telegram *</span>
+        <input id="f-contact" name="contact" type="text" required maxlength="120" />
+      </label>
+    </fieldset>
+
+    <label class="check">
+      <input id="f-ads" name="ads_interest" type="checkbox" value="yes" />
+      <span>Интересует реклама или специальные предложения для читателей</span>
+    </label>
+
+    <label class="check">
+      <input id="f-consent" name="consent" type="checkbox" value="yes" required />
+      <span>Я представляю эту компанию и согласен, что информация будет опубликована после проверки, а контакт используется только для связи по заявке *</span>
+    </label>
+
+    <!-- Ловушка для ботов: людям не видна -->
+    <label class="hp" aria-hidden="true">Не заполняйте <input name="website_hp" type="text" tabindex="-1" autocomplete="off" /></label>
+
+    <p id="form-error" class="notice" role="alert" hidden></p>
+    <button class="btn" type="submit" id="f-submit">Отправить заявку</button>
+  </form>
+
+  <div id="form-done" class="empty" role="status" hidden>
+    <strong id="form-done-title">Спасибо, заявка отправлена</strong>
+    <p id="form-done-text" style="margin:.35rem 0 0">Мы проверим информацию и свяжемся с вами, если появятся вопросы.</p>
+  </div>
+</Base>
+
+<style>
+  .add-form { display: grid; gap: 16px; max-width: 36rem; margin-top: 8px; }
+  .contact { border: 1px solid var(--border); border-radius: var(--radius); padding: 12px 14px 14px; margin: 0; display: grid; gap: 12px; }
+  .contact legend { font-weight: 600; padding: 0 6px; }
+  .contact p { margin: 0; }
+  .hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  #form-done { max-width: 36rem; margin-top: 8px; }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('#add-company')!;
+  const errorBox = document.querySelector<HTMLElement>('#form-error')!;
+  const done = document.querySelector<HTMLElement>('#form-done')!;
+  const submit = document.querySelector<HTMLButtonElement>('#f-submit')!;
+  const endpoint = form.dataset.endpoint ?? '';
+
+  // Раздел можно передать в адресе: /add-company/?section=education
+  const pre = new URLSearchParams(location.search).get('section');
+  const sel = form.elements.namedItem('section') as HTMLSelectElement;
+  if (pre && [...sel.options].some((o) => o.value === pre)) sel.value = pre;
+
+  const LABELS: Record<string, string> = {
+    name: 'название компании', section: 'раздел', about: 'чем занимается компания',
+    website: 'официальный сайт или страницу', person: 'ваше имя', contact: 'контакт для связи', consent: 'согласие',
+  };
+
+  function showError(msg: string, field?: HTMLElement) {
+    errorBox.textContent = msg;
+    errorBox.hidden = false;
+    field?.focus();
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    errorBox.hidden = true;
+    for (const el of [...form.elements] as HTMLInputElement[]) {
+      if (!el.name || !el.required) continue;
+      const empty = el.type === 'checkbox' ? !el.checked : !el.value.trim();
+      if (empty) return showError(`Заполните поле: ${LABELS[el.name] ?? el.name}.`, el);
+    }
+    const site = form.elements.namedItem('website') as HTMLInputElement;
+    if (!/^https?:\/\/\S+\.\S+/.test(site.value.trim())) return showError('Ссылка на сайт должна начинаться с https:// или http://', site);
+
+    const data: Record<string, string> = { page: location.pathname, sent_at: new Date().toISOString() };
+    new FormData(form).forEach((v, k) => (data[k] = String(v).trim()));
+
+    if (!endpoint) {
+      // Сервис приёма заявок ещё не подключён — честно сообщаем, что ничего не отправлено.
+      form.hidden = true;
+      done.hidden = false;
+      done.querySelector('#form-done-title')!.textContent = 'Тестовый режим: заявка не отправлена';
+      done.querySelector('#form-done-text')!.textContent = 'Приём заявок ещё не подключён. Форма заработает после настройки (см. docs/forms/README.md).';
+      return;
+    }
+
+    submit.disabled = true;
+    submit.textContent = 'Отправляем…';
+    try {
+      // text/plain + no-cors: «простой» запрос без предварительной проверки CORS, его принимает Google Apps Script.
+      await fetch(endpoint, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) });
+      form.hidden = true;
+      done.hidden = false;
+    } catch {
+      submit.disabled = false;
+      submit.textContent = 'Отправить заявку';
+      showError('Не удалось отправить заявку. Проверьте интернет и попробуйте ещё раз.');
+    }
+  });
+</script>

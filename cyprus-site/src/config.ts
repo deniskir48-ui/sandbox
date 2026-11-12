@@ -20,3 +20,6 @@ export const NAV = [
 export const USE_FIXTURES = process.env.USE_FIXTURES === '1';
 // Предпросмотр: показывать и черновики (непроверенные записи) с пометкой. Только для закрытого просмотра.
 export const PREVIEW_DRAFTS = process.env.PREVIEW_DRAFTS === '1';
+// Куда отправлять заявки компаний (URL веб-приложения Google Apps Script, см. docs/forms/README.md).
+// Пусто — форма работает в тестовом режиме и ничего не отправляет.
+export const FORM_ENDPOINT = process.env.PUBLIC_FORM_ENDPOINT || '';

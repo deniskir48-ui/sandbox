@@ -67,6 +67,7 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
         <nav aria-label="Нижнее меню" class="foot-nav">
           {NAV.map((item) => <a href={item.href}>{item.label}</a>)}
           <a href="/search/">Поиск</a>
+          <a href="/add-company/">Добавить компанию</a>
         </nav>
         <p class="small muted">
           Информация о компаниях и мероприятиях собрана из официальных источников; у каждой записи указаны источник и дата проверки.

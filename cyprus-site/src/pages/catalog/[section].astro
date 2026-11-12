@@ -54,6 +54,7 @@ const usedCats = section.categories.filter((cat) => companies.some((c) => c.data
       Мы проверяем компании этого раздела: официальный сайт, услуги, город и дату актуальности. Карточки появятся после проверки.
     </Empty>
   )}
+  <p class="cta-add">Нет вашей компании в разделе «{section.title}»? <a href={`/add-company/?section=${section.slug}`}>Предложите её для гида</a></p>
 </Base>
 
 <script>
