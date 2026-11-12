@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Площадка
+title: "RIOT V"
+status: draft
+type: concert
+date: "2026-11-11"
+time: "20:00"
+city: "Никосия"
+venue: "DownTown Live"
+summary: "Американский хэви-метал, 50-летие Riot, с разогревом House of Treason."
+ticket_url: "https://downtownnicosia.live/event/riot_v_nov_26/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://downtownnicosia.live/event/riot_v_nov_26/"

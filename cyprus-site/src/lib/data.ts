@@ -26,9 +26,9 @@ export const isUpcoming = (e: Event, today = todayInCyprus()) => eventLastDay(e)
 
 const eventKey = (e: Event) => `${e.data.date}T${e.data.time ?? '00:00'}`;
 
-/** Все опубликованные события (включая прошедшие — для страниц с пометкой «прошло»). */
+/** Все опубликованные события (включая прошедшие — для страниц с пометкой «прошло»). В предпросмотре — и черновики. */
 export async function getPublishedEvents(): Promise<Event[]> {
-  return (await getCollection('events', (e) => e.data.status === 'published')).sort((a, b) =>
+  return (await getCollection('events', (e) => PREVIEW_DRAFTS || e.data.status === 'published')).sort((a, b) =>
     eventKey(a).localeCompare(eventKey(b)),
   );
 }

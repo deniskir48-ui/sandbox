@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Афиша / билеты
+# Замечание редактора: Цена отличается у продавцов
+title: "Дмитрий Романов: «Новые главы»"
+status: draft
+type: standup
+date: "2026-11-12"
+time: "19:00"
+city: "Лимассол"
+venue: "Lanitio Theatre"
+summary: "Стендап на русском про эмиграцию, семью и отношения. От €55 по одной из афиш."
+ticket_url: "https://wgolimassol.com/ru/event/romanov-lanitio-2026"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://wgolimassol.com/ru/event/romanov-lanitio-2026"

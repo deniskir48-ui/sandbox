@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Каталог
+# Замечание редактора: Регистрация и доступ проверить
+title: "Cyprus Fintech Summit"
+status: draft
+type: talk
+date: "2026-11-12"
+city: "Никосия"
+venue: "Municipal Theatre"
+summary: "Конференция о финтехе и банковских технологиях."
+ticket_url: "https://eventula.eu/events/cyprus"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eventula.eu/events/cyprus"

@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Карточка / билеты
+title: "Леонид Фёдоров и Игорь Крутоголов"
+status: draft
+type: concert
+date: "2026-11-12"
+time: "20:00"
+city: "Лимассол"
+venue: "Kiklos Music Venue"
+summary: "Фронтмен «АукцЫона» и авангардный басист, около двух часов; €35."
+ticket_url: "https://kind.events/events/leonid-fedorov-and-igor-krutogolov-live-in-limassol"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://kind.events/events/leonid-fedorov-and-igor-krutogolov-live-in-limassol"

@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог, сверить условия
+title: "The Frog and the Water"
+status: draft
+type: theatre
+date: "2026-11-10"
+time: "20:30"
+city: "Никосия"
+venue: "Pantheon Theatre"
+summary: "Постановка/показ, в афише требует уточнения языка и формата."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

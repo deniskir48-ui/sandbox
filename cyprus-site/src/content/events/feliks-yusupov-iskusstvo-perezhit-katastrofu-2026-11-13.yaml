@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Афиша
+# Замечание редактора: Условия и билет уточнить
+title: "«Феликс Юсупов: искусство пережить катастрофу»"
+status: draft
+type: talk
+date: "2026-11-13"
+time: "19:00"
+city: "Лимассол"
+venue: "Parisian Flat"
+summary: "Историческая лекция/встреча на русском языке."
+ticket_url: "https://radar.romkola.ru/meropriyatiya/limassol"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://radar.romkola.ru/meropriyatiya/limassol"

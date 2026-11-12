@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ⚠ Даты требуют проверки
+# Замечание редактора: Сведения в карточке о днях недели противоречивы
+title: "Paramythoupoli: открытие ярмарки"
+status: draft
+type: festival
+date: "2026-11-13"
+time: "17:00"
+city: "Никосия"
+venue: "ров D'Avila"
+summary: "Рождественский городок в Никосии, программа до января."
+ticket_url: "https://cyprusnow.app/event/%CF%80%CE%B1%CF%81%CE%B1%CE%BC%CF%85%CE%B8%CE%BF%CF%8D%CF%80%CE%BF%CE%BB%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1%CF%82-2026-2026-11-13"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CF%80%CE%B1%CF%81%CE%B1%CE%BC%CF%85%CE%B8%CE%BF%CF%8D%CF%80%CE%BF%CE%BB%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1%CF%82-2026-2026-11-13"

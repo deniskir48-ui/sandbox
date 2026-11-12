@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Подробная карточка / Heartland
+# Замечание редактора: Новая находка. Предварительная запись: +357 99360147. Язык греческий по афише.
+title: "Плетение традиционных сидений для табуретов"
+status: draft
+type: workshop
+date: "2026-11-14"
+time: "11:30"
+city: "Като Дрис"
+venue: "Garden Kamara House"
+summary: "Бесплатный мастер-класс по традиционной технике сидений из растений; запись у мастера."
+ticket_url: "https://cyprus.bz/event/3a9c/stool-making-from-anathrika-2026"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cyprus.bz/event/3a9c/stool-making-from-anathrika-2026"

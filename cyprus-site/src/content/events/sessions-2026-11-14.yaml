@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог, сверить условия
+title: "Sessions"
+status: draft
+type: concert
+date: "2026-11-14"
+time: "20:00"
+city: "Никосия"
+venue: "ARTos House"
+summary: "Музыкальная программа, сеансы в 18:00 и 20:00."
+ticket_url: "https://eventula.eu/events/cyprus"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eventula.eu/events/cyprus"

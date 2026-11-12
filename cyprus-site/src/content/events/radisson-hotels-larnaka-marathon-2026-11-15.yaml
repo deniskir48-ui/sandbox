@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Организатор
+# Замечание редактора: Точные старты по дистанциям на официальном сайте
+title: "Radisson Hotels Larnaka Marathon"
+status: draft
+type: sport
+date: "2026-11-15"
+time: "06:55"
+city: "Ларнака"
+venue: "Финикудес"
+summary: "Марафон, полумарафон, 10/5 км, детский километр; крупное международное спортивное мероприятие."
+ticket_url: "https://larnakamarathon.com/week-program/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://larnakamarathon.com/week-program/"

@@ -27,6 +27,7 @@ const jsonLd = {
 <Base title={`${d.title} — ${d.city}, ${when}`} description={d.summary!} noindex={past} jsonLd={jsonLd}>
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { href: '/events/', label: 'Афиша' }, { label: d.title }]} />
   <article class="prose">
+    {d.status === 'draft' && !past && <p class="notice">Событие из рабочей таблицы афиши, данные ещё не перепроверены. Дату, время и цену уточняйте по ссылке на источник.</p>}
     {past && <p class="notice">Это мероприятие уже прошло. <a href="/events/">Смотреть ближайшие</a></p>}
     <p class="meta"><span class="chip">{EVENT_TYPES[d.type]}</span></p>
     <h1>{d.title}</h1>

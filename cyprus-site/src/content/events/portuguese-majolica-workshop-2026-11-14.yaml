@@ -1,0 +1,14 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог, сверить условия
+title: "Portuguese Majolica workshop"
+status: draft
+type: workshop
+date: "2026-11-14"
+city: "Никосия"
+venue: "Tochka Ceramics"
+summary: "Занятие по росписи керамики в технике майолики."
+ticket_url: "https://eventula.eu/events/cyprus"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eventula.eu/events/cyprus"

@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Организатор
+# Замечание редактора: Часть большого марафона
+title: "McDonald's Kids Race 1 км"
+status: draft
+type: sport
+date: "2026-11-15"
+time: "13:00"
+city: "Ларнака"
+venue: "Финикудес"
+summary: "Детские старты для 6–8 и 9–12 лет в рамках марафона."
+ticket_url: "https://larnakamarathon.com/week-program/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://larnakamarathon.com/week-program/"

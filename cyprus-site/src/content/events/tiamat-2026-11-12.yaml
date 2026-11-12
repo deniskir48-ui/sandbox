@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Афиша / билеты
+title: "Tiamat"
+status: draft
+type: concert
+date: "2026-11-12"
+time: "20:00"
+city: "Лимассол"
+venue: "Opus"
+summary: "Шведский готик-метал, около 90 минут; билеты €45."
+ticket_url: "https://wgolimassol.com/ru/event/tiamat-opus-2026"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://wgolimassol.com/ru/event/tiamat-opus-2026"

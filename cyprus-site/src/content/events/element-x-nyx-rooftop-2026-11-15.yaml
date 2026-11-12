@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог, сверить условия
+title: "ELEMENT X × NYX ROOFTOP"
+status: draft
+type: concert
+date: "2026-11-15"
+time: "18:00"
+city: "Лимассол"
+venue: "Nyx Hotel"
+summary: "Музыкальный вечер на крыше отеля; около €20."
+ticket_url: "https://eventula.eu/events/cyprus"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eventula.eu/events/cyprus"

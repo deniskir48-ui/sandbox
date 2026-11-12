@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог
+# Замечание редактора: Место сбора напротив Theama
+title: "Charity Walk: I'd Rather Walk Than Drink & Drive"
+status: draft
+type: tour
+date: "2026-11-15"
+time: "09:00"
+city: "Лимассол"
+venue: "Аматунда"
+summary: "18-я благотворительная прогулка за безопасность на дорогах."
+ticket_url: "https://eventula.eu/events/cyprus"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eventula.eu/events/cyprus"

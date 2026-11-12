@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Карточка события
+title: "Joy to the World: рождественские огни"
+status: draft
+type: festival
+date: "2026-11-13"
+time: "17:30"
+city: "Ларнака"
+venue: "Metropolis Mall"
+summary: "Праздничная программа в торговом центре, бесплатно."
+ticket_url: "https://cyprusnow.app/event/joy-to-the-world-metropolis-mall-christmas-lighting-2026-2026-11-13"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cyprusnow.app/event/joy-to-the-world-metropolis-mall-christmas-lighting-2026-2026-11-13"

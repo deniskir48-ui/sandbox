@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Свежая публикация
+title: "Включение рождественских огней Ларнаки"
+status: draft
+type: kids
+date: "2026-11-11"
+time: "17:30"
+city: "Ларнака"
+venue: "площадь Эрму"
+summary: "Городская иллюминация, концерт Йоргоса Цаликиса, танцы, хор и детская программа."
+ticket_url: "https://www.checkincyprus.com/article/90290/e-larnaka-anabei-ta-khristougenniatika-phota-tes-me-ton-giorgo-tsalike/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90290/e-larnaka-anabei-ta-khristougenniatika-phota-tes-me-ton-giorgo-tsalike/"

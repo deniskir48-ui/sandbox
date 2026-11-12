@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Афиша
+# Замечание редактора: Возможен закрытый формат, доступ/регистрация проверить
+title: "India–Cyprus Diwali Gala"
+status: draft
+type: other
+date: "2026-11-09"
+time: "19:15"
+city: "Никосия"
+venue: "Президентский дворец"
+summary: "Праздничный индийско-кипрский гала-ужин."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши (9–15 ноября). Дата исправлена в таблице по Cyprus Mail от 08.11.
+# Перед публикацией сверить дату и программу по ссылке, заполнить verified_at и поставить status: published.
+title: "8-й фестиваль грибов"
+status: draft
+type: festival
+date: "2026-11-21"
+end_date: "2026-11-22"
+city: "Спилья, Троодос"
+summary: "Грибные блюда, местная продукция и деревенский фестиваль в горах."
+ticket_url: "https://eos-tour.com/events/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eos-tour.com/events/"
+  - title: "Cyprus Mail, 08.11.2026"
+    url: "https://www.cyprus-mail.com/2026/11/08/from-zivania-to-mushrooms-november-festivals-in-cyprus"

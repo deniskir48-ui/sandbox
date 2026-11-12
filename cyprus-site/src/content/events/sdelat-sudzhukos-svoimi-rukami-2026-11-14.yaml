@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный календарь / Heartland
+# Замечание редактора: Новая находка. Точное место и язык у организатора уточнить; не обещать места.
+title: "Сделать суджукос своими руками"
+status: draft
+type: workshop
+date: "2026-11-14"
+time: "11:00"
+city: "Агиои Ваватсиниас"
+venue: "деревня"
+summary: "Бесплатная мастерская по традиционной кипрской виноградной сладости. Программа Heartland of Legends, запись обязательна."
+ticket_url: "https://eventshub.cy/en/events/larnaca/savvatokyriako"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eventshub.cy/en/events/larnaca/savvatokyriako"

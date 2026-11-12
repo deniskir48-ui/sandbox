@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Календарь
+# Замечание редактора: Уточнить адрес Xanthis Xenierou 23 и условия
+title: "The Great Ladies of French Song / Julia Garnier"
+status: draft
+type: concert
+date: "2026-11-15"
+time: "19:30"
+city: "Никосия"
+venue: "частная концертная площадка"
+summary: "Камерная программа французских песен."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

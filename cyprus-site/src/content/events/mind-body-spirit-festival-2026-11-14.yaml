@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Организатор
+# Замечание редактора: Не путать с Lidl Wellness Camp на предыдущей неделе
+title: "Mind, Body & Spirit Festival"
+status: draft
+type: festival
+date: "2026-11-14"
+end_date: "2026-11-15"
+city: "Лимассол"
+venue: "St Raphael Resort"
+summary: "25-летие фестиваля, 70+ экспонентов и 80+ занятий. €18 в день онлайн, выставка отдельно €5."
+ticket_url: "https://mbscyprus.com/the-mind-body-spirit-wellbeing-festival/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://mbscyprus.com/the-mind-body-spirit-wellbeing-festival/"

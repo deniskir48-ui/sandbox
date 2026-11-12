@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Подробная карточка
+title: "Sparkling Christmas: Telethon"
+status: draft
+type: talk
+date: "2026-11-11"
+time: "17:00"
+city: "Лимассол"
+venue: "Four Seasons Hotel"
+summary: "Благотворительная праздничная встреча; €30."
+ticket_url: "https://cyprusnow.app/event/sparkling-christmas-2026-11-11"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cyprusnow.app/event/sparkling-christmas-2026-11-11"

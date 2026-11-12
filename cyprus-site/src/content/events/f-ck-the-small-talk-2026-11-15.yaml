@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог, сверить условия
+title: "F*ck The Small Talk"
+status: draft
+type: talk
+date: "2026-11-15"
+time: "13:30"
+city: "Пафос"
+venue: "секретная площадка"
+summary: "Групповая встреча-знакомство, место сообщают участникам; €15–20."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

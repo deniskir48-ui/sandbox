@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Подробная афиша
+# Замечание редактора: Время отдельных показов уточнить
+title: "Limassol Fashion Week 2026"
+status: draft
+type: other
+date: "2026-11-11"
+end_date: "2026-11-15"
+city: "Лимассол"
+venue: "Warehouse by IT"
+summary: "Модные показы дизайнеров, pop-up, семинары и дискуссии; пропуск €50."
+ticket_url: "https://cyprusnow.app/event/limassol-fashion-week-2026-runway-shows-fashion-events-2026-11-11"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cyprusnow.app/event/limassol-fashion-week-2026-runway-shows-fashion-events-2026-11-11"

@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог, сверить условия
+title: "«По следам Педиэоса»"
+status: draft
+type: kids
+date: "2026-11-14"
+time: "10:00"
+city: "Никосия"
+venue: "CVAR"
+summary: "Музейная прогулка/занятие для детей, бесплатно."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

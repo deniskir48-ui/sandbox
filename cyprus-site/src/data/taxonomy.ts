@@ -115,7 +115,9 @@ export const EVENT_TYPES = {
   kids: 'Детям',
   sport: 'Спорт',
   party: 'Вечеринка',
-  tour: 'Экскурсия',
+  tour: 'Экскурсия и прогулка',
+  workshop: 'Мастер-класс',
+  talk: 'Лекция и встреча',
   other: 'Другое',
 } as const;
 

@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог, сверить условия
+title: "Tayna: клубный вечер"
+status: draft
+type: party
+date: "2026-11-13"
+time: "22:00"
+city: "Ларнака"
+venue: "DSTRKT"
+summary: "Вечеринка с артисткой Tayna, билет от €10."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

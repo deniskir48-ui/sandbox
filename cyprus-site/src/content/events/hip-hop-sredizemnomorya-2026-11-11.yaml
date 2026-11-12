@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Публикация / билеты
+title: "«Хип-хоп Средиземноморья»"
+status: draft
+type: cinema
+date: "2026-11-11"
+time: "19:30"
+city: "Лимассол"
+venue: "Synergeio"
+summary: "Музыкальный документальный фильм Social Waste, первый показ на Кипре; €8."
+ticket_url: "https://www.checkincyprus.com/article/90186/to-mousiko-ntokimanter-to-khip-khop-tes-mesogeiou-ton-social-waste-erkhetai-gia-prote-phora-sten-kupro/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90186/to-mousiko-ntokimanter-to-khip-khop-tes-mesogeiou-ton-social-waste-erkhetai-gia-prote-phora-sten-kupro/"

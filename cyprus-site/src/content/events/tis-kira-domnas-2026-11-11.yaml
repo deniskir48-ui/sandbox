@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Карточка
+# Замечание редактора: На греческом
+title: "«Тис Кира Домнас»"
+status: draft
+type: concert
+date: "2026-11-11"
+time: "20:00"
+city: "Лимассол"
+venue: "Pattihio"
+summary: "Музыкальное посвящение Дóмне Самиу, греческая фольклорная музыка."
+ticket_url: "https://cyprusnow.app/event/%CF%84%CE%B7%CF%82-%CE%BA%CF%85%CF%81%CE%AC-%CE%B4%CF%8C%CE%BC%CE%BD%CE%B1%CF%82-2026-11-11"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CF%84%CE%B7%CF%82-%CE%BA%CF%85%CF%81%CE%AC-%CE%B4%CF%8C%CE%BC%CE%BD%CE%B1%CF%82-2026-11-11"

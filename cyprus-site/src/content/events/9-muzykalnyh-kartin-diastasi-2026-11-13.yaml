@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Свежая публикация
+# Замечание редактора: Время проверить
+title: "«9 музыкальных картин» / Diastasi"
+status: draft
+type: concert
+date: "2026-11-13"
+city: "Лимассол"
+venue: "Pattihio"
+summary: "Греческая музыка девяти композиторов с известными вокалистами и оркестром."
+ticket_url: "https://www.checkincyprus.com/article/90214/sunauliakos-noembres-ta-live-kai-oi-mousikes-parastaseis-pou-den-prepei-na-khaseis/"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90214/sunauliakos-noembres-ta-live-kai-oi-mousikes-parastaseis-pou-den-prepei-na-khaseis/"

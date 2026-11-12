@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Каталог
+# Замечание редактора: Противоречивая географическая подпись: адрес проверить
+title: "Old School Sundays"
+status: draft
+type: party
+date: "2026-11-15"
+city: "Ларнака"
+venue: "Old Market St"
+summary: "Вечер ретро R&B/классики в баре."
+ticket_url: "https://eventula.eu/events/cyprus"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eventula.eu/events/cyprus"

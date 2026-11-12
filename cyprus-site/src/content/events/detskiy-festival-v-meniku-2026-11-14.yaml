@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Карточка / организатор
+# Замечание редактора: Игры-квесты в 12:30 и 16:00; вход €13 на ребёнка.
+title: "Детский фестиваль в Менику"
+status: draft
+type: kids
+date: "2026-11-14"
+end_date: "2026-11-15"
+city: "Менику"
+venue: "EX DREAM"
+summary: "Семейный фестиваль с надувными аттракционами, лазанием, лодочками и квестами. €13 на ребёнка/день, родителям бесплатно."
+ticket_url: "https://kind.events/events/ex-dream-kids-festival-in-meniko"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://kind.events/events/ex-dream-kids-festival-in-meniko"

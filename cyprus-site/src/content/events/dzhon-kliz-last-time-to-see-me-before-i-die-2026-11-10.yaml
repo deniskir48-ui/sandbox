@@ -1,0 +1,15 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Площадка / билеты
+title: "Джон Клиз: Last Time To See Me Before I Die"
+status: draft
+type: theatre
+date: "2026-11-10"
+time: "19:30"
+city: "Никосия"
+venue: "Eleftheria Arena"
+summary: "Легенда Monty Python впервые выступает на Кипре, шоу на английском; €35–80."
+ticket_url: "https://www.pantheon-theatre.com/product/john-cleese-last-time-to-see-me-before-i-die/?selected_date=2026-11-10&selected_time=2026-11-10+19%3A30%3A00"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://www.pantheon-theatre.com/product/john-cleese-last-time-to-see-me-before-i-die/?selected_date=2026-11-10&selected_time=2026-11-10+19%3A30%3A00"

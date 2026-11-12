@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Сводный каталог
+# Замечание редактора: Тизер проходит в 2026, название фестиваля 2027
+title: "Alchemy Festival 2027: тизер"
+status: draft
+type: festival
+date: "2026-11-14"
+time: "17:00"
+city: "Никосия"
+venue: "Ktima Camelot"
+summary: "Электронная вечеринка перед фестивалем 2027 года."
+ticket_url: "https://eventula.eu/events/cyprus"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://eventula.eu/events/cyprus"

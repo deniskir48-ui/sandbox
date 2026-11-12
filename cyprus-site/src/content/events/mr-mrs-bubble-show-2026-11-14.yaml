@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ◒ Каталог
+# Замечание редактора: В Ларнаке ещё один показ 15 ноября
+title: "Mr & Mrs Bubble Show"
+status: draft
+type: kids
+date: "2026-11-14"
+time: "16:00"
+city: "Никосия"
+venue: "Maskarini Theatre"
+summary: "Семейное интерактивное шоу мыльных пузырей, €10."
+ticket_url: "https://kind.events/ru?date=2026-11-14"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://kind.events/ru?date=2026-11-14"

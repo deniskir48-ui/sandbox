@@ -1,0 +1,16 @@
+# Черновик из недельной таблицы афиши. Перед публикацией сверить дату, время, место и цену по ссылке,
+# заполнить verified_at и поставить status: published.
+# Проверка в таблице: ✓ Анонс гастролей
+# Замечание редактора: На греческом
+title: "«Убийство в Восточном экспрессе»"
+status: draft
+type: theatre
+date: "2026-11-11"
+time: "20:30"
+city: "Ларнака"
+venue: "Municipal Theatre"
+summary: "Грекоязычная постановка Агаты Кристи от THOC."
+ticket_url: "https://cyprusnow.app/event/%CE%AD%CE%B3%CE%BA%CE%BB%CE%B7%CE%BC%CE%B1-%CF%83%CF%84%CE%BF-%CF%8C%CF%81%CE%B9%CE%B5%CE%BD%CF%84-%CE%B5%CE%BE%CF%80%CF%81%CE%AD%CF%82-%CF%83%CF%84%CE%B7-%CE%BB%CE%AC%CF%81%CE%BD%CE%B1%CE%BA%CE%B1-2026-11-11"
+sources:
+  - title: "Ссылка из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CE%AD%CE%B3%CE%BA%CE%BB%CE%B7%CE%BC%CE%B1-%CF%83%CF%84%CE%BF-%CF%8C%CF%81%CE%B9%CE%B5%CE%BD%CF%84-%CE%B5%CE%BE%CF%80%CF%81%CE%AD%CF%82-%CF%83%CF%84%CE%B7-%CE%BB%CE%AC%CF%81%CE%BD%CE%B1%CE%BA%CE%B1-2026-11-11"
