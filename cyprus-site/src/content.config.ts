@@ -52,6 +52,8 @@ const events = defineCollection({
       title: z.string(),
       status: z.enum(['draft', 'published']).default('draft'),
       type: z.enum(EVENT_TYPE_SLUGS),
+      // Приоритет редактора: 1 — в первую очередь, 2 — интересно, 3 — дополнительно. Определяет порядок в Афише.
+      priority: z.number().int().min(1).max(5).default(3),
       date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'Формат даты: ГГГГ-ММ-ДД'),
       time: z.string().regex(/^\d{2}:\d{2}$/, 'Формат времени: ЧЧ:ММ').optional(),
       end_date: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(), // для многодневных событий

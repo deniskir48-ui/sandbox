@@ -8,13 +8,15 @@ const { event } = Astro.props;
 const d = event.data;
 ---
 <a class="card event" href={`/events/${event.id}/`}
-   data-city={d.city} data-type={d.type} data-start={d.date} data-end={eventLastDay(event)}>
-  <div class="meta"><span class="chip">{EVENT_TYPES[d.type]}</span><span>{formatEventWhen(d.date, d.time, d.end_date)}</span></div>
+   data-city={d.city} data-type={d.type} data-start={d.date} data-end={eventLastDay(event)}
+   data-priority={d.priority} data-key={`${d.date}T${d.time ?? '00:00'}`}>
+  <div class="meta">{d.priority === 1 && <span class="chip top">Главное</span>}<span class="chip">{EVENT_TYPES[d.type]}</span><span>{formatEventWhen(d.date, d.time, d.end_date)}</span></div>
   <h3 style="margin-top:6px">{d.title}</h3>
   <div class="meta"><span>{d.city}{d.venue ? `, ${d.venue}` : ''}</span>{d.price && <span>· {d.price}</span>}</div>
   {d.summary && <p>{d.summary}</p>}
   {d.status === 'draft' && <p class="unverified">Данные не проверены</p>}
 </a>
 <style>
+  .chip.top { background: var(--accent); color: var(--bg); }
   .unverified { font-size: 0.78rem; color: var(--warn-text); background: var(--warn-bg); display: inline-block; padding: 1px 8px; border-radius: 999px; margin-top: 8px !important; }
 </style>

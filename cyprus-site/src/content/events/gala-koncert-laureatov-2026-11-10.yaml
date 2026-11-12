@@ -4,6 +4,7 @@
 title: "Гала-концерт лауреатов"
 status: draft
 type: concert
+priority: 2
 date: "2026-11-10"
 time: "20:00"
 city: "Никосия"

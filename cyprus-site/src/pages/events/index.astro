@@ -33,6 +33,12 @@ const types = [...new Set(events.map((e) => e.data.type))];
             {cities.map((c) => <option value={c}>{c}</option>)}
           </select>
         </label>
+        <label>Порядок
+          <select name="sort">
+            <option value="">По важности</option>
+            <option value="date">По дате</option>
+          </select>
+        </label>
         <label>Тип
           <select name="type">
             <option value="">Все</option>
@@ -66,6 +72,18 @@ const types = [...new Set(events.map((e) => e.data.type))];
     return null;
   }
 
+  // Порядок: по умолчанию как собрано (приоритет → дата), «По дате» — хронологически.
+  const listEl = document.querySelector('#list');
+  const original = listEl ? [...listEl.children] as HTMLElement[] : [];
+  const sortSel = document.querySelector<HTMLSelectElement>('select[name=sort]');
+  function reorder() {
+    if (!listEl) return;
+    const key = (li: HTMLElement) => (li.firstElementChild as HTMLElement).dataset.key ?? '';
+    const items = sortSel?.value === 'date' ? [...original].sort((a, b) => key(a).localeCompare(key(b))) : original;
+    listEl.append(...items);
+  }
+  sortSel?.addEventListener('change', reorder);
+
   bindFilters({
     form: '#filters', items: '#list > li', count: '#count', empty: '#no-results',
     match: (li, f) => {
@@ -79,4 +97,5 @@ const types = [...new Set(events.map((e) => e.data.type))];
       return true;
     },
   });
+  reorder(); // после восстановления фильтров из URL
 </script>

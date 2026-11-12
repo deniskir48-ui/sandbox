@@ -2,6 +2,7 @@
 # Рекомендуемый slug: <название>-<город>-<ГГГГ-ММ-ДД>
 title: "Название мероприятия"
 status: draft
+priority: 2              # 1 — в первую очередь (метка «Главное»), 2 — интересно, 3 — дополнительно
 type: concert            # concert | theatre | standup | festival | exhibition | cinema | kids | sport | party | tour | other
 date: "2026-12-05"       # дата начала, ГГГГ-ММ-ДД
 time: "20:00"            # время начала по Кипру; неизвестно — удалите строку

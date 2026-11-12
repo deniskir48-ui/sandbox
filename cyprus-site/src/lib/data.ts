@@ -33,9 +33,12 @@ export async function getPublishedEvents(): Promise<Event[]> {
   );
 }
 
+/** Предстоящие события: сначала по приоритету редактора, внутри — по дате и времени. */
 export async function getUpcomingEvents(): Promise<Event[]> {
   const today = todayInCyprus();
-  return (await getPublishedEvents()).filter((e) => isUpcoming(e, today));
+  return (await getPublishedEvents())
+    .filter((e) => isUpcoming(e, today))
+    .sort((a, b) => a.data.priority - b.data.priority || eventKey(a).localeCompare(eventKey(b)));
 }
 
 export async function getCompanyMap(): Promise<Map<string, Company>> {

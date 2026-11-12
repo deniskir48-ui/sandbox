@@ -5,7 +5,7 @@
     python3 scripts/import-afisha.py import/afisha.xlsx [--year 2026]
 
 Ожидаемые колонки листа «Все события» (как в «Афиша Кипра · 9–15 ноября 2026»):
-  A приоритет · B когда («14–15 ноя · 20:00») · C «город · место» · D событие · E что будет
+  A приоритет («1 — В первую очередь» → priority: 1) · B когда («14–15 ноя · 20:00») · C «город · место» · D событие · E что будет
   F ссылка (=HYPERLINK) · G в пост? · H проверка · I замечания
 Создаёт src/content/events/<slug>.yaml со status: draft. Существующие файлы не трогает.
 Пропускает строки, помеченные как дубли («объединить», «уже есть общ…», «не делать дубли»)
@@ -99,6 +99,8 @@ def main():
         start, end, time = parsed
         city, _, venue = place.partition(" · ")
         hay = f"{title} {what}".lower()
+        pm = re.match(r"\s*(\d)", str(row[0].value or ""))
+        priority = int(pm.group(1)) if pm else 3
         etype = next((t for t, rx in TYPES if re.search(rx, hay, re.I)), "other")
 
         slug = f"{slugify(title) or slugify(etype)}-{start}"  # названия на греческом и т. п. → по типу
@@ -114,6 +116,7 @@ def main():
             f"title: {q(title)}",
             "status: draft",
             f"type: {etype}",
+            f"priority: {priority}",
             f"date: {q(start)}",
             f"end_date: {q(end)}" if end else None,
             f"time: {q(time)}" if time and not end else None,
