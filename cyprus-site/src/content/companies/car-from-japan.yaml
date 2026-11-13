@@ -1,7 +1,6 @@
 # Проверено 13.11.2026 по официальному сайту car-from-japan.com (адрес — с визитки основателя, которую передал владелец продукта).
 # Раньше по ошибке проверялся другой сайт — carfromjapan.com (японская площадка, не связана с компанией).
-# Запись базы AUTO-013 «Ichiro Fukuda / CY Consultant» — тот же автобизнес (Ichiro Fukuda — основатель), объединена с этой карточкой.
-# Сайт cy-consultant.com — консалтинг на японском (регистрация компаний, ВНЖ, недвижимость), связи с автоуслугами на нём нет — в раздел не включён.
+# CY Consultant (AUTO-013) — отдельный бизнес по тому же адресу, см. cy-consultant.yaml.
 # Ждёт утверждения владельцем — до этого status: draft.
 name: "Car From Japan"
 status: draft
@@ -24,4 +23,3 @@ sources:
     url: "https://www.car-from-japan.com/warranty"
 verified_at: 2026-11-13
 source_id: AUTO-012
-merged_source_ids: [AUTO-013]

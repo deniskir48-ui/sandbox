@@ -1,0 +1,24 @@
+# Проверено 13.11.2026 по официальному сайту (см. sources). Запись базы AUTO-013 «Ichiro Fukuda / CY Consultant» —
+# консалтинговая компания, не автобизнес (DEC-W28), поэтому раздел «Недвижимость и дом». Ждёт утверждения владельцем — до этого status: draft.
+name: "CY Consultant"
+status: draft
+section: property-home
+category: legal
+extra_categories: [real-estate]
+city: "Лимассол"
+service_type: "Регистрация компаний, ВНЖ, недвижимость"
+languages: "JA/EN"
+summary: "Консалтинг для переезда и бизнеса на Кипре: регистрация компаний, постоянный ВНЖ, банковские счета и инвестиции в недвижимость."
+description: "Консалтинговая компания из Лимассола, работает на японском и английском языках. Регистрирует компании на Кипре и берёт на себя лицензии, юридический адрес, секретаря и налоговое сопровождение; помогает открыть личные и корпоративные банковские счета. Сопровождает получение постоянного вида на жительство, в том числе по ускоренной процедуре через покупку недвижимости, и подбирает жилую и инвестиционную недвижимость — от выбора объекта до управления. Сайт на японском и английском."
+website: "https://cy-consultant.com/eng/"
+sources:
+  - title: "Официальный сайт CY Consultant (English)"
+    url: "https://cy-consultant.com/eng/"
+  - title: "CY Consultant — регистрация компаний"
+    url: "https://cy-consultant.com/eng/cf/"
+  - title: "CY Consultant — постоянный ВНЖ"
+    url: "https://cy-consultant.com/eng/pr/"
+  - title: "CY Consultant — недвижимость"
+    url: "https://cy-consultant.com/eng/re/"
+verified_at: 2026-11-13
+source_id: AUTO-013
