@@ -6,11 +6,13 @@ export type Company = CollectionEntry<'companies'>;
 export type Event = CollectionEntry<'events'>;
 export type Article = CollectionEntry<'articles'>;
 
-// Опубликованные → проверенные черновики → непроверенные (последние два видны только в предпросмотре), внутри — по алфавиту.
+// Порядок: сначала Verified (DEC-W29), затем опубликованные → проверенные черновики → непроверенные
+// (черновики видны только в предпросмотре), внутри — по алфавиту.
 const rank = (c: Company) => (c.data.status === 'published' ? 0 : c.data.verified_at ? 1 : 2);
 /** Все подкатегории компании: основная + дополнительные. */
 export const categoriesOf = (c: Company): string[] => [c.data.category, ...c.data.extra_categories];
-const byName = (a: Company, b: Company) => rank(a) - rank(b) || a.data.name.localeCompare(b.data.name, 'ru');
+const byName = (a: Company, b: Company) =>
+  Number(b.data.verified_badge) - Number(a.data.verified_badge) || rank(a) - rank(b) || a.data.name.localeCompare(b.data.name, 'ru');
 
 /** Только опубликованные (проверенные) компании. Черновики видны лишь в режиме предпросмотра PREVIEW_DRAFTS=1. */
 export async function getPublishedCompanies(): Promise<Company[]> {

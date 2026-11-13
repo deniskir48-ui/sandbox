@@ -17,10 +17,10 @@ const d = company.data;
 const cat = getCategory(d.category)!;
 const catTitles = categoriesOf(company).map((s) => getCategory(s)!.title);
 const related = (await getPublishedArticles()).filter((a) => a.data.companies.includes(company.id));
-// Похожие: та же категория, сначала тот же город. Порядок не зависит от оплаты.
+// Похожие: та же категория, сначала Verified, потом тот же город. Порядок не зависит от оплаты.
 const similar = (await getPublishedCompanies())
   .filter((c) => c.id !== company.id && categoriesOf(c).includes(d.category))
-  .sort((a, b) => Number(b.data.city === d.city) - Number(a.data.city === d.city))
+  .sort((a, b) => Number(b.data.verified_badge) - Number(a.data.verified_badge) || Number(b.data.city === d.city) - Number(a.data.city === d.city))
   .slice(0, 3);
 const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
 const jsonLd = {
