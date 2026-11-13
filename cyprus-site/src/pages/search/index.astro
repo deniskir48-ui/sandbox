@@ -18,6 +18,33 @@ import SearchForm from '../../components/SearchForm.astro';
   const KIND: Record<string, string> = { company: 'Гид', event: 'Афиша', article: 'Статья' };
 
   const norm = (s: string) => s.toLowerCase().replace(/ё/g, 'е').normalize('NFKD').replace(/[̀-ͯ]/g, '');
+
+  // Простая работа с формами русских слов: «лодка» находит «лодок», «баня» — «бани», «школа» — «школы».
+  const ENDINGS = ['иями', 'ями', 'ами', 'ого', 'его', 'ому', 'ему', 'ыми', 'ими', 'ией', 'ых', 'их', 'ой', 'ей', 'ий', 'ый', 'ая', 'яя', 'ое', 'ее', 'ые', 'ие', 'ую', 'юю', 'ов', 'ев', 'ам', 'ям', 'ах', 'ях', 'ом', 'ем', 'ию', 'ия', 'ии', 'а', 'я', 'ы', 'и', 'у', 'ю', 'е', 'о', 'ь', 'й'];
+  const stem = (w: string) => {
+    for (const e of ENDINGS) if (w.endsWith(e) && w.length - e.length >= 3) return w.slice(0, -e.length);
+    return w;
+  };
+  const C = '[бвгджзйклмнпрстфхцчшщ]';
+  // Беглая гласная: «лодк» ↔ «лодок», «ложк» ↔ «ложек».
+  const variants = (st: string) => {
+    const out = [st];
+    const ins = st.match(new RegExp(`^(.*${C})(${C})$`));
+    if (ins) out.push(`${ins[1]}о${ins[2]}`, `${ins[1]}е${ins[2]}`);
+    const del = st.match(new RegExp(`^(.*${C})[ое](${C})$`));
+    if (del && del[1].length >= 2) out.push(del[1] + del[2]);
+    return out;
+  };
+  const words = (s: string) => s.split(/[^a-zа-я0-9]+/).filter(Boolean);
+  // Совпадение ищется с начала слова: «тату» не находит «статус», но «лимас» находит «Лимассол».
+  function matches(term: string, hayWords: string[]) {
+    const vs = variants(stem(term));
+    return hayWords.some((w) => {
+      if (w.startsWith(term)) return true;
+      const ws = stem(w);
+      return vs.some((v) => ws === v || (v.length >= 4 && w.startsWith(v)));
+    });
+  }
   const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 
   const input = document.querySelector<HTMLInputElement>('#q')!;
@@ -32,13 +59,14 @@ import SearchForm from '../../components/SearchForm.astro';
     let items: Item[] = [];
     try { items = await (await fetch('/search-index.json')).json(); } catch { status.textContent = 'Не удалось загрузить поиск. Обновите страницу.'; return; }
     const today = todayCyprus();
-    const terms = norm(q).split(/\s+/).filter(Boolean);
+    const terms = words(norm(q));
     const scored = items
       .filter((i) => !i.end || i.end >= today)
       .map((i) => {
         const title = norm(i.title), hay = norm(`${i.title} ${i.meta} ${i.text}`);
-        if (!terms.every((t) => hay.includes(t))) return null;
-        return { i, score: terms.filter((t) => title.includes(t)).length };
+        const hayWords = words(hay), titleWords = words(title);
+        if (!terms.every((t) => matches(t, hayWords))) return null;
+        return { i, score: terms.filter((t) => matches(t, titleWords)).length };
       })
       .filter((x) => x !== null)
       .sort((a, b) => b.score - a.score);
