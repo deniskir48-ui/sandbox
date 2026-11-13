@@ -3,12 +3,13 @@ import { categoriesOf, type Company } from '../lib/data';
 import { categoryTitles } from '../data/taxonomy';
 import Icon from './Icon.astro';
 import VerifiedBadge from './VerifiedBadge.astro';
+import { regionOf } from '../data/regions';
 interface Props { company: Company }
 const { company } = Astro.props;
 const d = company.data;
 const catLine = categoryTitles(categoriesOf(company)).join(' · ');
 ---
-<a class="card company" href={`/services/${company.id}/`} data-city={d.city ?? ''} data-category={categoriesOf(company).join(' ')}>
+<a class="card company" href={`/services/${company.id}/`} data-city={regionOf(d.city) ?? ''} data-category={categoriesOf(company).join(' ')}>
   <span class="eyebrow">{catLine}</span>
   <h3 class="name-row"><span>{d.name}</span>{d.verified_badge && <VerifiedBadge />}</h3>
   {d.city && <p class="loc"><Icon name="pin" size={15} />{d.city}</p>}

@@ -6,12 +6,13 @@ import Empty from '../../components/Empty.astro';
 import ChipGroup from '../../components/ChipGroup.astro';
 import { EVENT_TYPES } from '../../data/taxonomy';
 import { getUpcomingEvents } from '../../lib/data';
+import { regionOptions } from '../../data/regions';
 
 const events = await getUpcomingEvents();
-// Варианты фильтров — по числу событий: сначала крупные города и частые типы, «Другое» в конце.
+// Варианты фильтров — по числу событий: сначала крупные районы и частые типы, «Другое» в конце.
+// Деревни в фильтр не выводятся: они сведены к районам (src/data/regions.json).
 const countBy = <T extends string>(xs: T[]) => xs.reduce((m, x) => m.set(x, (m.get(x) ?? 0) + 1), new Map<T, number>());
-const cityCount = countBy(events.map((e) => e.data.city));
-const cities = [...cityCount.keys()].sort((a, b) => cityCount.get(b)! - cityCount.get(a)! || a.localeCompare(b, 'ru'));
+const regions = regionOptions(events.map((e) => e.data.city));
 const typeCount = countBy(events.map((e) => e.data.type));
 const types = [...typeCount.keys()].sort((a, b) => Number(a === 'other') - Number(b === 'other') || typeCount.get(b)! - typeCount.get(a)!);
 ---
@@ -30,14 +31,14 @@ const types = [...typeCount.keys()].sort((a, b) => Number(a === 'other') - Numbe
           { value: 'week', label: '7 дней' }, { value: 'month', label: '30 дней' },
         ]} />
         <ChipGroup legend="Тип" name="type" options={[{ value: '', label: 'Все' }, ...types.map((t) => ({ value: t, label: EVENT_TYPES[t] }))]} />
-        <ChipGroup legend="Город" name="city" limit={7} options={[{ value: '', label: 'Все' }, ...cities.map((c) => ({ value: c, label: c }))]} />
+        <ChipGroup legend="Где" name="city" options={[{ value: '', label: 'Везде' }, ...regions.map((r) => ({ value: r, label: r }))]} />
       </form>
       <div class="list-bar">
         <p class="result-count" id="count" aria-live="polite">Найдено: {events.length}</p>
         <ChipGroup legend="Порядок" name="sort" form="filters" compact hideLegend options={[{ value: '', label: 'Сначала главное' }, { value: 'date', label: 'По дате' }]} />
       </div>
       <ul class="grid grid-3" id="list">{events.map((e) => <li><EventCard event={e} /></li>)}</ul>
-      <div id="no-results" hidden><Empty title="Нет мероприятий по этим условиям">Измените дату, город или тип события.</Empty></div>
+      <div id="no-results" hidden><Empty title="Нет мероприятий по этим условиям">Измените дату, место или тип события.</Empty></div>
     </>
   ) : (
     <Empty title="Афиша готовится">Мероприятия появятся после проверки дат, мест и ссылок на билеты по официальным источникам.</Empty>

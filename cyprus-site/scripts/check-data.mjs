@@ -6,7 +6,8 @@
  *  - статьи ссылаются только на опубликованные компании;
  *  - организатор события — опубликованная компания;
  *  - даты проверки не в будущем; устаревшие проверки (компании > 180 дней) — предупреждение;
- *  - в src/content нет технических фикстур.
+ *  - в src/content нет технических фикстур;
+ *  - каждое место (city) привязано к району фильтра (src/data/regions.json) — предупреждение.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -64,6 +65,15 @@ for (const a of articles) {
     if (!published.has(m[1])) errors.push(`${rel}: ссылка на неопубликованную компанию /services/${m[1]}/`);
   }
 }
+
+// Места без района попадают в фильтре в «Другие места» — подсказать, что их стоит добавить в справочник.
+const REGIONS = JSON.parse(fs.readFileSync(path.resolve('src/data/regions.json'), 'utf8'));
+const unmapped = new Map();
+for (const item of [...companies, ...events]) {
+  const city = item.data.city;
+  if (city && !REGIONS.places[city]) unmapped.set(city, [...(unmapped.get(city) ?? []), item.id]);
+}
+for (const [city, ids] of unmapped) warnings.push(`место «${city}» не привязано к району в src/data/regions.json — в фильтре будет в «${REGIONS.other}» (${ids.slice(0, 3).join(', ')}${ids.length > 3 ? '…' : ''})`);
 
 const drafts = companies.length - published.size;
 console.log(`Компании: опубликовано ${published.size}, черновиков ${drafts}. События: ${events.filter((e) => e.data.status === 'published').length} опубл. Статьи: ${articles.filter((a) => a.data.status === 'published').length} опубл.`);
