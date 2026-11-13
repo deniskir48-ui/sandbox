@@ -91,6 +91,18 @@ const isActive = (href: string) => path.startsWith(href) || (href === '/catalog/
         </p>
       </div>
     </footer>
+      <script is:inline>
+      // Новая страница открывается сверху. Нужно для просмотра внутри другого окна (предпросмотр claude.ai),
+      // где прокрутка остаётся от предыдущей страницы. «Назад» и ссылки с #якорем не трогаем.
+      (function () {
+        try {
+          var nav = performance.getEntriesByType('navigation')[0];
+          if (location.hash || (nav && nav.type === 'back_forward')) return;
+          window.scrollTo(0, 0);
+          if (window.top !== window.self) document.documentElement.scrollIntoView({ block: 'start' });
+        } catch (e) {}
+      })();
+    </script>
   </body>
 </html>
 
