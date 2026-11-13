@@ -3,6 +3,7 @@ name: "Auto Japan Cyprus"
 status: draft
 section: cars
 category: japan-import
+extra_categories: [car-selection]
 city: "Лимассол"
 service_type: "Авто из Японии и Великобритании"
 summary: "Автомобили в наличии в Лимассоле и под заказ из Японии и Великобритании — от подбора до передачи машины."

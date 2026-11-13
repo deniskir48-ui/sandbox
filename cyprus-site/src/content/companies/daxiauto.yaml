@@ -3,6 +3,7 @@ name: "DaxiAuto"
 status: draft
 section: cars
 category: japan-import
+extra_categories: [car-selection]
 city: "Лимассол"
 service_type: "Импорт авто из Японии и Великобритании"
 summary: "Импорт автомобилей с аукционов Японии и Великобритании на Кипр: торги, доставка, растаможка и регистрация."

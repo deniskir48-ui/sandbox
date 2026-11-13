@@ -6,7 +6,7 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import CompanyCard from '../../components/CompanyCard.astro';
 import Icon from '../../components/Icon.astro';
 import { getCategory } from '../../data/taxonomy';
-import { getPublishedCompanies, getPublishedArticles, type Company } from '../../lib/data';
+import { getPublishedCompanies, getPublishedArticles, categoriesOf, type Company } from '../../lib/data';
 
 export async function getStaticPaths() {
   return (await getPublishedCompanies()).map((company) => ({ params: { slug: company.id }, props: { company } }));
@@ -14,10 +14,11 @@ export async function getStaticPaths() {
 const { company } = Astro.props as { company: Company };
 const d = company.data;
 const cat = getCategory(d.category)!;
+const catTitles = categoriesOf(company).map((s) => getCategory(s)!.title);
 const related = (await getPublishedArticles()).filter((a) => a.data.companies.includes(company.id));
 // Похожие: та же категория, сначала тот же город. Порядок не зависит от оплаты.
 const similar = (await getPublishedCompanies())
-  .filter((c) => c.id !== company.id && c.data.category === d.category)
+  .filter((c) => c.id !== company.id && categoriesOf(c).includes(d.category))
   .sort((a, b) => Number(b.data.city === d.city) - Number(a.data.city === d.city))
   .slice(0, 3);
 const host = (u: string) => new URL(u).hostname.replace(/^www\./, '');
@@ -50,7 +51,7 @@ const jsonLd = {
     <aside>
       <div class="side-card">
         <dl class="facts">
-          <div><dt>Раздел</dt><dd><a href={`/catalog/${cat.section.slug}/`}>{cat.section.title}</a> · {cat.title}</dd></div>
+          <div><dt>Раздел</dt><dd><a href={`/catalog/${cat.section.slug}/`}>{cat.section.title}</a> · {catTitles.join(', ')}</dd></div>
           {d.city && <div><dt>Город / регион</dt><dd>{d.city}</dd></div>}
           {d.languages && <div><dt>Языки</dt><dd>{d.languages}</dd></div>}
           {d.network && <div><dt>Сеть</dt><dd>{d.network}</dd></div>}

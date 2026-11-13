@@ -3,6 +3,7 @@ name: "iSellCars"
 status: draft
 section: cars
 category: japan-import
+extra_categories: [car-selection]
 city: "Лимассол"
 service_type: "Премиальные авто под заказ"
 languages: "EN/RU"

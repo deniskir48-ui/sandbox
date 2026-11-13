@@ -4,10 +4,10 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import SearchForm from '../../components/SearchForm.astro';
 import Icon from '../../components/Icon.astro';
 import { SECTIONS } from '../../data/taxonomy';
-import { getPublishedCompanies } from '../../lib/data';
+import { getPublishedCompanies, categoriesOf } from '../../lib/data';
 const companies = await getPublishedCompanies();
 const count = (slug: string) => companies.filter((c) => c.data.section === slug).length;
-const catCount = (slug: string) => companies.filter((c) => c.data.category === slug).length;
+const catCount = (slug: string) => companies.filter((c) => categoriesOf(c).includes(slug)).length;
 ---
 <Base title="Гид по компаниям и сервисам Кипра" description="Разделы гида: автомобили, образование, недвижимость, отдых, здоровье, кафе, развлечения и другие сервисы Кипра.">
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { label: 'Гид' }]} />

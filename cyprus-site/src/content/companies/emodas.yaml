@@ -3,6 +3,7 @@ name: "Emodas"
 status: draft
 section: cars
 category: japan-import
+extra_categories: [car-selection]
 service_type: "Авто из Японии"
 summary: "Автомобили и техника с аукционов и из объявлений Японии под заказ и в наличии; подбор авто на Кипре."
 description: "Привозит на Кипр автомобили и технику с японских аукционов и из объявлений — под заказ и в наличии. Сопровождает покупку до постановки на учёт и отправки машины и документов в ваш город. Отдельные услуги — подбор автомобиля на Кипре и покупка авто на запчасти. Работает пн–сб с 9:00 до 18:00. Сайт на русском, английском и греческом."
@@ -10,5 +11,7 @@ website: "https://emodas.cy/"
 sources:
   - title: "Официальный сайт Emodas"
     url: "https://emodas.cy/"
+  - title: "Emodas — подбор авто на Кипре"
+    url: "https://emodas.cy/uslugi/podbor-avto-na-kipre"
 verified_at: 2026-11-13
 source_id: AUTO-006

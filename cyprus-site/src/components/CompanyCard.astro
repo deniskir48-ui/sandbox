@@ -1,5 +1,5 @@
 ---
-import type { Company } from '../lib/data';
+import { categoriesOf, type Company } from '../lib/data';
 import { getCategory } from '../data/taxonomy';
 import Icon from './Icon.astro';
 interface Props { company: Company }
@@ -7,7 +7,7 @@ const { company } = Astro.props;
 const d = company.data;
 const cat = getCategory(d.category);
 ---
-<a class="card company" href={`/services/${company.id}/`} data-city={d.city ?? ''} data-category={d.category}>
+<a class="card company" href={`/services/${company.id}/`} data-city={d.city ?? ''} data-category={categoriesOf(company).join(' ')}>
   <span class="eyebrow">{d.service_type ?? cat?.title}</span>
   <h3>{d.name}</h3>
   {d.city && <p class="loc"><Icon name="pin" size={15} />{d.city}</p>}

@@ -3,6 +3,7 @@ name: "DriveClick"
 status: draft
 section: cars
 category: japan-import
+extra_categories: [car-selection]
 city: "Лимассол"
 service_type: "Импорт авто из Японии и Великобритании"
 languages: "EN/RU"

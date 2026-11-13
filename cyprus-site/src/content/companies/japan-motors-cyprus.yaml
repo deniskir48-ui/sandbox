@@ -3,6 +3,7 @@ name: "Japan Motors Cyprus"
 status: draft
 section: cars
 category: japan-import
+extra_categories: [car-selection]
 city: "Никосия"
 service_type: "Импорт авто из Японии"
 summary: "Подержанные автомобили из Японии напрямую с крупных аукционов (USS, JU, TAA, ARAI, CAA и других)."

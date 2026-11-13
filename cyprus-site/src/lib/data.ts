@@ -8,6 +8,8 @@ export type Article = CollectionEntry<'articles'>;
 
 // Опубликованные → проверенные черновики → непроверенные (последние два видны только в предпросмотре), внутри — по алфавиту.
 const rank = (c: Company) => (c.data.status === 'published' ? 0 : c.data.verified_at ? 1 : 2);
+/** Все подкатегории компании: основная + дополнительные. */
+export const categoriesOf = (c: Company): string[] => [c.data.category, ...c.data.extra_categories];
 const byName = (a: Company, b: Company) => rank(a) - rank(b) || a.data.name.localeCompare(b.data.name, 'ru');
 
 /** Только опубликованные (проверенные) компании. Черновики видны лишь в режиме предпросмотра PREVIEW_DRAFTS=1. */

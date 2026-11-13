@@ -3,6 +3,7 @@ name: "Prestyn Motors"
 status: draft
 section: cars
 category: japan-import
+extra_categories: [car-selection]
 city: "Лимассол"
 service_type: "Импорт авто из Японии"
 summary: "Подбор автомобилей на японских онлайн-площадках с фиксированной комиссией и сопровождением до регистрации на Кипре."

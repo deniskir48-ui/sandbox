@@ -4,7 +4,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CompanyCard from '../../components/CompanyCard.astro';
 import Empty from '../../components/Empty.astro';
 import { SECTIONS, type Section } from '../../data/taxonomy';
-import { getPublishedCompanies } from '../../lib/data';
+import { getPublishedCompanies, categoriesOf } from '../../lib/data';
 import Icon from '../../components/Icon.astro';
 import ChipGroup from '../../components/ChipGroup.astro';
 
@@ -15,7 +15,7 @@ const { section } = Astro.props as { section: Section };
 const companies = (await getPublishedCompanies()).filter((c) => c.data.section === section.slug);
 const cityCount = companies.reduce((m, c) => (c.data.city ? m.set(c.data.city, (m.get(c.data.city) ?? 0) + 1) : m), new Map<string, number>());
 const cities = [...cityCount.keys()].sort((a, b) => cityCount.get(b)! - cityCount.get(a)! || a.localeCompare(b, 'ru'));
-const usedCats = section.categories.filter((cat) => companies.some((c) => c.data.category === cat.slug));
+const usedCats = section.categories.filter((cat) => companies.some((c) => categoriesOf(c).includes(cat.slug)));
 ---
 <Base
   title={`${section.title} на Кипре`}
@@ -60,7 +60,7 @@ const usedCats = section.categories.filter((cat) => companies.some((c) => c.data
   bindFilters({ form: '#filters', items: '#list > li', count: '#count', empty: '#no-results',
     match: (el, f) => {
       const card = el.firstElementChild as HTMLElement;
-      return (!f.category || card.dataset.category === f.category) && (!f.city || card.dataset.city === f.city);
+      return (!f.category || (card.dataset.category ?? '').split(' ').includes(f.category)) && (!f.city || card.dataset.city === f.city);
     } });
 </script>
 <style>

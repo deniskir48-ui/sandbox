@@ -1,6 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
-import { CATEGORY_SLUGS, EVENT_TYPE_SLUGS, SECTION_SLUGS } from './data/taxonomy';
+import { CATEGORY_SLUGS, EVENT_TYPE_SLUGS, SECTION_SLUGS, getCategory } from './data/taxonomy';
 
 // В режиме USE_FIXTURES=1 данные берутся из /fixtures (технические тестовые записи).
 // Продакшен-сборка их не видит вообще.
@@ -29,7 +29,8 @@ const companies = defineCollection({
       name: z.string(),
       status: z.enum(['draft', 'published']).default('draft'),
       section: z.enum(SECTION_SLUGS),
-      category: z.enum(CATEGORY_SLUGS),
+      category: z.enum(CATEGORY_SLUGS), // основная подкатегория: хлебные крошки, «Ещё в категории»
+      extra_categories: z.array(z.enum(CATEGORY_SLUGS)).default([]), // доп. подкатегории того же раздела, если компания подтверждённо работает и в них
       city: z.string().optional(), // город/регион, только подтверждённый
       network: z.string().optional(), // сеть, если это филиал/кампус
       service_type: z.string().optional(), // тип услуги: «Застройщик», «Баня на дровах»
@@ -42,7 +43,15 @@ const companies = defineCollection({
       verified_at: z.coerce.date().optional(),
       source_id: z.string().optional(), // ID во внутренней базе, на сайте не показывается
     })
-    .superRefine(publishGate(['summary', 'sources', 'verified_at'])),
+    .superRefine(publishGate(['summary', 'sources', 'verified_at']))
+    .superRefine((d, ctx) => {
+      for (const slug of [d.category, ...d.extra_categories]) {
+        if (getCategory(slug)?.section.slug !== d.section)
+          ctx.addIssue({ code: z.ZodIssueCode.custom, message: `Подкатегория «${slug}» не относится к разделу «${d.section}»` });
+      }
+      if (d.extra_categories.includes(d.category))
+        ctx.addIssue({ code: z.ZodIssueCode.custom, message: 'extra_categories не должен повторять category' });
+    }),
 });
 
 const events = defineCollection({

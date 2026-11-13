@@ -4,6 +4,7 @@ name: "Официальное название"
 status: draft            # draft — не видна на сайте; published — опубликована
 section: cars            # cars | education | property-home | leisure-spa | health-beauty | food | entertainment | other
 category: japan-import   # подкатегория раздела, список в src/data/taxonomy.ts
+# extra_categories: [car-selection]   # необязательно: доп. подкатегории того же раздела, только если подтверждены источником
 city: "Лимассол"         # только подтверждённый город/регион; нет данных — удалите строку
 # network: "Название сети"   # если это филиал/кампус сети
 summary: "До 150 символов: что делает компания, без рекламных эпитетов."
