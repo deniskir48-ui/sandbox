@@ -118,7 +118,7 @@ function main() {
   const args = process.argv.slice(2);
   const file = args.find((a) => !a.startsWith('--'));
   const dry = args.includes('--dry-run');
-  const refresh = args.includes('--refresh-drafts'); // обновить поля в непроверенных черновиках (без verified_at)
+  const refresh = args.includes('--refresh-drafts'); // обновить поля в непроверенных черновиках без ручных правок
   if (!file) { console.error('Использование: npm run import:catalog -- <путь к CSV> [--dry-run]'); process.exit(1); }
 
   const rows = parseCSV(fs.readFileSync(file, 'utf8')).filter((r) => r.some((c) => c.trim()));
@@ -133,8 +133,8 @@ function main() {
   for (const f of existingFiles) {
     const txt = fs.readFileSync(path.join(outDir, f), 'utf8');
     const sid = txt.match(/^source_id:\s*(\S+)/m)?.[1];
-    // Проверенные черновики (есть verified_at, ждут утверждения) импорт не перезаписывает.
-    if (sid) known.set(sid, { file: f, draft: /^status:\s*draft/m.test(txt) && !/^verified_at:/m.test(txt) });
+    // Черновики с ручными правками (проверенные — verified_at, или с доп. подкатегориями) импорт не перезаписывает.
+    if (sid) known.set(sid, { file: f, draft: /^status:\s*draft/m.test(txt) && !/^(verified_at|extra_categories):/m.test(txt) });
   }
 
   for (const r of rows) {
