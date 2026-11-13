@@ -1,0 +1,24 @@
+# Проверено 13.11.2026 по официальному сайту car-from-japan.com (адрес — с визитки основателя Ichiro Fukuda, которую передал владелец продукта).
+# Запись базы AUTO-013. Не путать с CAR FROM JAPAN (carfromjapan.com, AUTO-012) — это другая компания, японская онлайн-площадка.
+# Ждёт утверждения владельцем — до этого status: draft.
+name: "Car From Japan (Mizuho Medtrade)"
+status: draft
+section: cars
+category: japan-import
+extra_categories: [car-selection]
+city: "Лимассол"
+service_type: "Авто из Японии"
+summary: "Подержанные автомобили из Японии на Кипр и Мальту — в основном до 3 лет и с пробегом до 30 000 км; есть поиск машины под запрос."
+description: "MIZUHO MEDTRADE LTD — кипрско-японская компания из Лимассола. Привозит из Японии подержанные автомобили, в основном праворульные, в том числе европейские модели, JDM, спортивные и классические машины; большинство — младше трёх лет с пробегом до 30 000 км. Можно выбрать машину из каталога по схеме «всё включено» (перевозка, пошлина и НДС в цене) или заказать поиск автомобиля под свой запрос и бюджет. Перед продажей машину осматривают, на время перевозки она застрахована; если при передаче обнаружится серьёзный скрытый дефект, компания обещает вернуть деньги. Сайт на английском."
+website: "https://www.car-from-japan.com/"
+sources:
+  - title: "Официальный сайт Car From Japan"
+    url: "https://www.car-from-japan.com/"
+  - title: "Car From Japan — о компании"
+    url: "https://www.car-from-japan.com/1"
+  - title: "Car From Japan — услуги и тарифы"
+    url: "https://www.car-from-japan.com/3"
+  - title: "Car From Japan — гарантии"
+    url: "https://www.car-from-japan.com/warranty"
+verified_at: 2026-11-13
+source_id: AUTO-013

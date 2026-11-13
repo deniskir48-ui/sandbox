@@ -1,5 +1,6 @@
-# Проверено 13.11.2026 по официальному сайту (см. sources). Запись базы AUTO-013 «Ichiro Fukuda / CY Consultant» —
-# консалтинговая компания, не автобизнес (DEC-W28), поэтому раздел «Недвижимость и дом». Ждёт утверждения владельцем — до этого status: draft.
+# Проверено 13.11.2026 по официальному сайту (см. sources). В базе упомянута в записи AUTO-013 «Ichiro Fukuda / CY Consultant»;
+# автобизнес основателя — отдельная карточка car-from-japan-mizuho-medtrade. Консалтинг, не авто, поэтому раздел «Недвижимость и дом».
+# Ждёт утверждения владельцем — до этого status: draft.
 name: "CY Consultant"
 status: draft
 section: property-home
@@ -21,4 +22,3 @@ sources:
   - title: "CY Consultant — недвижимость"
     url: "https://cy-consultant.com/eng/re/"
 verified_at: 2026-11-13
-source_id: AUTO-013
