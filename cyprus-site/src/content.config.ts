@@ -33,6 +33,7 @@ const companies = defineCollection({
       extra_categories: z.array(z.enum(CATEGORY_SLUGS)).default([]), // доп. подкатегории того же раздела, если компания подтверждённо работает и в них
       city: z.string().optional(), // город/регион, только подтверждённый
       network: z.string().optional(), // сеть, если это филиал/кампус
+      verified_badge: z.boolean().default(false), // отметка Verified: автор гида лично знаком с компанией (DEC-W29)
       service_type: z.string().optional(), // тип услуги: «Застройщик», «Баня на дровах»
       languages: z.string().optional(), // языки обучения/обслуживания: «EN/EL»
       summary: z.string().max(160).optional(), // для списка, до ~150 символов

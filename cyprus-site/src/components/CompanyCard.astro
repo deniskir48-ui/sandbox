@@ -9,7 +9,7 @@ const cat = getCategory(d.category);
 ---
 <a class="card company" href={`/services/${company.id}/`} data-city={d.city ?? ''} data-category={categoriesOf(company).join(' ')}>
   <span class="eyebrow">{d.service_type ?? cat?.title}</span>
-  <h3>{d.name}</h3>
+  <h3>{d.name}{d.verified_badge && <span class="verified-badge" title="Автор гида лично знаком с компанией"><Icon name="verified" size={14} />Verified</span>}</h3>
   {d.city && <p class="loc"><Icon name="pin" size={15} />{d.city}</p>}
   {d.summary && <p class="desc" style="margin-top:6px">{d.summary}</p>}
   {d.status === 'draft' && (d.verified_at

@@ -1,6 +1,7 @@
 # Проверено 13.11.2026 по собственным профилям компании (DEC-W27): Threads — открыт для проверки, Instagram — по скриншоту владельца продукта (сайт Instagram не пускает без входа). Ждёт утверждения владельцем — до этого status: draft.
 name: "FreshCar"
 status: draft
+verified_badge: true   # Verified — автор гида лично знаком с компанией (по указанию владельца 13.11.2026)
 section: cars
 category: car-selection
 extra_categories: [japan-import, car-rental]

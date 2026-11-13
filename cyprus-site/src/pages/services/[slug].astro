@@ -37,6 +37,9 @@ const jsonLd = {
     <article>
       <p class="eyebrow">{d.service_type ?? cat.title}</p>
       <h1>{d.name}</h1>
+      {d.verified_badge && (
+        <p class="verified-line"><span class="verified-badge"><Icon name="verified" size={15} />Verified</span> Автор гида лично знаком с компанией. <a href="/about/#verified">Что это значит</a></p>
+      )}
       {d.city && <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}</p>}
       {d.status === 'draft' && !d.verified_at && (
         <p class="notice">Карточка из внутренней базы, данные ещё не проверены. Уточняйте информацию у компании.</p>

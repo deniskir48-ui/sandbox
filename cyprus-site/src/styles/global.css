@@ -148,6 +148,15 @@ a.card:hover h3 { color: var(--accent-ink); }
 }
 .badge-top { display: inline-block; font-size: 0.76rem; font-weight: 700; line-height: 1.5; padding: 2px 9px; border-radius: 999px; background: var(--sun); color: var(--sun-ink); }
 .unverified.pending { background: var(--accent-soft); color: var(--accent-ink); }
+/* Отметка Verified: автор гида лично знаком с компанией (DEC-W29) */
+.verified-badge {
+  display: inline-flex; align-items: center; gap: 4px; vertical-align: 0.15em; margin-left: 8px;
+  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; line-height: 1.5; white-space: nowrap;
+  padding: 1px 9px 1px 6px; border-radius: 999px; background: var(--btn-bg); color: var(--btn-text);
+}
+.verified-badge svg { flex: none; }
+.prose li .verified-badge, .verified-line .verified-badge { margin-left: 0; }
+.verified-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 8px 0 0; font-size: 0.9rem; color: var(--muted); }
 .unverified {
   display: inline-block; margin-top: 10px; font-size: 0.75rem; font-weight: 600;
   color: var(--warn-text); background: var(--warn-bg); padding: 2px 9px; border-radius: 999px;

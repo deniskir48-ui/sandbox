@@ -3,6 +3,7 @@
 # Ждёт утверждения владельцем — до этого status: draft.
 name: "Car From Japan (Mizuho Medtrade)"
 status: draft
+verified_badge: true   # Verified — автор гида лично знаком с компанией (по указанию владельца 13.11.2026)
 section: cars
 category: japan-import
 extra_categories: [car-selection]
