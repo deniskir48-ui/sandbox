@@ -66,14 +66,14 @@ for (const a of articles) {
   }
 }
 
-// Места без района попадают в фильтре в «Другие места» — подсказать, что их стоит добавить в справочник.
+// Место без района не попадает в фильтр «Где» (запись видна только в «Везде») — подсказать, что его стоит добавить в справочник.
 const REGIONS = JSON.parse(fs.readFileSync(path.resolve('src/data/regions.json'), 'utf8'));
 const unmapped = new Map();
 for (const item of [...companies, ...events]) {
   const city = item.data.city;
   if (city && !REGIONS.places[city]) unmapped.set(city, [...(unmapped.get(city) ?? []), item.id]);
 }
-for (const [city, ids] of unmapped) warnings.push(`место «${city}» не привязано к району в src/data/regions.json — в фильтре будет в «${REGIONS.other}» (${ids.slice(0, 3).join(', ')}${ids.length > 3 ? '…' : ''})`);
+for (const [city, ids] of unmapped) warnings.push(`место «${city}» не привязано к району в src/data/regions.json — в фильтре «Где» запись будет только в «Везде» (${ids.slice(0, 3).join(', ')}${ids.length > 3 ? '…' : ''})`);
 
 const drafts = companies.length - published.size;
 console.log(`Компании: опубликовано ${published.size}, черновиков ${drafts}. События: ${events.filter((e) => e.data.status === 'published').length} опубл. Статьи: ${articles.filter((a) => a.data.status === 'published').length} опубл.`);
