@@ -5,6 +5,7 @@ import SourceList from '../../components/SourceList.astro';
 import ArticleCard from '../../components/ArticleCard.astro';
 import CompanyCard from '../../components/CompanyCard.astro';
 import Icon from '../../components/Icon.astro';
+import VerifiedBadge from '../../components/VerifiedBadge.astro';
 import { getCategory } from '../../data/taxonomy';
 import { getPublishedCompanies, getPublishedArticles, categoriesOf, type Company } from '../../lib/data';
 
@@ -36,10 +37,8 @@ const jsonLd = {
   <div class="detail">
     <article>
       <p class="eyebrow">{d.service_type ?? cat.title}</p>
-      <h1>{d.name}</h1>
-      {d.verified_badge && (
-        <p class="verified-line"><span class="verified-badge"><Icon name="verified" size={15} />Verified</span> Автор гида лично знаком с компанией. <a href="/about/#verified">Что это значит</a></p>
-      )}
+      <div class="title-row"><h1>{d.name}</h1>{d.verified_badge && <VerifiedBadge size="lg" />}</div>
+      {d.verified_badge && <p class="verified-note">Автор гида лично знаком с компанией. <a href="/about/#verified">Что это значит</a></p>}
       {d.city && <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}</p>}
       {(d.description ?? d.summary) && <div class="prose"><p>{d.description ?? d.summary}</p></div>}
       <SourceList sources={d.sources} verifiedAt={d.verified_at} />

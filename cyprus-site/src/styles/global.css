@@ -27,6 +27,8 @@
   --band-btn-text: #0e1116;
   --sun: #f26b21;           /* оранжевый — только акценты */
   --sun-ink: #1c0b00;
+  --verified-bg: #0b7a54;   /* Verified — изумрудный, отдельный от палитры кнопок */
+  --verified-text: #ffffff;
   --hero-1: #cfeaf9;
   --hero-2: #a3d6f2;
   --hero-text: #0e1116;
@@ -64,6 +66,8 @@
     --band-btn-text: #e8eef3;
     --sun: #f27a35;
     --sun-ink: #1c0b00;
+    --verified-bg: #34d399;
+    --verified-text: #052e1f;
     --hero-1: #14293a;
     --hero-2: #0f1d2a;
     --hero-text: #e8eef3;
@@ -147,15 +151,18 @@ a.card:hover h3 { color: var(--accent-ink); }
   background: var(--accent-soft); color: var(--accent-ink);
 }
 .badge-top { display: inline-block; font-size: 0.76rem; font-weight: 700; line-height: 1.5; padding: 2px 9px; border-radius: 999px; background: var(--sun); color: var(--sun-ink); }
-/* Отметка Verified: автор гида лично знаком с компанией (DEC-W29) */
+/* Отметка Verified: автор гида лично знаком с компанией (DEC-W29). Свой цвет, чтобы не путать с кнопками и чипсами */
 .verified-badge {
-  display: inline-flex; align-items: center; gap: 4px; vertical-align: 0.15em; margin-left: 8px;
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.02em; line-height: 1.5; white-space: nowrap;
-  padding: 1px 9px 1px 6px; border-radius: 999px; background: var(--btn-bg); color: var(--btn-text);
+  display: inline-flex; align-items: center; gap: 5px; flex: none; vertical-align: middle;
+  font-size: 0.78rem; font-weight: 750; letter-spacing: 0.02em; line-height: 1; white-space: nowrap;
+  padding: 4px 10px 4px 6px; border-radius: 999px;
+  background: var(--verified-bg); color: var(--verified-text);
 }
-.verified-badge svg { flex: none; }
-.prose li .verified-badge, .verified-line .verified-badge { margin-left: 0; }
-.verified-line { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; margin: 8px 0 0; font-size: 0.9rem; color: var(--muted); }
+.verified-badge svg { flex: none; display: block; }
+.verified-badge.lg { font-size: 0.9rem; padding: 6px 13px 6px 8px; gap: 6px; }
+.name-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
+.verified-note { margin: 8px 0 0; font-size: 0.9rem; color: var(--muted); }
 
 /* ---------- Заголовки секций ---------- */
 .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 2.6rem 0 1rem; }
