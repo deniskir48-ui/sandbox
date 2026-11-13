@@ -1,0 +1,23 @@
+# Проверено 13.11.2026: реестр Минобразования Кипра + официальный сайт. Разделено с филиалом в Пафосе. Утверждено и опубликовано.
+name: "Morfosis Private School — Лимассол"
+status: published
+section: education
+category: private-schools
+city: "Лимассол"
+network: "Morfosis Private School"
+service_type: "Частная школа"
+languages: "RU"
+summary: "Русскоязычная общеобразовательная школа в Лимассоле: младшая и старшая школа, углублённый английский и греческий."
+description: "Русскоязычная общеобразовательная школа с углублённым изучением английского и греческого языков. По данным школы, обучение ведётся по программам Министерства образования и науки Российской Федерации и Республики Кипр. Старшая школа — Dimitri Liperti 12, Лимассол, младшая — Kozanis 30, Колосси. В реестре Министерства образования Кипра лимассольские начальная и средняя школы значатся с языком обучения русский. Ещё одна школа сети работает в Пафосе."
+website: "https://www.morfosisschool.com/"
+sources:
+  - title: "Официальный сайт Morfosis"
+    url: "https://www.morfosisschool.com/"
+  - title: "Morfosis — контакты и адреса школ"
+    url: "https://www.morfosisschool.com/contact"
+  - title: "Минобразования Кипра — реестр частных средних школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_secondary_general.pdf"
+  - title: "Минобразования Кипра — реестр частных начальных школ"
+    url: "https://archeia.moec.gov.cy/mc/363/en_private_primary.pdf"
+verified_at: 2026-11-13
+source_id: SCHOOL-012

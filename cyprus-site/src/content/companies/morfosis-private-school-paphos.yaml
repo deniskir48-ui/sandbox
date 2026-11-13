@@ -1,0 +1,19 @@
+# Проверено 13.11.2026 по официальному сайту (в реестре Минобразования школа в Пафосе не найдена). Утверждено и опубликовано вместе с лимассольской.
+name: "Morfosis Private School — Пафос"
+status: published
+section: education
+category: private-schools
+city: "Пафос"
+network: "Morfosis Private School"
+service_type: "Частная школа"
+languages: "RU"
+summary: "Школа сети Morfosis в Пафосе: русскоязычное общее образование с углублённым английским и греческим."
+description: "Школа сети Morfosis в центре Пафоса, Thetidos 4. По данным школы, учебный процесс строится с углублённым изучением английского и греческого языков, есть дополнительные кружки: от живописи, театра и музыки до программирования и робототехники. Основные младшая и старшая школы сети находятся в Лимассоле."
+website: "https://www.morfosisschool.com/"
+sources:
+  - title: "Morfosis — школа в Пафосе"
+    url: "https://www.morfosisschool.com/paphos"
+  - title: "Morfosis — контакты и адреса школ"
+    url: "https://www.morfosisschool.com/contact"
+verified_at: 2026-11-13
+source_id: SCHOOL-012
