@@ -2,7 +2,7 @@
 # заполнить summary, description, sources, verified_at и только затем поставить status: published.
 name: Elysium Hotel
 status: draft
-section: leisure-spa
+section: hotels-spa
 category: spa
 city: Пафос
 service_type: Бани / сауны / SPA

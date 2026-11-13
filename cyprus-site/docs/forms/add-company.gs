@@ -9,8 +9,8 @@
 const SHEET_NAME = 'Заявки компаний';
 const SECTIONS = {
   'cars': 'Автомобили', 'education': 'Образование', 'property-home': 'Недвижимость и дом',
-  'leisure-spa': 'Отдых и SPA', 'health-beauty': 'Здоровье и красота', 'food': 'Кафе и рестораны',
-  'entertainment': 'События и развлечения', 'other': 'Другие сервисы',
+  'hotels-spa': 'Отели и SPA', 'health-beauty': 'Здоровье и красота', 'food': 'Кафе и рестораны',
+  'entertainment': 'Досуг и развлечения', 'other': 'Другие сервисы',
 };
 const FIELDS = [
   ['name', 'Компания'], ['section', 'Раздел'], ['about', 'Чем занимается'], ['city', 'Город'],

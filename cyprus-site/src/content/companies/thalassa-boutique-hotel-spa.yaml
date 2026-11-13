@@ -2,7 +2,7 @@
 # заполнить summary, description, sources, verified_at и только затем поставить status: published.
 name: Thalassa Boutique Hotel & Spa
 status: draft
-section: leisure-spa
+section: hotels-spa
 category: hotels
 service_type: Отель / курорт
 sources: []

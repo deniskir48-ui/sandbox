@@ -2,7 +2,7 @@
 # заполнить summary, description, sources, verified_at и только затем поставить status: published.
 name: Sunny Bunny
 status: draft
-section: leisure-spa
+section: hotels-spa
 category: spa
 city: Лимассол
 service_type: Бани / сауны / SPA

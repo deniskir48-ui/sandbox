@@ -2,7 +2,7 @@
 # заполнить summary, description, sources, verified_at и только затем поставить status: published.
 name: Konnos Bay Watersports
 status: draft
-section: leisure-spa
+section: entertainment
 category: boats
 service_type: Аренда / прокат лодок
 sources: []

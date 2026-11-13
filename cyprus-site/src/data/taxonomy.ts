@@ -48,13 +48,12 @@ export const SECTIONS: Section[] = [
     ],
   },
   {
-    slug: 'leisure-spa',
-    title: 'Отдых и SPA',
-    intro: 'Аренда лодок и яхт, бани, SPA и размещение.',
+    slug: 'hotels-spa',
+    title: 'Отели и SPA',
+    intro: 'Отели и курорты, бани, хаммамы и SPA.',
     categories: [
-      { slug: 'boats', title: 'Аренда лодок и яхт', sourceCategories: ['Аренда лодок'] },
-      { slug: 'spa', title: 'Бани и SPA', sourceCategories: ['Бани и SPA'] },
       { slug: 'hotels', title: 'Отели и размещение', sourceCategories: ['Отели и размещение'] },
+      { slug: 'spa', title: 'Бани и SPA', sourceCategories: ['Бани и SPA'] },
     ],
   },
   {
@@ -74,12 +73,13 @@ export const SECTIONS: Section[] = [
   },
   {
     slug: 'entertainment',
-    title: 'События и развлечения',
-    intro: 'Билетные сервисы, организаторы, досуговые площадки. Сами мероприятия — в «Афише».',
+    title: 'Досуг и развлечения',
+    intro: 'Аренда лодок и яхт, кино и развлечения, организаторы и площадки, билетные сервисы. Сами мероприятия — в «Афише».',
     categories: [
-      { slug: 'tickets', title: 'Билетные сервисы', sourceCategories: ['Билеты и афиша'] },
-      { slug: 'organizers', title: 'Организаторы и площадки', sourceCategories: ['События и досуг'] },
+      { slug: 'boats', title: 'Аренда лодок и яхт', sourceCategories: ['Аренда лодок'] },
       { slug: 'cinema', title: 'Кино и развлечения', sourceCategories: ['Кино и развлечения'] },
+      { slug: 'organizers', title: 'Организаторы и площадки', sourceCategories: ['События и досуг'] },
+      { slug: 'tickets', title: 'Билетные сервисы', sourceCategories: ['Билеты и афиша'] },
     ],
   },
   {
