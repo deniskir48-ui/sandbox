@@ -133,6 +133,9 @@ function main() {
   for (const f of existingFiles) {
     const txt = fs.readFileSync(path.join(outDir, f), 'utf8');
     const sid = txt.match(/^source_id:\s*(\S+)/m)?.[1];
+    // Записи базы, объединённые с этой карточкой как дубли, не создаются и не обновляются.
+    const merged = txt.match(/^merged_source_ids:\s*\[([^\]]*)\]/m)?.[1].split(',').map((x) => x.trim()).filter(Boolean) ?? [];
+    for (const m of merged) known.set(m, { file: f, draft: false });
     // Черновики с ручными правками (проверенные — verified_at, или с доп. подкатегориями) импорт не перезаписывает.
     if (sid) known.set(sid, { file: f, draft: /^status:\s*draft/m.test(txt) && !/^(verified_at|extra_categories):/m.test(txt) });
   }

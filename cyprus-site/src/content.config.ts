@@ -42,6 +42,7 @@ const companies = defineCollection({
       sources: z.array(source).default([]),
       verified_at: z.coerce.date().optional(),
       source_id: z.string().optional(), // ID во внутренней базе, на сайте не показывается
+      merged_source_ids: z.array(z.string()).default([]), // дубли из базы, объединённые с этой карточкой; импорт их не создаёт заново
     })
     .superRefine(publishGate(['summary', 'sources', 'verified_at']))
     .superRefine((d, ctx) => {
