@@ -6,7 +6,7 @@ import ArticleCard from '../../components/ArticleCard.astro';
 import CompanyCard from '../../components/CompanyCard.astro';
 import Icon from '../../components/Icon.astro';
 import VerifiedBadge from '../../components/VerifiedBadge.astro';
-import { getCategory } from '../../data/taxonomy';
+import { getCategory, categoryTitles } from '../../data/taxonomy';
 import { getPublishedCompanies, getPublishedArticles, categoriesOf, type Company } from '../../lib/data';
 
 export async function getStaticPaths() {
@@ -15,7 +15,7 @@ export async function getStaticPaths() {
 const { company } = Astro.props as { company: Company };
 const d = company.data;
 const cat = getCategory(d.category)!;
-const catTitles = categoriesOf(company).map((s) => getCategory(s)!.title);
+const catTitles = categoryTitles(categoriesOf(company));
 const related = (await getPublishedArticles()).filter((a) => a.data.companies.includes(company.id));
 // Похожие: та же категория, сначала Verified, потом тот же город. Порядок не зависит от оплаты.
 const similar = (await getPublishedCompanies())
@@ -36,7 +36,7 @@ const jsonLd = {
   ]} />
   <div class="detail">
     <article>
-      <p class="eyebrow">{d.service_type ?? cat.title}</p>
+      <p class="eyebrow">{catTitles.join(' · ')}</p>
       <div class="title-row"><h1>{d.name}</h1>{d.verified_badge && <VerifiedBadge size="lg" />}</div>
       {d.verified_badge && <p class="verified-note">Автор гида лично знаком с компанией. <a href="/about/#verified">Что это значит</a></p>}
       {d.city && <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}</p>}

@@ -109,6 +109,12 @@ export function getCategory(slug: string): (Category & { section: Section }) | u
   return undefined;
 }
 
+/** Названия подкатегорий в порядке таксономии (как в фильтре раздела). */
+export function categoryTitles(slugs: string[]): string[] {
+  const order = CATEGORY_SLUGS as readonly string[];
+  return [...new Set(slugs)].sort((a, b) => order.indexOf(a) - order.indexOf(b)).map((s) => getCategory(s)?.title).filter((t): t is string => !!t);
+}
+
 // Типы мероприятий для «Афиши».
 export const EVENT_TYPES = {
   concert: 'Концерт',

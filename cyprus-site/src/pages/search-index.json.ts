@@ -1,6 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getPublishedCompanies, getUpcomingEvents, getPublishedArticles, categoriesOf } from '../lib/data';
-import { getCategory, EVENT_TYPES } from '../data/taxonomy';
+import { getCategory, categoryTitles, EVENT_TYPES } from '../data/taxonomy';
 import { formatEventWhen } from '../lib/dates';
 
 // Статический индекс для поиска: только опубликованные записи и только публичные поля.
@@ -9,7 +9,7 @@ export const GET: APIRoute = async () => {
     const cat = getCategory(c.data.category)!;
     return {
       kind: 'company', url: `/services/${c.id}/`, title: c.data.name,
-      meta: [cat.section.title, categoriesOf(c).map((s) => getCategory(s)!.title).join(', '), c.data.city].filter(Boolean).join(' · '),
+      meta: [cat.section.title, categoryTitles(categoriesOf(c)).join(', '), c.data.city].filter(Boolean).join(' · '),
       text: [c.data.service_type, c.data.summary, c.data.description, c.data.network].filter(Boolean).join(' '),
     };
   });
