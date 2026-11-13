@@ -15,12 +15,12 @@ const events = upcoming.slice(0, 6);
 const articles = (await getPublishedArticles()).slice(0, 3);
 const count = (slug: string) => companies.filter((c) => c.data.section === slug).length;
 
-// Быстрые переходы — только в существующие разделы и фильтры.
+// Быстрые переходы: примеры того, что есть на сайте (разные разделы).
 const quick = [
   { href: '/events/?when=weekend', label: 'Афиша на выходные' },
-  { href: '/catalog/education/', label: 'Школы и греческий' },
+  { href: '/catalog/education/?category=private-schools', label: 'Частные школы' },
   { href: '/catalog/cars/', label: 'Покупка авто' },
-  { href: '/catalog/leisure-spa/', label: 'Бани, SPA и лодки' },
+  { href: '/catalog/leisure-spa/?category=spa', label: 'Бани' },
 ];
 ---
 <Base title={SITE.name} description={SITE.tagline}>
