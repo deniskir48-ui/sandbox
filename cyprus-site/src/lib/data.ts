@@ -6,7 +6,9 @@ export type Company = CollectionEntry<'companies'>;
 export type Event = CollectionEntry<'events'>;
 export type Article = CollectionEntry<'articles'>;
 
-const byName = (a: Company, b: Company) => a.data.name.localeCompare(b.data.name, 'ru');
+// Опубликованные → проверенные черновики → непроверенные (последние два видны только в предпросмотре), внутри — по алфавиту.
+const rank = (c: Company) => (c.data.status === 'published' ? 0 : c.data.verified_at ? 1 : 2);
+const byName = (a: Company, b: Company) => rank(a) - rank(b) || a.data.name.localeCompare(b.data.name, 'ru');
 
 /** Только опубликованные (проверенные) компании. Черновики видны лишь в режиме предпросмотра PREVIEW_DRAFTS=1. */
 export async function getPublishedCompanies(): Promise<Company[]> {

@@ -1,9 +1,9 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: ADN Group Stock
+# Черновик из внутренней базы. Данные НЕ проверены.
+# Проверка 13.11.2026: Сайт adngroup.co.jp 13.11.2026 не открылся (ошибка 402), других официальных источников не нашли.
+name: "ADN Group Stock"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
+category: japan-import
+service_type: "Авто / импорт из Японии"
 sources: []
 source_id: AUTO-004

@@ -1,9 +1,9 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: FreshCar
+# Черновик из внутренней базы. Данные НЕ проверены.
+# Проверка 13.11.2026: Официальный сайт не найден (поиск 13.11.2026).
+name: "FreshCar"
 status: draft
 section: cars
-category: car-buying
-service_type: Автоподбор / доставка авто
+category: car-selection
+service_type: "Автоподбор / доставка авто"
 sources: []
 source_id: CYP-195

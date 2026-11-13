@@ -1,9 +1,15 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: NAM Motors
+# Проверено 13.11.2026 по официальному сайту (см. sources). Ждёт утверждения владельцем — до этого status: draft.
+name: "NAM Motors"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
-sources: []
+category: japan-import
+city: "Лимассол"
+service_type: "Подержанные авто и импорт"
+summary: "Автосалон подержанных автомобилей в Лимассоле; привозит машины под заказ из Великобритании и Японии."
+description: "Автосалон в Лимассоле (ул. Омониас, 98). Компания заявляет более 40 лет опыта и привозит автомобили любого класса из Великобритании и Японии. На сайте — каталог машин в наличии и форма для продажи своего автомобиля. Сайт на английском."
+website: "https://nammotors.com/"
+sources:
+  - title: "Официальный сайт NAM Motors"
+    url: "https://nammotors.com/"
+verified_at: 2026-11-13
 source_id: AUTO-010

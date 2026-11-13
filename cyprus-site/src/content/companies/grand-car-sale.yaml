@@ -1,9 +1,9 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Grand Car Sale
+# Черновик из внутренней базы. Данные НЕ проверены.
+# Проверка 13.11.2026: Официальный сайт не найден (поиск 13.11.2026).
+name: "Grand Car Sale"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
+category: japan-import
+service_type: "Авто / импорт из Японии"
 sources: []
 source_id: AUTO-014

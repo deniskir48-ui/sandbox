@@ -25,7 +25,7 @@ const COL = { id: 0, category: 1, type: 2, name: 3, city: 4, note: 5, website: 6
 
 // Соответствие исходных категорий разделам сайта (дублирует src/data/taxonomy.ts).
 const MAP = {
-  'Автомобили': ['cars', 'car-buying'],
+  'Автомобили': ['cars', 'japan-import'], // уточняется по типу услуги, см. carCategory()
   'Частные школы': ['education', 'private-schools'],
   'Греческий язык': ['education', 'greek'],
   'Недвижимость': ['property-home', 'real-estate'],
@@ -105,11 +105,20 @@ function formatNote(v) {
   return s.replace(/;\s*/g, '. ');
 }
 
+/** Подкатегория авто по типу услуги из базы; окончательно проверяется по сайту компании. */
+function carCategory(type) {
+  const t = clean(type).toLowerCase();
+  if (/аренд|прокат|rent/.test(t)) return 'car-rental';
+  if (/подбор/.test(t)) return 'car-selection';
+  if (/нов(ые|ых)|дилер/.test(t)) return 'new-cars';
+  return 'japan-import';
+}
+
 function main() {
   const args = process.argv.slice(2);
   const file = args.find((a) => !a.startsWith('--'));
   const dry = args.includes('--dry-run');
-  const refresh = args.includes('--refresh-drafts'); // обновить поля в файлах, которые ещё в статусе draft
+  const refresh = args.includes('--refresh-drafts'); // обновить поля в непроверенных черновиках (без verified_at)
   if (!file) { console.error('Использование: npm run import:catalog -- <путь к CSV> [--dry-run]'); process.exit(1); }
 
   const rows = parseCSV(fs.readFileSync(file, 'utf8')).filter((r) => r.some((c) => c.trim()));
@@ -124,7 +133,8 @@ function main() {
   for (const f of existingFiles) {
     const txt = fs.readFileSync(path.join(outDir, f), 'utf8');
     const sid = txt.match(/^source_id:\s*(\S+)/m)?.[1];
-    if (sid) known.set(sid, { file: f, draft: /^status:\s*draft/m.test(txt) });
+    // Проверенные черновики (есть verified_at, ждут утверждения) импорт не перезаписывает.
+    if (sid) known.set(sid, { file: f, draft: /^status:\s*draft/m.test(txt) && !/^verified_at:/m.test(txt) });
   }
 
   for (const r of rows) {
@@ -148,7 +158,7 @@ function main() {
       name,
       status: 'draft',
       section: mapped[0],
-      category: mapped[1],
+      category: mapped[0] === 'cars' ? carCategory(r[COL.type]) : mapped[1],
       ...(city && !['Кипр'].includes(city) && { city }),
       ...(network && network !== name && { network }),
       ...(serviceType(r[COL.type]) && { service_type: serviceType(r[COL.type]) }),

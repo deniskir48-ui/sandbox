@@ -1,7 +1,7 @@
 name: "Тестовая компания 1 (фикстура)"
 status: published
 section: cars
-category: car-buying
+category: japan-import
 city: "Город А"
 summary: "Техническая запись для проверки вёрстки. Не настоящая компания."
 description: "Подробное описание тестовой записи. Используется только в режиме фикстур."

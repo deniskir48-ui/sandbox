@@ -19,8 +19,13 @@ export const SECTIONS: Section[] = [
   {
     slug: 'cars',
     title: 'Автомобили',
-    intro: 'Покупка, подбор и импорт автомобилей, в том числе из Японии.',
-    categories: [{ slug: 'car-buying', title: 'Покупка, подбор и импорт', sourceCategories: ['Автомобили'] }],
+    intro: 'Заказ автомобилей из Японии, автоподбор, новые автомобили и аренда.',
+    categories: [
+      { slug: 'japan-import', title: 'Заказ из Японии', sourceCategories: ['Автомобили'] },
+      { slug: 'car-selection', title: 'Автоподбор', sourceCategories: [] },
+      { slug: 'new-cars', title: 'Новые авто', sourceCategories: [] },
+      { slug: 'car-rental', title: 'Аренда авто', sourceCategories: [] },
+    ],
   },
   {
     slug: 'education',

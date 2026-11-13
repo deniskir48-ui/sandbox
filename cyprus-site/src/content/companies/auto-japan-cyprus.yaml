@@ -1,9 +1,15 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Auto Japan Cyprus
+# Проверено 13.11.2026 по официальному сайту (см. sources). Ждёт утверждения владельцем — до этого status: draft.
+name: "Auto Japan Cyprus"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
-sources: []
+category: japan-import
+city: "Лимассол"
+service_type: "Авто из Японии и Великобритании"
+summary: "Автомобили в наличии в Лимассоле и под заказ из Японии и Великобритании — от подбора до передачи машины."
+description: "Автосалон в Лимассоле: машины в наличии на Кипре и подбор под заказ из Японии и Великобритании с отслеживанием доставки на сайте. Компания сообщает о более чем 110 доставленных автомобилях. Связь по телефону и в WhatsApp. Сайт на английском."
+website: "https://autojapancyprus.com/"
+sources:
+  - title: "Официальный сайт Auto Japan Cyprus"
+    url: "https://autojapancyprus.com/"
+verified_at: 2026-11-13
 source_id: AUTO-008

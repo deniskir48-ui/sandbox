@@ -1,9 +1,16 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Cyprus AutoService
+# Проверено 13.11.2026 по официальному сайту (см. sources). Ждёт утверждения владельцем — до этого status: draft.
+name: "Cyprus AutoService"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
-sources: []
+category: japan-import
+city: "Ларнака"
+service_type: "Авто из Японии и автосервис"
+languages: "EL/EN/RU/UA"
+summary: "Заказ автомобилей из Японии с гарантией, кредит и аренда с выкупом, а также ремонт, перетяжка салона и покраска."
+description: "Gloria Motors Services Ltd из Ларнаки заказывает автомобили из Японии на Кипр с гарантией, продаёт машины в наличии, помогает с кредитом и предлагает lease-to-buy (аренду с выкупом). В собственном сервисе — ремонт, перетяжка салона и покраска. Консультации по телефону на греческом, английском, русском и украинском. Японские аукционы и машины в наличии компания также показывает на новом сайте buycarincyprus.cy."
+website: "https://www.cyprusautoservice.com/"
+sources:
+  - title: "Официальный сайт Cyprus AutoService"
+    url: "https://www.cyprusautoservice.com/"
+verified_at: 2026-11-13
 source_id: AUTO-005

@@ -1,9 +1,9 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: CAR FROM JAPAN
+# Черновик из внутренней базы. Данные НЕ проверены.
+# Проверка 13.11.2026: carfromjapan.com — международная площадка в Японии (экспорт в 50+ стран); доставку на Кипр сайт не подтверждает (страницы по странам закрыты для проверки).
+name: "CAR FROM JAPAN"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
+category: japan-import
+service_type: "Авто / импорт из Японии"
 sources: []
 source_id: AUTO-012

@@ -1,9 +1,15 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Prestyn Motors
+# Проверено 13.11.2026 по официальному сайту (см. sources). Ждёт утверждения владельцем — до этого status: draft.
+name: "Prestyn Motors"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
-sources: []
+category: japan-import
+city: "Лимассол"
+service_type: "Импорт авто из Японии"
+summary: "Подбор автомобилей на японских онлайн-площадках с фиксированной комиссией и сопровождением до регистрации на Кипре."
+description: "Prestyn Motors (A.P.K Prestige Drives Limited, рег. HE 458041) подбирает автомобили на крупных автомобильных площадках Японии и берёт на себя доставку, растаможку и регистрацию. Комиссия фиксированная, размер указан на сайте; компания обещает показывать клиенту все чеки и счета. Встретиться можно в Лимассоле. Сайт на английском."
+website: "https://prestynmotors.com/"
+sources:
+  - title: "Официальный сайт Prestyn Motors"
+    url: "https://prestynmotors.com/"
+verified_at: 2026-11-13
 source_id: AUTO-007

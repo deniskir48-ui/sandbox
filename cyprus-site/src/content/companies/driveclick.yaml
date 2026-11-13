@@ -1,9 +1,16 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: DriveClick
+# Проверено 13.11.2026 по официальному сайту (см. sources). Ждёт утверждения владельцем — до этого status: draft.
+name: "DriveClick"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
-sources: []
+category: japan-import
+city: "Лимассол"
+service_type: "Импорт авто из Японии и Великобритании"
+languages: "EN/RU"
+summary: "Импорт автомобилей из Японии и Великобритании с аукционов и от дилеров; каталог машин на сайте."
+description: "DRIVECLICK GROUP LTD из Лимассола (Потамос Гермасогейас) привозит на Кипр автомобили с японских и британских аукционов и от дилеров — подержанные и новые. На сайте каталог по маркам, разделы о покупке на аукционах и у дилеров, личный кабинет и поддержка в WhatsApp. Сайт на английском и русском."
+website: "https://driveclick.cy/"
+sources:
+  - title: "Официальный сайт DriveClick"
+    url: "https://driveclick.cy/"
+verified_at: 2026-11-13
 source_id: AUTO-001

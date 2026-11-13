@@ -1,9 +1,15 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Japan Motors Cyprus
+# Проверено 13.11.2026 по официальному сайту (см. sources). Ждёт утверждения владельцем — до этого status: draft.
+name: "Japan Motors Cyprus"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
-sources: []
+category: japan-import
+city: "Никосия"
+service_type: "Импорт авто из Японии"
+summary: "Подержанные автомобили из Японии напрямую с крупных аукционов (USS, JU, TAA, ARAI, CAA и других)."
+description: "Компания из Никосии привозит на Кипр подержанные автомобили с крупнейших японских аукционов. Перед передачей машина проходит технический осмотр и предпродажную подготовку, на основные механические узлы выдаётся письменная гарантия. На сайте — порядок заказа, ответы на частые вопросы и форма быстрой оценки. Сайт на греческом."
+website: "https://japanmotors.cy/"
+sources:
+  - title: "Официальный сайт Japan Motors Cyprus"
+    url: "https://japanmotors.cy/"
+verified_at: 2026-11-13
 source_id: AUTO-009

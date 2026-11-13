@@ -1,9 +1,14 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Christis Trading
+# Проверено 13.11.2026 по официальному сайту (см. sources). Ждёт утверждения владельцем — до этого status: draft.
+name: "Christis Trading"
 status: draft
 section: cars
-category: car-buying
-service_type: Авто / импорт из Японии
-sources: []
+category: japan-import
+service_type: "Импорт авто из Японии"
+summary: "Подержанные автомобили из Японии в наличии и под заказ: подбор через партнёров на японских аукционах и у дилеров."
+description: "CMC & Christis Trading Ltd (Christis Motors) — зарегистрированный на Кипре автодилер. Привозит подержанные автомобили из Японии: есть машины в наличии, а под заказ партнёры в Японии подбирают варианты на крупных аукционах и у дилеров. Компания готовит документы для регистрации на Кипре, окончательная оплата — после проверки машины на Кипре; помогает оформить кредит через кипрские банки. Контакты в Пафосе и Лимассоле. Сайт на английском."
+website: "https://www.christis.net/"
+sources:
+  - title: "Официальный сайт Christis Trading"
+    url: "https://www.christis.net/"
+verified_at: 2026-11-13
 source_id: AUTO-011
