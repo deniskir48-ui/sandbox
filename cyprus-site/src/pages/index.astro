@@ -96,19 +96,25 @@ const quick = [
   .stats { display: flex; flex-wrap: wrap; gap: 6px 20px; margin: 18px 0 0; font-size: 0.92rem; color: var(--hero-muted); }
   .stats strong { color: var(--hero-text); font-variant-numeric: tabular-nums; }
 
+  /* Плитки разделов. Телефон: 2 в ряд, иконка над названием — тексту достаётся вся ширина плитки.
+     От 600px: иконка слева. 4 в ряд — только от 1000px, иначе длинные слова («Недвижимость») не помещаются. */
   .tiles { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  @media (min-width: 760px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } }
+  @media (min-width: 1000px) { .tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } }
   .tile {
-    display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 10px; align-items: center;
+    display: flex; flex-direction: column; align-items: flex-start; gap: 4px;
     height: 100%; padding: 14px; border: 1px solid var(--border); border-radius: var(--radius);
     color: var(--text); text-decoration: none; background: var(--bg);
   }
+  @media (min-width: 600px) {
+    .tile { display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-rows: auto auto; column-gap: 12px; row-gap: 2px; align-items: center; }
+    .tile-icon { grid-row: 1 / 3; margin-bottom: 0; }
+  }
   .tile:hover { border-color: var(--text); color: var(--text); }
   .tile-icon {
-    grid-row: 1 / 3; width: 42px; height: 42px; border-radius: 12px; display: grid; place-items: center;
+    flex: none; width: 42px; height: 42px; margin-bottom: 6px; border-radius: 12px; display: grid; place-items: center;
     background: var(--accent-soft); color: var(--accent-ink);
   }
-  .tile-title { font-weight: 650; font-size: 0.95rem; line-height: 1.25; }
+  .tile-title { min-width: 0; max-width: 100%; font-weight: 650; font-size: 0.95rem; line-height: 1.25; overflow-wrap: break-word; hyphens: auto; }
   .tile-count { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
   .add-band {
