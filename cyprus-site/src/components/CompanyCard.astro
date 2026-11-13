@@ -11,7 +11,8 @@ const catLine = categoryTitles(categoriesOf(company)).join(' · ');
 ---
 <a class="card company" href={`/services/${company.id}/`} data-city={regionAttr(d.city)} data-category={categoriesOf(company).join(' ')}>
   <span class="eyebrow">{catLine}</span>
-  <h3 class="name-row"><span>{d.name}</span>{d.verified_badge && <VerifiedBadge />}</h3>
+  <h3>{d.name}</h3>
+  {d.verified_badge && <div class="verified-slot"><VerifiedBadge /></div>}
   {d.city && <p class="loc"><Icon name="pin" size={15} />{d.city}</p>}
   {d.summary && <p class="desc" style="margin-top:6px">{d.summary}</p>}
 </a>

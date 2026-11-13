@@ -37,8 +37,10 @@ const jsonLd = {
   <div class="detail">
     <article>
       <p class="eyebrow">{catTitles.join(' · ')}</p>
-      <div class="title-row"><h1>{d.name}</h1>{d.verified_badge && <VerifiedBadge size="lg" />}</div>
-      {d.verified_badge && <p class="verified-note">Автор гида лично знаком с компанией. <a href="/about/#verified">Что это значит</a></p>}
+      <h1>{d.name}</h1>
+      {d.verified_badge && (
+        <div class="verified-slot"><VerifiedBadge size="lg" /><span class="verified-note">Автор гида лично знаком с компанией. <a href="/about/#verified">Что это значит</a></span></div>
+      )}
       {d.city && <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}</p>}
       {(d.description ?? d.summary) && <div class="prose"><p>{d.description ?? d.summary}</p></div>}
       {d.services.length > 0 && (

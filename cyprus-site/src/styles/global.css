@@ -160,9 +160,10 @@ a.card:hover h3 { color: var(--accent-ink); }
 }
 .verified-badge svg { flex: none; display: block; }
 .verified-badge.lg { font-size: 0.9rem; padding: 6px 13px 6px 8px; gap: 6px; }
-.name-row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-.title-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
-.verified-note { margin: 8px 0 0; font-size: 0.9rem; color: var(--muted); }
+/* Место значка всегда одно: отдельная строка сразу под названием (карточка и страница компании) */
+.verified-slot { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin: 0 0 8px; }
+h1 + .verified-slot { margin: 10px 0 16px; }
+.verified-note { font-size: 0.9rem; color: var(--muted); }
 
 /* ---------- Заголовки секций ---------- */
 .section-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 2.6rem 0 1rem; }
