@@ -1,5 +1,4 @@
-# Сведения — из собственных профилей компании (13.11.2026): Threads открыт для проверки, Instagram — по скриншоту владельца продукта (сайт Instagram не пускает без входа).
-# Официального сайта нет, поэтому по правилу DEC-W20 карточка не считается проверенной (нет verified_at) и не может быть опубликована, пока правило не изменено.
+# Проверено 13.11.2026 по собственным профилям компании (DEC-W27): Threads — открыт для проверки, Instagram — по скриншоту владельца продукта (сайт Instagram не пускает без входа). Ждёт утверждения владельцем — до этого status: draft.
 name: "FreshCar"
 status: draft
 section: cars
@@ -16,4 +15,5 @@ sources:
     url: "https://www.instagram.com/freshcar.cyprus/"
   - title: "Threads FreshCar — профиль и пост об услугах"
     url: "https://www.threads.com/@freshcar.cyprus"
+verified_at: 2026-11-13
 source_id: CYP-195

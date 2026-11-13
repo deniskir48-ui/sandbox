@@ -39,10 +39,10 @@ const jsonLd = {
       <h1>{d.name}</h1>
       {d.city && <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}</p>}
       {d.status === 'draft' && !d.verified_at && (
-        <p class="notice">Карточка из внутренней базы, данные ещё не проверены. Уточняйте информацию на официальном сайте компании.</p>
+        <p class="notice">Карточка из внутренней базы, данные ещё не проверены. Уточняйте информацию у компании.</p>
       )}
       {d.status === 'draft' && d.verified_at && (
-        <p class="notice">Данные сверены с официальным сайтом и ждут утверждения перед публикацией.</p>
+        <p class="notice">Данные сверены с официальными источниками компании и ждут утверждения перед публикацией.</p>
       )}
       {(d.description ?? d.summary) && <div class="prose"><p>{d.description ?? d.summary}</p></div>}
       <SourceList sources={d.sources} verifiedAt={d.verified_at} />
