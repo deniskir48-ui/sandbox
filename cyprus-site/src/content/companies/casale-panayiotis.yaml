@@ -1,12 +1,27 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Casale Panayiotis
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Снежная комната по вторникам недоступна; расписание обслуживания нужно проверить.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Casale Panayiotis"
 status: draft
 section: hotels-spa
 category: spa
-city: Калопанайотис
-service_type: Бани / сауны / SPA
-summary: Отель / spa, сауна
-website: https://www.casalepanayiotis.com/
-sources: []
+city: "Калопанайотис, Троодос"
+service_type: "Бани / сауны / SPA"
+summary: "Горный SPA с гидротерапией, сауной, парной и массажами."
+description: "Myrianthousa Spa при Casale Panayiotis включает гидротерапевтический бассейн, термальную зону, снежную комнату и процедуры ухода."
+services:
+  - "Гидротерапия"
+  - "Сауна"
+  - "Травяная парная"
+  - "Снежная комната"
+  - "Массаж"
+conditions: "На сайте указано закрытие SPA на обслуживание 23–24 ноября 2026 года."
+website: "https://www.casalepanayiotis.com/spa"
+sources:
+  - title: "Официальный сайт — casalepanayiotis.com/spa"
+    url: "https://www.casalepanayiotis.com/spa"
+verified_at: 2026-11-13
 source_id: SPA-006

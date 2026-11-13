@@ -1,9 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Kostas Giagas
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Фамилию в CRM нужно сверить с юридическим названием салона; тариф не равен итоговой цене полного удаления.
+# Что ещё проверить: Проверить актуальность и название; противопоказания и условия
+# Заметка редактора: Публичные данные без CRM
+name: "Kostas Giagas"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Удаление татуировок
-sources: []
+city: "Колосси, Лимассол и Лакатамия, Никосия"
+service_type: "Удаление татуировок"
+summary: "Лазерное удаление татуировок в центре Kostas Hair & Beauty."
+description: "Kostas Giagas связан с центрами Kostas Laser Beauty Center, где предоставляют удаление тату лазером, эстетические процедуры и запись по времени."
+services:
+  - "Удаление тату"
+  - "Лазерные процедуры"
+  - "Косметология"
+conditions: "По онлайн-записи: лазерное удаление тату от €50 за посещение, стоимость зависит от размера."
+address: "Apostolou Louka Avenue 70, Kolossi 4632, Cyprus"
+website: "https://kostashair.com.cy/laser-tattoo-removal/"
+sources:
+  - title: "Официальный сайт — kostashair.com.cy/book"
+    url: "https://kostashair.com.cy/book/"
+  - title: "Официальный сайт — kostashair.com.cy/beauty-center/laser-tattoo-removal"
+    url: "https://kostashair.com.cy/beauty-center/laser-tattoo-removal/"
+verified_at: 2026-11-13
 source_id: CYP-118

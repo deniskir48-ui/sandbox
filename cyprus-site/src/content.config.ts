@@ -38,6 +38,9 @@ const companies = defineCollection({
       languages: z.string().optional(), // языки обучения/обслуживания: «EN/EL»
       summary: z.string().max(160).optional(), // для списка, до ~150 символов
       description: z.string().optional(), // описание услуг для подробной страницы
+      services: z.array(z.string()).default([]), // список услуг (по официальному источнику)
+      conditions: z.string().optional(), // условия, цены, бронирование — по источнику на дату проверки
+      address: z.string().optional(), // публичный адрес по официальному источнику
       website: z.string().url().optional(), // официальный сайт
       channel: z.object({ label: z.string(), url: z.string().url() }).optional(), // официальный публичный канал
       sources: z.array(source).default([]),

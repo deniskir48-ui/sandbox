@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Charalambous Dental
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: Сверить тождество записи «Charalambous Dental» и официального названия врача перед публикацией.
+# Что ещё проверить: Проверить цену, наличие, расписание и юридическое название
+# Заметка редактора: Публичные источники, без CRM
+name: "Charalambous Dental"
 status: draft
 section: health-beauty
 category: medical
-service_type: Стоматология
-sources: []
+city: "Лимассол"
+service_type: "Стоматология"
+summary: "Частная стоматологическая клиника с эстетической и восстановительной стоматологией."
+description: "Dr Constantinos Charalambous Dental Clinic предоставляет лечение и реставрацию зубов, керамические коронки и мосты, имплантацию, отбеливание, гигиену и протезирование."
+services:
+  - "Реставрации"
+  - "Имплантация"
+  - "Коронки"
+  - "Мосты"
+  - "Отбеливание"
+  - "Гигиена"
+  - "Протезы"
+conditions: "Клиника заявляет участие в общей системе здравоохранения GeSY."
+address: "27 Vasileos Konstantinou, Limassol 3075, Cyprus"
+website: "https://drconstantinos.com/"
+sources:
+  - title: "Официальный сайт — drconstantinos.com"
+    url: "https://drconstantinos.com/"
 source_id: CYP-130

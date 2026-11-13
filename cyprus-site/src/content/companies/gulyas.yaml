@@ -1,12 +1,27 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Gulya's
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Доставка и ресторан могут иметь разные цены.
+# Что ещё проверить: Проверить актуальность меню, часы, наличие брони и официальный Instagram
+# Заметка редактора: Не переносить контакты менеджеров и статусы коммерческой переписки
+name: "Gulya's"
 status: draft
 section: food
 category: cafes
-service_type: Кафе / ресторан
-channel:
-  label: Instagram
-  url: https://www.instagram.com/gulya_limassol/
-sources: []
+city: "Агиос Тихонас, Лимассол"
+service_type: "Кафе / ресторан"
+summary: "Ресторан русской и узбекской домашней кухни."
+description: "Gulya’s Home Cuisine готовит борщ, плов, чебуреки, супы и другие домашние блюда. Меню и цены доступны в сервисе доставки Wolt."
+services:
+  - "Русская кухня"
+  - "Узбекская кухня"
+  - "Борщ"
+  - "Плов"
+  - "Доставка"
+conditions: "По Wolt: борщ €10,50, чебурек €6,50, плов 300 г €11."
+address: "Navaria Complex, Amathountos Avenue 64, Agios Tychon, Limassol 4532, Cyprus"
+sources:
+  - title: "wolt.com/en/cyp/limassol/restaurant/gulyas-bar-restaurant"
+    url: "https://wolt.com/en/cyp/limassol/restaurant/gulyas-bar-restaurant"
+verified_at: 2026-11-13
 source_id: CYP-172

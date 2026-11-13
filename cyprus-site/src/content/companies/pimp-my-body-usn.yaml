@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Pimp My Body / USN
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Не утверждать лечебный эффект добавок; цену и наличие уточнять.
+# Что ещё проверить: Проверить цену, наличие, расписание и юридическое название
+# Заметка редактора: Публичные источники, без CRM
+name: "Pimp My Body / USN"
 status: draft
 section: other
 category: sport
-service_type: Спортивные товары / сервис
-sources: []
+city: "Лимассол и Никосия"
+service_type: "Спортивные товары / сервис"
+summary: "Магазины спортивного питания с протеином, креатином и витаминами."
+description: "Pimp My Body / Supplement House продаёт спортивные добавки разных брендов, включая USN, Applied Nutrition, Dymatize. Есть доставка курьером по Кипру."
+services:
+  - "Протеин"
+  - "Креатин"
+  - "Витамины"
+  - "Аминокислоты"
+  - "Спортивные добавки"
+  - "Доставка"
+conditions: "Доставка на следующий или второй рабочий день; бесплатная доставка при заказе от €50 по сайту."
+address: "Agias Filaxeos 16, Limassol; Nikis Avenue 6 EZ, Nicosia, Cyprus"
+website: "https://supplementhouse.cy/"
+sources:
+  - title: "Официальный сайт — supplementhouse.cy"
+    url: "https://supplementhouse.cy/"
+verified_at: 2026-11-13
 source_id: CYP-128

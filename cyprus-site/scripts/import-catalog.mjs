@@ -134,7 +134,7 @@ function main() {
     const txt = fs.readFileSync(path.join(outDir, f), 'utf8');
     const sid = txt.match(/^source_id:\s*(\S+)/m)?.[1];
     // Черновики с ручными правками (проверенные — verified_at, или с доп. подкатегориями) импорт не перезаписывает.
-    if (sid) known.set(sid, { file: f, draft: /^status:\s*draft/m.test(txt) && !/^(verified_at|extra_categories):/m.test(txt) });
+    if (sid) known.set(sid, { file: f, draft: /^status:\s*draft/m.test(txt) && !/^(verified_at|extra_categories):/m.test(txt) && !txt.includes('# research-import') });
   }
 
   for (const r of rows) {

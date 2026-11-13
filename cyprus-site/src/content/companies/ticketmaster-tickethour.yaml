@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Ticketmaster / Tickethour
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Для конкретного события пользоваться официальным каналом, не покупать у непроверенных реселлеров.
+# Что ещё проверить: Проверить действующий статус, цены и идентичность названия
+# Заметка редактора: Источник указан; не публиковать неподтверждённые данные
+name: "Ticketmaster / Tickethour"
 status: draft
 section: entertainment
 category: tickets
-service_type: Билетные площадки
-sources: []
+city: "Никосия, весь Кипр"
+service_type: "Билетные площадки"
+summary: "Кипрская билетная сеть Ticketmaster / Tickethour."
+description: "Tickethour работает через каналы Ticketmaster Cyprus; официальный центр поддержки публикует точку продаж, телефон и правила покупки билетов."
+services:
+  - "Продажа билетов"
+  - "Информация о заказах"
+  - "Кассы"
+  - "Обслуживание покупателей"
+conditions: "Телефонный центр по будням 09:00–19:00, суббота 09:00–13:00."
+address: "Varkizas 14, Nicosia 2033, Cyprus"
+website: "https://help.ticketmaster.cy/"
+sources:
+  - title: "Официальный сайт — help.ticketmaster.cy/hc/en-us/sections/14123427502993-Tickethour-Official-Points-of-Sale"
+    url: "https://help.ticketmaster.cy/hc/en-us/sections/14123427502993-Tickethour-Official-Points-of-Sale"
+  - title: "Официальный сайт — help.ticketmaster.cy/hc/en-us/articles/14122654726033-I-bought-tickets-from-another-seller-reseller-Are-they-valid"
+    url: "https://help.ticketmaster.cy/hc/en-us/articles/14122654726033-I-bought-tickets-from-another-seller-reseller-Are-they-valid"
+verified_at: 2026-11-13
 source_id: CYP-159

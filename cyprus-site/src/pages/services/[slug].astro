@@ -41,6 +41,12 @@ const jsonLd = {
       {d.verified_badge && <p class="verified-note">Автор гида лично знаком с компанией. <a href="/about/#verified">Что это значит</a></p>}
       {d.city && <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}</p>}
       {(d.description ?? d.summary) && <div class="prose"><p>{d.description ?? d.summary}</p></div>}
+      {d.services.length > 0 && (
+        <section class="block"><h2>Услуги</h2><ul class="service-list">{d.services.map((s) => <li>{s}</li>)}</ul></section>
+      )}
+      {d.conditions && (
+        <section class="block"><h2>Условия и цены</h2><p>{d.conditions}</p><p class="small muted">По данным официального источника на дату проверки. Актуальные условия уточняйте у компании.</p></section>
+      )}
       <SourceList sources={d.sources} verifiedAt={d.verified_at} />
     </article>
 
@@ -49,6 +55,7 @@ const jsonLd = {
         <dl class="facts">
           <div><dt>Раздел</dt><dd><a href={`/catalog/${cat.section.slug}/`}>{cat.section.title}</a> · {catTitles.join(', ')}</dd></div>
           {d.city && <div><dt>Город / регион</dt><dd>{d.city}</dd></div>}
+          {d.address && <div><dt>Адрес</dt><dd>{d.address}</dd></div>}
           {d.languages && <div><dt>Языки</dt><dd>{d.languages}</dd></div>}
           {d.network && <div><dt>Сеть</dt><dd>{d.network}</dd></div>}
           {d.website && <div><dt>Сайт</dt><dd><a href={d.website} rel="noopener" target="_blank">{host(d.website)}</a></dd></div>}
@@ -77,3 +84,11 @@ const jsonLd = {
     </>
   )}
 </Base>
+
+<style>
+  .block { margin-top: 24px; }
+  .block h2 { font-size: 1.05rem; margin-bottom: 8px; }
+  .block p { margin: 0 0 6px; }
+  .service-list { display: flex; flex-wrap: wrap; gap: 6px; list-style: none; padding: 0; margin: 0; }
+  .service-list li { font-size: 0.86rem; padding: 4px 11px; border-radius: 999px; background: var(--surface); border: 1px solid var(--border); }
+</style>

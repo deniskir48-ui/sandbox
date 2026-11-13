@@ -1,9 +1,23 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Heart & Blade Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: Официальный сайт не удалось однозначно подтвердить; сведения из открытого бизнес-справочника.
+# Что ещё проверить: Проверить действующую запись, прайс и условия
+# Заметка редактора: Наличие в справочнике не гарантирует действующий статус
+name: "Heart & Blade Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Никосия"
+service_type: "Тату-студии"
+summary: "Тату-студия в Никосии с индивидуальными работами."
+description: "Heart & Blade Tattoo была открыта мастерами Tas Danazoglou и Scary Terry; публикует фотогалерею татуировок и контактные данные."
+services:
+  - "Татуировки"
+  - "Индивидуальные эскизы"
+conditions: "Стоимость и часы требуют уточнения напрямую."
+address: "Dimitsanis 5, Nicosia 1070, Cyprus"
+sources:
+  - title: "olakypros.com/business-profile-details/heart-and-blade-tattoo"
+    url: "https://www.olakypros.com/business-profile-details/heart-and-blade-tattoo"
 source_id: CYP-140

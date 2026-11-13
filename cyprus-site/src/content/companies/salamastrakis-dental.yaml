@@ -1,9 +1,26 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Salamastrakis Dental
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Не переносить адрес и телефоны филиала Афин в кипрскую карточку.
+# Что ещё проверить: Актуальность программы, цены, расписания, юридическое название
+# Заметка редактора: Публичные данные без CRM
+name: "Salamastrakis Dental"
 status: draft
 section: health-beauty
 category: medical
-service_type: Стоматология
-sources: []
+city: "Гермасойя, Лимассол"
+service_type: "Стоматология"
+summary: "Стоматологическая клиника с общим лечением и эстетическими услугами."
+description: "Salamastrakis Dental Clinic указывает отделения на Кипре и в Греции. Кипрская клиника расположена в Лимассоле."
+services:
+  - "Общая стоматология"
+  - "Профилактика"
+  - "Косметическое лечение"
+conditions: "Запись по телефону и форме обратной связи."
+address: "Panagiotis Tsangaris 9, Limassol 4047, Cyprus"
+website: "https://salamastrakis-dental.com/en/contact-us/"
+sources:
+  - title: "Официальный сайт — salamastrakis-dental.com/en/contact-us"
+    url: "https://salamastrakis-dental.com/en/contact-us/"
+verified_at: 2026-11-13
 source_id: CYP-134

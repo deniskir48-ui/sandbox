@@ -1,13 +1,24 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Pelmentor / Harvest
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: Историческое имя может отражать ребрендинг; перед публикацией проверить, используется ли Pelmentor и Harvest одновременно.
+# Что ещё проверить: Проверить актуальность меню, часы, наличие брони и официальный Instagram
+# Заметка редактора: Не переносить контакты менеджеров и статусы коммерческой переписки
+name: "Pelmentor / Harvest"
 status: draft
 section: food
 category: cafes
-service_type: Ресторан
-website: https://circle.prive.cy/partners/pelmentor
-channel:
-  label: Instagram
-  url: https://www.instagram.com/harvest_cy/
-sources: []
+city: "Гермасойя, Лимассол"
+service_type: "Ресторан"
+summary: "Бистро HARVEST с историей Pelmentor Dumpling Bar и блюдами домашней кухни."
+description: "HARVEST bistro x Pelmentor упоминается как заведение в Germasogeia; отдельного подтверждённого сайта с актуальным меню не найдено. Ссылка на Instagram указана в прежней базе."
+services:
+  - "Бистро"
+  - "Ресторан"
+  - "Пельмени и блюда домашней кухни — требуется проверка"
+conditions: "Уточнить действующее меню и часы."
+address: "Georgiou A, Germasogeia, Limassol, Cyprus"
+sources:
+  - title: "cymply-cy.com/ru/business/limassol/harvest-bistro-x-pelmentor-dumpling-bar-germasogeia-a144ff"
+    url: "https://cymply-cy.com/ru/business/limassol/harvest-bistro-x-pelmentor-dumpling-bar-germasogeia-a144ff"
 source_id: CYP-151

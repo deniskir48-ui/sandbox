@@ -1,9 +1,23 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Dragon Nikolas Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: Не подтверждено, что «Dragon Nikolas Tattoo» является официальным названием.
+# Что ещё проверить: Проверить действующий статус, цены и идентичность названия
+# Заметка редактора: Источник указан; не публиковать неподтверждённые данные
+name: "Dragon Nikolas Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Ларнака"
+service_type: "Тату-студии"
+summary: "Студия татуировок Dragon Tattoo в Ларнаке."
+description: "В отраслевом справочнике Dragon Tattoo связывается с контактом Nikolas; исходное название Dragon Nikolas Tattoo требует подтверждения у студии."
+services:
+  - "Татуировки"
+  - "Индивидуальный дизайн"
+conditions: "Стоимость и график не опубликованы в проверенном источнике."
+address: "Kiamil Kenan 7, Larnaca 6026, Cyprus"
+sources:
+  - title: "oncyprus.com/en/dir/cyprus_tattoos.html"
+    url: "https://www.oncyprus.com/en/dir/cyprus_tattoos.html"
 source_id: CYP-142

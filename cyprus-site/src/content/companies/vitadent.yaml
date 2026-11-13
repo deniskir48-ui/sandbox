@@ -1,9 +1,30 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: VitaDent
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Цена зависит от лечения.
+# Что ещё проверить: Актуальность программы, цены, расписания, юридическое название
+# Заметка редактора: Публичные данные без CRM
+name: "VitaDent"
 status: draft
 section: health-beauty
 category: medical
-service_type: Стоматология
-sources: []
+city: "Потамос Гермасойас, Лимассол"
+service_type: "Стоматология"
+summary: "Стоматология для семьи с профилактикой и восстановительным лечением."
+description: "VitaDent Clinic, основанная двумя врачами в 2014 году, предоставляет стоматологические услуги, отбеливание, эндодонтию, профилактику и эстетическое лечение."
+services:
+  - "Общая стоматология"
+  - "Эндодонтия"
+  - "Эстетика"
+  - "Отбеливание"
+  - "Профилактика"
+conditions: "Рабочие часы на сайте в разных разделах отличаются, рекомендуем подтверждать по телефону."
+address: "Georgiou A 20, Drakos Beach House, Germasogeia, Limassol 4047, Cyprus"
+website: "https://vitadentclinic.com/"
+sources:
+  - title: "Официальный сайт — vitadentclinic.com"
+    url: "https://vitadentclinic.com/"
+  - title: "Официальный сайт — vitadentclinic.com/contact-us"
+    url: "https://vitadentclinic.com/contact-us"
+verified_at: 2026-11-13
 source_id: CYP-137

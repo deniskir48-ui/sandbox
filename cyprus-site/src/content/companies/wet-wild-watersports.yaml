@@ -1,9 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Wet & Wild Watersports
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Водные активности сезонные, возрастные и страховые ограничения уточнять перед бронированием.
+# Что ещё проверить: Проверить остаточные публичные контакты и условия
+# Заметка редактора: Нет переноса личных контактов, статусов переписки и партнёрских выплат.
+name: "Wet & Wild Watersports"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Пернера, Протарас"
+service_type: "Аренда / прокат лодок"
+summary: "Прокат семейных лодок, гидроциклов и водные развлечения."
+description: "Wet & Wild Watersports работает на побережье Пернеры, предлагает семейные моторные лодки, jet ski, парасейлинг, SUP, водные аттракционы и педальные лодки."
+services:
+  - "Self-drive family boats"
+  - "Jet ski"
+  - "Parasailing"
+  - "SUP"
+  - "Pedal boats"
+  - "Inflatables"
+conditions: "Бронирование через сайт и обращение в центр; услуги зависят от погоды."
+address: "Pernera, Protaras, Cyprus"
+website: "https://www.wetandwildwatersport.com/"
+sources:
+  - title: "Официальный сайт — wetandwildwatersport.com"
+    url: "https://www.wetandwildwatersport.com/"
+  - title: "cywatersports.com/watersports-in-cyprus/protaras-watersports"
+    url: "https://cywatersports.com/watersports-in-cyprus/protaras-watersports/"
+verified_at: 2026-11-13
 source_id: BOAT-011

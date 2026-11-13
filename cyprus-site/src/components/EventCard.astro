@@ -11,10 +11,10 @@ const stub = stubParts(d.date, d.end_date);
 const isRange = !!d.end_date && d.end_date !== d.date;
 const when = [isRange ? `по ${formatDay(d.end_date!, false).replace(/ \d{4}$/, '')}` : d.time ? `в ${d.time}` : '', d.price ?? '']
   .filter(Boolean).join(' · ');
-import { regionOf } from '../data/regions';
+import { regionAttr } from '../data/regions';
 ---
 <a class="card event" href={`/events/${event.id}/`}
-   data-city={regionOf(d.city)} data-type={d.type} data-start={d.date} data-end={eventLastDay(event)}
+   data-city={regionAttr(d.city)} data-type={d.type} data-start={d.date} data-end={eventLastDay(event)}
    data-priority={d.priority} data-key={`${d.date}T${d.time ?? '00:00'}`}>
   <div class="stub" aria-hidden="true">
     <span class:list={['stub-day', isRange && 'range']}>{stub.day}</span>

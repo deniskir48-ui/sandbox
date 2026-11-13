@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены.
-# Проверка 13.11.2026: Официальный сайт не найден (поиск 13.11.2026).
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Уточнить актуальные возрастные ограничения машин и условия гарантий.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
 name: "Grand Car Sale"
 status: draft
 section: cars
 category: japan-import
+city: "Муттаяка, Лимассол"
 service_type: "Авто / импорт из Японии"
-sources: []
+summary: "Подбор и доставка автомобилей из Японии и Великобритании; есть машины в наличии."
+description: "Grand Car Sale предлагает поиск по марке, году и бюджету, доставку и продажу автомобилей в наличии."
+services:
+  - "Импорт Япония/UK"
+  - "Автомобили в наличии"
+  - "Подбор"
+  - "Рассрочка"
+conditions: "Финансовые условия уточняются по выбранному автомобилю."
+address: "Sun City Complex, Amathus Avenue 7-B, Mouttagiaka, Limassol, Cyprus"
+website: "https://grandcarsale.com/en/cars/"
+sources:
+  - title: "Официальный сайт — grandcarsale.com/en/cars"
+    url: "https://grandcarsale.com/en/cars/"
+  - title: "Официальный сайт — grandcarsale.com/en/in-stock"
+    url: "https://grandcarsale.com/en/in-stock/"
+verified_at: 2026-11-13
 source_id: AUTO-014

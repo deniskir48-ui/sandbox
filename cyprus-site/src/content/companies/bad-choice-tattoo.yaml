@@ -1,9 +1,23 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Bad Choice Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: ВАЖНО: название не совпадает дословно с исходной базой; не подменять компанию без подтверждения.
+# Что ещё проверить: Проверить актуальность и название; противопоказания и условия
+# Заметка редактора: Публичные данные без CRM
+name: "Bad Choice Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Никосия"
+service_type: "Тату-студии"
+summary: "Тату-студия BAD CHOICES TATTOO CLUB, сведения о названии требуют сверки."
+description: "В открытом справочнике найден BAD CHOICES TATTOO CLUB в Никосии. В исходной CRM записано Bad Choice Tattoo, тождество не подтверждено."
+services:
+  - "Татуировки"
+  - "Авторские эскизы — уточнить"
+conditions: "Цена и график не установлены."
+address: "Archiepiskopou Filotheou 8, Nicosia 1107, Cyprus"
+sources:
+  - title: "fix.cy/category/art-creative-services/tattoo-piercing-artists"
+    url: "https://www.fix.cy/category/art-creative-services/tattoo-piercing-artists/"
 source_id: CYP-110

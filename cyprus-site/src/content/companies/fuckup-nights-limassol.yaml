@@ -1,9 +1,27 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Fuckup Nights Limassol
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: На момент проверки сайт показывает «New dates coming soon»; не обещать регулярность или конкретный билет без анонса.
+# Что ещё проверить: Проверить актуальные даты и цены перед публикацией
+# Заметка редактора: Внутренняя CRM не используется в публичных полях.
+name: "Fuckup Nights Limassol"
 status: draft
 section: entertainment
 category: organizers
-service_type: Мероприятия / площадки
-sources: []
+city: "Лимассол"
+service_type: "Мероприятия / площадки"
+summary: "Встречи, где предприниматели и специалисты рассказывают об ошибках и неудачах."
+description: "Fuckup Nights Limassol — местная серия международного формата, в которой несколько спикеров делятся историями профессиональных провалов и полученными уроками."
+services:
+  - "Бизнес-встречи"
+  - "Выступления"
+  - "Нетворкинг"
+  - "Истории ошибок"
+conditions: "Новые даты публикуются в официальном календаре серии."
+address: "Limassol, Cyprus"
+website: "https://www.fuckupnights.com/city/limassol"
+sources:
+  - title: "Официальный сайт — fuckupnights.com/city/limassol"
+    url: "https://www.fuckupnights.com/city/limassol"
+verified_at: 2026-11-13
 source_id: CYP-103

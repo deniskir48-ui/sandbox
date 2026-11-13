@@ -1,9 +1,26 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Baywatch Watersports
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Не путать с одноимённым Baywatch Watersports в Лимассоле.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Baywatch Watersports"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Пернера, Протарас"
+service_type: "Аренда / прокат лодок"
+summary: "Прокат моторных лодок и водные развлечения у пляжа Каламиес."
+description: "Baywatch Watersports в Пернере предлагает небольшие моторные лодки для самостоятельного управления и водные развлечения."
+services:
+  - "Self-drive лодки"
+  - "Водные активности"
+  - "Прогулки"
+conditions: "Для одной из стандартных лодок на странице указано, что топливо включено."
+address: "Kalamies Beach, Pernera, Protaras, Cyprus"
+website: "https://www.baywatch-watersports.com/"
+sources:
+  - title: "Официальный сайт — baywatch-watersports.com/service-page/standard-boat-rental"
+    url: "https://www.baywatch-watersports.com/service-page/standard-boat-rental"
+verified_at: 2026-11-13
 source_id: BOAT-003

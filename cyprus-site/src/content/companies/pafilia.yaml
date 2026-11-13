@@ -1,10 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Pafilia
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Сведения о проданных объектах не означают наличие квартир к покупке.
+# Что ещё проверить: Актуальность цен, контактов и конкретных объектов
+# Заметка редактора: Публичное содержание; не копировать CRM и коммерческие переговоры
+name: "Pafilia"
 status: draft
 section: property-home
 category: real-estate
-service_type: Застройщик
-website: https://www.pafilia.com/contact/
-sources: []
+city: "Пафос и Лимассол"
+service_type: "Застройщик"
+summary: "Застройщик жилой недвижимости и курортных комплексов на Кипре."
+description: "Pafilia разрабатывает новые квартиры, виллы и резиденции; среди проектов Minthis, ONE, Konia Green и Coral Vista."
+services:
+  - "Квартиры"
+  - "Виллы"
+  - "Курортная недвижимость"
+  - "Проекты под инвестиции"
+conditions: "Каталог показывает отдельно разные проекты и их готовность."
+website: "https://www.pafilia.com/"
+sources:
+  - title: "Официальный сайт — pafilia.com"
+    url: "https://www.pafilia.com/"
+  - title: "realestate.pafilia.com/property-page"
+    url: "https://realestate.pafilia.com/property-page"
+verified_at: 2026-11-13
 source_id: CYP-185

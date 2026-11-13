@@ -1,13 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Pushkin
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Перед посещением уточнять доступность столиков и праздничные часы.
+# Что ещё проверить: Проверить актуальность меню, часы, наличие брони и официальный Instagram
+# Заметка редактора: Не переносить контакты менеджеров и статусы коммерческой переписки
+name: "Pushkin"
 status: draft
 section: food
 category: cafes
-service_type: Ресторан
-website: https://aspushkin.eu/en/contact
-channel:
-  label: Instagram
-  url: https://www.instagram.com/pushkin.cyprus/
-sources: []
+city: "Энаэриос, Лимассол"
+service_type: "Ресторан"
+summary: "Ресторан-кафе Pushkin с завтраками, обедами и ужинами."
+description: "Pushkin принимает гостей весь день, предлагает зал и бронирование столиков по телефону. Официальный сайт публикует адрес и время работы."
+services:
+  - "Кафе"
+  - "Ресторан"
+  - "Завтрак"
+  - "Обед"
+  - "Ужин"
+  - "Бронь"
+conditions: "Пн–чт 09:00–22:00, пт–вс 09:00–23:00 по сайту."
+address: "October 28, Kanika, Limassol 3100, Cyprus"
+website: "https://aspushkin.eu/en/contact"
+sources:
+  - title: "Официальный сайт — aspushkin.eu/en/contact"
+    url: "https://aspushkin.eu/en/contact"
+verified_at: 2026-11-13
 source_id: CYP-152

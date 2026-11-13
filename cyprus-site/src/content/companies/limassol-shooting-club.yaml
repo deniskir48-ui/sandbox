@@ -1,9 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Limassol Shooting Club
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Требования к возрасту, допуску, безопасности и аренде оборудования проверять до брони.
+# Что ещё проверить: Проверить актуальные сеансы, даты, требования и цены
+# Заметка редактора: Официальные сайты, без сведений из приватных переписок.
+name: "Limassol Shooting Club"
 status: draft
 section: other
 category: sport
-service_type: Стрелковый клуб
-sources: []
+city: "Арменохори, район Лимассола"
+service_type: "Стрелковый клуб"
+summary: "Стрелковый спортивный клуб с площадками Trap, Skeet, FITASC и Compak."
+description: "Limassol International Shooting Club предлагает спортивную стрельбу по тарелочкам, тренировки с инструкторами, соревнования и членские программы."
+services:
+  - "Trap"
+  - "Skeet"
+  - "FITASC"
+  - "Compak"
+  - "Тренировки с инструктором"
+  - "Соревнования"
+conditions: "По сайту часы вторник–воскресенье 08:30–19:00, понедельник закрыт."
+address: "Armenochori, Limassol District, Cyprus"
+website: "https://www.limassolshootingclub.com/"
+sources:
+  - title: "Официальный сайт — limassolshootingclub.com"
+    url: "https://www.limassolshootingclub.com/"
+  - title: "Официальный сайт — limassolshootingclub.com/about"
+    url: "https://www.limassolshootingclub.com/about/"
+verified_at: 2026-11-13
 source_id: CYP-145

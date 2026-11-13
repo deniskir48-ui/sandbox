@@ -1,10 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Imperio
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Не путать девелопера с риелторским агентством; по проектам указывать статус строительства.
+# Что ещё проверить: Проверить актуальность цен, режим работы, публичные контакты
+# Заметка редактора: Проверено по открытым источникам; внутренние коммуникации не включены.
+name: "Imperio"
 status: draft
 section: property-home
 category: real-estate
-service_type: Застройщик
-website: https://www.imperioproperties.com/
-sources: []
+city: "Лимассол"
+service_type: "Застройщик"
+summary: "Девелопер жилых и смешанных проектов, а также управление объектами недвижимости."
+description: "Imperio Properties строит жилые и коммерческие проекты на Кипре, в том числе Silicon Park, Imperio Portside, Imperio Skyline, Sunset Gardens и The Icon. Компания дополнительно предлагает аренду, управление и интерьерные услуги."
+services:
+  - "Новостройки"
+  - "Квартиры"
+  - "Коммерческие объекты"
+  - "Управление недвижимостью"
+  - "Аренда"
+  - "Интерьерный дизайн"
+conditions: "Стоимость и доступность зависят от конкретного проекта и квартиры."
+website: "https://www.imperioproperties.com/"
+sources:
+  - title: "Официальный сайт — imperioproperties.com"
+    url: "https://www.imperioproperties.com/"
+verified_at: 2026-11-13
 source_id: CYP-183

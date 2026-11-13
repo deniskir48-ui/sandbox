@@ -1,9 +1,25 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Latchi Boat Hire
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: На сайте для RAP 1 стоимость 1 и 2 часа совпадает. Перепроверить тариф и убедиться, что торговая марка RAP действительно соответствует названию из CRM.
+# Что ещё проверить: Подтвердить тождество названия RAP Watersports и Latchi Boat Hire
+# Заметка редактора: Нет переноса личных контактов, статусов переписки и партнёрских выплат.
+name: "Latchi Boat Hire"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Лачи, Пафос"
+service_type: "Аренда / прокат лодок"
+summary: "Самостоятельная аренда моторных лодок из гавани Лачи."
+description: "Latchi Boat Hire в исходной CRM связан с доменом latchiboathire.cy. На этом домене работает RAP Watersports & Boats с бронированием лодок без капитана."
+services:
+  - "Self-drive boats"
+  - "Прогулки к Акамасу"
+  - "Бронирование лодки"
+conditions: "В опубликованном каталоге для RAP 1 50HP указаны 2 часа €180, 4 часа €280 и полный день €380."
+address: "Latchi Port, Polis Chrysochous, Cyprus"
+website: "https://latchiboathire.cy/"
+sources:
+  - title: "Официальный сайт — latchiboathire.cy/boat-hire-booking"
+    url: "https://latchiboathire.cy/boat-hire-booking/"
 source_id: BOAT-007

@@ -1,9 +1,26 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: New Life
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Не обещать удаление без следов: результат зависит от пигмента, кожи и режима процедур.
+# Что ещё проверить: Проверить действующий статус, цены и идентичность названия
+# Заметка редактора: Источник указан; не публиковать неподтверждённые данные
+name: "New Life"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Удаление татуировок
-sources: []
+city: "Строволос, Никосия"
+service_type: "Удаление татуировок"
+summary: "Центр эстетической медицины с услугой лазерного удаления татуировок."
+description: "New Life Health Center предлагает лазерное осветление и удаление тату и другие процедуры аппаратной косметологии."
+services:
+  - "Удаление тату"
+  - "Лазерные процедуры"
+  - "Косметология"
+conditions: "Режим сеансов и цена после консультации."
+address: "Stadiou 47, Strovolos, Nicosia 2058, Cyprus"
+website: "https://newlife.com.cy/service/afairesi-tatouaz/"
+sources:
+  - title: "Официальный сайт — newlife.com.cy/service/afairesi-tatouaz"
+    url: "https://newlife.com.cy/service/afairesi-tatouaz/"
+verified_at: 2026-11-13
 source_id: CYP-122

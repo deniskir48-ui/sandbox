@@ -1,9 +1,32 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Notes & Spirits
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: В исходной базе стоит «мероприятия/площадки», но основная категория — бар. Не путать с Notes Live в Лимассоле.
+# Что ещё проверить: Проверить актуальные часы, бронь и меню; перенести из «событий» в бары
+# Заметка редактора: Контакты и часы дополнительно подтверждаются бизнес-справочниками, не переносить внутреннюю CRM.
+name: "Notes & Spirits"
 status: draft
 section: entertainment
 category: organizers
-service_type: Мероприятия / площадки
-sources: []
+city: "Никосия"
+service_type: "Мероприятия / площадки"
+summary: "Коктейль-бар и музыкальное пространство в центре Никосии."
+description: "Notes & Spirits основан в 2014 году; после реконструкции и обновления концепции сочетает коктейль-бар, музыкальное пространство и небольшое меню. В официальном описании особое внимание уделено интерьеру, музыке и атмосфере."
+services:
+  - "Коктейли"
+  - "Бар"
+  - "Музыка"
+  - "DJ-сеты"
+  - "Вечерние встречи"
+conditions: "В сторонних справочниках указана работа со вторника по субботу с вечера; часы перед посещением уточнять."
+address: "33 Evagorou Avenue, Nicosia 1066, Cyprus"
+website: "https://www.notesandspirits.com/"
+sources:
+  - title: "Официальный сайт — notesandspirits.com"
+    url: "https://www.notesandspirits.com/"
+  - title: "visitnicosia.com.cy/taste-nicosia/drinkery-discoveries"
+    url: "https://visitnicosia.com.cy/taste-nicosia/drinkery-discoveries/"
+  - title: "restaurantguru.com/Notes-And-Spirits-Nicosia"
+    url: "https://restaurantguru.com/Notes-And-Spirits-Nicosia"
+verified_at: 2026-11-13
 source_id: CYP-097

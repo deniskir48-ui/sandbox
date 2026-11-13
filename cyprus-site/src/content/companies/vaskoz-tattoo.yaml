@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Vaskoz Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: В летний сезон лучше записаться заранее; после свежей татуировки действуют ограничения по купанию.
+# Что ещё проверить: Проверить действующую запись, прайс и условия
+# Заметка редактора: Наличие в справочнике не гарантирует действующий статус
+name: "Vaskoz Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Протарас, район Фамагусты"
+service_type: "Тату-студии"
+summary: "Тату-студия с работами fine-line, реализмом и перекрытием татуировок."
+description: "Vaskoz Tattoo принимает по предварительной записи и без неё при наличии свободного времени, подбирает дизайн под клиента и публикует условия ухода."
+services:
+  - "Fine-line"
+  - "Black & grey"
+  - "Реализм"
+  - "Lettering"
+  - "Cover-up"
+  - "Walk-in"
+conditions: "По сайту ежедневно 11:00–00:00, стоимость рассчитывается под дизайн."
+address: "Protaras Avenue 69, Shop 3, Paralimni 5296, Cyprus"
+website: "https://vaskoztattoo.com/"
+sources:
+  - title: "Официальный сайт — vaskoztattoo.com"
+    url: "https://vaskoztattoo.com/"
+verified_at: 2026-11-13
 source_id: CYP-125

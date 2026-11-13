@@ -1,12 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Greenland
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Возможность брони и часы уточнять заранее.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Greenland"
 status: draft
 section: hotels-spa
 category: spa
-city: Эптагония
-service_type: Бани / сауны / SPA
-summary: Баня на дровах
-website: https://www.greenland.cy/russian-banya/
-sources: []
+city: "Эптагония, район Лимассола"
+service_type: "Бани / сауны / SPA"
+summary: "Русская баня на дровах, хаммам, купель и SPA-процедуры."
+description: "Greenland Spa расположен в загородном комплексе, предлагает баню на дровах, парение с мастером, сауну, хаммам, купель и массаж."
+services:
+  - "Русская баня"
+  - "Парение"
+  - "Хаммам"
+  - "Купель"
+  - "Джакузи"
+  - "Массаж"
+conditions: "Согласно странице, баня работает со вторника по воскресенье."
+address: "Odos Podou, Eptagonia, Limassol District, Cyprus"
+website: "https://www.greenland.cy/russian-banya/"
+sources:
+  - title: "Официальный сайт — greenland.cy/spa"
+    url: "https://www.greenland.cy/spa/"
+  - title: "Официальный сайт — greenland.cy/russian-banya"
+    url: "https://www.greenland.cy/russian-banya/"
+verified_at: 2026-11-13
 source_id: SPA-001

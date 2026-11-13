@@ -1,9 +1,25 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Albion Laser Tattoo Removal
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Проверить наличие специалиста и программу процедур до визита.
+# Что ещё проверить: Проверить цены, квалификацию специалистов и актуальность контактов
+# Заметка редактора: Не заявлять гарантированный медицинский или косметический результат
+name: "Albion Laser Tattoo Removal"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Удаление татуировок
-sources: []
+city: "Лакатамия, Никосия"
+service_type: "Удаление татуировок"
+summary: "Лазерное удаление татуировок и пигмента с консультацией."
+description: "Albion Laser Tattoo Removal на Кипре предоставляет услуги на базе Borelluss Tattoo Studio, публикует часы и способы связи."
+services:
+  - "Лазерное удаление тату"
+  - "Консультации"
+conditions: "Согласно сайту, услуги доступны вт–сб, точные часы по дням различаются."
+address: "Archiepiskopou Makariou III 57, Lakatamia 2323, Nicosia, Cyprus"
+website: "https://tattooremoval.cy/"
+sources:
+  - title: "Официальный сайт — tattooremoval.cy/find-us"
+    url: "https://tattooremoval.cy/find-us/"
+verified_at: 2026-11-13
 source_id: CYP-108

@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: George’s Watersports
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Возраст и лицензия зависят от правил конкретной лодки.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "George’s Watersports"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Лачи, Пафос"
+service_type: "Аренда / прокат лодок"
+summary: "Самостоятельная аренда моторных лодок и яхтенные прогулки вдоль Акамаса."
+description: "George’s Watersports расположен в гавани Лачи. Предлагает моторные лодки и RIB без капитана и отдельные чартеры с капитаном."
+services:
+  - "Self-drive boats"
+  - "RIB"
+  - "Яхты с капитаном"
+  - "Голубая лагуна"
+conditions: "Обычно аренда 2 или 4 часа либо день; топливо для self-drive отдельно. Пример на сайте: лодка 80HP на 4 часа €242 плюс топливо."
+address: "Latchi Harbour, Paphos, Cyprus"
+website: "https://www.georgesboathire.com/"
+sources:
+  - title: "Официальный сайт — georgesboathire.com/self-drive-boat-hire"
+    url: "https://www.georgesboathire.com/self-drive-boat-hire/"
+  - title: "Официальный сайт — georgesboathire.com/faq"
+    url: "https://www.georgesboathire.com/faq/"
+verified_at: 2026-11-13
 source_id: BOAT-001

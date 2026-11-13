@@ -1,10 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Michael Kyprianou Law Firm
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Сопровождение юриста не заменяет независимую проверку титула, обременений и условий договора.
+# Что ещё проверить: Проверить актуальность цен, режим работы, публичные контакты
+# Заметка редактора: Проверено по открытым источникам; внутренние коммуникации не включены.
+name: "Michael Kyprianou Law Firm"
 status: draft
 section: property-home
 category: legal
-service_type: Юридическое сопровождение сделок
-website: https://www.kyprianou.com/ru/key_contact/eleni-drakou-ru/
-sources: []
+city: "Никосия, Лимассол, Пафос"
+service_type: "Юридическое сопровождение сделок"
+summary: "Юридическое сопровождение сделок с недвижимостью и имущественных споров."
+description: "Michael Kyprianou & Co LLC оказывает юридические услуги при покупке, продаже, аренде недвижимости и имущественных спорах, включая регистрацию и связанные налоговые вопросы."
+services:
+  - "Покупка недвижимости"
+  - "Договоры аренды"
+  - "Отчуждение"
+  - "Имущественные споры"
+  - "Сопровождение регистраций"
+conditions: "Гонорар обсуждается индивидуально в зависимости от объёма услуг."
+website: "https://www.kyprianou.com/expertises/immovable-property-law-cyprus/"
+sources:
+  - title: "Официальный сайт — kyprianou.com/expertises/immovable-property-law-cyprus"
+    url: "https://www.kyprianou.com/expertises/immovable-property-law-cyprus/"
+  - title: "Официальный сайт — kyprianou.com/real-estate-construction-team-recognised-by-the-legal-500-emea-2026"
+    url: "https://www.kyprianou.com/real-estate-construction-team-recognised-by-the-legal-500-emea-2026/"
+verified_at: 2026-11-13
 source_id: CYP-192

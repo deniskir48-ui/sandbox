@@ -1,13 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Tiflis Restaurant
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Меню доставки и ресторана имеют разные цены; проверять перед заказом.
+# Что ещё проверить: Проверить актуальность меню, часы, наличие брони и официальный Instagram
+# Заметка редактора: Не переносить контакты менеджеров и статусы коммерческой переписки
+name: "Tiflis Restaurant"
 status: draft
 section: food
 category: cafes
-service_type: Ресторан
-website: https://tiflisrestaurant.com/
-channel:
-  label: Instagram
-  url: https://www.instagram.com/tiflis_cyprus/
-sources: []
+city: "Гермасойя, Лимассол"
+service_type: "Ресторан"
+summary: "Грузинский ресторан с хинкали, хачапури, шашлыками и другими национальными блюдами."
+description: "Tiflis Restaurant публикует полное меню грузинской кухни, предлагает зал для мероприятий, доставку/заказ еды и бронирование столов."
+services:
+  - "Грузинская кухня"
+  - "Хинкали"
+  - "Хачапури"
+  - "Шашлыки"
+  - "Блюда навынос"
+  - "Частные мероприятия"
+conditions: "По сайту ежедневно 12:00–23:00. Пример: хачапури по-аджарски €15, 10 хинкали с мясом €20."
+address: "Georgiou A 14, Andrea Court, Shops 3–5, Germasogeia, Limassol, Cyprus"
+website: "https://tiflisrestaurant.com/"
+sources:
+  - title: "Официальный сайт — tiflisrestaurant.com/food-menu"
+    url: "https://tiflisrestaurant.com/food-menu/"
+  - title: "Официальный сайт — tiflisrestaurant.com"
+    url: "https://tiflisrestaurant.com/"
+verified_at: 2026-11-13
 source_id: CYP-149

@@ -1,12 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: AM:PM
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Находится внутри Kanika Enaerios Estia House; искать вывеску у входа с проспекта Макариу.
+# Что ещё проверить: Проверить актуальность меню, часы, наличие брони и официальный Instagram
+# Заметка редактора: Не переносить контакты менеджеров и статусы коммерческой переписки
+name: "AM:PM"
 status: draft
 section: food
 category: cafes
-service_type: Кафе / ресторан
-channel:
-  label: Instagram
-  url: https://www.instagram.com/am.pm_cy/
-sources: []
+city: "Энаэриос, Лимассол"
+service_type: "Кафе / ресторан"
+summary: "Кафе и лаунж с кофе, завтраками, обедами и вечерними напитками."
+description: "AM:PM Cafe & Lounge Bar предлагает завтраки, боулы, сэндвичи, кофе, десерты и вечерний лаунж. Заказы доставки доступны через Wolt и Bolt Food."
+services:
+  - "Завтраки"
+  - "Кофе"
+  - "Обед"
+  - "Lounge"
+  - "Доставка"
+  - "Вечерние напитки"
+conditions: "Согласно официальному сайту, ежедневно 08:00–22:00."
+address: "Leoforos Makariou C 235, Kanika Enaerios Estia House, Limassol 3105, Cyprus"
+website: "https://ampmcafe.cy/ru"
+sources:
+  - title: "Официальный сайт — ampmcafe.cy/ru"
+    url: "https://ampmcafe.cy/ru"
+  - title: "Официальный сайт — ampmcafe.cy/en"
+    url: "https://ampmcafe.cy/en"
+verified_at: 2026-11-13
 source_id: CYP-176

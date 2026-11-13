@@ -1,12 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Me Time Therapy
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Групповые сеансы в отдельные даты; записываться заранее.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Me Time Therapy"
 status: draft
 section: hotels-spa
 category: spa
-city: Пафос
-service_type: Бани / сауны / SPA
-summary: Финская сауна
-website: https://metimetherapy.cy/spa-gatherings.html
-sources: []
+city: "Пафос"
+service_type: "Бани / сауны / SPA"
+summary: "Финская сауна, массаж и SPA-встречи малыми группами."
+description: "Me Time Therapy предлагает сауну для небольших групп и восстановительные процедуры по предварительной записи."
+services:
+  - "Финская сауна"
+  - "Массаж"
+  - "SPA-группы"
+  - "Контрастные процедуры"
+conditions: "Сайт указывает 3 часа в группе за €30 с человека, 18+, до 7 участников, без наготы."
+address: "Agiou Panaretou, Paphos, Cyprus"
+website: "https://metimetherapy.cy/spa-gatherings.html"
+sources:
+  - title: "Официальный сайт — metimetherapy.cy/spa-gatherings.html"
+    url: "https://metimetherapy.cy/spa-gatherings.html"
+  - title: "Официальный сайт — metimetherapy.cy/Sauna.html"
+    url: "https://metimetherapy.cy/Sauna.html"
+verified_at: 2026-11-13
 source_id: SPA-003

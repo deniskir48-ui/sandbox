@@ -125,3 +125,14 @@ python3 scripts/import-afisha.py import/afisha.xlsx
 - CMS: структура «один файл = одна запись» подходит для Git-based CMS (Decap/Sveltia/TinaCMS) поверх тех же файлов.
 - Google Sheets: можно добавить скрипт выгрузки таблицы → YAML с тем же правилом публикации.
 - Новые поля карточки — в схеме `src/content.config.ts` и шаблоне `src/pages/services/[slug].astro`.
+
+### Обновление карточек из листа исследования
+
+Единая база → Файл → Скачать → Microsoft Excel (.xlsx) → `import/catalog.xlsx`, затем:
+
+```bash
+python3 scripts/import-research.py import/catalog.xlsx --dry-run   # что изменится
+python3 scripts/import-research.py import/catalog.xlsx             # записать
+```
+
+Скрипт заполняет черновики из листа «Карточки сайта — исследование» и не трогает опубликованные и вручную уточнённые карточки (подробности — в начале скрипта и DEC-W35).

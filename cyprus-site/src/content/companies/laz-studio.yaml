@@ -1,9 +1,24 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Laz Studio
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: В исходном названии Laz Studio пропущено Its; подтвердить, что это одно и то же место.
+# Что ещё проверить: Проверить действующий статус, цены и идентичность названия
+# Заметка редактора: Источник указан; не публиковать неподтверждённые данные
+name: "Laz Studio"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Никосия"
+service_type: "Тату-студии"
+summary: "Студия татуировок в центре Никосии."
+description: "Its Laz Studio публикуется в отраслевых справочниках как тату-студия в Capital Center на проспекте Макариоса."
+services:
+  - "Татуировки"
+  - "Индивидуальные работы"
+conditions: "Стоимость и часы не подтверждены."
+address: "Archbishop Makarios III Avenue 4, Capital Center, Nicosia 1065, Cyprus"
+website: "https://itslazstudio.com/"
+sources:
+  - title: "oncyprus.com/en/dir/cyprus_Nicosia_tattoos.html"
+    url: "https://www.oncyprus.com/en/dir/cyprus_Nicosia_tattoos.html"
 source_id: CYP-119

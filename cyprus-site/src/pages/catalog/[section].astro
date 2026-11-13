@@ -58,10 +58,11 @@ const usedCats = section.categories.filter((cat) => companies.some((c) => catego
 
 <script>
   import { bindFilters } from '../../lib/filters';
+  import { UNKNOWN_REGION } from '../../data/regions';
   bindFilters({ form: '#filters', items: '#list > li', count: '#count', empty: '#no-results',
     match: (el, f) => {
       const card = el.firstElementChild as HTMLElement;
-      return (!f.category || (card.dataset.category ?? '').split(' ').includes(f.category)) && (!f.city || card.dataset.city === f.city);
+      return (!f.category || (card.dataset.category ?? '').split(' ').includes(f.category)) && (!f.city || (card.dataset.city ?? '').split('|').some((r) => r === f.city || (r === '*' && f.city !== UNKNOWN_REGION)));
     } });
 </script>
 <style>

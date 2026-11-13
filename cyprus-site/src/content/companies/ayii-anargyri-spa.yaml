@@ -1,12 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Ayii Anargyri Spa
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Текущее название Secret Forest отличается от исторического Ayii Anargyri Spa. Не утверждать медицинскую эффективность процедур как доказанный эффект.
+# Что ещё проверить: Проверить актуальность цен, режим работы, публичные контакты
+# Заметка редактора: Проверено по открытым источникам; внутренние коммуникации не включены.
+name: "Ayii Anargyri Spa"
 status: draft
 section: hotels-spa
 category: spa
-city: Милиу
-service_type: Бани / сауны / SPA
-summary: Отель / бассейны и сауна
-website: https://www.secretfo.rest/
-sources: []
+city: "Милиу, Пафос"
+service_type: "Бани / сауны / SPA"
+summary: "SPA-ретрит с природными серными бассейнами, сауной и процедурами."
+description: "Secret Forest Wellness Retreat & Spa (в прежней базе Ayii Anargyri Spa) расположен в Милиу. В комплексе есть три крытых минеральных бассейна, открытый подогреваемый бассейн, сауна, парная и массажные кабинеты."
+services:
+  - "SPA"
+  - "Серные бассейны"
+  - "Сауна"
+  - "Парная"
+  - "Массаж"
+  - "Оздоровительные ретриты"
+conditions: "На сайте: один час процедуры €120, две процедуры €200; сеанс в серных бассейнах до 45 минут после анкеты здоровья."
+address: "Miliou, Paphos District, Cyprus"
+website: "https://secretfo.rest/en/the-spa/"
+sources:
+  - title: "Официальный сайт — secretfo.rest/en/the-spa"
+    url: "https://secretfo.rest/en/the-spa/"
+  - title: "Официальный сайт — secretfo.rest/en/miliou"
+    url: "https://secretfo.rest/en/miliou/"
+verified_at: 2026-11-13
 source_id: SPA-010

@@ -35,7 +35,7 @@ const published = new Set(companies.filter((c) => c.data.status === 'published')
 
 const EMAIL = /[\w.+-]+@[\w-]+\.[a-z]{2,}/i;
 const PHONE = /\+?\d[\d\s-]{8,}\d/;
-const PUBLIC_FIELDS = ['name', 'title', 'city', 'venue', 'summary', 'description', 'network', 'price'];
+const PUBLIC_FIELDS = ['name', 'title', 'city', 'venue', 'summary', 'description', 'network', 'price', 'conditions', 'address'];
 const isoOf = (v) => (v instanceof Date ? v.toISOString().slice(0, 10) : String(v ?? ''));
 const daysAgo = (iso) => Math.round((Date.parse(today) - Date.parse(iso)) / 86400000);
 
@@ -69,9 +69,17 @@ for (const a of articles) {
 // Место без района не попадает в фильтр «Где» (запись видна только в «Везде») — подсказать, что его стоит добавить в справочник.
 const REGIONS = JSON.parse(fs.readFileSync(path.resolve('src/data/regions.json'), 'utf8'));
 const unmapped = new Map();
+const regionsOf = (place) => {
+  if (REGIONS.places[place]) return [REGIONS.places[place]];
+  const low = place.toLowerCase(), out = new Set();
+  for (const part of place.split(/\s*(?:[,;/]|\sи\s)\s*/)) if (REGIONS.places[part] && REGIONS.places[part] !== REGIONS.unknown) out.add(REGIONS.places[part]);
+  for (const [kw, region] of REGIONS.keywords) if (low.includes(kw)) out.add(region);
+  if (REGIONS.everywhere.some((w) => low.includes(w))) out.add('*');
+  return [...out];
+};
 for (const item of [...companies, ...events]) {
   const city = item.data.city;
-  if (city && !REGIONS.places[city]) unmapped.set(city, [...(unmapped.get(city) ?? []), item.id]);
+  if (city && !regionsOf(city).length) unmapped.set(city, [...(unmapped.get(city) ?? []), item.id]);
 }
 for (const [city, ids] of unmapped) warnings.push(`место «${city}» не привязано к району в src/data/regions.json — в фильтре «Где» запись будет только в «Везде» (${ids.slice(0, 3).join(', ')}${ids.length > 3 ? '…' : ''})`);
 

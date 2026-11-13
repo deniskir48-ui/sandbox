@@ -1,9 +1,32 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Thalassa Boutique Hotel & Spa
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Это отель только для взрослых; наличие услуг для дневных посетителей и тарифы уточнять.
+# Что ещё проверить: Проверить актуальность цен, режим работы, публичные контакты
+# Заметка редактора: Проверено по открытым источникам; внутренние коммуникации не включены.
+name: "Thalassa Boutique Hotel & Spa"
 status: draft
 section: hotels-spa
 category: hotels
-service_type: Отель / курорт
-sources: []
+city: "Coral Bay, Пафос"
+service_type: "Отель / курорт"
+summary: "Отель только для взрослых с видом на море, SPA и бассейнами."
+description: "Thalassa Boutique Hotel & Spa находится на побережье Coral Bay, предлагает около 100 номеров и сьютов с видом на море, ресторан, бассейны, Anagenisis Spa и залы для встреч."
+services:
+  - "Отель adults-only"
+  - "SPA"
+  - "Сауна"
+  - "Парная"
+  - "Бассейн"
+  - "Ресторан"
+  - "Конференц-зал"
+conditions: "Для корпоративных групп есть зал Coral Suite до 30 человек (рассадка boardroom); цены проживания зависят от дат."
+address: "Coral Bay, Paphos, Cyprus"
+website: "https://thalassa.com.cy/"
+sources:
+  - title: "Официальный сайт — thalassa.com.cy"
+    url: "https://thalassa.com.cy/"
+  - title: "Официальный сайт — thalassa.com.cy/events/meetings"
+    url: "https://thalassa.com.cy/events/meetings/"
+verified_at: 2026-11-13
 source_id: CYP-179

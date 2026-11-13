@@ -1,12 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Crashi Hammam
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Уточнить длительность самостоятельного посещения и актуальный прайс.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Crashi Hammam"
 status: draft
 section: hotels-spa
 category: spa
-city: Лимассол
-service_type: Бани / сауны / SPA
-summary: Турецкий хаммам
-website: https://crashihammam.com/contact-us
-sources: []
+city: "Лимассол"
+service_type: "Бани / сауны / SPA"
+summary: "Хаммам, сауна, парная, пилинг и массажные процедуры."
+description: "Crashi Hammam & Spa предлагает посещение бани и отдельные процедуры ухода, в том числе массаж."
+services:
+  - "Турецкий хаммам"
+  - "Сауна"
+  - "Парная"
+  - "Пилинг"
+  - "Массаж"
+conditions: "На сайте указаны Hammam Facilities €35 с человека, скраб с пенным массажем 40 мин €75."
+address: "Loutron 01, Limassol, Cyprus"
+website: "https://crashihammam.com/"
+sources:
+  - title: "Официальный сайт — crashihammam.com"
+    url: "https://crashihammam.com/"
+verified_at: 2026-11-13
 source_id: SPA-005

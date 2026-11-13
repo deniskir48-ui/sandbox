@@ -1,10 +1,29 @@
-# Проверка 12.11.2026: официальный сайт не найден. Есть страница в Facebook (greeklearningcenter) и рекламная статья vkcyprus.com (Лимассол, Гермасойя). Нужна ручная проверка.
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Anastasia Greek Language Centre
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Школа не проводит индивидуальные занятия; пропущенные по вине ученика уроки не компенсируются, платежи не возвращаются.
+# Что ещё проверить: Проверить остаточные публичные контакты и условия
+# Заметка редактора: Нет переноса личных контактов, статусов переписки и партнёрских выплат.
+name: "Anastasia Greek Language Centre"
 status: draft
 section: education
 category: greek
-service_type: Курсы греческого языка
-sources: []
+city: "Потамос Гермасойас, Лимассол"
+service_type: "Курсы греческого языка"
+summary: "Очные групповые курсы греческого A1–C2 и подготовка к официальным экзаменам."
+description: "Anastasia’s Greek Learning Center работает с взрослыми, готовит к Ellinomatheia и экзамену по основам современной политической и социальной реальности Кипра, необходимому для гражданства."
+services:
+  - "Греческий A1–C2"
+  - "Ellinomatheia"
+  - "Экзамен по истории/обществу Кипра"
+  - "Разговорные группы"
+conditions: "На официальном FAQ указано €600 за уровень, скидка 10% при полной предоплате; примерно 5 месяцев на уровень."
+address: "Christaki Kranou 11, Potamos Germasogeias, Limassol, Cyprus"
+website: "https://greeklearningcenter.com/"
+sources:
+  - title: "Официальный сайт — greeklearningcenter.com/faqs"
+    url: "https://greeklearningcenter.com/faqs/"
+  - title: "Официальный сайт — greeklearningcenter.com/welcome"
+    url: "https://greeklearningcenter.com/welcome/"
+verified_at: 2026-11-13
 source_id: GREEK-005

@@ -1,10 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Eurobank Cyprus
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Одобрение и ставка индивидуальны; страхование и оценка объекта увеличивают стоимость кредита.
+# Что ещё проверить: Проверить актуальные тарифы, условия возврата, юридическую информацию и контакты
+# Заметка редактора: Публичные данные, без статуса переговоров и внутренних контактов
+name: "Eurobank Cyprus"
 status: draft
 section: property-home
 category: mortgage
-service_type: Банки / ипотека
-website: https://www.eurobank.cy/en/personal/housing/home-loan
-sources: []
+city: "Кипр, отделения банка и онлайн"
+service_type: "Банки / ипотека"
+summary: "Ипотечные кредиты на покупку, строительство и реконструкцию основного жилья."
+description: "Eurobank Cyprus предлагает Home Loan с фиксированным периодом на 3, 5 или 10 лет и переменной ставкой, в том числе отдельные условия для энергоэффективного жилья."
+services:
+  - "Ипотека"
+  - "Покупка жилья"
+  - "Строительство"
+  - "Ремонт"
+  - "Калькулятор"
+  - "Green Homes"
+conditions: "Для постоянных резидентов Кипра возможно финансирование до 80%, срок до 30 лет или до 65 лет заёмщика."
+website: "https://www.eurobank.cy/en/personal/housing/home-loan"
+sources:
+  - title: "Официальный сайт — eurobank.cy/en/personal/housing/home-loan"
+    url: "https://www.eurobank.cy/en/personal/housing/home-loan"
+verified_at: 2026-11-13
 source_id: CYP-191

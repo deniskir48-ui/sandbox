@@ -1,9 +1,30 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Black Volt Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Цена, доступность и стиль зависят от мастера.
+# Что ещё проверить: Проверить действующий статус, цены и идентичность названия
+# Заметка редактора: Источник указан; не публиковать неподтверждённые данные
+name: "Black Volt Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Центр Никосии"
+service_type: "Тату-студии"
+summary: "Тату-студия с индивидуальными эскизами и гостевыми мастерами."
+description: "Black Volt Tattooing объединяет нескольких мастеров, публикует портфолио и информацию о гостевых сессиях."
+services:
+  - "Татуировки"
+  - "Fine-line"
+  - "Blackwork"
+  - "Реализм"
+  - "Художественные эскизы"
+conditions: "Запись через форму или выбранного мастера."
+address: "Evagorou 29D, Nicosia, Cyprus"
+website: "https://www.blackvolt.eu/"
+sources:
+  - title: "Официальный сайт — blackvolt.eu"
+    url: "https://www.blackvolt.eu/"
+  - title: "oncyprus.com/en/black-volt-tattoo/contacts/id/18760.html"
+    url: "https://www.oncyprus.com/en/black-volt-tattoo/contacts/id/18760.html"
+verified_at: 2026-11-13
 source_id: CYP-143

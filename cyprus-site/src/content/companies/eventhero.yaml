@@ -1,9 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: EventHero
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Переносы и возвраты подчиняются правилам организатора.
+# Что ещё проверить: Проверить актуальные тарифы, условия возврата, юридическую информацию и контакты
+# Заметка редактора: Публичные данные, без статуса переговоров и внутренних контактов
+name: "EventHero"
 status: draft
 section: entertainment
 category: tickets
-service_type: Билетные площадки
-sources: []
+city: "Кипр, онлайн"
+service_type: "Билетные площадки"
+summary: "Продажа билетов на концерты, стендап и другие мероприятия."
+description: "EventHero публикует будущие мероприятия, позволяет оплатить билеты картой и получить электронные билеты на почту. На сайте указана кипрская компания EVENHERO LTD."
+services:
+  - "Концерты"
+  - "Стендап"
+  - "Электронные билеты"
+  - "Кабинет организатора"
+conditions: "По FAQ покупка возможна без учётной записи; способы оплаты зависят от события."
+address: "4 Kleisouras, Agios Athanasios 4105, Limassol, Cyprus"
+website: "https://eventhero.cy/"
+sources:
+  - title: "Официальный сайт — eventhero.cy"
+    url: "https://eventhero.cy/"
+  - title: "Официальный сайт — eventhero.cy/support"
+    url: "https://eventhero.cy/support"
+  - title: "Официальный сайт — eventhero.cy/terms-of-sale"
+    url: "https://eventhero.cy/terms-of-sale"
+verified_at: 2026-11-13
 source_id: CYP-168

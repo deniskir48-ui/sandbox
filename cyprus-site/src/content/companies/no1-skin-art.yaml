@@ -1,9 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: No1 Skin Art
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Проверить действующий адрес перед поездкой: официальный сайт перечисляет две точки.
+# Что ещё проверить: Проверить действующий статус, цены и идентичность названия
+# Заметка редактора: Источник указан; не публиковать неподтверждённые данные
+name: "No1 Skin Art"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Лимассол"
+service_type: "Тату-студии"
+summary: "Татуировки и индивидуальные эскизы в студии Skin Art."
+description: "No1 Skin Art связан с мастером Андреасом Христодулу. Студия предлагает цветные и чёрно-белые татуировки, реализм, cover-up и авторские дизайны."
+services:
+  - "Татуировки"
+  - "Реализм"
+  - "Цветные тату"
+  - "Cover-up"
+  - "Индивидуальные рисунки"
+conditions: "Цена рассчитывается под рисунок и размер."
+address: "Franklin Roosevelt 94; Queen Elizabeth 56, Limassol, Cyprus"
+website: "https://tattooskinart.tattoo/"
+sources:
+  - title: "Официальный сайт — tattooskinart.tattoo"
+    url: "https://tattooskinart.tattoo/"
+verified_at: 2026-11-13
 source_id: CYP-095

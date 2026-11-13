@@ -1,10 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Cyprus Property Gallery
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Категория исходной CRM «агентство/девелопер» требует исправления: официальный сайт указывает в первую очередь застройщика.
+# Что ещё проверить: Проверить актуальность цен, режим работы, публичные контакты
+# Заметка редактора: Проверено по открытым источникам; внутренние коммуникации не включены.
+name: "Cyprus Property Gallery"
 status: draft
 section: property-home
 category: real-estate
-service_type: Агентство / девелопер
-website: https://cypruspropertygallery.com/contact-us-en/
-sources: []
+city: "Лимассол, Писсури и Троодос"
+service_type: "Агентство / девелопер"
+summary: "Застройщик жилых и коммерческих объектов, включая квартиры, виллы и офисы."
+description: "Property Gallery Developers & Constructors разрабатывает жилые и коммерческие проекты, включая YOO Limassol, MIR Residences, Cityspace и другие комплексы."
+services:
+  - "Девелопмент"
+  - "Квартиры"
+  - "Виллы"
+  - "Коммерческие помещения"
+  - "Земельные участки"
+conditions: "На сайте есть каталог проектов с фильтрами по виду недвижимости."
+website: "https://cypruspropertygallery.com/"
+sources:
+  - title: "Официальный сайт — cypruspropertygallery.com/projects-en"
+    url: "https://cypruspropertygallery.com/projects-en/"
+  - title: "Официальный сайт — cypruspropertygallery.com/about-us-en"
+    url: "https://cypruspropertygallery.com/about-us-en"
+verified_at: 2026-11-13
 source_id: CYP-188

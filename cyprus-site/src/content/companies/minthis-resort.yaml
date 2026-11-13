@@ -1,12 +1,27 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Minthis Resort
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Не предполагать свободный доступ для гостей без проживания.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Minthis Resort"
 status: draft
 section: hotels-spa
 category: spa
-city: Цада
-service_type: Бани / сауны / SPA
-summary: Отель / spa, сауна
-website: https://www.minthisresort.com/
-sources: []
+city: "Цада, Пафос"
+service_type: "Бани / сауны / SPA"
+summary: "Wellness-комплекс с сауной, гидротерапией и бассейнами."
+description: "Minthis Resort предлагает процедуры, финскую сауну, парную, соляную комнату, гидротерапию и холодную купель."
+services:
+  - "Сауна"
+  - "Парная"
+  - "Соляная комната"
+  - "Гидротерапия"
+  - "Процедуры"
+conditions: "Стоимость и формат дневного посещения уточняются."
+website: "https://www.minthisresort.com/wellness/"
+sources:
+  - title: "Официальный сайт — minthisresort.com/wellness"
+    url: "https://www.minthisresort.com/wellness/"
+verified_at: 2026-11-13
 source_id: SPA-007

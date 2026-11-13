@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Latchi Watersports Centre
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Топливо, залог, страховку и условия отмены уточнять при бронировании.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Latchi Watersports Centre"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Лачи, Пафос"
+service_type: "Аренда / прокат лодок"
+summary: "Самостоятельный прокат лодок, яхтенные чартеры, дайвинг и водные виды спорта."
+description: "Latchi Watersports Centre работает из гавани Лачи. Предлагает аренду лодок, капитанские чартеры, дайвинг и курсы RYA."
+services:
+  - "Self-drive"
+  - "Яхты с капитаном"
+  - "Дайвинг"
+  - "RYA"
+  - "Jet ski"
+  - "Развлечения"
+conditions: "Для self-drive на сайте указаны возраст 21+ и автомобильные права; встречаются тарифы от €75 в зависимости от лодки."
+address: "Latchi Harbour, Polis, Cyprus"
+website: "https://www.latchiwatersportscentre.com/"
+sources:
+  - title: "Официальный сайт — latchiwatersportscentre.com/boat-hire"
+    url: "https://www.latchiwatersportscentre.com/boat-hire/"
+verified_at: 2026-11-13
 source_id: BOAT-002

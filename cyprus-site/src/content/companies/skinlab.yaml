@@ -1,9 +1,25 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: SkinLab
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: Не путать кипрский SkinLab с одноимёнными студиями в других странах.
+# Что ещё проверить: Проверить действующий статус, цены и идентичность названия
+# Заметка редактора: Источник указан; не публиковать неподтверждённые данные
+name: "SkinLab"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Удаление татуировок
-sources: []
+city: "Строволос, Никосия"
+service_type: "Удаление татуировок"
+summary: "Клиника дерматологии и эстетической медицины, сведения об удалении тату требуют проверки."
+description: "SkinLab доктора Constantinos P. Symeonides упоминается как дерматологическая клиника с услугами по коже и аппаратным процедурам."
+services:
+  - "Дерматология"
+  - "Кожные процедуры"
+  - "Удаление тату — уточнить"
+conditions: "Цена и лазерная технология не подтверждены."
+address: "Archangel Michael 37A, Flat 202, Strovolos, Nicosia, Cyprus"
+website: "https://skinlab.com.cy/"
+sources:
+  - title: "fastbase.com/countryindex/cyprus/t/tattoo-removal-service"
+    url: "https://www.fastbase.com/countryindex/cyprus/t/tattoo-removal-service"
 source_id: CYP-124

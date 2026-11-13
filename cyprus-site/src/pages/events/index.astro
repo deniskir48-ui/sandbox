@@ -47,6 +47,7 @@ const types = [...typeCount.keys()].sort((a, b) => Number(a === 'other') - Numbe
 
 <script>
   import { bindFilters, todayCyprus } from '../../lib/filters';
+  import { UNKNOWN_REGION } from '../../data/regions';
 
   // Диапазон для фильтра «Когда».
   function range(when: string): [string, string] | null {
@@ -80,7 +81,7 @@ const types = [...typeCount.keys()].sort((a, b) => Number(a === 'other') - Numbe
       const card = li.firstElementChild as HTMLElement;
       const { start = '', end = '', city, type } = card.dataset;
       if (end < todayCyprus()) return false; // страница собрана раньше, а событие уже прошло
-      if (f.city && city !== f.city) return false;
+      if (f.city && !(city ?? '').split('|').some((r) => r === f.city || (r === '*' && f.city !== UNKNOWN_REGION))) return false;
       if (f.type && type !== f.type) return false;
       const r = range(f.when);
       if (r && (start > r[1] || end < r[0])) return false;

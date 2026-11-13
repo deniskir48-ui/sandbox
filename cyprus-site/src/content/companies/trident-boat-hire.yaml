@@ -1,9 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Trident Boat Hire
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: На разных официальных страницах указаны ограничения 21+ и 18+. Проверить перед бронированием.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Trident Boat Hire"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Лачи, Пафос"
+service_type: "Аренда / прокат лодок"
+summary: "Аренда лодок для самостоятельной поездки к Голубой лагуне или с капитаном."
+description: "Trident Boat Hire работает в гавани Лачи, предоставляет инструктаж и маршрутную карту для самостоятельных морских прогулок."
+services:
+  - "Self-drive"
+  - "Чартер с капитаном"
+  - "Голубая лагуна"
+conditions: "Топливо отдельно; капитан +€30/ч. Указана франшиза €650/€1100 по мощности."
+address: "Latchi Harbour AA32, Polis, Cyprus"
+website: "https://tridentboathire.com/"
+sources:
+  - title: "Официальный сайт — tridentboathire.com"
+    url: "https://tridentboathire.com/"
+  - title: "Официальный сайт — tridentboathire.com/book"
+    url: "https://tridentboathire.com/book/"
+verified_at: 2026-11-13
 source_id: BOAT-010

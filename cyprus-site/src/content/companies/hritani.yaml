@@ -1,9 +1,30 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Hritani
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Стоимость после осмотра, не указаны универсальные цены.
+# Что ещё проверить: Актуальность программы, цены, расписания, юридическое название
+# Заметка редактора: Публичные данные без CRM
+name: "Hritani"
 status: draft
 section: health-beauty
 category: medical
-service_type: Стоматология
-sources: []
+city: "Меса Гитония, Лимассол"
+service_type: "Стоматология"
+summary: "Стоматологический центр с имплантацией, ортодонтией и лечением детей."
+description: "Hritani Dental Centre предлагает общую и эстетическую стоматологию, имплантацию, ортодонтию, детское лечение и пародонтологию."
+services:
+  - "Стоматология"
+  - "Имплантация"
+  - "Ортодонтия"
+  - "Детская стоматология"
+  - "Косметические процедуры"
+conditions: "Пн–пт 10:00–18:00 по официальной странице."
+address: "Christou Samara 2, Morfou Court, Floor 2, Mesa Geitonia, Limassol 4001, Cyprus"
+website: "https://hritanidental.com/"
+sources:
+  - title: "Официальный сайт — hritanidental.com"
+    url: "https://hritanidental.com/"
+  - title: "Официальный сайт — hritanidental.com/contact-us"
+    url: "https://hritanidental.com/contact-us/"
+verified_at: 2026-11-13
 source_id: CYP-131

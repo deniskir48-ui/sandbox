@@ -1,9 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Kapparis Waterfun
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Проверять сезонную доступность услуг.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Kapparis Waterfun"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Каппарис, Протарас"
+service_type: "Аренда / прокат лодок"
+summary: "Прокат лодок без капитана и водные развлечения на пляже Каппариса."
+description: "Kapparis Waterfun предлагает моторные лодки, гидроциклы и водные активности на побережье Протараса."
+services:
+  - "Self-drive лодки"
+  - "Jet ski"
+  - "SUP"
+  - "Каяки"
+  - "Wakeboard"
+conditions: "Для управления лодкой сайт указывает возраст 25+ и действующие автомобильные права."
+address: "Beach below Malama Holiday Village, Kapparis, Cyprus"
+website: "https://kappariswaterfun.com/"
+sources:
+  - title: "Официальный сайт — kappariswaterfun.com"
+    url: "https://kappariswaterfun.com/"
+verified_at: 2026-11-13
 source_id: BOAT-005

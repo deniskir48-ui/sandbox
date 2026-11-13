@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Konnos Bay Watersports
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: Источники подтверждают Mike Watersports и его контакт konnos@cytanet.com.cy, но не доказывают тождество с прежней записью Konnos Bay Watersports. Перед публичной публикацией уточнить.
+# Что ещё проверить: Проверить статус, название и пригодность для сайта; не публиковать как готовую карточку
+# Заметка редактора: Проверено по открытым источникам; внутренние коммуникации не включены.
+name: "Konnos Bay Watersports"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Konnos Bay, Айя-Напа/Протарас"
+service_type: "Аренда / прокат лодок"
+summary: "Лодки без капитана, водные виды спорта и яхтенные прогулки у Каво-Греко."
+description: "Mike Watersports, зарегистрированный в ассоциации водных видов спорта по адресу Konnos, предлагает самостоятельную аренду лодок, гидроциклы, SUP, wakeboard и яхтенные чартеры. В прежней базе записано «Konnos Bay Watersports»: точное совпадение торгового названия требует подтверждения."
+services:
+  - "Self-drive лодки"
+  - "Jet ski"
+  - "SUP"
+  - "Wakeboard"
+  - "Яхтенные прогулки"
+conditions: "Официальный сайт: jet ski €50 за 15 минут, SUP €20 за час; лодки по отдельному тарифу."
+address: "Konnos Bay, Ayia Napa 5297, Cyprus"
+website: "https://mikewatersports.com/"
+sources:
+  - title: "cywatersports.com/watersports-in-cyprus/ayia-napa-watersport"
+    url: "https://cywatersports.com/watersports-in-cyprus/ayia-napa-watersport/"
+  - title: "Официальный сайт — mikewatersports.com"
+    url: "https://mikewatersports.com/"
 source_id: BOAT-006

@@ -1,9 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Dr Zenonos
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Цена и продолжительность определяются врачом.
+# Что ещё проверить: Актуальность программы, цены, расписания, юридическое название
+# Заметка редактора: Публичные данные без CRM
+name: "Dr Zenonos"
 status: draft
 section: health-beauty
 category: medical
-service_type: Стоматология
-sources: []
+city: "Лимассол"
+service_type: "Стоматология"
+summary: "Стоматологическая клиника, имплантация, ортодонтия и эстетическое лечение."
+description: "Dr Zenonos – The Dental Clinic с 1997 года предоставляет общую, восстановительную и эстетическую стоматологию. На сайте описаны лазерные и цифровые процедуры."
+services:
+  - "Имплантация"
+  - "Брекеты"
+  - "Invisalign"
+  - "Виниры"
+  - "Стоматологическая помощь"
+  - "Лазер"
+conditions: "Пн–пт 09:00–13:30 и 14:00–17:30 по официальному сайту."
+address: "Vasileos Georgiou II 33A, Limassol 3077, Cyprus"
+website: "https://drzenonos.com/"
+sources:
+  - title: "Официальный сайт — drzenonos.com"
+    url: "https://drzenonos.com/"
+  - title: "Официальный сайт — drzenonos.com/contact-us"
+    url: "https://drzenonos.com/contact-us/"
+verified_at: 2026-11-13
 source_id: CYP-146

@@ -1,9 +1,22 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Scandalo Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: дополнительная проверка обязательна). Claude их не перепроверял.
+# НЕ проверено: по таблице нужна дополнительная проверка — без verified_at карточку нельзя опубликовать.
+# Что стоит учесть: Найден только бизнес-справочник; официальный сайт и действующий статус необходимо проверить.
+# Что ещё проверить: Проверить действующую запись, прайс и условия
+# Заметка редактора: Наличие в справочнике не гарантирует действующий статус
+name: "Scandalo Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Лимассол"
+service_type: "Тату-студии"
+summary: "Тату-студия в центре Лимассола."
+description: "Scandalo Tattoo указана в кипрском бизнес-справочнике как студия татуировок на улице Anexartisias."
+services:
+  - "Татуировки"
+conditions: "Цены и часы не удалось подтвердить."
+address: "Anexartisias 169, Limassol, Cyprus"
+sources:
+  - title: "businesslink.com.cy/BusinessDirectory_List.aspx"
+    url: "https://www.businesslink.com.cy/BusinessDirectory_List.aspx?AccountCategoryID=468"
 source_id: CYP-123

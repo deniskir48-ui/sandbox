@@ -1,9 +1,27 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Med Yachts Charters
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Начальные тарифы разных категорий не сравнивать как стоимость полного дня.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Med Yachts Charters"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Разные марины Кипра"
+service_type: "Аренда / прокат лодок"
+summary: "Чартер моторных и парусных яхт, катамаранов и лодок."
+description: "Med Yachts Charters предлагает варианты аренды судов разных классов с маршрутами вокруг острова."
+services:
+  - "Яхты"
+  - "Катамараны"
+  - "Моторные лодки"
+  - "Чартеры"
+  - "Self-drive"
+conditions: "Цена зависит от типа судна и маршрута."
+website: "https://medyachtscharters.com/"
+sources:
+  - title: "Официальный сайт — medyachtscharters.com"
+    url: "https://medyachtscharters.com/"
+verified_at: 2026-11-13
 source_id: BOAT-008

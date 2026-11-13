@@ -1,9 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Cyprus Comic Con
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Не путать архив фестиваля 2026 с будущим событием и его билетами.
+# Что ещё проверить: Проверить актуальные сеансы, даты, требования и цены
+# Заметка редактора: Официальные сайты, без сведений из приватных переписок.
+name: "Cyprus Comic Con"
 status: draft
 section: entertainment
 category: organizers
-service_type: Мероприятия / площадки
-sources: []
+city: "Никосия, Cyprus State Fair"
+service_type: "Мероприятия / площадки"
+summary: "Фестиваль поп-культуры, косплея, игр, комиксов и творчества."
+description: "Cyprus Comic Con объединяет косплееров, художников, игровые и настольные сообщества, продавцов и гостей поп-культуры. Организаторы также публикуют календарь связанных событий."
+services:
+  - "Фестиваль"
+  - "Косплей"
+  - "Игры"
+  - "Комиксы"
+  - "Встречи с гостями"
+  - "Маркет"
+conditions: "На официальном сайте следующие даты основной конвенции: 1–3 октября 2027 года."
+address: "Cyprus State Fair, Egkomi, Nicosia, Cyprus"
+website: "https://cypruscomiccon.org/"
+sources:
+  - title: "Официальный сайт — cypruscomiccon.org"
+    url: "https://cypruscomiccon.org/"
+  - title: "Официальный сайт — cypruscomiccon.org/media-kit"
+    url: "https://cypruscomiccon.org/media-kit/"
+verified_at: 2026-11-13
 source_id: CYP-093

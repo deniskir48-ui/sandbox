@@ -1,9 +1,27 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Blue Diamond Latchi
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: На одном сайте указаны оба ограничения 18+ и 21+. Уточнить возраст до бронирования.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Blue Diamond Latchi"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Лачи, Пафос"
+service_type: "Аренда / прокат лодок"
+summary: "Лодки для поездок к Голубой лагуне, круизы и частные чартеры."
+description: "Blue Diamond Latchi предлагает самостоятельную аренду лодок и маршруты вдоль Акамаса, включая прогулки с капитаном."
+services:
+  - "Self-drive 2–6 часов"
+  - "Голубая лагуна"
+  - "Круизы"
+  - "Частные чартеры"
+conditions: "Топливо оплачивается по факту расхода; капитан дополнительно €20 за час (по данным страницы)."
+address: "Latchi Harbour, Polis, Cyprus"
+website: "https://www.bluediamondlatchi.com/"
+sources:
+  - title: "Официальный сайт — bluediamondlatchi.com/boat-hire"
+    url: "https://www.bluediamondlatchi.com/boat-hire/"
+verified_at: 2026-11-13
 source_id: BOAT-004

@@ -1,9 +1,27 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Angry Mama Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Общедоступный Linktree подтверждает тату- и пирсинг-студию, но прайс не опубликован.
+# Что ещё проверить: Проверить действующую запись, прайс и условия
+# Заметка редактора: Наличие в справочнике не гарантирует действующий статус
+name: "Angry Mama Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Лимассол"
+service_type: "Тату-студии"
+summary: "Тату-студия и пирсинг с записью через соцсети."
+description: "Angry Mama Tattoo Studio публикует портфолио мастеров, контакты и форму записи через свой публичный Linktree."
+services:
+  - "Татуировки"
+  - "Пирсинг"
+  - "Консультации"
+  - "Портфолио"
+conditions: "Стоимость зависит от рисунка и мастера."
+address: "Adonidos 30, Limassol, Cyprus"
+website: "https://linktr.ee/angrymamatattoo"
+sources:
+  - title: "Официальный сайт — linktr.ee/angrymamatattoo"
+    url: "https://linktr.ee/angrymamatattoo"
+verified_at: 2026-11-13
 source_id: CYP-109

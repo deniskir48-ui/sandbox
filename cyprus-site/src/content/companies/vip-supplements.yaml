@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: VIP Supplements
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Отдельные предложения и скидки имеют срок; не гарантировать цены.
+# Что ещё проверить: Проверить цену, наличие, расписание и юридическое название
+# Заметка редактора: Публичные источники, без CRM
+name: "VIP Supplements"
 status: draft
 section: other
 category: sport
-service_type: Спортивные товары / сервис
-sources: []
+city: "Лимассол"
+service_type: "Спортивные товары / сервис"
+summary: "Магазин спортивного питания, протеина, креатина и витаминов."
+description: "VIP Supplements продаёт протеин, масс-гейнеры, креатин, предтренировочные продукты, аминокислоты, витамины и спортивные аксессуары, с доставкой через Wolt."
+services:
+  - "Протеин"
+  - "Креатин"
+  - "Гейнеры"
+  - "Аминокислоты"
+  - "Витамины"
+  - "Шейкеры"
+conditions: "Магазины на Pafou 38 и Irinis 42 в Лимассоле."
+address: "Pafou 38, Limassol 3052; Irinis 42, Limassol 3042, Cyprus"
+website: "https://www.vipsupplementstores.com/"
+sources:
+  - title: "Официальный сайт — vipsupplementstores.com"
+    url: "https://www.vipsupplementstores.com/"
+verified_at: 2026-11-13
 source_id: CYP-129

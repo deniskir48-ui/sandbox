@@ -1,9 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Christos Tziortzis Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Студия не делает тату несовершеннолетним, даже с согласием родителей.
+# Что ещё проверить: Проверить действующую запись, прайс и условия
+# Заметка редактора: Наличие в справочнике не гарантирует действующий статус
+name: "Christos Tziortzis Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Лимассол"
+service_type: "Тату-студии"
+summary: "Авторские татуировки в студии Chris Cosmos Tattoo."
+description: "Мастер Christos Tziortzis основал Chris Cosmos Tattoo Studio в Лимассоле; специализации включают геометрию, neotraditional, японские и авторские татуировки, перекрытие старых рисунков."
+services:
+  - "Тату"
+  - "Геометрия"
+  - "Японский стиль"
+  - "Neotraditional"
+  - "Cover-up"
+  - "Консультации"
+conditions: "Приём по записи, пн–сб 10:00–19:00; цены по размеру и сложности."
+address: "Limassol, Cyprus"
+website: "https://chriscosmostattoo.com/"
+sources:
+  - title: "Официальный сайт — chriscosmostattoo.com"
+    url: "https://chriscosmostattoo.com/"
+  - title: "chriscosmostattoocyprus.com/index.html"
+    url: "https://www.chriscosmostattoocyprus.com/index.html"
+verified_at: 2026-11-13
 source_id: CYP-113

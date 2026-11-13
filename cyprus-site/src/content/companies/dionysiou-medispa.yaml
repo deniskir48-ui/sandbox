@@ -1,9 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Dionysiou MediSpa
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Многие рекламные обещания о безболезненности не следует трактовать как гарантию результата.
+# Что ещё проверить: Проверить цены, квалификацию специалистов и актуальность контактов
+# Заметка редактора: Не заявлять гарантированный медицинский или косметический результат
+name: "Dionysiou MediSpa"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Удаление татуировок
-sources: []
+city: "Като Полемидия, Лимассол"
+service_type: "Удаление татуировок"
+summary: "Медицинская эстетика с лазерным удалением татуировок PicoWay."
+description: "Dionysiou MediSpa предлагает удаление тату и эстетические процедуры, предварительно оценивая площадь, цвет и характеристики пигмента."
+services:
+  - "PicoWay"
+  - "Удаление тату"
+  - "SPA"
+  - "Косметология"
+  - "Уход за кожей"
+conditions: "Стоимость обсуждается после бесплатной консультации; число процедур индивидуально."
+address: "Demetri Lagiou 4, Kato Polemidia 4150, Limassol, Cyprus"
+website: "https://www.dionysioumedispa.com/en/services/laser-tattoo-removal/"
+sources:
+  - title: "Официальный сайт — dionysioumedispa.com/en/services/laser-tattoo-removal"
+    url: "https://www.dionysioumedispa.com/en/services/laser-tattoo-removal/"
+verified_at: 2026-11-13
 source_id: CYP-114

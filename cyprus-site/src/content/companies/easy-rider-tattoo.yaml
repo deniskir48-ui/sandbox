@@ -1,9 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Easy Rider Tattoo
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: У бренда Easy Rider несколько точек на острове; не использовать общие адреса.
+# Что ещё проверить: Проверить актуальность и название; противопоказания и условия
+# Заметка редактора: Публичные данные без CRM
+name: "Easy Rider Tattoo"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Тату-студии
-sources: []
+city: "Потамос Гермасойас, Лимассол"
+service_type: "Тату-студии"
+summary: "Студия татуировок, пирсинга и перманентного макияжа."
+description: "Easy Rider Tattoo Limassol работает под руководством Loucas Tattuatore, предлагает татуировки, пирсинг и микропигментацию."
+services:
+  - "Тату"
+  - "Пирсинг"
+  - "Микропигментация"
+  - "Консультация"
+  - "Эскизы"
+conditions: "По сайту ежедневно 13:00–20:00, запись через форму/телефон."
+address: "Vasileos Georgiou A 18H, Germasogeia, Limassol 4047, Cyprus"
+website: "https://easyriderlimassol.com/"
+sources:
+  - title: "Официальный сайт — easyriderlimassol.com"
+    url: "https://easyriderlimassol.com/"
+verified_at: 2026-11-13
 source_id: CYP-116

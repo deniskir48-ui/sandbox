@@ -1,9 +1,31 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Dacor
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Это сервисная компания и организатор, не самостоятельная площадка для посещения событий.
+# Что ещё проверить: Проверить актуальные даты и цены перед публикацией
+# Заметка редактора: Внутренняя CRM не используется в публичных полях.
+name: "Dacor"
 status: draft
 section: entertainment
 category: organizers
-service_type: Мероприятия / площадки
-sources: []
+city: "Лимассол, весь Кипр"
+service_type: "Мероприятия / площадки"
+summary: "Организация мероприятий, маркетинг, реклама и видеопроизводство."
+description: "Dacor Advertising & Media занимается корпоративными мероприятиями, PR, рекламой, веб-разработкой, дизайном и аудиовизуальными производствами. В партнёрстве High Voltage Events & Productions проводит музыкальные проекты."
+services:
+  - "Организация событий"
+  - "PR"
+  - "Маркетинг"
+  - "Дизайн"
+  - "Продакшен"
+  - "Веб-разработка"
+conditions: "Стоимость по индивидуальному брифу."
+address: "5 Apostolou Varnava St, Limassol, Cyprus"
+website: "https://www.dacor.com.cy/"
+sources:
+  - title: "Официальный сайт — dacor.com.cy"
+    url: "https://www.dacor.com.cy/"
+  - title: "Официальный сайт — dacor.com.cy/audiovisual-services"
+    url: "https://dacor.com.cy/audiovisual-services"
+verified_at: 2026-11-13
 source_id: CYP-107

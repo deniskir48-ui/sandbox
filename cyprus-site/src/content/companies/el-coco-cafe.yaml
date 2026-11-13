@@ -1,13 +1,32 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: EL COCO CAFE
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Тарифы и график отличаются в публичных источниках; ориентироваться на официальный сайт.
+# Что ещё проверить: Проверить актуальность меню, часы, наличие брони и официальный Instagram
+# Заметка редактора: Не переносить контакты менеджеров и статусы коммерческой переписки
+name: "EL COCO CAFE"
 status: draft
 section: food
 category: cafes
-service_type: Кафе / ресторан
-website: https://elcococafe.com/contact-us
-channel:
-  label: Instagram
-  url: https://www.instagram.com/elcoco_cafe/
-sources: []
+city: "Центр Лимассола"
+service_type: "Кафе / ресторан"
+summary: "Кафе с кофе, завтраками, сырниками, супами и сэндвичами."
+description: "EL COCO CAFE предлагает посадку на месте и еду навынос. На официальном сайте опубликовано меню напитков, завтраков, салатов, выпечки и горячих блюд."
+services:
+  - "Кофе"
+  - "Завтрак"
+  - "Сырники"
+  - "Wraps"
+  - "Супы"
+  - "Выпечка"
+  - "Takeaway"
+conditions: "По меню: Freddo Espresso €2,50; завтрак EL COCO €15; будни 08:00–19:00, суббота 08:00–14:00."
+address: "Arch. Makarios III Avenue 180, Limassol 3027, Cyprus"
+website: "https://elcococafe.com/"
+sources:
+  - title: "Официальный сайт — elcococafe.com/menu"
+    url: "https://elcococafe.com/menu"
+  - title: "Официальный сайт — elcococafe.com/cafe"
+    url: "https://elcococafe.com/cafe"
+verified_at: 2026-11-13
 source_id: CYP-174

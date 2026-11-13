@@ -1,9 +1,30 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Stavros Watersports
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: На сайте указан возраст от 18 лет, но права и ограничения конкретной лодки необходимо уточнить.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Stavros Watersports"
 status: draft
 section: entertainment
 category: boats
-service_type: Аренда / прокат лодок
-sources: []
+city: "Fig Tree Bay, Протарас"
+service_type: "Аренда / прокат лодок"
+summary: "Прокат моторных лодок и активные водные развлечения на Fig Tree Bay."
+description: "Stavros Watersports предлагает самостоятельное управление лодкой, поездки с капитаном и водные виды спорта."
+services:
+  - "Self-drive"
+  - "Капитан"
+  - "Парасейлинг"
+  - "Wake surfing"
+  - "Развлечения"
+conditions: "На сайте есть почасовые варианты и аренда на день; пример Regal Bowrider €170 за час."
+address: "Below Capo Bay Hotel, Fig Tree Bay, Protaras, Cyprus"
+website: "https://stavroswatersports.com/"
+sources:
+  - title: "Официальный сайт — stavroswatersports.com/activities/speed-boats"
+    url: "https://stavroswatersports.com/activities/speed-boats/"
+  - title: "Официальный сайт — stavroswatersports.com/contacts"
+    url: "https://stavroswatersports.com/contacts/"
+verified_at: 2026-11-13
 source_id: BOAT-009

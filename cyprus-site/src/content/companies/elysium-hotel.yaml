@@ -1,12 +1,28 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Elysium Hotel
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Не подтверждены дневной вход для сторонних гостей и его условия.
+# Что ещё проверить: Актуальность тарифов, контактов и прочих меняющихся условий
+# Заметка редактора: Только открытая информация, без внутренней CRM.
+name: "Elysium Hotel"
 status: draft
 section: hotels-spa
 category: spa
-city: Пафос
-service_type: Бани / сауны / SPA
-summary: Отель / Opium Spa
-website: https://www.elysium-hotel.com/
-sources: []
+city: "Пафос"
+service_type: "Бани / сауны / SPA"
+summary: "Opium Spa с массажами, сауной, парной и фитнесом."
+description: "Opium Health Spa при Elysium Hotel предоставляет массажи, косметические процедуры и термальные зоны."
+services:
+  - "Массаж"
+  - "Сауна"
+  - "Парная"
+  - "Уход"
+  - "Фитнес"
+conditions: "Стоимость зависит от процедуры."
+address: "Queen Verenikis Street, Paphos, Cyprus"
+website: "https://www.elysium-hotel.com/spa/"
+sources:
+  - title: "Официальный сайт — elysium-hotel.com/spa"
+    url: "https://www.elysium-hotel.com/spa/"
+verified_at: 2026-11-13
 source_id: SPA-011

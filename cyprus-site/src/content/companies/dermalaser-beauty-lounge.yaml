@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Dermalaser Beauty Lounge
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Количество сеансов и результат не гарантируются.
+# Что ещё проверить: Проверить цены, квалификацию специалистов и актуальность контактов
+# Заметка редактора: Не заявлять гарантированный медицинский или косметический результат
+name: "Dermalaser Beauty Lounge"
 status: draft
 section: health-beauty
 category: tattoo
-service_type: Удаление татуировок
-sources: []
+city: "Паралимни"
+service_type: "Удаление татуировок"
+summary: "Косметологический салон с лазерным удалением татуировок."
+description: "Dermalaser Beauty Lounge использует Q-switched лазер DEKA TORO для постепенного осветления или удаления тату, также проводит косметологические процедуры."
+services:
+  - "Лазерное удаление тату"
+  - "Коррекция пигмента"
+  - "Эпиляция"
+  - "Косметология"
+conditions: "Ориентир сайта: 4–12 процедур с интервалами минимум 6 недель, индивидуально."
+address: "Kolokotroni 1, Paralimni 5280, Cyprus"
+website: "https://www.dermalaser.com.cy/treatments/toro-tattoo-removal/"
+sources:
+  - title: "Официальный сайт — dermalaser.com.cy/treatments/toro-tattoo-removal"
+    url: "https://www.dermalaser.com.cy/treatments/toro-tattoo-removal/"
+  - title: "Официальный сайт — dermalaser.com.cy/contact"
+    url: "https://www.dermalaser.com.cy/contact/"
+verified_at: 2026-11-13
 source_id: CYP-094

@@ -1,9 +1,29 @@
-# Черновик из внутренней базы. Данные НЕ проверены: сверить по официальному источнику,
-# заполнить summary, description, sources, verified_at и только затем поставить status: published.
-name: Ekfraseis Vineyards
+# research-import
+# Данные — лист «Карточки сайта — исследование» единой базы, исследование 2026-11-13 (Исследовано: нужна редакторская проверка). Claude их не перепроверял.
+# Ждёт утверждения владельцем — до этого status: draft.
+# Что стоит учесть: Для всех визитов нужна предварительная бронь; дни проведения зависят от пакета.
+# Что ещё проверить: Проверить актуальные даты и цены перед публикацией
+# Заметка редактора: Внутренняя CRM не используется в публичных полях.
+name: "Ekfraseis Vineyards"
 status: draft
 section: entertainment
 category: organizers
-service_type: Мероприятия / площадки
-sources: []
+city: "Хандрия, горы Троодос"
+service_type: "Мероприятия / площадки"
+summary: "Винодельня с экскурсиями, дегустациями и сезонными мероприятиями."
+description: "Ekfraseis Winery принимает гостей по предварительной записи в районе горы Мадари на высоте около 1300 м и проводит дегустации разной продолжительности."
+services:
+  - "Экскурсия по винодельне"
+  - "Дегустации"
+  - "Гастрономические сочетания"
+  - "Сезонные праздники"
+conditions: "Первое знакомство 1 ч €12; полный тур 3 ч €55; другие форматы €30–45 по официальному прайсу."
+address: "E909, Chandria, Limassol District, Cyprus"
+website: "https://www.ekfraseis.com/en/visits"
+sources:
+  - title: "Официальный сайт — ekfraseis.com/en/visits"
+    url: "https://www.ekfraseis.com/en/visits"
+  - title: "Официальный сайт — ekfraseis.com/en/events"
+    url: "https://www.ekfraseis.com/en/events"
+verified_at: 2026-11-13
 source_id: CYP-102
