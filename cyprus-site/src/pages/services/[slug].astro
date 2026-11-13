@@ -41,12 +41,6 @@ const jsonLd = {
         <p class="verified-line"><span class="verified-badge"><Icon name="verified" size={15} />Verified</span> Автор гида лично знаком с компанией. <a href="/about/#verified">Что это значит</a></p>
       )}
       {d.city && <p class="loc" style="font-size:1rem"><Icon name="pin" size={17} />{d.city}</p>}
-      {d.status === 'draft' && !d.verified_at && (
-        <p class="notice">Карточка из внутренней базы, данные ещё не проверены. Уточняйте информацию у компании.</p>
-      )}
-      {d.status === 'draft' && d.verified_at && (
-        <p class="notice">Данные сверены с официальными источниками компании и ждут утверждения перед публикацией.</p>
-      )}
       {(d.description ?? d.summary) && <div class="prose"><p>{d.description ?? d.summary}</p></div>}
       <SourceList sources={d.sources} verifiedAt={d.verified_at} />
     </article>

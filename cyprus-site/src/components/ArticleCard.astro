@@ -16,5 +16,4 @@ const minutes = Math.max(1, Math.round(words / 180));
   <p class="meta" style="margin-top:10px">
     <span>{formatDate(d.updated_at ?? d.published_at)}</span><span>{minutes} мин чтения</span>
   </p>
-  {d.status === 'draft' && <span class="unverified">Черновик</span>}
 </a>
