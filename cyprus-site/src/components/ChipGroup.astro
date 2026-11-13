@@ -1,0 +1,39 @@
+---
+// Группа вариантов-«чипсов» вместо выпадающего списка. Под капотом — радиокнопки,
+// поэтому работает с клавиатурой, экранными читалками и FormData.
+interface Option { value: string; label: string }
+interface Props { legend: string; name: string; options: Option[]; selected?: string; required?: boolean; wrap?: boolean; compact?: boolean; hideLegend?: boolean; form?: string; limit?: number }
+const { legend, name, options, selected = '', required = false, wrap = false, compact = false, hideLegend = false, form, limit } = Astro.props;
+// Показываем первые `limit` вариантов, остальные — по кнопке «Ещё N».
+const extra = limit && options.length > limit ? options.length - limit : 0;
+---
+<fieldset class:list={['chip-group', compact && 'chip-group-compact']}>
+  <legend class:list={[hideLegend && 'visually-hidden']}>{legend}</legend>
+  <div class:list={['chip-row', wrap && 'chip-row-wrap']}>
+    {options.map((o, i) => (
+      <label class="chip-opt" hidden={extra > 0 && i >= limit! ? true : undefined} data-extra={extra > 0 && i >= limit! ? '' : undefined}>
+        <input type="radio" name={name} value={o.value} checked={o.value === selected} required={required} form={form} />
+        <span>{o.label}</span>
+      </label>
+    ))}
+    {extra > 0 && <button type="button" class="chip-more" aria-expanded="false">Ещё {extra}</button>}
+  </div>
+</fieldset>
+
+<script>
+  // Раскрытие скрытых вариантов: по кнопке или если выбранный вариант среди скрытых (например, из ссылки).
+  function expand(row: Element) {
+    row.querySelectorAll<HTMLElement>('[data-extra]').forEach((el) => (el.hidden = false));
+    row.querySelector('.chip-more')?.remove();
+  }
+  document.querySelectorAll('.chip-row').forEach((row) => {
+    const btn = row.querySelector('.chip-more');
+    if (!btn) return;
+    btn.addEventListener('click', () => expand(row));
+    const sync = () => { if (row.querySelector('[data-extra] input:checked')) expand(row); };
+    sync();
+    row.addEventListener('change', sync);
+    window.addEventListener('pageshow', sync);
+    setTimeout(sync, 0); // после восстановления фильтров из адреса
+  });
+</script>

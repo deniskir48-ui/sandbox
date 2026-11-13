@@ -42,9 +42,11 @@ export function bindFilters(o: Options) {
   if (form) {
     // Восстанавливаем фильтры из URL.
     const params = new URLSearchParams(location.search);
-    for (const el of [...form.elements] as HTMLSelectElement[]) {
-      const val = el.name && params.get(el.name);
-      if (val && [...(el.options ?? [])].some((opt) => opt.value === val)) el.value = val;
+    for (const el of [...form.elements] as (HTMLInputElement & HTMLSelectElement)[]) {
+      const val = el.name ? params.get(el.name) : null;
+      if (val === null) continue;
+      if (el.type === 'radio') el.checked = el.value === val;
+      else if (el.tagName === 'SELECT' && [...el.options].some((opt) => opt.value === val)) el.value = val;
     }
     form.addEventListener('change', () => apply());
     form.addEventListener('submit', (e) => e.preventDefault());

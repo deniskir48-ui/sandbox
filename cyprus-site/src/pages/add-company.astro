@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import { SECTIONS } from '../data/taxonomy';
+import ChipGroup from '../components/ChipGroup.astro';
 import { FORM_ENDPOINT } from '../config';
 ---
 <Base title="Добавить компанию в гид" description="Заявка на бесплатное размещение компании или сервиса в русскоязычном гиде по Кипру.">
@@ -21,12 +22,7 @@ import { FORM_ENDPOINT } from '../config';
       <input id="f-name" name="name" type="text" required maxlength="120" autocomplete="organization" />
     </label>
 
-    <label class="field"><span>Раздел гида *</span>
-      <select id="f-section" name="section" required>
-        <option value="">Выберите раздел</option>
-        {SECTIONS.map((s) => <option value={s.slug}>{s.title}</option>)}
-      </select>
-    </label>
+    <ChipGroup legend="Раздел гида *" name="section" required wrap options={SECTIONS.map((s) => ({ value: s.slug, label: s.title }))} />
 
     <label class="field"><span>Чем занимается компания *</span>
       <textarea id="f-about" name="about" required maxlength="500" placeholder="Например: аренда лодок без лицензии в Лимассоле, с капитаном и без"></textarea>
@@ -94,8 +90,8 @@ import { FORM_ENDPOINT } from '../config';
 
   // Раздел можно передать в адресе: /add-company/?section=education
   const pre = new URLSearchParams(location.search).get('section');
-  const sel = form.elements.namedItem('section') as HTMLSelectElement;
-  if (pre && [...sel.options].some((o) => o.value === pre)) sel.value = pre;
+  const preRadio = pre ? form.querySelector<HTMLInputElement>(`input[name="section"][value="${CSS.escape(pre)}"]`) : null;
+  if (preRadio) preRadio.checked = true;
 
   const LABELS: Record<string, string> = {
     name: 'название компании', section: 'раздел', about: 'чем занимается компания',
@@ -113,7 +109,9 @@ import { FORM_ENDPOINT } from '../config';
     errorBox.hidden = true;
     for (const el of [...form.elements] as HTMLInputElement[]) {
       if (!el.name || !el.required) continue;
-      const empty = el.type === 'checkbox' ? !el.checked : !el.value.trim();
+      const empty = el.type === 'checkbox' ? !el.checked
+        : el.type === 'radio' ? !form.querySelector(`input[name="${el.name}"]:checked`)
+        : !el.value.trim();
       if (empty) return showError(`Заполните поле: ${LABELS[el.name] ?? el.name}.`, el);
     }
     const site = form.elements.namedItem('website') as HTMLInputElement;

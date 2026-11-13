@@ -3,12 +3,17 @@ import Base from '../../layouts/Base.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import EventCard from '../../components/EventCard.astro';
 import Empty from '../../components/Empty.astro';
+import ChipGroup from '../../components/ChipGroup.astro';
 import { EVENT_TYPES } from '../../data/taxonomy';
 import { getUpcomingEvents } from '../../lib/data';
 
 const events = await getUpcomingEvents();
-const cities = [...new Set(events.map((e) => e.data.city))].sort((a, b) => a.localeCompare(b, 'ru'));
-const types = [...new Set(events.map((e) => e.data.type))];
+// Варианты фильтров — по числу событий: сначала крупные города и частые типы, «Другое» в конце.
+const countBy = <T extends string>(xs: T[]) => xs.reduce((m, x) => m.set(x, (m.get(x) ?? 0) + 1), new Map<T, number>());
+const cityCount = countBy(events.map((e) => e.data.city));
+const cities = [...cityCount.keys()].sort((a, b) => cityCount.get(b)! - cityCount.get(a)! || a.localeCompare(b, 'ru'));
+const typeCount = countBy(events.map((e) => e.data.type));
+const types = [...typeCount.keys()].sort((a, b) => Number(a === 'other') - Number(b === 'other') || typeCount.get(b)! - typeCount.get(a)!);
 ---
 <Base title="Афиша Кипра: ближайшие мероприятия" description="Предстоящие концерты, спектакли, фестивали и другие события на Кипре с датами, местами и ссылками на официальные источники и билеты.">
   <Breadcrumbs items={[{ href: '/', label: 'Главная' }, { label: 'Афиша' }]} />
@@ -20,35 +25,17 @@ const types = [...new Set(events.map((e) => e.data.type))];
   {events.length > 0 ? (
     <>
       <form class="filters" id="filters" aria-label="Фильтры афиши">
-        <label>Когда
-          <select name="when">
-            <option value="">Все даты</option>
-            <option value="today">Сегодня</option>
-            <option value="weekend">Ближайшие выходные</option>
-            <option value="week">7 дней</option>
-            <option value="month">30 дней</option>
-          </select>
-        </label>
-        <label>Город
-          <select name="city">
-            <option value="">Все</option>
-            {cities.map((c) => <option value={c}>{c}</option>)}
-          </select>
-        </label>
-        <label>Порядок
-          <select name="sort">
-            <option value="">По важности</option>
-            <option value="date">По дате</option>
-          </select>
-        </label>
-        <label>Тип
-          <select name="type">
-            <option value="">Все</option>
-            {types.map((t) => <option value={t}>{EVENT_TYPES[t]}</option>)}
-          </select>
-        </label>
+        <ChipGroup legend="Когда" name="when" options={[
+          { value: '', label: 'Все даты' }, { value: 'today', label: 'Сегодня' }, { value: 'weekend', label: 'Выходные' },
+          { value: 'week', label: '7 дней' }, { value: 'month', label: '30 дней' },
+        ]} />
+        <ChipGroup legend="Тип" name="type" options={[{ value: '', label: 'Все' }, ...types.map((t) => ({ value: t, label: EVENT_TYPES[t] }))]} />
+        <ChipGroup legend="Город" name="city" limit={7} options={[{ value: '', label: 'Все' }, ...cities.map((c) => ({ value: c, label: c }))]} />
       </form>
-      <p class="result-count" id="count" aria-live="polite">Найдено: {events.length}</p>
+      <div class="list-bar">
+        <p class="result-count" id="count" aria-live="polite">Найдено: {events.length}</p>
+        <ChipGroup legend="Порядок" name="sort" form="filters" compact hideLegend options={[{ value: '', label: 'Сначала главное' }, { value: 'date', label: 'По дате' }]} />
+      </div>
       <ul class="grid grid-3" id="list">{events.map((e) => <li><EventCard event={e} /></li>)}</ul>
       <div id="no-results" hidden><Empty title="Нет мероприятий по этим условиям">Измените дату, город или тип события.</Empty></div>
     </>
@@ -77,14 +64,14 @@ const types = [...new Set(events.map((e) => e.data.type))];
   // Порядок: по умолчанию как собрано (приоритет → дата), «По дате» — хронологически.
   const listEl = document.querySelector('#list');
   const original = listEl ? [...listEl.children] as HTMLElement[] : [];
-  const sortSel = document.querySelector<HTMLSelectElement>('select[name=sort]');
+  const sortValue = () => document.querySelector<HTMLInputElement>('input[name=sort]:checked')?.value ?? '';
   function reorder() {
     if (!listEl) return;
     const key = (li: HTMLElement) => (li.firstElementChild as HTMLElement).dataset.key ?? '';
-    const items = sortSel?.value === 'date' ? [...original].sort((a, b) => key(a).localeCompare(key(b))) : original;
+    const items = sortValue() === 'date' ? [...original].sort((a, b) => key(a).localeCompare(key(b))) : original;
     listEl.append(...items);
   }
-  sortSel?.addEventListener('change', reorder);
+  document.querySelectorAll('input[name=sort]').forEach((el) => el.addEventListener('change', reorder));
 
   bindFilters({
     form: '#filters', items: '#list > li', count: '#count', empty: '#no-results',

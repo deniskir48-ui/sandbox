@@ -6,13 +6,15 @@ import Empty from '../../components/Empty.astro';
 import { SECTIONS, type Section } from '../../data/taxonomy';
 import { getPublishedCompanies } from '../../lib/data';
 import Icon from '../../components/Icon.astro';
+import ChipGroup from '../../components/ChipGroup.astro';
 
 export function getStaticPaths() {
   return SECTIONS.map((section) => ({ params: { section: section.slug }, props: { section } }));
 }
 const { section } = Astro.props as { section: Section };
 const companies = (await getPublishedCompanies()).filter((c) => c.data.section === section.slug);
-const cities = [...new Set(companies.map((c) => c.data.city).filter(Boolean))].sort((a, b) => a!.localeCompare(b!, 'ru'));
+const cityCount = companies.reduce((m, c) => (c.data.city ? m.set(c.data.city, (m.get(c.data.city) ?? 0) + 1) : m), new Map<string, number>());
+const cities = [...cityCount.keys()].sort((a, b) => cityCount.get(b)! - cityCount.get(a)! || a.localeCompare(b, 'ru'));
 const usedCats = section.categories.filter((cat) => companies.some((c) => c.data.category === cat.slug));
 ---
 <Base
@@ -34,20 +36,10 @@ const usedCats = section.categories.filter((cat) => companies.some((c) => c.data
       {(cities.length > 1 || usedCats.length > 1) && (
         <form class="filters" id="filters" aria-label="Фильтры">
           {usedCats.length > 1 && (
-            <label>Категория
-              <select name="category">
-                <option value="">Все</option>
-                {usedCats.map((c) => <option value={c.slug}>{c.title}</option>)}
-              </select>
-            </label>
+            <ChipGroup legend="Категория" name="category" options={[{ value: '', label: 'Все' }, ...usedCats.map((c) => ({ value: c.slug, label: c.title }))]} />
           )}
           {cities.length > 1 && (
-            <label>Город
-              <select name="city">
-                <option value="">Все</option>
-                {cities.map((c) => <option value={c}>{c}</option>)}
-              </select>
-            </label>
+            <ChipGroup legend="Город" name="city" limit={7} options={[{ value: '', label: 'Все' }, ...cities.map((c) => ({ value: c!, label: c! }))]} />
           )}
         </form>
       )}
