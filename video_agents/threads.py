@@ -114,6 +114,68 @@ def fetch_posts(token: str, max_posts: int | None = None) -> list[dict]:
     return posts if max_posts is None else posts[:max_posts]
 
 
+REPLY_FIELDS = "id,text,timestamp,root_post,replied_to"
+SAVE_FORMAT = 2  # 2: посты-цепочки склеены с продолжениями
+
+
+def fetch_own_replies(token: str) -> list[dict]:
+    """Все ваши ответы (нужно разрешение threads_read_replies): из них собираются продолжения постов."""
+    replies: list[dict] = []
+    after = None
+    while True:
+        params = {"fields": REPLY_FIELDS, "limit": 100}
+        if after:
+            params["after"] = after
+        page = _get(f"{API}/me/replies", token, **params)
+        batch = page.get("data", [])
+        replies += batch
+        next_after = page.get("paging", {}).get("cursors", {}).get("after")
+        if not batch or not next_after or next_after == after:
+            return replies
+        after = next_after
+
+
+def attach_continuations(posts: list[dict], replies: list[dict]) -> list[dict]:
+    """Длинный пост в Threads - цепочка ваших ответов самому себе. Склеиваем её в один текст.
+
+    Берём только ответы, которые продолжают вашу же цепочку (ответ на сам пост или на ваше продолжение);
+    ваши ответы людям в комментариях в текст поста не попадают.
+    """
+    by_root: dict[str, list[dict]] = {}
+    for reply in replies:
+        root = (reply.get("root_post") or {}).get("id")
+        if root and (reply.get("text") or "").strip():
+            by_root.setdefault(root, []).append(reply)
+    result = []
+    for post in posts:
+        chain_ids = {post["id"]}
+        parts = []
+        for reply in sorted(by_root.get(post["id"], []), key=lambda r: r.get("timestamp", "")):
+            if (reply.get("replied_to") or {}).get("id") in chain_ids:
+                chain_ids.add(reply["id"])
+                parts.append(reply["text"].strip())
+        if parts:
+            post = {**post, "text": "\n\n".join([(post.get("text") or "").strip(), *parts]),
+                    "thread_parts": len(parts) + 1}
+        result.append(post)
+    return result
+
+
+def fetch_posts_with_continuations(token: str) -> list[dict]:
+    posts = fetch_posts(token)
+    try:
+        replies = fetch_own_replies(token)
+    except ThreadsError as exc:
+        log.warning("Не удалось получить продолжения постов (ваши ответы в цепочках), беру только первые "
+                    "сообщения. Нужен ключ Threads с разрешением threads_read_replies: %s", exc)
+        return posts
+    posts = attach_continuations(posts, replies)
+    joined = sum(1 for post in posts if post.get("thread_parts"))
+    if joined:
+        log.info("Постов-цепочек с продолжениями: %d", joined)
+    return posts
+
+
 COLUMNS = [  # (заголовок, ширина колонки)
     ("Дата", 12), ("Время", 8), ("День недели", 8), ("Текст", 60), ("Просмотры", 11), ("Лайки", 9),
     ("Ответы", 9), ("Репосты", 9), ("Цитаты", 9), ("Поделились", 11), ("Вовлечённость", 13), ("Тип", 12),
@@ -144,7 +206,8 @@ def save_posts(posts: list[dict], workspace: Path) -> Path:
 
     workspace.mkdir(parents=True, exist_ok=True)
     (workspace / "threads_posts.json").write_text(
-        json.dumps({"fetched_at": time.time(), "posts": posts}, ensure_ascii=False, indent=2), encoding="utf-8")
+        json.dumps({"fetched_at": time.time(), "format": SAVE_FORMAT, "posts": posts}, ensure_ascii=False, indent=2),
+        encoding="utf-8")
 
     book = Workbook()
     sheet = book.active
@@ -176,6 +239,15 @@ def save_posts(posts: list[dict], workspace: Path) -> Path:
     return table
 
 
+def has_continuations_info(workspace: Path) -> bool:
+    """Выгрузка сделана версией, которая склеивает посты-цепочки (старые выгрузки - только первые сообщения)."""
+    path = workspace / "threads_posts.json"
+    try:
+        return json.loads(path.read_text(encoding="utf-8")).get("format", 1) >= SAVE_FORMAT
+    except (OSError, ValueError):
+        return False
+
+
 def load_posts(workspace: Path, max_age_hours: float | None = None) -> list[dict] | None:
     path = workspace / "threads_posts.json"
     if not path.exists():
@@ -202,7 +274,7 @@ def describe(post: dict) -> str:
 
 
 def refresh(secrets, workspace: Path) -> list[dict]:
-    posts = fetch_posts(ThreadsAuth(secrets).token())
+    posts = fetch_posts_with_continuations(ThreadsAuth(secrets).token())
     save_posts(posts, workspace)
     return posts
 

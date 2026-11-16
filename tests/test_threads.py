@@ -168,3 +168,45 @@ def test_post_to_idea_keeps_source():
     idea = threads.post_to_idea({"id": 42, "text": "Жираф по-гречески", "views": 467000, "likes": 9000})
     assert idea.source_post_id == "42" and idea.source_text == "Жираф по-гречески"
     assert "views 467000" in idea.why_it_works
+
+
+def test_thread_chains_are_glued_but_replies_to_people_are_not():
+    posts = [{"id": "root", "text": "Аптеки на Кипре работают не всегда."},
+             {"id": "solo", "text": "Короткий пост без продолжения"}]
+    replies = [
+        # Порядок из API не важен: склеиваем по времени.
+        {"id": "r2", "text": "Список дежурных - на сайте Минздрава.", "timestamp": "2026-11-01T10:02:00+0000",
+         "root_post": {"id": "root"}, "replied_to": {"id": "r1"}},
+        {"id": "r1", "text": "Но всегда есть дежурная аптека.", "timestamp": "2026-11-01T10:01:00+0000",
+         "root_post": {"id": "root"}, "replied_to": {"id": "root"}},
+        # Ваш ответ комментатору под этим постом - не продолжение.
+        {"id": "c1", "text": "Спасибо!", "timestamp": "2026-11-01T12:00:00+0000",
+         "root_post": {"id": "root"}, "replied_to": {"id": "someone_comment"}},
+        # Ответ под чужим постом.
+        {"id": "x1", "text": "Согласен", "timestamp": "2026-11-01T12:00:00+0000",
+         "root_post": {"id": "other"}, "replied_to": {"id": "other"}},
+    ]
+    glued = threads.attach_continuations(posts, replies)
+    assert glued[0]["text"] == ("Аптеки на Кипре работают не всегда.\n\nНо всегда есть дежурная аптека.\n\n"
+                                "Список дежурных - на сайте Минздрава.")
+    assert glued[0]["thread_parts"] == 3
+    assert glued[1] == posts[1]
+
+
+def test_without_reply_permission_posts_still_load(monkeypatch):
+    monkeypatch.setattr(threads, "fetch_posts", lambda token: [{"id": "a", "text": "Первая часть"}])
+
+    def denied(url, token, **params):
+        raise threads.ThreadsError("Threads API: permission threads_read_replies required")
+
+    monkeypatch.setattr(threads, "_get", denied)
+    assert threads.fetch_posts_with_continuations("T") == [{"id": "a", "text": "Первая часть"}]
+
+
+def test_old_export_without_chains_is_refetched(tmp_path):
+    import json
+
+    (tmp_path / "threads_posts.json").write_text(json.dumps({"fetched_at": 0, "posts": []}), encoding="utf-8")
+    assert not threads.has_continuations_info(tmp_path)
+    threads.save_posts([], tmp_path)
+    assert threads.has_continuations_info(tmp_path)
