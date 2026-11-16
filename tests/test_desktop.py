@@ -48,7 +48,7 @@ def state(app):
 def test_page_carries_the_session_key(app):
     page = requests.get(app.url + "/", timeout=10)
     assert page.status_code == 200
-    assert app.token in page.text and "Сделать ролик" in page.text
+    assert app.token in page.text and "Написать сценарий" in page.text
 
 
 def test_actions_need_the_key_and_our_host(app):
@@ -59,8 +59,13 @@ def test_actions_need_the_key_and_our_host(app):
     assert state(app)["queue"] == []
 
 
-def test_make_video_then_publish_from_the_page(app):
+def test_script_first_then_video_then_publish(app):
     assert post(app, "make", topic="Как не сгореть на пляже в Лимассоле").status_code == 200
+    draft = state(app)["jobs"][0]
+    # Сначала только сценарий: видео не снимается, пока автор его не одобрит.
+    assert draft["status"] == "scripted" and not draft["has_video"] and draft["lines"]
+
+    post(app, "approve", job=draft["id"], text="\n".join(draft["lines"]))
     jobs = state(app)["jobs"]
     assert len(jobs) == 1 and jobs[0]["status"] == "produced" and jobs[0]["has_video"]
     job_id = jobs[0]["id"]
@@ -75,6 +80,38 @@ def test_make_video_then_publish_from_the_page(app):
     current = state(app)
     assert current["jobs"][0]["status"] == "published"
     assert any("опубликовано" in line["text"] for line in current["log"])
+
+
+def test_hand_edits_go_into_the_video(app):
+    post(app, "make", topic="Дежурные аптеки на Кипре")
+    job_id = state(app)["jobs"][0]["id"]
+    # Та же длина - меняется только текст; другое число строк - кадры подбираются заново.
+    post(app, "save_script", job=job_id, text="Аптека закрыта?\nИщите дежурную.")
+    assert state(app)["jobs"][0]["lines"] == ["Аптека закрыта?", "Ищите дежурную."]
+    post(app, "approve", job=job_id, text="Аптека закрыта?\n\nИщите дежурную.\nСписок - в подписи.")
+    job = state(app)["jobs"][0]
+    assert job["status"] == "produced"
+    assert job["lines"] == ["Аптека закрыта?", "Ищите дежурную.", "Список - в подписи."]
+
+
+def test_redraft_with_and_without_comment(app):
+    post(app, "make", topic="Дежурные аптеки на Кипре")
+    job_id = state(app)["jobs"][0]["id"]
+    post(app, "redraft", job=job_id, comment="добавь про дежурные аптеки")
+    assert state(app)["jobs"][0]["status"] == "scripted"
+    post(app, "redraft", job=job_id)
+    assert state(app)["jobs"][0]["status"] == "scripted"
+
+
+def test_produced_video_can_go_back_to_text_but_published_cannot(app):
+    post(app, "make", topic="Тема")
+    job_id = state(app)["jobs"][0]["id"]
+    post(app, "approve", job=job_id)
+    post(app, "edit", job=job_id)
+    assert state(app)["jobs"][0]["status"] == "scripted"
+    post(app, "approve", job=job_id)
+    post(app, "publish", job=job_id)
+    assert post(app, "edit", job=job_id).status_code == 400
 
 
 def test_bad_job_id_is_refused(app):
@@ -146,15 +183,3 @@ def test_shortcut_survives_odd_powershell_output(monkeypatch):
 
     monkeypatch.setattr(desktop.subprocess, "run", failing_run)
     assert desktop.install_shortcut() is None
-
-
-def test_rewrite_writes_a_new_script_for_the_same_topic(app):
-    post(app, "make", topic="Дежурные аптеки на Кипре")
-    job = state(app)["jobs"][0]
-    post(app, "rewrite", job=job["id"])
-    current = state(app)["jobs"]
-    assert len(current) == 1 and current[0]["id"] == job["id"]
-    assert current[0]["status"] == "produced" and current[0]["topic"] == "Дежурные аптеки на Кипре"
-    post(app, "publish", job=job["id"])
-    post(app, "rewrite", job=job["id"])
-    assert any("уже опубликован" in line["text"] for line in state(app)["log"])

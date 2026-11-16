@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .brief import channel_brief, target_words, word_budget
-from ..models import Review, Script, VideoIdea
+from ..models import Review, Scene, Script, VideoIdea
 
 SYSTEM = """Ты - сценарист коротких вертикальных роликов с закадровым голосом.
 
@@ -88,3 +88,23 @@ class ScriptwriterAgent:
             f"~{target_words(self.channel)} слов: убери второстепенное и подробности, сохрани хук и решение/главный совет."
         )
         return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Script, effort="medium")
+
+    def restage(self, idea: VideoIdea, script: Script, lines: list[str], llm=None) -> Script:
+        """Автор поправил текст руками и изменил число фраз: подбираем к фразам кадры, текст не трогаем."""
+        numbered = "\n".join(f"{n}. {line}" for n, line in enumerate(lines, 1))
+        prompt = (
+            f"{channel_brief(self.channel)}\n\n"
+            f"Автор сам написал текст диктора, по фразе на сцену:\n{numbered}\n\n"
+            f"Сделай сценарий ровно из {len(lines)} сцен: narration каждой сцены - соответствующая фраза БЕЗ "
+            "изменений, к ней подбери visual_queries и on_screen_text. Название и backup_queries - по смыслу текста."
+        )
+        fresh = (llm or self.llm).structured(system=SYSTEM, prompt=prompt, output_model=Script, effort="low")
+        scenes = []
+        for index, line in enumerate(lines):
+            # Текст автора - закон: даже если модель что-то поменяла или ошиблась с числом сцен.
+            source = fresh.scenes[index] if index < len(fresh.scenes) else (
+                fresh.scenes[-1] if fresh.scenes else script.scenes[min(index, len(script.scenes) - 1)])
+            scenes.append(Scene(narration=line, visual_queries=source.visual_queries,
+                                on_screen_text=source.on_screen_text))
+        return Script(title=script.title, scenes=scenes, call_to_action=script.call_to_action,
+                      backup_queries=fresh.backup_queries or script.backup_queries)
