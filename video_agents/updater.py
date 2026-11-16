@@ -12,6 +12,8 @@ from pathlib import Path
 
 import requests
 
+from .winproc import NO_WINDOW
+
 log = logging.getLogger(__name__)
 
 REPO_ZIP = "https://codeload.github.com/deniskir48-ui/sandbox/zip/refs/heads/main"
@@ -48,7 +50,8 @@ def update(root: Path, url: str = REPO_ZIP, skip_suffixes: tuple[str, ...] = ())
             updated.append(Path(*parts).as_posix())
     if (root / "requirements.txt").read_bytes() != old_requirements:
         log.info("Изменились зависимости, устанавливаем")
-        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-r", str(root / "requirements.txt")], check=True)
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", "-r", str(root / "requirements.txt")], check=True,
+                       **NO_WINDOW)
     return updated
 
 
