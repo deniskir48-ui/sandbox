@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 
 from video_agents.config import Settings
-from video_agents.models import IdeaList, PlatformMeta, Review, Scene, Script, UploadResult, VideoIdea
+from video_agents.models import ArcScript, IdeaList, PlatformMeta, Review, Scene, Script, UploadResult, VideoIdea
 from video_agents.pipeline import Pipeline
 from video_agents.production.ffmpeg import probe_duration, run_ffmpeg
 from video_agents.production.render import VideoProducer
@@ -28,6 +28,12 @@ class FakeLLM:
                 VideoIdea(topic=f"Тема {i}", angle="угол", hook="хук", why_it_works="потому что")
                 for i in range(5)
             ])
+        if output_model is ArcScript:
+            script = self.structured(output_model=Script, prompt=prompt)
+            self.calls.pop()  # вложенный вызов не считаем
+            return ArcScript(title=script.title, hook=script.scenes[0], twist=[], situation=[],
+                             payoff=script.scenes[1:-1], finale=script.scenes[-1], call_to_action=script.call_to_action,
+                             backup_queries=script.backup_queries)
         if output_model is Script:
             return Script(
                 title="Почему Венера крутится назад",
@@ -107,7 +113,7 @@ def test_full_run_produces_video_and_publishes(settings):
 
     assert job.idea.topic == "Тема 0"
     assert [r.approved for r in job.reviews] == [False, True]  # один круг правок
-    assert llm.calls.count("Script") == 2
+    assert llm.calls.count("ArcScript") == 2
     video = Path(job.video_path)
     assert video.exists()
     assert job.duration == pytest.approx(probe_duration(video), abs=0.1)
@@ -187,7 +193,8 @@ def test_long_script_is_shortened(settings):
                 self.calls.append("Script")
                 long_text = " ".join(["word"] * 200)
                 return Script(title="t", call_to_action="c",
-                              scenes=[Scene(narration=long_text, visual_queries=["gym"], on_screen_text="")])
+                              scenes=[Scene(narration=long_text, visual_queries=["gym"], on_screen_text=""),
+                                      Scene(narration="Конец.", visual_queries=["gym"], on_screen_text="")])
             if output_model is Script:
                 self.calls.append("Shorten")
             return super().structured(output_model=output_model, prompt=prompt, **kw)
@@ -650,3 +657,16 @@ def test_pollinations_retries_and_caches(tmp_path, monkeypatch):
     assert calls[0][1]["width"] == 1080 and calls[0][1]["height"] == 1920 and calls[0][2] == {}
     assert generator.generate("pharmacy counter", seed=3) == path and len(calls) == 2  # из кэша
     assert generator.watermarked and not ai_images.PollinationsImages(tmp_path, "tok").watermarked
+
+
+def test_arc_keeps_only_one_twist_and_two_solutions():
+    def scene(text):
+        return Scene(narration=text, visual_queries=["q"], on_screen_text="")
+
+    arc = ArcScript(title="Аптеки", hook=scene("Круглосуточных аптек нет."), twist=[scene("Вообще."), scene("Никогда.")],
+                    situation=[scene("Живот скрутило вечером?")],
+                    payoff=[scene("Ищите дежурную."), scene("Звоните фармацевту."), scene("Ищите в радиусе.")],
+                    finale=scene("Ссылки в описании."), call_to_action="", backup_queries=["pharmacy"])
+    assert [s.narration for s in arc.to_script().scenes] == [
+        "Круглосуточных аптек нет.", "Вообще.", "Живот скрутило вечером?", "Ищите дежурную.",
+        "Звоните фармацевту.", "Ссылки в описании."]

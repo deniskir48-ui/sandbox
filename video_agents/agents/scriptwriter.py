@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from .brief import channel_brief, target_words, word_budget
-from ..models import Review, Scene, Script, VideoIdea
+from ..models import ArcScript, Review, Scene, Script, VideoIdea
 
 SYSTEM = """Ты - сценарист коротких вертикальных роликов с закадровым голосом.
 
@@ -73,7 +73,7 @@ class ScriptwriterAgent:
             f"{self._brief(idea)}\n\n"
             f"Напиши сценарий ролика. {self._length()}"
         )
-        return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Script, effort="high")
+        return self._arc(prompt, "high")
 
     def revise(self, idea: VideoIdea, script: Script, review: Review) -> Script:
         problems = "\n".join(f"- {problem}" for problem in review.problems)
@@ -84,7 +84,7 @@ class ScriptwriterAgent:
             f"Указания редактора: {review.rewrite_instructions}\n\n"
             f"Перепиши сценарий целиком с учётом замечаний. {self._length()}"
         )
-        return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Script, effort="high")
+        return self._arc(prompt, "high")
 
     def shorten(self, idea: VideoIdea, script: Script) -> Script:
         budget = word_budget(self.channel)
@@ -95,7 +95,11 @@ class ScriptwriterAgent:
             f"В тексте диктора {words} слов, а максимум - {budget}. Сократи, лучше всего до "
             f"~{target_words(self.channel)} слов: убери второстепенное и подробности, сохрани хук и решение/главный совет."
         )
-        return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Script, effort="medium")
+        return self._arc(prompt, "medium")
+
+    def _arc(self, prompt: str, effort: str) -> Script:
+        """Сценарий раскладывается по ячейкам каркаса; лишние сцены в ячейках отбрасываются."""
+        return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=ArcScript, effort=effort).to_script()
 
     def restage(self, idea: VideoIdea, script: Script, lines: list[str], llm=None) -> Script:
         """Автор поправил текст руками и изменил число фраз: подбираем к фразам кадры, текст не трогаем."""
