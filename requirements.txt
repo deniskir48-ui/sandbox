@@ -2,6 +2,7 @@ anthropic>=2.3.0,<3
 pydantic>=2.7
 ruamel.yaml>=0.18
 python-dotenv>=1.0
+openpyxl>=3.1
 requests>=2.31
 edge-tts>=7.3.1
 google-api-python-client>=2.130
