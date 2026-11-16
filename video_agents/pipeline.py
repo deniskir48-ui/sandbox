@@ -80,18 +80,42 @@ class Pipeline:
         self.store.log_ideas(ideas)
         return ideas
 
+    def threads_ideas(self, count: int) -> list[VideoIdea]:
+        """Следующие посты из Threads для переделки в ролики (от старых к новым, каждый один раз)."""
+        from . import threads
+
+        workspace = Path(self.settings.workspace)
+        posts = threads.load_posts(workspace, max_age_hours=24)  # свежим постам нужна свежая статистика
+        if posts is None:
+            try:
+                posts = threads.refresh(self.settings.secrets, workspace)
+            except Exception as exc:
+                log.warning("Не удалось обновить посты из Threads: %s", exc)
+                posts = threads.load_posts(workspace) or []
+        used = {job.idea.source_post_id for job in self.store.all()
+                if job.idea and job.idea.source_post_id and job.status != "failed"}
+        config = self.settings.threads
+        picked = threads.pick_posts(posts, used, count, config.min_views, config.min_age_days, config.min_post_chars)
+        if picked:
+            log.info("Берём %d пост(а) из Threads для переделки в ролики", len(picked))
+        else:
+            log.info("Подходящих постов в Threads нет - тему придумает агент идей")
+        return [threads.post_to_idea(post) for post in picked]
+
     def enqueue(self, ideas: list[VideoIdea]) -> None:
         with self.store.lock:
             self.store.save_queue(self.store.queue() + ideas)
 
     def _next_ideas(self, count: int) -> list[VideoIdea]:
-        """Сначала темы из очереди, недостающие придумывает агент идей."""
+        """Сначала темы из очереди, затем посты из Threads (если включено), остальное придумывает агент идей."""
         with self.store.lock:
             queue = self.store.queue()
             taken, rest = queue[:count], queue[count:]
             self.store.save_queue(rest)
         if taken:
             log.info("Берём %d тем(ы) из очереди, осталось %d", len(taken), len(rest))
+        if len(taken) < count and self.settings.channel.source == "threads":
+            taken += self.threads_ideas(count - len(taken))
         if len(taken) < count:
             self.progress("Придумываю темы")
             taken += self.ideas(count - len(taken))

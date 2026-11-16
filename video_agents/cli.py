@@ -46,7 +46,9 @@ def main(argv: list[str] | None = None) -> int:
     auth.add_argument("platform", choices=["youtube", "instagram", "tiktok", "telegram", "threads",
                                            "threads-trends"])
 
-    sub.add_parser("threads", help="выгрузить свои посты из Threads со статистикой (таблица для Excel)")
+    threads_cmd = sub.add_parser("threads", help="выгрузить свои посты из Threads со статистикой (таблица для Excel)")
+    threads_cmd.add_argument("--next", type=int, nargs="?", const=5, default=None,
+                             help="показать, какие посты станут следующими роликами (по умолчанию 5)")
 
     setting = sub.add_parser("set", help="изменить настройку, например: set subtitles.show_scene_text true")
     setting.add_argument("key", help="раздел.поле, как в config.yaml")
@@ -119,6 +121,8 @@ def main(argv: list[str] | None = None) -> int:
         return _trends(settings, args.number)
 
     if args.command == "threads":
+        if args.next:
+            return _threads_next(settings, args.next)
         return _threads(settings)
 
     from .pipeline import Pipeline
@@ -327,6 +331,20 @@ def _trends(settings, number: int | None) -> int:
     except threads.ThreadsError as exc:
         print(f"Ошибка: {exc}")
         return 1
+    return 0
+
+
+def _threads_next(settings, count: int) -> int:
+    from .pipeline import Pipeline
+
+    ideas = Pipeline(settings).threads_ideas(count)
+    if not ideas:
+        print("Подходящих постов нет (все уже использованы, слишком свежие или с малыми просмотрами).")
+    for number, idea in enumerate(ideas, 1):
+        text = " ".join(idea.source_text.split())
+        print(f"{number}. {text[:160]}\n   {idea.why_it_works}")
+    if settings.channel.source != "threads":
+        print("\nСейчас ролики делаются из идей агента. Чтобы брать посты: set channel.source threads")
     return 0
 
 

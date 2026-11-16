@@ -32,6 +32,15 @@ class ScriptwriterAgent:
         self.channel = channel
 
     def _brief(self, idea: VideoIdea) -> str:
+        if idea.source_text:
+            return (
+                f"{channel_brief(self.channel)}\n\n"
+                f"Ролик - адаптация поста автора из Threads, который уже зашёл аудитории "
+                f"({idea.why_it_works}). Пост:\n«{idea.source_text}»\n\n"
+                "Сохрани голос автора: его мысль, факты, формулировки и юмор. Если пост длинный - выбери "
+                "главную мысль и самый сильный момент, остальное убери; если короткий - не раздувай. "
+                "Хук - самая цепляющая фраза поста, переписанная для речи."
+            )
         return (
             f"{channel_brief(self.channel)}\n\n"
             f"Проблема зрителя: {idea.viewer_problem}\n"
