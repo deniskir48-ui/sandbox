@@ -56,6 +56,7 @@ python -m video_agents publish <id>               # опубликовать п�
 python -m video_agents publish <id> --platform youtube
 python -m video_agents render <id>                # пересобрать видео после ручной правки job.json
 python -m video_agents update                     # обновить программу до последней версии с GitHub
+python -m video_agents set subtitles.show_scene_text true   # изменить одну настройку config.yaml
 ```
 
 По умолчанию `auto_publish: false`: агенты делают ролик, вы смотрите `final.mp4` и запускаете

@@ -40,7 +40,8 @@ HELP = (
     f"{STATS} - сколько стоили ролики\n"
     f"{THREADS} - статистика ваших постов в Threads и таблица для Excel\n"
     f"{TRENDS} - что сейчас в тренде в Threads\n"
-    "/format - подобрать формат канала по вашим постам в Threads\n\n"
+    "/format - подобрать формат канала по вашим постам в Threads\n"
+    "/set раздел.поле значение - изменить настройку (например /set subtitles.show_scene_text true)\n\n"
     "Любое другое сообщение я добавлю в очередь как тему ролика."
 )
 STALE_SECONDS = 300  # команды, отправленные, пока бот был выключен, не выполняем
@@ -161,6 +162,8 @@ class Bot:
             self.api.send(self.chat_id, stats_text(self.pipeline.store.all()))
         elif text.startswith("/threads "):
             self._connect_threads(text.split(maxsplit=1)[1])
+        elif text.startswith("/set "):
+            self._set_option(text.split(maxsplit=2)[1:])
         elif text == "/format" or text.startswith("/format "):
             hint = text[len("/format"):].strip()
             self._submit("Изучаю ваши посты в Threads", lambda: self._propose_format(hint))
@@ -333,6 +336,21 @@ class Bot:
             self.api.send(self.chat_id, f"❌ Ключ не подошёл: {exc}")
             return
         self.api.send(self.chat_id, f"✅ Threads @{data['username']} подключён. Нажмите {THREADS}, чтобы выгрузить посты.")
+
+    def _set_option(self, parts: list[str]) -> None:
+        from ..config_edit import ConfigEditError, apply_to, set_value
+
+        if len(parts) != 2:
+            self.api.send(self.chat_id, "Формат: /set раздел.поле значение")
+            return
+        try:
+            value = set_value(self.config_path, parts[0], parts[1])
+        except ConfigEditError as exc:
+            self.api.send(self.chat_id, f"❌ {exc}")
+            return
+        apply_to(self.pipeline.settings, parts[0], value)
+        self.pipeline._producer = None  # настройки монтажа подхватятся в следующем ролике
+        self.api.send(self.chat_id, f"✅ {parts[0]} = {value}")
 
     def _propose_format(self, hint: str) -> None:
         from ..agents.channel_advisor import ChannelAdvisorAgent, proposal_text

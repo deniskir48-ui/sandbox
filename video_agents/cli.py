@@ -48,6 +48,10 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("threads", help="выгрузить свои посты из Threads со статистикой (таблица для Excel)")
 
+    setting = sub.add_parser("set", help="изменить настройку, например: set subtitles.show_scene_text true")
+    setting.add_argument("key", help="раздел.поле, как в config.yaml")
+    setting.add_argument("value", help="новое значение")
+
     channel = sub.add_parser("channel", help="сменить формат канала по вашим постам из Threads")
     channel.add_argument("action", choices=["from-threads"])
     channel.add_argument("--hint", default="", help="в двух словах, о чём вы пишете")
@@ -94,6 +98,19 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "bot":
         return _bot(settings, args.config)
+
+    if args.command == "set":
+        from pathlib import Path
+
+        from .config_edit import ConfigEditError, set_value
+
+        try:
+            value = set_value(Path(args.config), args.key, args.value)
+        except ConfigEditError as exc:
+            print(f"Ошибка: {exc}")
+            return 1
+        print(f"Готово: {args.key} = {value}")
+        return 0
 
     if args.command == "channel":
         return _channel_from_threads(settings, args.config, args.hint, args.language)

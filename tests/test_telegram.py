@@ -259,3 +259,16 @@ def test_format_proposal_and_apply_with_voice(bot, monkeypatch, tmp_path):
 
     bot.handle(button("fa:male"))  # повторное нажатие - предложение уже применено
     assert "устарело" in bot.api.texts()[-1]
+
+
+def test_set_command_updates_file_and_running_settings(bot, tmp_path):
+    from video_agents.config import load_settings
+
+    bot.config_path = tmp_path / "config.yaml"
+    bot.config_path.write_text("subtitles:\n  font: Arial\n", encoding="utf-8")
+    bot.handle(message("/set subtitles.show_scene_text true"))
+    assert "✅ subtitles.show_scene_text = True" in bot.api.texts()[-1]
+    assert load_settings(bot.config_path).subtitles.show_scene_text is True
+    assert bot.pipeline.settings.subtitles.show_scene_text is True
+    bot.handle(message("/set subtitles.bogus 1"))
+    assert bot.api.texts()[-1].startswith("❌")
