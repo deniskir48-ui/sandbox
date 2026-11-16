@@ -13,6 +13,8 @@ import re
 import subprocess
 from pathlib import Path
 
+from .winproc import NO_WINDOW
+
 TASK_PREFIX = "VideoAgents"
 ROOT = Path(__file__).resolve().parent.parent
 LAUNCHER = ROOT / "run_scheduled.bat"
@@ -27,7 +29,8 @@ def _schtasks(*args: str) -> str:
     if os.name != "nt":
         raise ScheduleError("Планировщик задач есть только в Windows. На Mac/Linux используйте cron (см. README).")
     # Русская Windows печатает в консольной кодировке (cp866), а не в UTF-8.
-    result = subprocess.run(["schtasks", *args], capture_output=True, text=True, encoding="oem", errors="replace")
+    result = subprocess.run(["schtasks", *args], capture_output=True, text=True, encoding="oem", errors="replace",
+                            **NO_WINDOW)
     if result.returncode != 0:
         raise ScheduleError((result.stderr or result.stdout).strip())
     return result.stdout

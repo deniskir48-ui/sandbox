@@ -12,6 +12,9 @@ from .models import manual_idea
 
 
 def main(argv: list[str] | None = None) -> int:
+    for stream in ("stdout", "stderr"):
+        if getattr(sys, stream) is None:  # запуск без консоли (pythonw, ярлык на рабочем столе)
+            setattr(sys, stream, open(os.devnull, "w", encoding="utf-8"))
     parser = argparse.ArgumentParser(prog="video_agents", description="Агенты для создания и публикации коротких роликов")
     parser.add_argument("--config", default="config.yaml", help="путь к config.yaml")
     parser.add_argument("-v", "--verbose", action="store_true")
@@ -68,6 +71,8 @@ def main(argv: list[str] | None = None) -> int:
     trends.add_argument("number", nargs="?", type=int, help="номер тренда - показать популярные посты по нему")
 
     sub.add_parser("bot", help="запустить Telegram-бота (управление с телефона)")
+    app = sub.add_parser("app", help="окно программы с кнопками (и ярлык «Видео-агент» на рабочем столе)")
+    app.add_argument("--no-browser", action="store_true", help="не открывать браузер")
 
     schedule = sub.add_parser("schedule", help="запуск по расписанию (Планировщик задач Windows)")
     schedule.add_argument("action", choices=["add", "list", "remove"],
@@ -90,7 +95,15 @@ def main(argv: list[str] | None = None) -> int:
 
         from . import updater
 
-        updater.auto_update(Path(__file__).resolve().parent.parent, Path(settings.workspace) / ".last_update_check")
+        changed = updater.auto_update(Path(__file__).resolve().parent.parent,
+                                      Path(settings.workspace) / ".last_update_check")
+        if changed and args.command in ("app", "bot"):
+            # Долгоживущие окно и бот должны сразу работать на новом коде: перезапускаемся.
+            import subprocess
+
+            subprocess.Popen([sys.executable, "-m", "video_agents", *(argv if argv is not None else sys.argv[1:])],
+                             cwd=Path(__file__).resolve().parent.parent)
+            return 0
 
     if args.command == "update":
         from pathlib import Path
@@ -111,6 +124,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "bot":
         return _bot(settings, args.config)
+
+    if args.command == "app":
+        return _app(settings, args.config, open_browser=not args.no_browser)
 
     if args.command == "set":
         from pathlib import Path
@@ -343,6 +359,31 @@ def _bot(settings, config_path: str = "config.yaml") -> int:
         subprocess.Popen([sys.executable, "-m", "video_agents", "--config", config_path, "bot"],
                          cwd=Path(__file__).resolve().parent.parent)
     return 0
+
+
+def _app(settings, config_path: str, open_browser: bool = True) -> int:
+    from pathlib import Path
+
+    from . import desktop
+
+    marker = Path(settings.workspace) / ".shortcut_installed"
+    if os.name == "nt" and not marker.exists():
+        link = desktop.install_shortcut(config_path)
+        if link:
+            marker.parent.mkdir(parents=True, exist_ok=True)
+            marker.write_text(str(link), encoding="utf-8")
+            print(f"На рабочем столе появился ярлык «{desktop.SHORTCUT_NAME}»: дальше запускайте программу им.")
+    pythonw = Path(sys.executable).with_name("pythonw.exe")
+    if os.name == "nt" and Path(sys.executable).name.lower() == "python.exe" and pythonw.exists():
+        # Запущено из PowerShell: переносим программу в фон без окна консоли, чтобы консоль можно было закрыть.
+        import subprocess
+
+        command = [str(pythonw), "-m", "video_agents", "--config", config_path, "app"]
+        subprocess.Popen(command + ([] if open_browser else ["--no-browser"]), cwd=desktop.ROOT,
+                         creationflags=subprocess.DETACHED_PROCESS | subprocess.CREATE_NEW_PROCESS_GROUP)
+        print("Окно программы открывается в браузере. Это окно PowerShell можно закрыть.")
+        return 0
+    return desktop.serve(config_path, open_browser=open_browser)
 
 
 def _trends(settings, number: int | None) -> int:

@@ -8,6 +8,8 @@ import re
 import subprocess
 from pathlib import Path
 
+from ..winproc import NO_WINDOW
+
 log = logging.getLogger(__name__)
 
 
@@ -18,7 +20,7 @@ class FFmpegError(RuntimeError):
 def run_ffmpeg(args: list[str], cwd: Path | None = None) -> None:
     cmd = ["ffmpeg", "-hide_banner", "-loglevel", "error", "-y", *args]
     log.debug("ffmpeg %s", " ".join(args))
-    result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True)
+    result = subprocess.run(cmd, cwd=cwd, capture_output=True, text=True, **NO_WINDOW)
     if result.returncode != 0:
         raise FFmpegError(f"ffmpeg завершился с ошибкой:\n{result.stderr[-2000:]}")
 
@@ -28,6 +30,7 @@ def probe_duration(path: Path) -> float:
         ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "json", str(path)],
         capture_output=True,
         text=True,
+        **NO_WINDOW,
     )
     if result.returncode != 0:
         raise FFmpegError(f"ffprobe не смог прочитать {path}: {result.stderr}")
@@ -40,6 +43,7 @@ def probe_size(path: Path) -> tuple[int, int]:
          "-of", "json", str(path)],
         capture_output=True,
         text=True,
+        **NO_WINDOW,
     )
     stream = json.loads(result.stdout or "{}").get("streams", [{}])[0]
     return int(stream.get("width", 0)), int(stream.get("height", 0))
@@ -52,6 +56,7 @@ def detect_black_borders(path: Path, sample: float = 3.0) -> str | None:
          "-vf", "cropdetect=limit=24:round=2:reset=0", "-an", "-f", "null", "-"],
         capture_output=True,
         text=True,
+        **NO_WINDOW,
     )
     matches = re.findall(r"crop=(\d+):(\d+):(\d+):(\d+)", result.stderr)
     if not matches:

@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Видео-агент</title>
+<style>
+  :root {
+    --bg: #f4f5f7; --card: #ffffff; --text: #1d2129; --muted: #6b7280; --line: #e5e7eb;
+    --accent: #2563eb; --accent-text: #ffffff; --ok: #15803d; --ok-bg: #dcfce7; --err: #b91c1c; --err-bg: #fee2e2;
+    --warn: #a16207; --warn-bg: #fef9c3; --soft: #eef2ff;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #111318; --card: #1b1e25; --text: #e7e9ee; --muted: #9aa3b2; --line: #2b303a;
+      --accent: #4f8cff; --accent-text: #ffffff; --ok: #4ade80; --ok-bg: #14321f; --err: #f87171; --err-bg: #3a1717;
+      --warn: #facc15; --warn-bg: #332b0a; --soft: #1f2740;
+    }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.45 "Segoe UI", system-ui, sans-serif; }
+  header { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; padding: 14px 24px;
+           background: var(--card); border-bottom: 1px solid var(--line); position: sticky; top: 0; z-index: 5; }
+  header h1 { font-size: 20px; margin: 0; }
+  .pill { padding: 4px 12px; border-radius: 999px; font-size: 13px; background: var(--soft); }
+  .pill.busy { background: var(--warn-bg); color: var(--warn); }
+  .pill.down { background: var(--err-bg); color: var(--err); }
+  .badges { margin-left: auto; display: flex; gap: 6px; flex-wrap: wrap; }
+  .badge { font-size: 12px; padding: 3px 9px; border-radius: 999px; background: var(--bg); color: var(--muted); border: 1px solid var(--line); }
+  .badge.on { color: var(--ok); background: var(--ok-bg); border-color: transparent; }
+  main { display: grid; grid-template-columns: minmax(0, 2fr) minmax(300px, 1fr); gap: 20px; padding: 20px 24px; max-width: 1400px; margin: 0 auto; }
+  @media (max-width: 900px) { main { grid-template-columns: 1fr; padding: 16px; } header { padding: 12px 16px; } }
+  section { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 18px; margin-bottom: 20px; }
+  section h2 { font-size: 16px; margin: 0 0 12px; }
+  .hint { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+  button { font: inherit; cursor: pointer; border-radius: 9px; border: 1px solid var(--line); background: var(--card);
+           color: var(--text); padding: 7px 13px; }
+  button:hover { border-color: var(--accent); }
+  button.primary { background: var(--accent); color: var(--accent-text); border-color: var(--accent); font-weight: 600; }
+  button.big { font-size: 18px; padding: 14px 26px; }
+  button:disabled { opacity: .5; cursor: default; }
+  input[type=text], select { font: inherit; padding: 8px 11px; border-radius: 9px; border: 1px solid var(--line);
+                             background: var(--bg); color: var(--text); min-width: 0; }
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .row input[type=text] { flex: 1 1 220px; }
+  .log { max-height: 260px; overflow-y: auto; font-size: 13px; }
+  .log div { padding: 3px 0; border-bottom: 1px dashed var(--line); }
+  .log .t { color: var(--muted); margin-right: 8px; font-variant-numeric: tabular-nums; }
+  .log .ok { color: var(--ok); } .log .error { color: var(--err); } .log .warn { color: var(--warn); }
+  .jobs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
+  .job { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+  .job video { width: 100%; aspect-ratio: 9 / 16; background: #000; display: block; }
+  .job .noimg { aspect-ratio: 9 / 16; display: grid; place-items: center; background: var(--bg); color: var(--muted); padding: 12px; text-align: center; }
+  .job .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
+  .job .topic { font-weight: 600; }
+  .job .meta { color: var(--muted); font-size: 12px; }
+  .job .actions { display: flex; gap: 6px; flex-wrap: wrap; margin-top: auto; padding-top: 6px; }
+  .job .actions button { padding: 5px 9px; font-size: 13px; }
+  .status { font-size: 12px; padding: 2px 8px; border-radius: 999px; align-self: flex-start; }
+  .s-produced { background: var(--warn-bg); color: var(--warn); }
+  .s-published { background: var(--ok-bg); color: var(--ok); }
+  .s-partially_published { background: var(--warn-bg); color: var(--warn); }
+  .s-failed { background: var(--err-bg); color: var(--err); }
+  .s-new, .s-scripted { background: var(--soft); }
+  .uploads a { color: var(--accent); font-size: 13px; display: block; word-break: break-all; }
+  .uploads .bad { color: var(--err); font-size: 12px; }
+  details summary { cursor: pointer; color: var(--muted); font-size: 13px; }
+  details pre { white-space: pre-wrap; font: inherit; font-size: 13px; margin: 6px 0; }
+  ul.list { list-style: none; padding: 0; margin: 0; }
+  ul.list li { display: flex; gap: 8px; align-items: flex-start; padding: 7px 0; border-bottom: 1px solid var(--line); }
+  ul.list li span { flex: 1; }
+  ul.list li button { padding: 2px 9px; }
+  .post { font-size: 13px; }
+  .post small { display: block; color: var(--muted); }
+  .setting { display: grid; grid-template-columns: 1fr auto; gap: 8px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--line); }
+  .setting:last-child { border-bottom: 0; }
+  .setting label { font-size: 14px; }
+  .setting input[type=range] { width: 150px; }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+  .seg button { border: 0; border-radius: 0; padding: 6px 12px; }
+  .seg button.on { background: var(--accent); color: var(--accent-text); }
+  .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; text-align: center; }
+  .stats b { display: block; font-size: 22px; }
+  .stats span { color: var(--muted); font-size: 12px; }
+  #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: var(--text); color: var(--bg);
+           padding: 10px 18px; border-radius: 10px; opacity: 0; transition: opacity .2s; pointer-events: none; max-width: 90vw; }
+  #toast.show { opacity: .95; }
+  .empty { color: var(--muted); font-size: 14px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>🎬 Видео-агент</h1>
+  <span id="status" class="pill">Подключаюсь...</span>
+  <div class="badges" id="badges"></div>
+</header>
+<main>
+  <div>
+    <section>
+      <h2>Новый ролик</h2>
+      <div class="row">
+        <button class="primary big" id="make">🎬 Сделать ролик</button>
+        <input type="text" id="topic" placeholder="Своя тема (необязательно): иначе возьму следующую по очереди">
+      </div>
+      <p class="hint" id="make-hint"></p>
+    </section>
+    <section>
+      <h2>Ход работы</h2>
+      <div class="log" id="log"><div class="empty">Пока ничего не делалось.</div></div>
+    </section>
+    <section>
+      <h2>Ролики</h2>
+      <div class="jobs" id="jobs"></div>
+    </section>
+  </div>
+  <div>
+    <section>
+      <h2>Настройки</h2>
+      <div class="setting">
+        <label>Скорость голоса: <b id="speed-label"></b></label>
+        <input type="range" id="speed" min="-10" max="50" step="5">
+      </div>
+      <div class="setting">
+        <label>Голос</label>
+        <div class="seg" id="voice"><button data-v="male">мужской</button><button data-v="female">женский</button></div>
+      </div>
+      <div class="setting">
+        <label>Обычная длина ролика</label>
+        <select id="length">
+          <option value="10">10 с</option><option value="15">15 с</option><option value="20">20 с</option>
+          <option value="25">25 с</option><option value="30">30 с</option><option value="40">40 с</option>
+        </select>
+      </div>
+      <div class="setting">
+        <label>Публиковать сразу, без проверки</label>
+        <input type="checkbox" id="auto_publish">
+      </div>
+      <div class="setting">
+        <label>Надпись сверху кадра</label>
+        <input type="checkbox" id="show_scene_text">
+      </div>
+      <p class="hint">Изменения действуют со следующего ролика. Чтобы применить к готовому - «Пересобрать».</p>
+    </section>
+    <section>
+      <h2>Посты из Threads</h2>
+      <div class="row">
+        <button id="next-posts">Какие посты пойдут в ролики</button>
+        <button id="threads-report">Статистика в Excel</button>
+      </div>
+      <ul class="list" id="posts" style="margin-top:10px"></ul>
+      <div class="row" style="margin-top:10px">
+        <input type="text" id="exclude" placeholder="Не делать ролики на тему...">
+        <button id="exclude-btn">Исключить</button>
+      </div>
+    </section>
+    <section>
+      <h2>Очередь тем</h2>
+      <ul class="list" id="queue"></ul>
+      <div class="row" style="margin-top:10px">
+        <input type="text" id="queue-text" placeholder="Добавить свою тему">
+        <button id="queue-add">Добавить</button>
+      </div>
+    </section>
+    <section>
+      <h2>Расходы на Claude</h2>
+      <div class="stats" id="stats"></div>
+      <div class="row" style="margin-top:14px"><button id="update">Проверить обновления программы</button></div>
+    </section>
+  </div>
+</main>
+<div id="toast"></div>
+<script>
+const TOKEN = "__TOKEN__";
+const STATUS = {produced: "ждёт проверки", published: "опубликован", partially_published: "опубликован частично",
+                failed: "не получился", new: "в работе", scripted: "в работе"};
+const PLATFORMS = {instagram: "Instagram", youtube: "YouTube", tiktok: "TikTok", threads: "Threads"};
+let state = null, lastJobs = "", lastQueue = "", lastPosts = "", lastLog = 0, settingsBusy = false;
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+
+function toast(text) {
+  if (!text) return;
+  const el = $("toast"); el.textContent = text; el.classList.add("show");
+  clearTimeout(toast.t); toast.t = setTimeout(() => el.classList.remove("show"), 3500);
+}
+
+async function act(name, data = {}) {
+  try {
+    const res = await fetch("/api/" + name, {method: "POST", headers: {"Content-Type": "application/json", "X-Token": TOKEN},
+                                            body: JSON.stringify(data)});
+    const body = await res.json();
+    if (res.status === 403) { location.reload(); return; }
+    toast(body.error ? "Ошибка: " + body.error : body.message);
+  } catch (e) { toast("Программа не отвечает - возможно, перезапускается"); }
+  refresh();
+}
+
+function renderJobs(jobs) {
+  const key = JSON.stringify(jobs);
+  if (key === lastJobs) return;
+  lastJobs = key;
+  if (!jobs.length) { $("jobs").innerHTML = '<div class="empty">Роликов пока нет - нажмите «Сделать ролик».</div>'; return; }
+  // Не пересоздаём карточку, которая не менялась: иначе остановится видео, которое вы смотрите.
+  const old = new Map([...$("jobs").children].map((el) => [el.dataset.key, el]));
+  const frag = document.createDocumentFragment();
+  for (const job of jobs) {
+    const k = JSON.stringify(job);
+    let el = old.get(k);
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "job"; el.dataset.key = k;
+      const media = job.has_video
+        ? `<video controls preload="metadata" src="/video/${esc(job.id)}#t=0.1"></video>`
+        : `<div class="noimg">${job.status === "failed" ? "❌ " + esc(job.error).slice(0, 200) : "⏳ делается..."}</div>`;
+      const uploads = job.uploads.map((u) => u.ok
+        ? (u.url ? `<a href="${esc(u.url)}" target="_blank">✅ ${esc(PLATFORMS[u.platform] || u.platform)}</a>` : `<span>✅ ${esc(PLATFORMS[u.platform] || u.platform)}</span>`)
+        : `<div class="bad">❌ ${esc(PLATFORMS[u.platform] || u.platform)}: ${esc(u.error).slice(0, 160)}</div>`).join("");
+      const canPublish = job.has_video && (job.status === "produced" || job.status === "partially_published");
+      const canRerender = job.has_video || job.status === "scripted";
+      el.innerHTML = `${media}<div class="body">
+        <span class="status s-${esc(job.status)}">${esc(STATUS[job.status] || job.status)}</span>
+        <div class="topic">${esc(job.topic)}</div>
+        <div class="meta">${esc(job.date)}${job.duration ? " · " + job.duration + " с" : ""}${job.cost ? " · $" + job.cost.toFixed(2) : ""}${job.from_threads ? " · по посту из Threads" : ""}</div>
+        <div class="uploads">${uploads}</div>
+        ${job.caption ? `<details><summary>Подпись к посту</summary><pre>${esc(job.caption)}</pre><button data-copy>Скопировать</button></details>` : ""}
+        <div class="actions">
+          ${canPublish ? `<button class="primary" data-a="publish">✅ Опубликовать</button>` : ""}
+          ${canRerender ? `<button data-a="rerender" title="Собрать видео заново по тому же тексту: бесплатно">🔄 Пересобрать</button>` : ""}
+          ${job.status !== "published" && job.status !== "partially_published" ? `<button data-a="reject" title="Убрать из списка">🗑</button>` : ""}
+          <button data-a="open_folder" title="Открыть папку с файлами">📁</button>
+        </div></div>`;
+      el.querySelectorAll("[data-a]").forEach((b) => b.onclick = () => {
+        if (b.dataset.a === "reject" && !confirm("Убрать этот ролик? Он не будет опубликован.")) return;
+        if (b.dataset.a === "publish" && !confirm("Опубликовать ролик во все подключённые соцсети?")) return;
+        act(b.dataset.a, {job: job.id});
+      });
+      const copy = el.querySelector("[data-copy]");
+      if (copy) copy.onclick = () => navigator.clipboard.writeText(job.caption).then(() => toast("Подпись скопирована"));
+    }
+    frag.appendChild(el);
+  }
+  $("jobs").replaceChildren(frag);
+}
+
+function renderQueue(items) {
+  const key = JSON.stringify(items);
+  if (key === lastQueue) return;
+  lastQueue = key;
+  $("queue").innerHTML = items.length ? "" : '<li class="empty">Пусто: темы возьмутся из ваших постов или их придумает агент.</li>';
+  items.forEach((item, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${index + 1}. ${esc(item.topic)}</span><button title="Убрать">✕</button>`;
+    li.querySelector("button").onclick = () => act("queue_remove", {index, tag: item.tag});
+    $("queue").appendChild(li);
+  });
+}
+
+function renderPosts(posts) {
+  const key = JSON.stringify(posts);
+  if (key === lastPosts) return;
+  lastPosts = key;
+  if (posts === null) { $("posts").innerHTML = ""; return; }
+  $("posts").innerHTML = posts.length ? "" : '<li class="empty">Подходящих постов нет.</li>';
+  posts.forEach((post, index) => {
+    const li = document.createElement("li");
+    li.className = "post";
+    li.innerHTML = `<span>${index + 1}. ${esc(post.text)}<small>${esc(post.why)}</small></span>`;
+    $("posts").appendChild(li);
+  });
+}
+
+function renderLog(lines) {
+  if (!lines.length) return;
+  const newest = lines[lines.length - 1].n;
+  if (newest === lastLog) return;
+  lastLog = newest;
+  $("log").innerHTML = lines.slice().reverse().map((l) =>
+    `<div class="${esc(l.kind)}"><span class="t">${esc(l.time)}</span>${esc(l.text)}</div>`).join("");
+}
+
+function renderSettings(s) {
+  if (settingsBusy || document.activeElement?.id === "speed") return;
+  $("speed").value = s.speed;
+  $("speed-label").textContent = speedText(s.speed);
+  $("voice").querySelectorAll("button").forEach((b) => b.classList.toggle("on", b.dataset.v === s.voice));
+  if (![...$("length").options].some((o) => o.value == s.length)) $("length").add(new Option(s.length + " с", s.length));
+  $("length").value = s.length;
+  $("auto_publish").checked = s.auto_publish;
+  $("show_scene_text").checked = s.show_scene_text;
+}
+
+function speedText(v) { v = Number(v); return v === 0 ? "обычная" : (v > 0 ? "+" : "") + v + "%"; }
+
+function render(s) {
+  const busy = s.busy;
+  $("status").className = "pill" + (busy ? " busy" : "");
+  $("status").textContent = busy ? "⏳ " + busy + (s.waiting ? ` (ещё в очереди: ${s.waiting})` : "") : "Свободен";
+  $("badges").innerHTML = Object.entries(s.connected).map(([k, on]) =>
+    `<span class="badge${on ? " on" : ""}" title="${on ? "подключён" : "не подключён"}">${on ? "✓" : "✕"} ${esc(PLATFORMS[k] || k)}</span>`).join("");
+  const next = s.queue.length ? "следующая тема из очереди" : (s.settings.source === "threads" ? "следующий ваш пост из Threads" : "новая тема от агента идей");
+  $("make-hint").textContent = `Без своей темы возьму: ${next}. ` + (s.settings.auto_publish ? "Ролик сразу опубликуется." : "Готовый ролик появится ниже - посмотрите и нажмите «Опубликовать».");
+  renderJobs(s.jobs); renderQueue(s.queue); renderPosts(s.next_posts); renderLog(s.log); renderSettings(s.settings);
+  $("stats").innerHTML = `<div><b>${s.stats.videos}</b><span>роликов</span></div>
+    <div><b>$${s.stats.total.toFixed(2)}</b><span>всего</span></div>
+    <div><b>$${s.stats.average.toFixed(2)}</b><span>в среднем за ролик</span></div>`;
+}
+
+async function refresh() {
+  clearTimeout(refresh.t);
+  try {
+    const res = await fetch("/api/state", {headers: {"X-Token": TOKEN}});
+    if (res.status === 403) { location.reload(); return; }
+    state = await res.json();
+    render(state);
+  } catch (e) {
+    $("status").className = "pill down";
+    $("status").textContent = "Программа не отвечает (перезапускается или закрыта)";
+    // После обновления программа перезапускается с новым ключом - подхватим его.
+    try { const ping = await fetch("/api/ping"); if (ping.ok) { location.reload(); return; } } catch (_) {}
+  }
+  refresh.t = setTimeout(refresh, state && state.busy ? 1500 : 5000);
+}
+
+$("make").onclick = () => { act("make", {topic: $("topic").value}); $("topic").value = ""; };
+$("topic").onkeydown = (e) => { if (e.key === "Enter") $("make").click(); };
+$("next-posts").onclick = () => act("next_posts");
+$("threads-report").onclick = () => act("threads_report");
+$("exclude-btn").onclick = () => { act("exclude", {text: $("exclude").value}); $("exclude").value = ""; };
+$("queue-add").onclick = () => { act("queue_add", {text: $("queue-text").value}); $("queue-text").value = ""; };
+$("queue-text").onkeydown = (e) => { if (e.key === "Enter") $("queue-add").click(); };
+$("update").onclick = () => act("update");
+
+async function setting(key, value) {
+  settingsBusy = true;
+  try { await act("setting", {key, value}); } finally { settingsBusy = false; }
+}
+$("speed").oninput = () => $("speed-label").textContent = speedText($("speed").value);
+$("speed").onchange = () => { setting("speed", Number($("speed").value)); $("speed").blur(); };
+$("voice").querySelectorAll("button").forEach((b) => b.onclick = () => setting("voice", b.dataset.v));
+$("length").onchange = () => setting("length", Number($("length").value));
+$("auto_publish").onchange = () => setting("auto_publish", $("auto_publish").checked);
+$("show_scene_text").onchange = () => setting("show_scene_text", $("show_scene_text").checked);
+
+refresh();
+</script>
+</body>
+</html>
