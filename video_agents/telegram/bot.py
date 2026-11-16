@@ -100,23 +100,33 @@ class Bot:
         self.config_path = config_path
         self.proposal = None  # предложенный формат канала, ждёт подтверждения
         self.offset = 0
+        self._pending_restart = False
         self._message_id = None  # последнее сообщение владельца (чтобы удалить присланный ключ)
 
     # --- Цикл опроса Telegram ---
 
-    def run_forever(self) -> None:
+    def run_forever(self) -> str | None:
+        """Слушает Telegram. Возвращает "restart", если программа обновилась и бота пора перезапустить."""
         self.worker.start()
         self.api.send(self.chat_id, "🤖 Бот запущен.", MENU)
         log.info("Бот запущен, жду сообщений")
+        conflicts = 0
         while True:
+            if self._updated_and_idle():
+                self.api.send(self.chat_id, "🔄 Программа обновилась - перезапускаюсь, это несколько секунд.")
+                return "restart"
             try:
                 # Длинный опрос: Telegram держит запрос до 50 секунд, пока не придёт сообщение.
                 updates = self.api.call("getUpdates", http_timeout=70, timeout=50, offset=self.offset,
                                         allowed_updates=["message", "callback_query"])
             except TelegramError as exc:
                 if exc.code == 409:
-                    log.error("Этот бот уже запущен в другом окне - второй экземпляр завершается")
-                    return
+                    conflicts += 1
+                    if conflicts >= 4:  # после перезапуска старый экземпляр мог ещё не закрыться - ждём
+                        log.error("Этот бот уже запущен в другом окне - второй экземпляр завершается")
+                        return None
+                    time.sleep(5)
+                    continue
                 log.warning("Telegram: %s", exc)
                 time.sleep(5)
                 continue
@@ -130,6 +140,20 @@ class Bot:
                     self.handle(update)
                 except Exception:
                     log.exception("Не удалось обработать сообщение")
+
+    def _updated_and_idle(self) -> bool:
+        """Раз в час проверяет обновления; перезапускаться можно, только когда никакая задача не выполняется."""
+        settings = self.pipeline.settings
+        if not settings.auto_update or self.worker.sync:
+            return False
+        if self.worker.current or not self.worker.tasks.empty():
+            return False
+        from .. import updater
+
+        root = Path(__file__).resolve().parents[2]
+        changed = updater.auto_update(root, Path(settings.workspace) / ".last_update_check")
+        self._pending_restart = self._pending_restart or any(path.endswith(".py") for path in changed)
+        return self._pending_restart
 
     def handle(self, update: dict) -> None:
         if "callback_query" in update:

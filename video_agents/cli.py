@@ -85,6 +85,12 @@ def main(argv: list[str] | None = None) -> int:
         logging.getLogger(noisy).setLevel(logging.WARNING)
 
     settings = load_settings(args.config)
+    if settings.auto_update and args.command != "update":
+        from pathlib import Path
+
+        from . import updater
+
+        updater.auto_update(Path(__file__).resolve().parent.parent, Path(settings.workspace) / ".last_update_check")
 
     if args.command == "update":
         from pathlib import Path
@@ -330,7 +336,12 @@ def _bot(settings, config_path: str = "config.yaml") -> int:
     handler = logging.FileHandler(log_file, encoding="utf-8")
     handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-7s %(name)s: %(message)s"))
     logging.getLogger().addHandler(handler)
-    Bot(TelegramAPI(access.token), access.chat_id, Pipeline(settings), config_path=Path(config_path)).run_forever()
+    bot = Bot(TelegramAPI(access.token), access.chat_id, Pipeline(settings), config_path=Path(config_path))
+    if bot.run_forever() == "restart":  # программа обновилась - запускаем бота заново уже с новым кодом
+        import subprocess
+
+        subprocess.Popen([sys.executable, "-m", "video_agents", "--config", config_path, "bot"],
+                         cwd=Path(__file__).resolve().parent.parent)
     return 0
 
 

@@ -341,3 +341,38 @@ def test_rubric_rank_tolerates_typos():
     assert rubric_rank("Спорт и тренировка", rubrics) == 2
     assert rubric_rank("Кулинария", rubrics) == 4
     assert rubric_rank("Кипр", []) == 0
+
+
+def test_auto_update_interval_git_guard_and_bat_skip(monkeypatch, tmp_path):
+    import importlib
+    import io
+    import zipfile
+
+    from video_agents import updater as patched
+
+    updater = importlib.reload(patched)  # настоящий модуль: в тестах auto_update подменён заглушкой
+    calls = []
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w") as z:
+        z.writestr("sandbox-main/video_agents/a.py", "new")
+        z.writestr("sandbox-main/run_scheduled.bat", "new bat")
+
+    class Response:
+        content = buf.getvalue()
+
+        def raise_for_status(self):
+            pass
+
+    monkeypatch.setattr(updater.requests, "get", lambda url, timeout: calls.append(url) or Response())
+    (tmp_path / "requirements.txt").write_text("x")
+    (tmp_path / "run_scheduled.bat").write_text("old bat")
+    state = tmp_path / "workspace" / ".last_update_check"
+
+    assert updater.auto_update(tmp_path, state) == ["video_agents/a.py"]
+    assert (tmp_path / "run_scheduled.bat").read_text() == "old bat"  # работающий .bat не трогаем
+    assert updater.auto_update(tmp_path, state) == [] and len(calls) == 1  # не чаще раза в час
+
+    (tmp_path / ".git").mkdir()
+    state.unlink()
+    assert updater.auto_update(tmp_path, state) == [] and len(calls) == 1  # рабочая копия разработчика
+    importlib.reload(patched)

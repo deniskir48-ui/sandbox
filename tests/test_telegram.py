@@ -165,8 +165,11 @@ def test_connect_saves_access(tmp_path, monkeypatch):
     assert "Бот подключён" in api.texts()[-1]
 
 
-def test_second_bot_instance_exits_on_conflict(bot):
+def test_second_bot_instance_exits_on_conflict(bot, monkeypatch):
+    from video_agents.telegram import bot as bot_module
     from video_agents.telegram.api import TelegramError
+
+    monkeypatch.setattr(bot_module.time, "sleep", lambda seconds: None)
 
     def conflict(method, files=None, http_timeout=60, **params):
         if method == "getUpdates":
@@ -283,3 +286,23 @@ def test_priorities_command(bot, tmp_path):
     assert bot.pipeline.settings.threads.priorities[0] == "Кипр: полезное, места"
     bot.handle(message("/priorities"))
     assert "1. Кипр: полезное, места" in bot.api.texts()[-1]
+
+
+
+def test_bot_restarts_after_code_update_when_idle(bot, monkeypatch):
+    from video_agents import updater
+
+    bot.worker.sync = False  # как в настоящем боте
+    bot.worker.start = lambda: None
+    monkeypatch.setattr(updater, "auto_update", lambda root, state: ["video_agents/pipeline.py"])
+    assert bot.run_forever() == "restart"
+    assert "перезапускаюсь" in bot.api.texts()[-1]
+
+
+def test_bot_does_not_restart_while_busy(bot, monkeypatch):
+    from video_agents import updater
+
+    bot.worker.sync = False
+    bot.worker.current = "Делаю ролик"
+    monkeypatch.setattr(updater, "auto_update", lambda root, state: ["video_agents/pipeline.py"])
+    assert bot._updated_and_idle() is False

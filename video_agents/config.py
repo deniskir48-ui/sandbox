@@ -167,6 +167,7 @@ class Settings(BaseModel):
     publish: PublishConfig = Field(default_factory=PublishConfig)
     threads: ThreadsConfig = Field(default_factory=ThreadsConfig)
     workspace: str = "workspace"
+    auto_update: bool = True  # раз в час тихо подтягивать свежую версию программы с GitHub
     secrets: Secrets = Field(default_factory=Secrets, exclude=True)
 
 
