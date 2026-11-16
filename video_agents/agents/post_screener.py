@@ -46,6 +46,19 @@ def category_name(rubric: str) -> str:
     return rubric.split(":", 1)[0].strip()
 
 
+def rubric_rank(category: str, rubrics: list[str]) -> int:
+    """Место рубрики в списке приоритетов. Модель иногда опечатывается («Кипар» вместо «Кипр»), поэтому
+    название сравнивается нечётко; не нашлось - в конец."""
+    import difflib
+
+    names = [category_name(rubric).lower() for rubric in rubrics]
+    wanted = category.strip().lower()
+    if wanted in names:
+        return names.index(wanted)
+    close = difflib.get_close_matches(wanted, names, n=1, cutoff=0.75)
+    return names.index(close[0]) if close else len(names)
+
+
 class PostScreenerAgent:
     def __init__(self, llm, channel, topic_filter: bool = True, exclude_topics: list[str] = (),
                  categories: list[str] = ()):
