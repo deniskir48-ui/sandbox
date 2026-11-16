@@ -189,7 +189,7 @@ def main(argv: list[str] | None = None) -> int:
 
 
 STAGE_NAMES = {"ideas": "идеи", "script": "сценарий", "critic": "редактор", "footage": "подбор видео",
-               "metadata": "подписи"}
+               "metadata": "подписи", "screen": "отбор постов"}
 
 
 def parse_selection(answer: str, total: int) -> list[int]:

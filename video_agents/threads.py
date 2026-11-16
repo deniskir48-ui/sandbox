@@ -304,3 +304,19 @@ def post_to_idea(post: dict):
         why_it_works=f"Пост уже зашёл аудитории в Threads ({stats or 'есть отклик'})",
         source_post_id=str(post["id"]), source_text=post.get("text", ""),
     )
+
+
+def load_screening(workspace: Path, niche: str = "") -> dict[str, dict]:
+    """Решения отборщика по постам: {id: {"use": bool, "reason": str}}. Сменилась тема канала - решения
+    устарели, проверяем заново."""
+    path = workspace / "threads_screening.json"
+    if not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    return data["verdicts"] if data.get("niche") == niche else {}
+
+
+def save_screening(workspace: Path, verdicts: dict[str, dict], niche: str = "") -> None:
+    workspace.mkdir(parents=True, exist_ok=True)
+    (workspace / "threads_screening.json").write_text(
+        json.dumps({"niche": niche, "verdicts": verdicts}, ensure_ascii=False, indent=2), encoding="utf-8")

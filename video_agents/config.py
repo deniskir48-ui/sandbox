@@ -35,6 +35,7 @@ class LLMConfig(BaseModel):
     critic_model: str | None = "claude-sonnet-5-5"
     footage_model: str | None = "claude-haiku-5-5"
     metadata_model: str | None = "claude-haiku-5-5"
+    screen_model: str | None = "claude-haiku-5-5"  # отбор постов из Threads для роликов
     web_research: bool = True
     max_revisions: int = 1
     min_score: int = 8

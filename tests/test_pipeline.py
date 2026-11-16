@@ -43,6 +43,13 @@ class FakeLLM:
             return Review(score=9 if approved else 5, approved=approved, strengths=["хук"],
                           problems=[] if approved else ["слабый финал"],
                           rewrite_instructions="" if approved else "усиль финал")
+        if output_model.__name__ == "Screening":  # отбор постов: id с «skip» пропускаем
+            import re
+
+            from video_agents.agents.post_screener import PostVerdict, Screening
+
+            ids = re.findall(r"\[id=([^\]]+)\]", prompt)
+            return Screening(verdicts=[PostVerdict(post_id=i, use="skip" not in i, reason="тест") for i in ids])
         if output_model is PlatformMeta:
             return PlatformMeta(youtube_title="Венера", youtube_description="Описание #space",
                                 youtube_tags=["космос"], instagram_caption="Подпись", tiktok_caption="Подпись #space")
@@ -454,3 +461,53 @@ def test_threads_source_turns_posts_into_videos_once(settings):
 
     [job2] = pipeline.run(publish=False)  # пост уже использован - тему придумывает агент
     assert job2.idea.source_post_id == "" and "IdeaList" in llm.calls
+
+
+
+def test_screening_skips_questions_and_remembers_verdicts(settings):
+    from datetime import datetime, timedelta, timezone
+
+    from video_agents import threads
+
+    def post(pid, days):
+        moment = (datetime.now(timezone.utc) - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%S%z")
+        return {"id": pid, "text": "Достаточно длинный текст поста для проверки отбора. " * 3, "views": 1000,
+                "timestamp": moment}
+
+    workspace = Path(settings.workspace)
+    threads.save_posts([post("skip-question", 300), post("good-1", 200), post("skip-sprint", 100),
+                        post("good-2", 50)], workspace)
+    settings.channel.source = "threads"
+    llm = FakeLLM()
+    pipeline = Pipeline(settings, llm=llm, producer=VideoProducer(settings, FakeTTS()))
+
+    ideas = pipeline.threads_ideas(5)
+    assert [i.source_post_id for i in ideas] == ["good-1", "good-2"]
+    verdicts = threads.load_screening(workspace, settings.channel.niche)
+    assert verdicts["skip-question"]["use"] is False and verdicts["good-1"]["use"] is True
+
+    pipeline.threads_ideas(5)
+    assert llm.calls.count("Screening") == 1  # решения запомнены - повторно не проверяем
+
+    settings.channel.niche = "Совсем другая тема"
+    pipeline.threads_ideas(5)
+    assert llm.calls.count("Screening") == 2  # тема канала сменилась - проверяем заново
+
+
+def test_screening_failure_does_not_pass_unchecked_posts(settings):
+    from datetime import datetime, timedelta, timezone
+
+    from video_agents import threads
+
+    moment = (datetime.now(timezone.utc) - timedelta(days=30)).strftime("%Y-%m-%dT%H:%M:%S%z")
+    threads.save_posts([{"id": "p1", "text": "Длинный пост " * 20, "views": 10, "timestamp": moment}],
+                       Path(settings.workspace))
+
+    class Broken(FakeLLM):
+        def structured(self, *, output_model, prompt, **kw):
+            if output_model.__name__ == "Screening":
+                raise RuntimeError("API недоступен")
+            return super().structured(output_model=output_model, prompt=prompt, **kw)
+
+    pipeline = Pipeline(settings, llm=Broken(), producer=VideoProducer(settings, FakeTTS()))
+    assert pipeline.threads_ideas(3) == []
