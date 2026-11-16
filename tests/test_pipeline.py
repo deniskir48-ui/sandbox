@@ -670,3 +670,74 @@ def test_arc_keeps_only_one_twist_and_two_solutions():
     assert [s.narration for s in arc.to_script().scenes] == [
         "Круглосуточных аптек нет.", "Вообще.", "Живот скрутило вечером?", "Ищите дежурную.",
         "Звоните фармацевту.", "Ссылки в описании."]
+
+
+def test_whole_video_switches_to_fallback_voice(settings, tmp_path):
+    class FlakyVoice(FakeTTS):
+        voice = "ru-RU-DmitryNeural"
+
+        def __init__(self):
+            self.used = []
+
+        def use_fallback(self):
+            self.voice = "ru-RU-SvetlanaNeural"
+            return True
+
+        def synthesize(self, text, out_path):
+            self.used.append(self.voice)
+            if self.voice == "ru-RU-DmitryNeural" and len(self.used) == 2:
+                raise RuntimeError("No audio was received")
+            return super().synthesize(text, out_path)
+
+    tts = FlakyVoice()
+    VideoProducer(settings, tts).produce(_two_scene_script(), tmp_path / "job")
+    # Вторая фраза не озвучилась Дмитрием - весь ролик заново озвучен Светланой, без смеси голосов.
+    assert tts.used == ["ru-RU-DmitryNeural", "ru-RU-DmitryNeural", "ru-RU-SvetlanaNeural", "ru-RU-SvetlanaNeural"]
+
+
+def test_edge_tts_retries_then_gives_up(monkeypatch, tmp_path):
+    from video_agents.production import tts as tts_module
+
+    tts = tts_module.EdgeTTS("ru-RU-DmitryNeural", attempts=3, pause=0)
+    calls = []
+
+    async def no_audio(text, out_path):
+        calls.append(text)
+        raise RuntimeError("No audio was received")
+
+    monkeypatch.setattr(tts, "_stream", no_audio)
+    with pytest.raises(RuntimeError, match="DmitryNeural"):
+        tts.synthesize("И выходные.", tmp_path / "v.mp3")
+    assert len(calls) == 3
+    assert tts.use_fallback() and tts.voice == "ru-RU-SvetlanaNeural"
+
+
+def test_voices_alternate_and_good_phrases_are_kept(settings, tmp_path, monkeypatch):
+    from video_agents.production import render
+
+    monkeypatch.setattr(render.time, "sleep", lambda seconds: None)
+
+    class Alternating(FakeTTS):
+        voice = "ru-RU-DmitryNeural"
+
+        def __init__(self):
+            self.used = []
+            self.failures = {("ru-RU-DmitryNeural", "Подпишись"), ("ru-RU-SvetlanaNeural", "Венера")}
+
+        def use_fallback(self):
+            self.voice = "ru-RU-SvetlanaNeural" if self.voice == "ru-RU-DmitryNeural" else "ru-RU-DmitryNeural"
+            return True
+
+        def synthesize(self, text, out_path):
+            word = text.split()[0].strip(",")
+            self.used.append((self.voice, word))
+            if (self.voice, word) in self.failures:
+                self.failures.discard((self.voice, word))  # голос «ожил» к следующему кругу
+                raise RuntimeError("No audio was received")
+            return super().synthesize(text, out_path)
+
+    tts = Alternating()
+    VideoProducer(settings, tts).produce(_two_scene_script(), tmp_path / "job")
+    # Дмитрий споткнулся на 2-й фразе, Светлана - на 1-й; третий круг снова Дмитрий: 1-я фраза уже есть.
+    assert tts.used == [("ru-RU-DmitryNeural", "Венера"), ("ru-RU-DmitryNeural", "Подпишись"),
+                        ("ru-RU-SvetlanaNeural", "Венера"), ("ru-RU-DmitryNeural", "Подпишись")]
