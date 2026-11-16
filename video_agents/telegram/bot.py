@@ -41,6 +41,7 @@ HELP = (
     f"{THREADS} - статистика ваших постов в Threads и таблица для Excel\n"
     f"{TRENDS} - что сейчас в тренде в Threads\n"
     "/format - подобрать формат канала по вашим постам в Threads\n"
+    "/exclude тема - никогда не делать ролики из постов на эту тему\n"
     "/set раздел.поле значение - изменить настройку (например /set subtitles.show_scene_text true)\n\n"
     "Любое другое сообщение я добавлю в очередь как тему ролика."
 )
@@ -162,6 +163,12 @@ class Bot:
             self.api.send(self.chat_id, stats_text(self.pipeline.store.all()))
         elif text.startswith("/threads "):
             self._connect_threads(text.split(maxsplit=1)[1])
+        elif text.startswith("/exclude "):
+            from ..config_edit import add_to_list
+
+            topics = add_to_list(self.config_path, "threads.exclude_topics", text.split(maxsplit=1)[1])
+            self.pipeline.settings.threads.exclude_topics = topics
+            self.api.send(self.chat_id, "✅ Из постов на эти темы ролики не делаю: " + "; ".join(topics))
         elif text.startswith("/set "):
             self._set_option(text.split(maxsplit=2)[1:])
         elif text == "/format" or text.startswith("/format "):

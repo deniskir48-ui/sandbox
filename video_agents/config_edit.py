@@ -47,6 +47,25 @@ def set_value(path: Path, key: str, raw_value: str):
     return current
 
 
+def add_to_list(path: Path, key: str, item: str) -> list:
+    """Добавляет элемент в список-настройку (например threads.exclude_topics) и возвращает новый список."""
+    yaml = YAML()
+    data = yaml.load(path.read_text(encoding="utf-8")) if path.exists() else None
+    if data is None:
+        data = {}
+    *sections, field = key.split(".")
+    node = data
+    for section in sections:
+        node = node.setdefault(section, {})
+    items = node.get(field) or []
+    if item.strip() and item.strip() not in items:
+        items.append(item.strip())
+    node[field] = items
+    with open(path, "w", encoding="utf-8") as fh:
+        yaml.dump(data, fh)
+    return list(items)
+
+
 def apply_to(settings, key: str, value) -> None:
     """Применяет то же значение к уже загруженным настройкам (например, в работающем боте)."""
     *sections, field = key.strip().split(".")

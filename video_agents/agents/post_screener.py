@@ -37,10 +37,11 @@ class Screening(BaseModel):
 
 
 class PostScreenerAgent:
-    def __init__(self, llm, channel, topic_filter: bool = True):
+    def __init__(self, llm, channel, topic_filter: bool = True, exclude_topics: list[str] = ()):
         self.llm = llm
         self.channel = channel
         self.topic_filter = topic_filter
+        self.exclude_topics = list(exclude_topics)
 
     def screen(self, posts: list[dict]) -> dict[str, dict]:
         """{id поста: {"use", "time_sensitive", "relevant_until", "reason"}}."""
@@ -48,7 +49,11 @@ class PostScreenerAgent:
             f"[id={post['id']}, опубликован {str(post.get('timestamp', ''))[:10] or 'неизвестно'}]\n"
             f"{' '.join((post.get('text') or '').split())[:1500]}" for post in posts)
         prompt = f"{channel_brief(self.channel)}\n\nПосты:\n\n{listing}"
-        system = SYSTEM.format(topic_rule=TOPIC_RULE if self.topic_filter else "")
+        rules = TOPIC_RULE if self.topic_filter else ""
+        if self.exclude_topics:
+            rules += ("Всегда пропускай посты на эти темы, даже если они подходят каналу: "
+                      + "; ".join(self.exclude_topics) + ".\n")
+        system = SYSTEM.format(topic_rule=rules)
         result = self.llm.structured(system=system, prompt=prompt, output_model=Screening, effort="low")
         return {v.post_id: {"use": v.use, "time_sensitive": v.time_sensitive,
                             "relevant_until": v.relevant_until.strip(), "reason": v.reason}

@@ -106,6 +106,12 @@ class Pipeline:
             log.info("Подходящих постов в Threads нет - тему придумает агент идей")
         return [threads.post_to_idea(post) for post in picked]
 
+    def screening_key(self) -> str:
+        """Под этим ключом хранятся решения отборщика: сменились тема, фильтр или исключения - проверяем заново."""
+        config = self.settings.threads
+        return (f"{self.settings.channel.niche}|topic_filter={config.topic_filter}"
+                f"|exclude={'; '.join(config.exclude_topics)}|v2")  # v2: даты актуальности афиш
+
     def _screen_posts(self, fresh: list[dict], backlog: list[dict], count: int) -> list[dict]:
         """Сначала свежие посты с датами (афиши) - вне очереди, затем остальные от старых к новым.
 
@@ -117,10 +123,10 @@ class Pipeline:
 
         workspace = Path(self.settings.workspace)
         topic_filter = self.settings.threads.topic_filter
-        # Сменились тема, фильтр или правила отбора (v2: даты актуальности) - проверяем посты заново.
-        key = f"{self.settings.channel.niche}|topic_filter={topic_filter}|v2"
+        excluded = self.settings.threads.exclude_topics
+        key = self.screening_key()
         verdicts = threads.load_screening(workspace, key)
-        screener = PostScreenerAgent(self.llms["screen"], self.settings.channel, topic_filter)
+        screener = PostScreenerAgent(self.llms["screen"], self.settings.channel, topic_filter, excluded)
 
         def judge(batch: list[dict]) -> bool:
             unknown = [post for post in batch if str(post["id"]) not in verdicts]

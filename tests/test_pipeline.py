@@ -486,7 +486,7 @@ def test_screening_skips_questions_and_remembers_verdicts(settings):
 
     ideas = pipeline.threads_ideas(5)
     assert [i.source_post_id for i in ideas] == ["good-1", "good-2"]
-    verdicts = threads.load_screening(workspace, f"{settings.channel.niche}|topic_filter=True|v2")
+    verdicts = threads.load_screening(workspace, pipeline.screening_key())
     assert verdicts["skip-question"]["use"] is False and verdicts["good-1"]["use"] is True
 
     pipeline.threads_ideas(5)
@@ -541,3 +541,17 @@ def test_fresh_event_posts_jump_the_queue_and_old_ones_expire(settings):
 
     settings.threads.include_events = False  # по умолчанию афиши не берём совсем
     assert [i.source_post_id for i in pipeline.threads_ideas(5)] == ["story-1", "story-2"]
+
+
+def test_excluded_topics_reach_screener_and_reset_cache(settings):
+    from video_agents.agents.post_screener import PostScreenerAgent
+
+    systems = []
+
+    class Spy(FakeLLM):
+        def structured(self, *, output_model, prompt, system="", **kw):
+            systems.append(system)
+            return super().structured(output_model=output_model, prompt=prompt, **kw)
+
+    PostScreenerAgent(Spy(), settings.channel, exclude_topics=["работа в IT"]).screen([{"id": "1", "text": "t"}])
+    assert "работа в IT" in systems[-1]

@@ -47,6 +47,7 @@ def main(argv: list[str] | None = None) -> int:
                                            "threads-trends"])
 
     threads_cmd = sub.add_parser("threads", help="выгрузить свои посты из Threads со статистикой (таблица для Excel)")
+    threads_cmd.add_argument("--exclude", metavar="ТЕМА", help="никогда не делать ролики из постов на эту тему")
     threads_cmd.add_argument("--next", type=int, nargs="?", const=5, default=None,
                              help="показать, какие посты станут следующими роликами (по умолчанию 5)")
 
@@ -123,6 +124,14 @@ def main(argv: list[str] | None = None) -> int:
         return _trends(settings, args.number)
 
     if args.command == "threads":
+        if args.exclude:
+            from pathlib import Path
+
+            from .config_edit import add_to_list
+
+            topics = add_to_list(Path(args.config), "threads.exclude_topics", args.exclude)
+            print("Темы, из которых ролики не делаются: " + "; ".join(topics))
+            return 0
         if args.next:
             return _threads_next(settings, args.next)
         return _threads(settings)
