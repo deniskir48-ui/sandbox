@@ -48,7 +48,7 @@ class IdeaList(BaseModel):
 
 
 class Scene(BaseModel):
-    narration: str = Field(description="Текст диктора для сцены, 1-2 коротких предложения")
+    narration: str = Field(description="Текст диктора для сцены: ОДНА короткая фраза, 3-8 слов, максимум 10")
     visual_queries: list[str] = Field(
         description="2-3 запроса для поиска стокового видео НА АНГЛИЙСКОМ, по 2-4 слова, "
         "от самого точного к более общему; описывают то, что буквально видно в кадре"
@@ -83,6 +83,32 @@ class Script(BaseModel):
     @property
     def full_text(self) -> str:
         return " ".join(scene.narration for scene in self.scenes)
+
+
+class ArcScript(BaseModel):
+    """Сценарий по каркасу драматургии: лишнее (третий совет, побочная тема) в ролик просто не помещается."""
+
+    title: str = Field(description="Рабочее название ролика")
+    hook: Scene = Field(description="Крючок: неожиданный факт, на который хочется сказать «да ладно?»")
+    twist: list[Scene] = Field(
+        description="0 или 1 сцена: короткая добивка в 1-4 слова, от которой крючок ещё сильнее («Вообще.», «И выходные.»)")
+    situation: list[Scene] = Field(
+        description="1-2 сцены: живая ситуация зрителя, где этот факт бьёт по нему, лучше вопросом; "
+        "для обзора, слова дня, истории - контекст")
+    payoff: list[Scene] = Field(
+        description="1-2 сцены: ОДНО решение (что делать) или суть. Не перечень советов: остальное - в описание")
+    finale: Scene = Field(description="Финал: куда за подробностями («Где она сегодня - ссылки в описании») "
+                                      "или короткий вывод")
+    call_to_action: str = Field(description="Короткий призыв до 4 слов (уже включён в финал) или пустая строка")
+    backup_queries: list[str] = Field(
+        description="2-3 общих запроса НА АНГЛИЙСКОМ по теме всего ролика (например 'coffee cup kitchen morning') - "
+        "запасной видеоряд, если для сцены не найдётся точного кадра"
+    )
+
+    def to_script(self) -> "Script":
+        scenes = [self.hook, *self.twist[:1], *self.situation[:2], *self.payoff[:2], self.finale]
+        return Script(title=self.title, scenes=scenes, call_to_action=self.call_to_action,
+                      backup_queries=self.backup_queries)
 
 
 class Review(BaseModel):
