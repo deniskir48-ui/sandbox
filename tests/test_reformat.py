@@ -95,3 +95,28 @@ def test_cli_channel_from_threads(tmp_path, monkeypatch, capsys):
     assert "Сколько стоит жизнь в Лимассоле" in capsys.readouterr().out
     settings = load_settings("config.yaml")
     assert settings.channel.language == "ru" and settings.voice.voice == "ru-RU-SvetlanaNeural"
+
+
+def test_set_value_changes_one_setting_and_validates(tmp_path):
+    import pytest
+
+    from video_agents.config_edit import ConfigEditError, apply_to, set_value
+
+    path = tmp_path / "config.yaml"
+    path.write_text(CONFIG, encoding="utf-8")
+    assert set_value(path, "subtitles.show_scene_text", "true") is True
+    assert set_value(path, "llm.max_revisions", "1") == 1
+    text = path.read_text(encoding="utf-8")
+    assert "# главная модель" in text
+    settings = load_settings(path)
+    assert settings.subtitles.show_scene_text is True and settings.llm.max_revisions == 1
+
+    with pytest.raises(ConfigEditError):
+        set_value(path, "llm.max_revisions", "много")
+    with pytest.raises(ConfigEditError):
+        set_value(path, "voice.no_such_field", "1")
+    assert path.read_text(encoding="utf-8") == text  # при ошибке файл не испорчен
+
+    live = Settings()
+    apply_to(live, "subtitles.show_scene_text", True)
+    assert live.subtitles.show_scene_text is True

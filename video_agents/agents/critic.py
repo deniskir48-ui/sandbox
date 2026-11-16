@@ -29,9 +29,14 @@ class CriticAgent:
 
     def review(self, idea: VideoIdea, script: Script) -> Review:
         words = len(script.full_text.split())
+        if idea.source_text:
+            subject = ("Ролик - адаптация поста автора из Threads. Проверь, что смысл, факты и интонация автора "
+                       f"сохранены и ничего не выдумано сверх поста. Пост:\n«{idea.source_text}»\n")
+        else:
+            subject = f"Проблема зрителя: {idea.viewer_problem}\nТема: {idea.topic}\n"
         prompt = (
             f"{channel_brief(self.channel)}\n\n"
-            f"Проблема зрителя: {idea.viewer_problem}\nТема: {idea.topic}\n"
+            f"{subject}"
             f"Сценарий (JSON):\n{script.model_dump_json(indent=2)}\n\n"
             f"В тексте диктора {words} слов (~{words / words_per_second(self.channel):.0f} секунд), "
             f"обычно ~{target_words(self.channel)} слов, максимум - {word_budget(self.channel)}.\n"

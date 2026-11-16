@@ -22,6 +22,8 @@ def job_keyboard(job: Job) -> dict | None:
 
 def job_caption(job: Job) -> str:
     lines = [f"🎬 {job.idea.topic if job.idea else job.id}"]
+    if job.idea and job.idea.source_post_id:
+        lines.append("📎 по вашему посту из Threads")
     details = []
     if job.duration:
         details.append(f"{job.duration:.0f} с")

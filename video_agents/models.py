@@ -7,6 +7,7 @@ from typing import Literal
 from uuid import uuid4
 
 from pydantic import BaseModel, Field, model_validator
+from pydantic.json_schema import SkipJsonSchema
 
 
 # --- Ответы агентов (structured outputs) ---
@@ -23,6 +24,9 @@ class VideoIdea(BaseModel):
     angle: str = Field(description="Чем ответ полезен и неожидан: простое конкретное решение знакомой проблемы")
     hook: str = Field(description="Первая фраза ролика: называет проблему зрителя и останавливает скролл")
     why_it_works: str = Field(description="Почему это зайдёт аудитории, 1-2 предложения")
+    # Не для модели (скрыто из схемы ответа): заполняется, когда ролик - адаптация поста автора из Threads.
+    source_post_id: SkipJsonSchema[str] = ""
+    source_text: SkipJsonSchema[str] = ""
 
     @model_validator(mode="before")
     @classmethod

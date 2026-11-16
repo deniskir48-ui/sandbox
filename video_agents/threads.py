@@ -8,8 +8,9 @@ from __future__ import annotations
 
 import json
 import logging
+import statistics
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import requests
@@ -264,3 +265,42 @@ def fetch_trend_posts(app_token: str, trend_id: str, kind: str = "top", limit: i
         raise ThreadsError("Посты по трендам Meta отдаёт только после одобрения функции "
                            f"«Threads Trending Topics» для приложения (advanced access). Ответ API: {exc}") from exc
     return page.get("data", [])
+
+
+# --- Ролики из постов: какие посты переделывать и в каком порядке ---
+
+
+def pick_posts(posts: list[dict], used_ids: set[str], count: int, min_views: int | None = None,
+               min_age_days: float = 2, min_chars: int = 80, now: datetime | None = None) -> list[dict]:
+    """Следующие посты для роликов: от старых к новым, с просмотрами не ниже порога, каждый один раз.
+
+    Порог по умолчанию - медиана по всем постам автора (по просмотрам, а без них - по реакциям).
+    Свежие посты ждут min_age_days, чтобы успеть набрать просмотры.
+    """
+    now = now or datetime.now()
+    scores = [score(p) for p in posts if score(p) > 0]
+    threshold = min_views if min_views is not None else (statistics.median(scores) if scores else 0)
+    candidates = []
+    for post in posts:
+        moment = published_at(post)
+        if (post.get("id") in used_ids or post.get("media_type") == "REPOST_FACADE"
+                or len((post.get("text") or "").strip()) < min_chars
+                or moment is None or now - moment < timedelta(days=min_age_days)
+                or score(post) < threshold):
+            continue
+        candidates.append((moment, post))
+    candidates.sort(key=lambda item: item[0])
+    return [post for _, post in candidates[:count]]
+
+
+def post_to_idea(post: dict):
+    from .models import VideoIdea
+
+    text = " ".join((post.get("text") or "").split())
+    stats = ", ".join(f"{name} {post[name]}" for name in METRICS if post.get(name))
+    return VideoIdea(
+        viewer_problem=text[:120], relatability=10, topic=text[:80],
+        angle="адаптация поста автора из Threads", hook="на усмотрение сценариста",
+        why_it_works=f"Пост уже зашёл аудитории в Threads ({stats or 'есть отклик'})",
+        source_post_id=str(post["id"]), source_text=post.get("text", ""),
+    )

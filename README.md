@@ -56,6 +56,7 @@ python -m video_agents publish <id>               # опубликовать п�
 python -m video_agents publish <id> --platform youtube
 python -m video_agents render <id>                # пересобрать видео после ручной правки job.json
 python -m video_agents update                     # обновить программу до последней версии с GitHub
+python -m video_agents set subtitles.show_scene_text true   # изменить одну настройку config.yaml
 ```
 
 По умолчанию `auto_publish: false`: агенты делают ролик, вы смотрите `final.mp4` и запускаете
@@ -136,6 +137,16 @@ python -m video_agents update                     # обновить прогр�
 сохраняются), переключает голос (мужской или женский русский) и заменяет очередь тем на предложенные
 (старая очередь - в `workspace/ideas_queue.backup.json`). Для русского языка длина считается по 2 словам
 в секунду.
+
+### Ролики из ваших постов в Threads
+
+`python -m video_agents set channel.source threads` - темы роликов берутся из ваших постов: от старых
+к новым, только с просмотрами не ниже медианы по аккаунту (`threads.min_views`), свежим постам даётся
+`threads.min_age_days` (2 дня) набрать просмотры, слишком короткие (`threads.min_post_chars`) пропускаются,
+каждый пост используется один раз. Сценарист адаптирует пост под короткий ролик, сохраняя голос автора,
+редактор проверяет, что ничего не выдумано. Когда подходящих постов нет - тему придумывает агент идей.
+Темы из очереди (`queue`) по-прежнему идут первыми. Посмотреть, какие посты пойдут следующими:
+`python -m video_agents threads --next`.
 
 ### Тренды Threads
 

@@ -143,3 +143,28 @@ def test_trend_posts_explain_missing_approval(monkeypatch):
     monkeypatch.setattr(threads, "_get", denied)
     with pytest.raises(threads.ThreadsError, match="одобрения"):
         threads.fetch_trend_posts("TH|1|2", "9876543210123456")
+
+
+def _post(pid, days_ago, views, text="Пост достаточно длинный, чтобы из него получился ролик: " * 2):
+    from datetime import datetime, timedelta, timezone
+
+    moment = datetime.now(timezone.utc) - timedelta(days=days_ago)
+    return {"id": pid, "text": text, "views": views, "timestamp": moment.strftime("%Y-%m-%dT%H:%M:%S%z"),
+            "media_type": "TEXT_POST"}
+
+
+def test_pick_posts_oldest_first_above_median_once():
+    posts = [_post("new", 0.5, 5000), _post("mid", 30, 3000), _post("old", 400, 3500), _post("weak", 200, 10),
+             _post("weak2", 210, 10), _post("weak3", 220, 10), _post("short", 300, 5000, text="коротко"),
+             _post("used", 500, 9000), _post("older", 450, 600)]
+    # медиана по всем постам = 3000 → «weak*» и «older» (600) не проходят; «new» ещё слишком свежий
+    picked = threads.pick_posts(posts, used_ids={"used"}, count=5)
+    assert [p["id"] for p in picked] == ["old", "mid"]
+    assert [p["id"] for p in threads.pick_posts(posts, {"used"}, 5, min_views=500)] == ["older", "old", "mid"]
+    assert [p["id"] for p in threads.pick_posts(posts, {"used"}, 5, min_age_days=0)][-1] == "new"
+
+
+def test_post_to_idea_keeps_source():
+    idea = threads.post_to_idea({"id": 42, "text": "Жираф по-гречески", "views": 467000, "likes": 9000})
+    assert idea.source_post_id == "42" and idea.source_text == "Жираф по-гречески"
+    assert "views 467000" in idea.why_it_works

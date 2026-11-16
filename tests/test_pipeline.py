@@ -425,3 +425,32 @@ def test_costs_are_tracked_per_job_and_stage(settings, monkeypatch):
     assert "fallbacks" not in haiku_request and "betas" not in haiku_request
     assert all(r.get("fallbacks") == "default" for r in requests if r["model"] != "claude-haiku-5-5")
     assert {r["model"] for r in requests} == {"claude-opus-5-5", "claude-sonnet-5-5", "claude-haiku-5-5"}
+
+
+def test_threads_source_turns_posts_into_videos_once(settings):
+    from datetime import datetime, timedelta, timezone
+
+    from video_agents import threads
+
+    old = (datetime.now(timezone.utc) - timedelta(days=100)).strftime("%Y-%m-%dT%H:%M:%S%z")
+    long_text = "Сижу учу греческий, никого не трогаю, и тут жираф оказывается верблюдом-леопардом. " * 2
+    threads.save_posts([{"id": "g1", "text": long_text, "views": 467000, "timestamp": old}],
+                       Path(settings.workspace))
+    settings.channel.source = "threads"
+
+    class SpyLLM(FakeLLM):
+        prompts = []
+
+        def structured(self, *, output_model, prompt, **kw):
+            self.prompts.append(prompt)
+            return super().structured(output_model=output_model, prompt=prompt, **kw)
+
+    llm = SpyLLM()
+    pipeline = Pipeline(settings, llm=llm, producer=VideoProducer(settings, FakeTTS()))
+    [job] = pipeline.run(publish=False)
+    assert job.idea.source_post_id == "g1"
+    assert "IdeaList" not in llm.calls  # тема взята из поста, агент идей не нужен
+    assert any("верблюдом-леопардом" in p and "адаптация поста" in p for p in llm.prompts)
+
+    [job2] = pipeline.run(publish=False)  # пост уже использован - тему придумывает агент
+    assert job2.idea.source_post_id == "" and "IdeaList" in llm.calls

@@ -21,6 +21,9 @@ class ChannelConfig(BaseModel):
     extra_rules: list[str] = Field(default_factory=list)
     # Добавляется в конец описания YouTube и подписи Instagram (например, «not medical advice»).
     disclaimer: str = ""
+    # Откуда брать темы: ideas - придумывает агент; threads - переделки ваших постов из Threads
+    # (от старых к новым, только с нормальными просмотрами), а когда подходящих нет - снова агент.
+    source: Literal["ideas", "threads"] = "ideas"
 
 
 class LLMConfig(BaseModel):
@@ -137,6 +140,10 @@ class Secrets(BaseModel):
 
 class ThreadsConfig(BaseModel):
     trends_country: Literal["US", "JP"] = "US"  # Meta отдаёт тренды только для США и Японии
+    # Какие посты переделывать в ролики (channel.source: threads):
+    min_views: int | None = None  # не меньше стольких просмотров; пусто - медиана по вашим постам
+    min_age_days: float = 2  # свежему посту даём набрать просмотры, прежде чем решать
+    min_post_chars: int = 80  # из совсем коротких постов ролик не сделать
 
 
 class Settings(BaseModel):
