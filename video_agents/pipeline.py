@@ -85,12 +85,14 @@ class Pipeline:
     def producer(self):
         # Создаём лениво: для генерации идей и публикации TTS/футажи не нужны.
         if self._producer is None:
-            from .production import VideoProducer, make_footage, make_tts
+            from .production import VideoProducer, make_ai_images, make_footage, make_tts
 
             tts = make_tts(self.settings.voice, self.settings.secrets)
             footage = make_footage(self.settings.footage, self.settings.secrets, Path(self.settings.workspace) / "footage_cache")
             editor = FootageEditorAgent(self.llms["footage"]) if footage and self.settings.footage.ai_selection else None
-            self._producer = VideoProducer(self.settings, tts, footage, editor)
+            images = make_ai_images(self.settings.footage, self.settings.secrets,
+                                    Path(self.settings.workspace) / "footage_cache")
+            self._producer = VideoProducer(self.settings, tts, footage, editor, images)
         return self._producer
 
     # --- Этапы ---

@@ -1,4 +1,4 @@
-"""Подбор стоковых видео для фона (Pexels или Pixabay, оба бесплатные)."""
+"""Подбор стоковых видео и фото для фона (Pexels или Pixabay, оба бесплатные)."""
 
 from __future__ import annotations
 
@@ -17,6 +17,7 @@ class Clip:
     duration: float
     url: str
     preview_url: str = ""
+    kind: str = "video"  # video | image (стоковое фото)
 
 
 class StockFootage:
@@ -33,6 +34,10 @@ class StockFootage:
         """Ролики в порядке релевантности, как их отдаёт сток."""
         raise NotImplementedError
 
+    def search_photos(self, query: str) -> list[Clip]:
+        """Фото (их на стоках в разы больше, чем видео) - когда подходящего видео нет."""
+        return []
+
     def preview(self, clip: Clip) -> bytes | None:
         if not clip.preview_url:
             return None
@@ -41,7 +46,8 @@ class StockFootage:
         return response.content
 
     def download(self, clip: Clip) -> Path:
-        path = self.cache_dir / f"{self.name}_{clip.id}.mp4"
+        suffix = ".jpg" if clip.kind == "image" else ".mp4"
+        path = self.cache_dir / f"{self.name}_{clip.kind}_{clip.id}{suffix}"
         if path.exists() and path.stat().st_size > 0:
             return path
         with requests.get(clip.url, stream=True, timeout=120) as response:
@@ -80,6 +86,18 @@ class PexelsFootage(StockFootage):
         return clips
 
 
+    def search_photos(self, query: str) -> list[Clip]:
+        response = requests.get(
+            "https://api.pexels.com/v1/search",
+            headers={"Authorization": self.api_key},
+            params={"query": query, "orientation": "portrait", "per_page": 15},
+            timeout=30,
+        )
+        response.raise_for_status()
+        return [Clip(photo["id"], 0, photo["src"]["large2x"], photo["src"].get("medium", ""), "image")
+                for photo in response.json().get("photos", []) if photo.get("src", {}).get("large2x")]
+
+
 class PixabayFootage(StockFootage):
     """Вертикальных роликов на Pixabay мало, поэтому берём любые и обрезаем под 9:16."""
 
@@ -109,6 +127,18 @@ class PixabayFootage(StockFootage):
         return clips
 
 
+    def search_photos(self, query: str) -> list[Clip]:
+        response = requests.get(
+            "https://pixabay.com/api/",
+            params={"key": self.api_key, "q": query[:100], "image_type": "photo", "orientation": "vertical",
+                    "safesearch": "true", "per_page": 20},
+            timeout=30,
+        )
+        response.raise_for_status()
+        return [Clip(hit["id"], 0, hit["largeImageURL"], hit.get("webformatURL", ""), "image")
+                for hit in response.json().get("hits", []) if hit.get("largeImageURL")]
+
+
 def make_footage(footage_config, secrets, cache_dir: Path) -> StockFootage | None:
     provider = footage_config.provider
     if provider in ("auto", "pexels") and secrets.pexels_api_key:
@@ -116,5 +146,5 @@ def make_footage(footage_config, secrets, cache_dir: Path) -> StockFootage | Non
     if provider in ("auto", "pixabay") and secrets.pixabay_api_key:
         return PixabayFootage(secrets.pixabay_api_key, cache_dir)
     if provider != "none":
-        log.warning("Нет ключа PEXELS_API_KEY или PIXABAY_API_KEY - вместо видео будут цветные фоны")
+        log.warning("Нет ключа PEXELS_API_KEY или PIXABAY_API_KEY - стоковых видео не будет, только картинки ИИ")
     return None

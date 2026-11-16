@@ -55,6 +55,9 @@ class FootageConfig(BaseModel):
     provider: Literal["auto", "pexels", "pixabay", "none"] = "auto"
     ai_selection: bool = True  # агент-монтажёр смотрит превью и выбирает подходящее видео
     candidates: int = 4  # сколько вариантов показывать ему на каждый запрос
+    photos: bool = True  # нет подходящего видео - ищем стоковое фото (оживляется наездом камеры)
+    # Нет ни видео, ни фото - картинка ИИ: pollinations (бесплатно) | none (цветной фон)
+    ai_images: Literal["pollinations", "none"] = "pollinations"
     fallback_colors: list[str] = Field(default_factory=lambda: ["#0f2027", "#203a43", "#2c5364"])
 
 
@@ -124,6 +127,7 @@ class Secrets(BaseModel):
     telegram_file: str = "secrets/telegram.json"  # токен бота и чат владельца (python -m video_agents auth telegram)
     threads_token_file: str = "secrets/threads_token.json"  # ключ Threads для выгрузки статистики
     threads_app_file: str = "secrets/threads_app.json"  # ID и секрет приложения Threads (для трендов)
+    pollinations_token: str | None = None  # необязательно: картинки ИИ лучше и без водяного знака
     tiktok_client_key: str | None = None
     tiktok_client_secret: str | None = None
     tiktok_redirect_uri: str | None = None

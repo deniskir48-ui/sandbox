@@ -202,20 +202,43 @@ def test_long_script_is_shortened(settings):
 
 
 class FakeFootage:
-    def __init__(self, results):
+    def __init__(self, results, photos=None):
         self.results = results  # запрос -> список Clip
+        self.photos = photos or {}  # запрос -> список фото (Clip с kind="image")
         self.downloaded = []
 
     def search(self, query):
         return self.results.get(query, [])
+
+    def search_photos(self, query):
+        return self.photos.get(query, [])
 
     def preview(self, clip):
         return b"\xff\xd8 fake jpeg " + str(clip.id).encode()
 
     def download(self, clip):
         self.downloaded.append(clip.id)
+        if clip.kind == "image":
+            path = Path(self._dir) / f"photo_{clip.id}.jpg"
+            run_ffmpeg(["-f", "lavfi", "-i", "testsrc2=s=400x600", "-frames:v", "1", str(path)])
+            return path
         path = Path(self._dir) / f"{clip.id}.mp4"
         run_ffmpeg(["-f", "lavfi", "-i", "testsrc2=s=640x360:r=15:d=1", "-pix_fmt", "yuv420p", str(path)])
+        return path
+
+
+class FakeImages:
+    watermarked = True
+
+    def __init__(self, tmp_path, fail=False):
+        self.tmp_path, self.fail, self.prompts = tmp_path, fail, []
+
+    def generate(self, subject, seed=1):
+        self.prompts.append(subject)
+        if self.fail:
+            raise RuntimeError("сервис занят")
+        path = Path(self.tmp_path) / f"ai_{seed}.jpg"
+        run_ffmpeg(["-f", "lavfi", "-i", "color=c=blue:s=576x1024", "-frames:v", "1", str(path)])
         return path
 
 
@@ -559,3 +582,71 @@ def test_excluded_topics_reach_screener_and_reset_cache(settings):
 
     PostScreenerAgent(Spy(), settings.channel, exclude_topics=["работа в IT"]).screen([{"id": "1", "text": "t"}])
     assert "работа в IT" in systems[-1]
+
+
+def _plans(monkeypatch):
+    from video_agents.production import render
+
+    plans = []
+    original = render.VideoProducer._render_scene
+    monkeypatch.setattr(render.VideoProducer, "_render_scene",
+                        lambda self, plan, *a: plans.append(plan) or original(self, plan, *a))
+    return plans
+
+
+def test_photo_when_no_video_fits_then_ai_image(settings, tmp_path, monkeypatch):
+    from video_agents.production.footage import Clip
+
+    plans = _plans(monkeypatch)
+    # Сцена 1: видео нет, есть фото; сцена 2: ни видео, ни фото - рисуем картинку.
+    footage = FakeFootage({}, photos={"venus planet": [Clip(11, 0, "p11", kind="image")]})
+    footage._dir = tmp_path
+    images = FakeImages(tmp_path)
+    result = VideoProducer(settings, FakeTTS(), footage, None, images).produce(_two_scene_script(), tmp_path / "job")
+    assert [plan.kind for plan in plans] == ["image", "image"]
+    assert footage.downloaded == [11]
+    assert images.prompts == ["night sky"]
+    assert plans[1].trim_bottom > 0  # водяной знак бесплатного генератора срезаем
+    assert result.duration > 0
+
+
+def test_editor_checks_photos_too_and_color_is_the_last_resort(settings, tmp_path, monkeypatch):
+    from video_agents.production.footage import Clip
+
+    plans = _plans(monkeypatch)
+    footage = FakeFootage({}, photos={"venus planet": [Clip(11, 0, "p11", kind="image")]})
+    footage._dir = tmp_path
+    editor = FakeEditor([None])  # фото про другое - отклонено
+    images = FakeImages(tmp_path, fail=True)  # и генератор не ответил
+    script = _two_scene_script().model_copy(update={"scenes": _two_scene_script().scenes[:1]})
+    VideoProducer(settings, FakeTTS(), footage, editor, images).produce(script, tmp_path / "job")
+    assert editor.seen == [(1, False)]
+    assert plans == [None]  # цветной фон - только когда не нашлось совсем ничего
+
+
+def test_pollinations_retries_and_caches(tmp_path, monkeypatch):
+    from video_agents.production import ai_images
+
+    calls = []
+
+    class Response:
+        def __init__(self, ok):
+            self.ok = ok
+            self.headers = {"Content-Type": "image/jpeg" if ok else "text/html"}
+            self.content = b"\xff\xd8jpeg"
+
+        def raise_for_status(self):
+            pass
+
+    def fake_get(url, params, headers, timeout):
+        calls.append((url, params, headers))
+        return Response(ok=len(calls) > 1)
+
+    monkeypatch.setattr(ai_images.requests, "get", fake_get)
+    generator = ai_images.PollinationsImages(tmp_path, pause=0)
+    path = generator.generate("pharmacy counter", seed=3)
+    assert path.read_bytes() == b"\xff\xd8jpeg" and len(calls) == 2
+    assert "pharmacy%20counter" in calls[0][0] and "no%20text" in calls[0][0]
+    assert calls[0][1]["width"] == 1080 and calls[0][1]["height"] == 1920 and calls[0][2] == {}
+    assert generator.generate("pharmacy counter", seed=3) == path and len(calls) == 2  # из кэша
+    assert generator.watermarked and not ai_images.PollinationsImages(tmp_path, "tok").watermarked

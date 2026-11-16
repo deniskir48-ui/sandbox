@@ -37,6 +37,8 @@ class ClipPlan:
 
     path: Path
     start: float = 0.0
+    kind: str = "video"  # video | image (стоковое фото или картинка ИИ - оживляем наездом камеры)
+    trim_bottom: float = 0.0  # доля кадра снизу, которую срезаем (водяной знак бесплатного генератора)
 
 
 def speech_window(speech, lead: float = 0.04, tail: float = 0.08) -> tuple[float, float]:
@@ -55,7 +57,7 @@ def _first_long_enough(clips: list[Clip], duration: float) -> Clip:
 
 
 class VideoProducer:
-    def __init__(self, settings, tts: TTSProvider, footage=None, editor=None):
+    def __init__(self, settings, tts: TTSProvider, footage=None, editor=None, images=None):
         self.video = settings.video
         self.subs = settings.subtitles
         self.colors = settings.footage.fallback_colors
@@ -63,6 +65,8 @@ class VideoProducer:
         self.tts = tts
         self.footage = footage
         self.editor = editor
+        self.images = images  # генератор картинок ИИ - последний вариант кадра
+        self.photos = settings.footage.photos
         self._crop_cache: dict[Path, str | None] = {}
 
     def produce(self, script: Script, job_dir: Path) -> RenderResult:
@@ -73,7 +77,7 @@ class VideoProducer:
         scene_audio: list[Path] = []
         scene_video: list[Path] = []
         captions: list[tuple[float, float, str]] = []
-        used_footage: set[int] = set()
+        used_footage: set[tuple[str, int]] = set()
         previous: ClipPlan | None = None
         cursor = 0.0
 
@@ -93,11 +97,11 @@ class VideoProducer:
             if self.subs.show_scene_text and scene.on_screen_text.strip():
                 captions.append((cursor, cursor + duration, scene.on_screen_text.strip()))
 
-            plan = self._find_clip(scene, script, duration, used_footage, previous)
+            plan = self._find_clip(scene, script, duration, used_footage, previous, seed=i + 1)
             video_path = job_dir / f"scene_{i:02d}.mp4"
             self._render_scene(plan, duration, video_path, self.colors[i % len(self.colors)])
             if plan:
-                previous = ClipPlan(plan.path, plan.start + duration)
+                previous = ClipPlan(plan.path, plan.start + duration, plan.kind, plan.trim_bottom)
             scene_video.append(video_path)
             cursor += duration
 
@@ -113,52 +117,72 @@ class VideoProducer:
         self._final_mix(job_dir, raw_video, narration, final)
         return RenderResult(final, probe_duration(final))
 
-    def _find_clip(self, scene, script: Script, duration: float, used: set[int],
-                   previous: ClipPlan | None) -> ClipPlan | None:
-        """Ищет видео к сцене: запросы сцены, затем общие запросы ролика.
+    def _find_clip(self, scene, script: Script, duration: float, used: set[tuple[str, int]],
+                   previous: ClipPlan | None, seed: int = 1) -> ClipPlan | None:
+        """Ищет кадр к сцене, от лучшего к худшему:
 
-        Монтажёр сначала ищет точный кадр, потом - хотя бы подходящий по теме. Если подходящего нет,
-        продолжаем видео предыдущей сцены: это лучше, чем случайный кадр про другое.
+        1. стоковое видео точно к словам (запросы сцены, затем общие запросы ролика);
+        2. стоковое фото точно к словам (фото на стоках в разы больше, чем видео);
+        3. картинка ИИ по описанию кадра;
+        4. видео хотя бы по общей теме ролика;
+        5. продолжение кадра предыдущей сцены; и только если ничего нет - цветной фон.
         """
-        if not self.footage:
-            return None
-        queries = list(dict.fromkeys(scene.visual_queries + script.backup_queries))
         pool: list[Clip] = []
-        chosen = None
+        if self.footage:
+            queries = list(dict.fromkeys(scene.visual_queries + script.backup_queries))
+            chosen = self._search(self.footage.search, queries, scene, script, duration, used, pool)
+            if not chosen and self.photos:
+                chosen = self._search(self.footage.search_photos, scene.visual_queries[:2], scene, script,
+                                      duration, used, None)
+            if chosen:
+                return self._download(chosen, used, previous)
+        if self.images and scene.visual_queries:
+            try:
+                path = self.images.generate(scene.visual_queries[0], seed=seed)
+                log.info("Кадра на стоках нет - нарисовал картинку: %s", scene.visual_queries[0])
+                return ClipPlan(path, kind="image", trim_bottom=0.06 if self.images.watermarked else 0.0)
+            except Exception as exc:
+                log.warning("Картинку нарисовать не удалось: %s", exc)
+        if pool:
+            chosen = self._ask_editor(pool[:10], scene.narration, script.title, relaxed=True)
+            if chosen:
+                log.info("Монтажёр взял кадр, подходящий к общей теме ролика")
+                return self._download(chosen, used, previous)
+        if previous:
+            log.info("Подходящего кадра нет - продолжаем кадр предыдущей сцены")
+            return previous
+        log.warning("Подходящего кадра нет - будет цветной фон")
+        return None
+
+    def _search(self, search, queries: list[str], scene, script: Script, duration: float,
+                used: set[tuple[str, int]], pool: list[Clip] | None) -> Clip | None:
         for query in queries:
             try:
-                clips = [c for c in self.footage.search(query) if c.id not in used][:self.candidates]
+                clips = [c for c in search(query) if (c.kind, c.id) not in used][:self.candidates]
             except Exception as exc:
-                log.warning("Поиск видео '%s' не удался: %s", query, exc)
+                log.warning("Поиск '%s' не удался: %s", query, exc)
                 continue
             if not clips:
                 continue
             if not self.editor:
-                chosen = _first_long_enough(clips, duration)
-                break
-            pool.extend(c for c in clips[:2] if c.id not in {p.id for p in pool})
+                return _first_long_enough(clips, duration) if clips[0].kind == "video" else clips[0]
+            if pool is not None:
+                pool.extend(c for c in clips[:2] if c.id not in {p.id for p in pool})
             chosen = self._ask_editor(clips, scene.narration, script.title)
             if chosen:
-                log.info("Монтажёр выбрал видео по запросу '%s'", query)
-                break
-            log.info("Монтажёр не нашёл подходящего видео по запросу '%s'", query)
-        if not chosen and pool:
-            chosen = self._ask_editor(pool[:10], scene.narration, script.title, relaxed=True)
-            if chosen:
-                log.info("Монтажёр взял кадр, подходящий к общей теме ролика")
-        if not chosen:
-            if previous:
-                log.info("Подходящего видео нет - продолжаем кадр предыдущей сцены")
-                return previous
-            log.warning("Подходящего видео нет - будет цветной фон")
-            return None
+                log.info("Монтажёр выбрал %s по запросу '%s'", "фото" if chosen.kind == "image" else "видео", query)
+                return chosen
+            log.info("Монтажёр не нашёл подходящего кадра по запросу '%s'", query)
+        return None
+
+    def _download(self, chosen: Clip, used: set[tuple[str, int]], previous: ClipPlan | None) -> ClipPlan | None:
         try:
             path = self.footage.download(chosen)
         except Exception as exc:
-            log.warning("Не удалось скачать видео %s: %s", chosen.id, exc)
+            log.warning("Не удалось скачать %s: %s", chosen.id, exc)
             return previous
-        used.add(chosen.id)
-        return ClipPlan(path)
+        used.add((chosen.kind, chosen.id))
+        return ClipPlan(path, kind=chosen.kind)
 
     def _ask_editor(self, clips: list[Clip], narration: str, title: str, relaxed: bool = False) -> Clip | None:
         with_previews = []
@@ -183,7 +207,14 @@ class VideoProducer:
         w, h, fps = self.video.width, self.video.height, self.video.fps
         encode = ["-t", f"{duration:.3f}", "-an", "-c:v", "libx264", "-preset", "veryfast",
                   "-crf", "20", "-pix_fmt", "yuv420p", str(out)]
-        if plan:
+        if plan and plan.kind == "image":
+            # Фото или картинка ИИ: заполняем кадр 9:16 и медленно наезжаем камерой, чтобы кадр жил.
+            trim = f"crop=iw:ih*{1 - plan.trim_bottom:.3f}:0:0," if plan.trim_bottom else ""
+            vf = (f"{trim}scale={w}:{h}:force_original_aspect_ratio=increase,crop={w}:{h},"
+                  f"scale=w='{w}*(1+0.08*t/{duration:.3f})':h=-2:eval=frame,crop={w}:{h},"
+                  f"fps={fps},setsar=1")
+            run_ffmpeg(["-loop", "1", "-framerate", str(fps), "-i", str(plan.path), "-vf", vf, *encode])
+        elif plan:
             # Убираем чёрные полосы исходника, заполняем кадр 9:16 и даём лёгкий наезд камеры.
             borders = self._borders(plan.path)
             vf = (f"{borders + ',' if borders else ''}"
