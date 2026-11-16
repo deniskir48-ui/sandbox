@@ -183,3 +183,21 @@ def test_shortcut_survives_odd_powershell_output(monkeypatch):
 
     monkeypatch.setattr(desktop.subprocess, "run", failing_run)
     assert desktop.install_shortcut() is None
+
+
+def test_redraft_picks_up_the_full_thread_text(app):
+    from pathlib import Path
+
+    from video_agents import threads
+    from video_agents.models import VideoIdea
+
+    pipeline = app.pipeline()
+    idea = VideoIdea(viewer_problem="аптеки", topic="Аптеки на Кипре", angle="пост", hook="-", why_it_works="-",
+                     source_post_id="root", source_text="Аптеки на Кипре работают не всегда.")
+    pipeline.enqueue([idea])
+    post(app, "make")
+    job = state(app)["jobs"][0]
+    full = "Аптеки на Кипре работают не всегда.\n\nНо всегда есть дежурная аптека."
+    threads.save_posts([{"id": "root", "text": full}], Path(pipeline.settings.workspace))
+    post(app, "redraft", job=job["id"])
+    assert pipeline.store.load(job["id"]).idea.source_text == full

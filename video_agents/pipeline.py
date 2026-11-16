@@ -87,6 +87,8 @@ class Pipeline:
 
         workspace = Path(self.settings.workspace)
         posts = threads.load_posts(workspace, max_age_hours=24)  # свежим постам нужна свежая статистика
+        if posts is not None and not threads.has_continuations_info(workspace):
+            posts = None  # выгрузка старой версии - без продолжений постов-цепочек: выгружаем заново
         if posts is None:
             try:
                 posts = threads.refresh(self.settings.secrets, workspace)
@@ -112,7 +114,7 @@ class Pipeline:
         config = self.settings.threads
         return (f"{self.settings.channel.niche}|topic_filter={config.topic_filter}"
                 f"|exclude={'; '.join(config.exclude_topics)}|rubrics={'; '.join(config.priorities)}"
-                f"|v3")  # v3: рубрики и дайджесты
+                f"|v4")  # v4: посты-цепочки целиком (с продолжениями)
 
     def _screen_posts(self, fresh: list[dict], backlog: list[dict], count: int) -> list[dict]:
         """Выбирает посты для роликов.
@@ -247,6 +249,7 @@ class Pipeline:
         """Другой вариант сценария: с указаниями автора - правка текущего, без них - новый с нуля."""
         comment = comment.strip()
         job.error = None
+        self._refresh_source(job)
         if not comment:
             job.reviews = []
             return self.write(job)
@@ -257,6 +260,28 @@ class Pipeline:
             script = self._fit_length(job, self.writer.revise(job.idea, job.script, note))
             self._finish_script(job, script)
         return job
+
+    def _refresh_source(self, job: Job) -> None:
+        """Подтягивает текст поста заново: например, ролик сделан, когда продолжения цепочки ещё не склеивались."""
+        if not job.idea or not job.idea.source_post_id:
+            return
+        from . import threads
+
+        workspace = Path(self.settings.workspace)
+        try:
+            if threads.has_continuations_info(workspace):
+                posts = threads.load_posts(workspace) or []
+            else:
+                posts = threads.refresh(self.settings.secrets, workspace)
+        except Exception as exc:
+            log.warning("Не удалось обновить текст поста из Threads: %s", exc)
+            return
+        for post in posts:
+            if str(post.get("id")) == job.idea.source_post_id and post.get("text") \
+                    and post["text"] != job.idea.source_text:
+                job.idea = job.idea.model_copy(update={"source_text": post["text"]})
+                log.info("Текст поста обновлён: теперь в нём %d символов", len(post["text"]))
+                return
 
     def edit_script(self, job: Job, lines: list[str]) -> Job:
         """Автор поправил текст диктора руками (фраза - строка). Число фраз поменялось - подбираем кадры заново."""
