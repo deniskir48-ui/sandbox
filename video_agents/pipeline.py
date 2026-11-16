@@ -11,7 +11,7 @@ from typing import Callable
 from .agents import CriticAgent, FootageEditorAgent, IdeaAgent, MetadataAgent, ScriptwriterAgent
 from .agents.brief import word_budget
 from .config import Settings
-from .models import Job, UploadResult, VideoIdea, manual_idea
+from .models import Job, Review, UploadResult, VideoIdea, manual_idea
 from .publishers import Publisher, is_configured, make_publisher
 from .storage import JobStore
 
@@ -215,13 +215,76 @@ class Pipeline:
                 script = self.writer.revise(job.idea, script, review)
             script = self._fit_length(job, script)
             job.script = script
-            job.meta = self.meta_agent.generate(script, job.idea.source_text)
-            disclaimer = self.settings.channel.disclaimer.strip()
-            if disclaimer:
-                job.meta.youtube_description += f"\n\n{disclaimer}"
-                job.meta.instagram_caption += f"\n\n{disclaimer}"
-            job.status = "scripted"
+            self._finish_script(job, script)
             return job
+
+    # --- Сценарий на согласование: автор смотрит текст, правит или просит другой вариант, потом - видео ---
+
+    def draft(self, topic: str | None = None) -> Job:
+        """Пишет сценарий следующего ролика и останавливается: видео - только после одобрения автора."""
+        ideas_cost: dict[str, float] = {}
+        if topic:
+            idea = manual_idea(topic)
+        else:
+            mark = self.ledger.mark() if self.ledger else 0
+            ideas = self._next_ideas(1)
+            ideas_cost = self.ledger.since(mark) if self.ledger else {}
+            idea = ideas[0]
+        job = Job(idea=idea)
+        self._add_cost(job, ideas_cost)
+        self.store.save(job)
+        try:
+            self.write(job)
+        except Exception as exc:
+            log.exception("Сценарий %s не получился", job.id)
+            if not topic:
+                self.enqueue([idea])
+            job.status, job.error = "failed", str(exc)
+            self.store.save(job)
+        return job
+
+    def redraft(self, job: Job, comment: str = "") -> Job:
+        """Другой вариант сценария: с указаниями автора - правка текущего, без них - новый с нуля."""
+        comment = comment.strip()
+        job.error = None
+        if not comment:
+            job.reviews = []
+            return self.write(job)
+        with self._costs(job):
+            self.progress("Переписываю сценарий по вашим замечаниям")
+            note = Review(score=0, approved=False, strengths=[], problems=[comment],
+                          rewrite_instructions=f"Замечания автора канала (главное - выполнить их): {comment}")
+            script = self._fit_length(job, self.writer.revise(job.idea, job.script, note))
+            self._finish_script(job, script)
+        return job
+
+    def edit_script(self, job: Job, lines: list[str]) -> Job:
+        """Автор поправил текст диктора руками (фраза - строка). Число фраз поменялось - подбираем кадры заново."""
+        lines = [" ".join(line.split()) for line in lines if line.strip()]
+        if not lines:
+            raise ValueError("Текст пустой")
+        with self._costs(job):
+            script = job.script
+            if len(lines) == len(script.scenes):
+                script = script.model_copy(update={"scenes": [
+                    scene.model_copy(update={"narration": line}) for scene, line in zip(script.scenes, lines)]})
+            else:
+                self.progress("Подбираю кадры к новому тексту")
+                script = self.writer.restage(job.idea, script, lines, llm=self.llms["metadata"])
+            self._finish_script(job, script)
+        return job
+
+    def _finish_script(self, job: Job, script) -> None:
+        job.script = script
+        job.meta = self.meta_agent.generate(script, job.idea.source_text)
+        self._add_disclaimer(job)
+        job.status = "scripted"
+
+    def _add_disclaimer(self, job: Job) -> None:
+        disclaimer = self.settings.channel.disclaimer.strip()
+        if disclaimer:
+            job.meta.youtube_description += f"\n\n{disclaimer}"
+            job.meta.instagram_caption += f"\n\n{disclaimer}"
 
     @contextmanager
     def _costs(self, job: Job):

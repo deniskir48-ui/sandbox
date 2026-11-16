@@ -26,6 +26,7 @@ from typing import Callable
 
 import requests
 
+from .agents.brief import words_per_second
 from .config import load_settings
 from .models import Job, manual_idea
 from .winproc import NO_WINDOW
@@ -174,13 +175,15 @@ class DesktopApp:
         topic = (data.get("topic") or "").strip() or None
 
         def work() -> None:
-            pipeline = self.pipeline()
-            publish = pipeline.settings.publish.auto_publish
-            for job in pipeline.run(count=1, topic=topic, publish=publish):
+            job = self.pipeline().draft(topic)
+            if job.status == "failed":
                 self._report(job)
+            else:
+                self.tasks.say(f"Сценарий готов: «{job.idea.topic}». Он в блоке «Сценарии на проверке»: "
+                               "поправьте при желании и нажмите «Снять видео».", "ok")
 
-        self.tasks.submit("Делаю ролик" + (f": {topic}" if topic else ""), work)
-        return "Начал делать ролик: это займёт несколько минут"
+        self.tasks.submit("Пишу сценарий" + (f": {topic}" if topic else ""), work)
+        return "Пишу сценарий: около минуты"
 
     def _report(self, job: Job) -> None:
         topic = job.idea.topic if job.idea else job.id
@@ -218,21 +221,72 @@ class DesktopApp:
         self.tasks.submit("Пересобираю видео", work)
         return "Пересобираю видео по тому же сценарию (это бесплатно)"
 
-    def do_rewrite(self, data: dict) -> str:
-        job_id = self._job(data)
+    def _lines(self, data: dict) -> list[str] | None:
+        text = data.get("text")
+        return None if text is None else [line for line in str(text).splitlines() if line.strip()]
+
+    @staticmethod
+    def _draft(store, job_id: str) -> Job:
+        job = store.load(job_id)
+        if not job.script:
+            raise ValueError("У ролика ещё нет сценария")
+        if any(upload.ok for upload in job.uploads.values()):
+            raise ValueError("Этот ролик уже опубликован - сделайте новый")
+        return job
+
+    def do_approve(self, data: dict) -> str:
+        """«Снять видео»: сохраняем правки текста (если были) и монтируем; публикуем, если включено."""
+        job_id, lines = self._job(data), self._lines(data)
 
         def work() -> None:
             pipeline = self.pipeline()
-            job = pipeline.store.load(job_id)
-            if any(upload.ok for upload in job.uploads.values()):
-                self.tasks.say("Этот ролик уже опубликован - сделайте новый.", "error")
-                return
-            job.reviews, job.error = [], None
-            pipeline.write(job)
-            self._report(pipeline.produce(job))
+            job = self._draft(pipeline.store, job_id)
+            if lines is not None and lines != [scene.narration for scene in job.script.scenes]:
+                pipeline.edit_script(job, lines)
+            try:
+                pipeline.produce(job)
+                if pipeline.settings.publish.auto_publish:
+                    pipeline.publish(job)
+            except Exception as exc:
+                job.status, job.error = "scripted", str(exc)  # сценарий не теряем: можно снять ещё раз
+                pipeline.store.save(job)
+                raise
+            self._report(job)
 
-        self.tasks.submit("Переписываю сценарий", work)
-        return "Пишу сценарий заново по той же теме"
+        self.tasks.submit("Монтирую видео", work)
+        return "Монтирую видео: пара минут"
+
+    def do_save_script(self, data: dict) -> str:
+        job_id, lines = self._job(data), self._lines(data) or []
+
+        def work() -> None:
+            pipeline = self.pipeline()
+            pipeline.edit_script(self._draft(pipeline.store, job_id), lines)
+            self.tasks.say("Правки сохранены", "ok")
+
+        self.tasks.submit("Сохраняю правки", work)
+        return "Сохраняю"
+
+    def do_redraft(self, data: dict) -> str:
+        job_id, comment = self._job(data), str(data.get("comment") or "")
+
+        def work() -> None:
+            pipeline = self.pipeline()
+            job = pipeline.redraft(self._draft(pipeline.store, job_id), comment)
+            self.tasks.say(f"Новый вариант сценария готов, ${job.cost_usd:.2f} за ролик всего", "ok")
+
+        self.tasks.submit("Пишу другой вариант сценария", work)
+        return "Пишу другой вариант"
+
+    def do_edit(self, data: dict) -> str:
+        """Вернуть готовый, но не опубликованный ролик к правке текста (бесплатно)."""
+        from .storage import JobStore
+
+        store = JobStore(self.settings().workspace)
+        job = self._draft(store, self._job(data))
+        job.status = "scripted"
+        store.save(job)
+        return "Текст открыт для правки"
 
     def do_reject(self, data: dict) -> str:
         from .storage import JobStore
@@ -377,6 +431,9 @@ def job_view(job: Job) -> dict:
         "uploads": [{"platform": u.platform, "ok": u.ok, "url": u.url or "", "error": u.error or ""}
                     for u in job.uploads.values()],
         "error": job.error or "",
+        "lines": [scene.narration for scene in job.script.scenes] if job.script else [],
+        "source": job.idea.source_text if job.idea else "",
+        "review": (f"{job.reviews[-1].score}/10" if job.reviews else ""),
         "date": job.created_at.astimezone().strftime("%d.%m %H:%M"),
     }
 
@@ -390,6 +447,7 @@ def settings_view(settings) -> dict:
         "auto_publish": settings.publish.auto_publish,
         "show_scene_text": settings.subtitles.show_scene_text,
         "source": settings.channel.source,
+        "words_per_second": words_per_second(settings.channel),
     }
 
 

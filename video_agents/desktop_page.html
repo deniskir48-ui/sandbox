@@ -50,6 +50,12 @@
   .jobs { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 16px; }
   .job { border: 1px solid var(--line); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
   .job video { width: 100%; aspect-ratio: 9 / 16; background: #000; display: block; }
+  .draft { border: 1px solid var(--line); border-radius: 12px; padding: 14px; margin-bottom: 14px; display: flex; flex-direction: column; gap: 8px; }
+  .draft:last-child { margin-bottom: 0; }
+  .draft textarea { width: 100%; font: inherit; font-size: 16px; line-height: 1.6; padding: 10px 12px; border-radius: 9px;
+                    border: 1px solid var(--line); background: var(--bg); color: var(--text); resize: vertical; }
+  .draft .actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+  .draft .actions input { flex: 1 1 220px; }
   .job .noimg { aspect-ratio: 9 / 16; display: grid; place-items: center; background: var(--bg); color: var(--muted); padding: 12px; text-align: center; }
   .job .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
   .job .topic { font-weight: 600; }
@@ -99,10 +105,14 @@
     <section>
       <h2>Новый ролик</h2>
       <div class="row">
-        <button class="primary big" id="make">🎬 Сделать ролик</button>
+        <button class="primary big" id="make">✍️ Написать сценарий</button>
         <input type="text" id="topic" placeholder="Своя тема (необязательно): иначе возьму следующую по очереди">
       </div>
       <p class="hint" id="make-hint"></p>
+    </section>
+    <section id="drafts-section" hidden>
+      <h2>Сценарии на проверке</h2>
+      <div id="drafts"></div>
     </section>
     <section>
       <h2>Ход работы</h2>
@@ -172,9 +182,9 @@
 <script>
 const TOKEN = "__TOKEN__";
 const STATUS = {produced: "ждёт проверки", published: "опубликован", partially_published: "опубликован частично",
-                failed: "не получился", new: "в работе", scripted: "в работе"};
+                failed: "не получился", new: "пишется...", scripted: "сценарий на проверке"};
 const PLATFORMS = {instagram: "Instagram", youtube: "YouTube", tiktok: "TikTok", threads: "Threads"};
-let state = null, lastJobs = "", lastQueue = "", lastPosts = "", lastLog = 0, settingsBusy = false;
+let state = null, lastDrafts = "", lastJobs = "", lastQueue = "", lastPosts = "", lastLog = 0, settingsBusy = false;
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
@@ -200,7 +210,7 @@ function renderJobs(jobs) {
   const key = JSON.stringify(jobs);
   if (key === lastJobs) return;
   lastJobs = key;
-  if (!jobs.length) { $("jobs").innerHTML = '<div class="empty">Роликов пока нет - нажмите «Сделать ролик».</div>'; return; }
+  if (!jobs.length) { $("jobs").innerHTML = '<div class="empty">Готовых роликов пока нет.</div>'; return; }
   // Не пересоздаём карточку, которая не менялась: иначе остановится видео, которое вы смотрите.
   const old = new Map([...$("jobs").children].map((el) => [el.dataset.key, el]));
   const frag = document.createDocumentFragment();
@@ -217,7 +227,7 @@ function renderJobs(jobs) {
         ? (u.url ? `<a href="${esc(u.url)}" target="_blank">✅ ${esc(PLATFORMS[u.platform] || u.platform)}</a>` : `<span>✅ ${esc(PLATFORMS[u.platform] || u.platform)}</span>`)
         : `<div class="bad">❌ ${esc(PLATFORMS[u.platform] || u.platform)}: ${esc(u.error).slice(0, 160)}</div>`).join("");
       const canPublish = job.has_video && (job.status === "produced" || job.status === "partially_published");
-      const canRerender = job.has_video || job.status === "scripted";
+      const canRerender = job.has_video;
       el.innerHTML = `${media}<div class="body">
         <span class="status s-${esc(job.status)}">${esc(STATUS[job.status] || job.status)}</span>
         <div class="topic">${esc(job.topic)}</div>
@@ -226,7 +236,7 @@ function renderJobs(jobs) {
         ${job.caption ? `<details><summary>Подпись к посту</summary><pre>${esc(job.caption)}</pre><button data-copy>Скопировать</button></details>` : ""}
         <div class="actions">
           ${canPublish ? `<button class="primary" data-a="publish">✅ Опубликовать</button>` : ""}
-          ${job.status === "produced" && job.has_video ? `<button data-a="rewrite" title="Написать текст заново по той же теме: платно, как новый ролик">✍️ Переписать</button>` : ""}
+          ${job.status === "produced" && job.lines.length ? `<button data-a="edit" title="Вернуть текст на правку: бесплатно">✏️ Текст</button>` : ""}
           ${canRerender ? `<button data-a="rerender" title="Собрать видео заново по тому же тексту: бесплатно">🔄 Пересобрать</button>` : ""}
           ${job.status !== "published" && job.status !== "partially_published" ? `<button data-a="reject" title="Убрать из списка">🗑</button>` : ""}
           <button data-a="open_folder" title="Открыть папку с файлами">📁</button>
@@ -234,7 +244,6 @@ function renderJobs(jobs) {
       el.querySelectorAll("[data-a]").forEach((b) => b.onclick = () => {
         if (b.dataset.a === "reject" && !confirm("Убрать этот ролик? Он не будет опубликован.")) return;
         if (b.dataset.a === "publish" && !confirm("Опубликовать ролик во все подключённые соцсети?")) return;
-        if (b.dataset.a === "rewrite" && !confirm("Написать сценарий заново? Это платно, примерно как новый ролик.")) return;
         act(b.dataset.a, {job: job.id});
       });
       const copy = el.querySelector("[data-copy]");
@@ -243,6 +252,66 @@ function renderJobs(jobs) {
     frag.appendChild(el);
   }
   $("jobs").replaceChildren(frag);
+}
+
+function renderDrafts(drafts) {
+  const key = JSON.stringify(drafts);
+  if (key === lastDrafts) return;
+  lastDrafts = key;
+  $("drafts-section").hidden = !drafts.length;
+  // Карточку, в которой вы сейчас печатаете, не трогаем, пока сам сценарий не изменился.
+  const old = new Map([...$("drafts").children].map((el) => [el.dataset.key, el]));
+  const frag = document.createDocumentFragment();
+  for (const job of drafts) {
+    const k = JSON.stringify(job);
+    let el = old.get(k);
+    if (!el) {
+      el = document.createElement("div");
+      el.className = "draft"; el.dataset.key = k;
+      if (job.status === "new") {
+        el.innerHTML = `<span class="status s-new">${STATUS.new}</span><div class="topic"><b>${esc(job.topic)}</b></div>
+          <div class="actions"><button data-a="reject" title="Убрать">🗑</button></div>`;
+      } else {
+        el.innerHTML = `<span class="status s-scripted">${STATUS.scripted}</span>
+          <div><b>${esc(job.topic)}</b></div>
+          <div class="meta hint">${esc(job.date)}${job.review ? " · редактор: " + esc(job.review) : ""}${job.cost ? " · $" + job.cost.toFixed(2) : ""}</div>
+          ${job.source ? `<details><summary>Ваш пост из Threads</summary><pre>${esc(job.source)}</pre></details>` : ""}
+          ${job.error ? `<div class="uploads"><div class="bad">Видео не получилось: ${esc(job.error).slice(0, 200)}</div></div>` : ""}
+          <textarea rows="${Math.max(job.lines.length + 1, 4)}">${esc(job.lines.join("\n"))}</textarea>
+          <div class="hint" data-len></div>
+          <div class="actions">
+            <button class="primary" data-a="approve">🎬 Снять видео</button>
+            <button data-a="save_script">💾 Сохранить правки</button>
+            <button data-a="reject" title="Убрать сценарий">🗑</button>
+          </div>
+          <div class="actions">
+            <input type="text" data-comment placeholder="Что исправить? Например: добавь про дежурные аптеки (необязательно)">
+            <button data-a="redraft" title="Платно: около стоимости сценария">🔄 Другой вариант</button>
+          </div>`;
+        const area = el.querySelector("textarea"), len = el.querySelector("[data-len]");
+        const count = () => {
+          const lines = area.value.split("\n").filter((l) => l.trim());
+          const words = lines.join(" ").split(/\s+/).filter(Boolean).length;
+          len.textContent = `Каждая строка - отдельная фраза со своим кадром. Фраз: ${lines.length}, ` +
+            `примерно ${Math.round(words / (state?.settings.words_per_second || 2))} с.`;
+        };
+        area.oninput = count; count();
+      }
+      el.querySelectorAll("[data-a]").forEach((b) => b.onclick = () => {
+        const a = b.dataset.a, data = {job: job.id};
+        const area = el.querySelector("textarea");
+        if (a === "reject" && !confirm("Убрать этот сценарий?")) return;
+        if (a === "approve" || a === "save_script") data.text = area.value;
+        if (a === "redraft") {
+          data.comment = el.querySelector("[data-comment]").value;
+          if (!data.comment && !confirm("Написать совсем другой вариант? Ваши правки в тексте пропадут.")) return;
+        }
+        act(a, data);
+      });
+    }
+    frag.appendChild(el);
+  }
+  $("drafts").replaceChildren(frag);
 }
 
 function renderQueue(items) {
@@ -301,8 +370,11 @@ function render(s) {
   $("badges").innerHTML = Object.entries(s.connected).map(([k, on]) =>
     `<span class="badge${on ? " on" : ""}" title="${on ? "подключён" : "не подключён"}">${on ? "✓" : "✕"} ${esc(PLATFORMS[k] || k)}</span>`).join("");
   const next = s.queue.length ? "следующая тема из очереди" : (s.settings.source === "threads" ? "следующий ваш пост из Threads" : "новая тема от агента идей");
-  $("make-hint").textContent = `Без своей темы возьму: ${next}. ` + (s.settings.auto_publish ? "Ролик сразу опубликуется." : "Готовый ролик появится ниже - посмотрите и нажмите «Опубликовать».");
-  renderJobs(s.jobs); renderQueue(s.queue); renderPosts(s.next_posts); renderLog(s.log); renderSettings(s.settings);
+  $("make-hint").textContent = `Без своей темы возьму: ${next}. Сначала покажу текст - поправите его или попросите другой вариант, ` +
+    "а видео сниму, когда нажмёте «Снять видео»." + (s.settings.auto_publish ? " Готовый ролик сразу опубликуется." : "");
+  const isDraft = (j) => j.status === "scripted" || j.status === "new";
+  renderDrafts(s.jobs.filter(isDraft));
+  renderJobs(s.jobs.filter((j) => !isDraft(j))); renderQueue(s.queue); renderPosts(s.next_posts); renderLog(s.log); renderSettings(s.settings);
   $("stats").innerHTML = `<div><b>${s.stats.videos}</b><span>роликов</span></div>
     <div><b>$${s.stats.total.toFixed(2)}</b><span>всего</span></div>
     <div><b>$${s.stats.average.toFixed(2)}</b><span>в среднем за ролик</span></div>`;
