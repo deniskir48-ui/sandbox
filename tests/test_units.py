@@ -390,3 +390,21 @@ def test_speech_window_trims_silence_around_words():
     assert speech_window(speech) == pytest.approx((0.41, 2.18))
     assert speech_window(Speech(Path("x.mp3"), 2.0, [])) == (0.0, 2.0)
     assert speech_window(Speech(Path("x.mp3"), 1.0, [Word("a", 0.0, 1.0)])) == (0.0, 1.0)
+
+
+def test_long_scenes_are_split_by_sentence():
+    from video_agents.models import Scene, Script
+    from video_agents.pipeline import split_long_scenes
+
+    script = Script(title="Аптеки", call_to_action="", backup_queries=[], scenes=[
+        Scene(narration="Круглосуточных аптек на Кипре нет. Совсем. Дежурная - обычная, просто открыта "
+                        "до десяти-одиннадцати.", visual_queries=["pharmacy night"], on_screen_text="Аптеки"),
+        Scene(narration="Сохраните, пригодится.", visual_queries=["phone"], on_screen_text=""),
+    ])
+    scenes = split_long_scenes(script).scenes
+    assert [s.narration for s in scenes] == [
+        "Круглосуточных аптек на Кипре нет. Совсем.",
+        "Дежурная - обычная, просто открыта до десяти-одиннадцати.",
+        "Сохраните, пригодится.",
+    ]
+    assert scenes[1].visual_queries == ["pharmacy night"] and scenes[1].on_screen_text == ""

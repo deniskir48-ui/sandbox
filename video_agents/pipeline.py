@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+import re
 from datetime import datetime, timedelta
 from contextlib import contextmanager
 from pathlib import Path
@@ -18,6 +19,29 @@ from .storage import JobStore
 log = logging.getLogger(__name__)
 
 ROLES = ("ideas", "script", "critic", "footage", "metadata", "screen")
+
+
+SENTENCE_END = re.compile(r"(?<=[.!?…])\s+")
+
+
+def split_long_scenes(script, max_words: int = 12):
+    """Подстраховка: сцена из нескольких предложений - это один затянутый кадр. Делим её по предложениям
+    (кадры подбираются по тем же запросам), слишком короткие куски («Совсем.») оставляем с соседом."""
+    scenes = []
+    for scene in script.scenes:
+        if len(scene.narration.split()) <= max_words:
+            scenes.append(scene)
+            continue
+        parts: list[str] = []
+        for sentence in SENTENCE_END.split(scene.narration.strip()):
+            if parts and (len(sentence.split()) < 3 or len(parts[-1].split()) < 3):
+                parts[-1] = f"{parts[-1]} {sentence}"
+            else:
+                parts.append(sentence)
+        for index, part in enumerate(parts):
+            scenes.append(scene.model_copy(update={
+                "narration": part, "on_screen_text": scene.on_screen_text if index == 0 else ""}))
+    return script.model_copy(update={"scenes": scenes})
 
 
 class Pipeline:
@@ -215,7 +239,7 @@ class Pipeline:
                     log.warning("Лимит правок исчерпан, берём последнюю версию сценария")
                     break
                 script = self.writer.revise(job.idea, script, review)
-            script = self._fit_length(job, script)
+            script = split_long_scenes(self._fit_length(job, script))
             job.script = script
             self._finish_script(job, script)
             return job
@@ -257,7 +281,7 @@ class Pipeline:
             self.progress("Переписываю сценарий по вашим замечаниям")
             note = Review(score=0, approved=False, strengths=[], problems=[comment],
                           rewrite_instructions=f"Замечания автора канала (главное - выполнить их): {comment}")
-            script = self._fit_length(job, self.writer.revise(job.idea, job.script, note))
+            script = split_long_scenes(self._fit_length(job, self.writer.revise(job.idea, job.script, note)))
             self._finish_script(job, script)
         return job
 
