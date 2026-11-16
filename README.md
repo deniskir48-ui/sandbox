@@ -55,7 +55,7 @@ python -m video_agents list                       # все ролики и их 
 python -m video_agents publish <id>               # опубликовать проверенный ролик
 python -m video_agents publish <id> --platform youtube
 python -m video_agents render <id>                # пересобрать видео после ручной правки job.json
-python -m video_agents update                     # обновить программу до последней версии с GitHub
+python -m video_agents update                     # обновить вручную (обычно не нужно: см. ниже)
 python -m video_agents set subtitles.show_scene_text true   # изменить одну настройку config.yaml
 ```
 
@@ -104,6 +104,13 @@ python -m video_agents set subtitles.show_scene_text true   # изменить �
 из очереди и только потом просит агента придумать новые.
 
 Подключать площадки можно по одной: при публикации неподключённые площадки просто пропускаются.
+
+## Автообновление
+
+Перед любой командой программа не чаще раза в час тихо скачивает свежую версию с GitHub (`auto_update: false`
+в config.yaml - выключить); бот проверяет обновления сам и перезапускается, когда свободен. Изменения кода
+вступают в силу со следующего запуска; `.bat`-файлы обновляются только командой `update`, а в git-репозитории
+(рабочей копии разработчика) автообновление не работает.
 
 ## Telegram-бот
 
