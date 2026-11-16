@@ -15,8 +15,10 @@ SYSTEM = """Ты отбираешь посты автора из Threads, кот
 Бери (use = true): посты с мыслью, историей, фактом, советом, личным опытом, списком мест или событий.
 
 Отдельно отметь time_sensitive = true у постов, привязанных к датам: афиши, дайджесты событий на неделю,
-акции, расписания, «в эти выходные…». Устаревание по датам проверяет программа - такие посты не отбрасывай
-из-за этого сам. Отвечай по каждому посту, причину - коротко."""
+акции, расписания, «завтра будут учения…». Для них укажи relevant_until - последний день, когда пост ещё
+полезен зрителю (дата последнего события; «завтра» и «на этой неделе» считай от даты публикации поста).
+Устаревание по сегодняшней дате проверяет программа - сам такие посты из-за дат не отбрасывай.
+Отвечай по каждому посту, причину - коротко."""
 
 TOPIC_RULE = "Также пропускай посты не по теме канала (описание ниже): ролик из них не нужен его зрителям.\n"
 
@@ -25,6 +27,8 @@ class PostVerdict(BaseModel):
     post_id: str = Field(description="id поста из списка")
     use: bool = Field(description="true - из поста получится ролик")
     time_sensitive: bool = Field(description="true - пост привязан к датам (афиша, события, акции)")
+    relevant_until: str = Field(description="Для постов с датами - последний день актуальности, ГГГГ-ММ-ДД; "
+                                            "для остальных пустая строка")
     reason: str = Field(description="Коротко, почему")
 
 
@@ -39,11 +43,13 @@ class PostScreenerAgent:
         self.topic_filter = topic_filter
 
     def screen(self, posts: list[dict]) -> dict[str, dict]:
-        """{id поста: {"use", "time_sensitive", "reason"}}."""
-        listing = "\n\n".join(f"[id={post['id']}]\n{' '.join((post.get('text') or '').split())[:1500]}"
-                              for post in posts)
+        """{id поста: {"use", "time_sensitive", "relevant_until", "reason"}}."""
+        listing = "\n\n".join(
+            f"[id={post['id']}, опубликован {str(post.get('timestamp', ''))[:10] or 'неизвестно'}]\n"
+            f"{' '.join((post.get('text') or '').split())[:1500]}" for post in posts)
         prompt = f"{channel_brief(self.channel)}\n\nПосты:\n\n{listing}"
         system = SYSTEM.format(topic_rule=TOPIC_RULE if self.topic_filter else "")
         result = self.llm.structured(system=system, prompt=prompt, output_model=Screening, effort="low")
-        return {v.post_id: {"use": v.use, "time_sensitive": v.time_sensitive, "reason": v.reason}
+        return {v.post_id: {"use": v.use, "time_sensitive": v.time_sensitive,
+                            "relevant_until": v.relevant_until.strip(), "reason": v.reason}
                 for v in result.verdicts}

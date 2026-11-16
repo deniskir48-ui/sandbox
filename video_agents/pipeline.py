@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import logging
+from datetime import datetime
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Callable
@@ -116,7 +117,8 @@ class Pipeline:
 
         workspace = Path(self.settings.workspace)
         topic_filter = self.settings.threads.topic_filter
-        key = f"{self.settings.channel.niche}|topic_filter={topic_filter}"  # сменились правила - проверяем заново
+        # Сменились тема, фильтр или правила отбора (v2: даты актуальности) - проверяем посты заново.
+        key = f"{self.settings.channel.niche}|topic_filter={topic_filter}|v2"
         verdicts = threads.load_screening(workspace, key)
         screener = PostScreenerAgent(self.llms["screen"], self.settings.channel, topic_filter)
 
@@ -132,6 +134,16 @@ class Pipeline:
             threads.save_screening(workspace, verdicts, key)
             return True
 
+        today = datetime.now().date()
+
+        def still_relevant(verdict: dict, post: dict) -> bool:
+            """Пост с датами полезен, пока не прошёл его последний день (а без даты - fresh_days от публикации)."""
+            try:
+                return datetime.strptime(verdict.get("relevant_until", ""), "%Y-%m-%d").date() >= today
+            except ValueError:
+                moment = threads.published_at(post)
+                return bool(moment) and (today - moment.date()).days <= self.settings.threads.fresh_days
+
         def short(post: dict) -> str:
             return " ".join(post.get("text", "").split())[:60]
 
@@ -142,11 +154,15 @@ class Pipeline:
                 return picked
             for post in batch:
                 verdict = verdicts.get(str(post["id"]), {})
-                if verdict.get("use") and verdict.get("time_sensitive"):
-                    log.info("Свежий пост с датами - берём вне очереди: %s", short(post))
-                    picked.append(post)
-                    if len(picked) == count:
-                        return picked
+                if not (verdict.get("use") and verdict.get("time_sensitive")):
+                    continue
+                if not still_relevant(verdict, post):
+                    log.info("Пропускаем устаревший пост с датами: %s", short(post))
+                    continue
+                log.info("Свежий пост с датами - берём вне очереди: %s", short(post))
+                picked.append(post)
+                if len(picked) == count:
+                    return picked
         fresh_ids = {post["id"] for post in fresh}
         rest = [post for post in backlog if post not in picked]
         for start in range(0, len(rest), 10):  # 2. остальные - от старых к новым
@@ -159,9 +175,10 @@ class Pipeline:
                     continue
                 if not verdict["use"]:
                     log.info("Пропускаем пост: %s - %s", short(post), verdict["reason"])
-                elif verdict.get("time_sensitive"):
-                    if post["id"] not in fresh_ids:
-                        log.info("Пропускаем устаревший пост с датами: %s", short(post))
+                elif verdict.get("time_sensitive") and post["id"] in fresh_ids:
+                    continue  # уже рассмотрен выше
+                elif verdict.get("time_sensitive") and not still_relevant(verdict, post):
+                    log.info("Пропускаем устаревший пост с датами: %s", short(post))
                 else:
                     picked.append(post)
                     if len(picked) == count:

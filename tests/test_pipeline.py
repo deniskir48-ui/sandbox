@@ -48,9 +48,11 @@ class FakeLLM:
 
             from video_agents.agents.post_screener import PostVerdict, Screening
 
-            ids = re.findall(r"\[id=([^\]]+)\]", prompt)
-            return Screening(verdicts=[PostVerdict(post_id=i, use="skip" not in i, time_sensitive="event" in i,
-                                                   reason="тест") for i in ids])
+            ids = re.findall(r"\[id=([^,\]]+)", prompt)
+            return Screening(verdicts=[
+                PostVerdict(post_id=i, use="skip" not in i, time_sensitive="event" in i,
+                            relevant_until=("2000-01-01" if "expired" in i else "2099-12-31") if "event" in i else "",
+                            reason="тест") for i in ids])
         if output_model is PlatformMeta:
             return PlatformMeta(youtube_title="Венера", youtube_description="Описание #space",
                                 youtube_tags=["космос"], instagram_caption="Подпись", tiktok_caption="Подпись #space")
@@ -484,7 +486,7 @@ def test_screening_skips_questions_and_remembers_verdicts(settings):
 
     ideas = pipeline.threads_ideas(5)
     assert [i.source_post_id for i in ideas] == ["good-1", "good-2"]
-    verdicts = threads.load_screening(workspace, f"{settings.channel.niche}|topic_filter=True")
+    verdicts = threads.load_screening(workspace, f"{settings.channel.niche}|topic_filter=True|v2")
     assert verdicts["skip-question"]["use"] is False and verdicts["good-1"]["use"] is True
 
     pipeline.threads_ideas(5)
@@ -526,9 +528,12 @@ def test_fresh_event_posts_jump_the_queue_and_old_ones_expire(settings):
                 "timestamp": moment}
 
     # свежая афиша опубликована вчера и с малыми просмотрами - всё равно идёт первой;
-    # афиша двухмесячной давности устарела и пропускается
-    threads.save_posts([post("event-old", 60), post("story-1", 300), post("event-fresh", 1, views=5),
-                        post("story-2", 100)], Path(settings.workspace))
+    # афиша, опубликованная вчера, но про уже прошедшие события (как кинопоказы 11-15 ноября 16-го), пропускается;
+    # старая афиша про прошедшие события пропускается; старая, но ещё актуальная (Рождество) - берётся по порядку
+    threads.save_posts([post("event-expired-old", 60), post("story-1", 300), post("event-fresh", 1, views=5),
+                        post("event-expired-fresh", 1), post("event-christmas", 20), post("story-2", 100)],
+                       Path(settings.workspace))
     settings.channel.source = "threads"
     pipeline = Pipeline(settings, llm=FakeLLM(), producer=VideoProducer(settings, FakeTTS()))
-    assert [i.source_post_id for i in pipeline.threads_ideas(3)] == ["event-fresh", "story-1", "story-2"]
+    assert [i.source_post_id for i in pipeline.threads_ideas(5)] == ["event-fresh", "story-1", "story-2",
+                                                                     "event-christmas"]
