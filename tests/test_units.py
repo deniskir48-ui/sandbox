@@ -118,7 +118,7 @@ def test_word_budget_uses_target_and_ceiling():
     from video_agents.agents.brief import target_words, word_budget
     from video_agents.config import ChannelConfig
 
-    channel = ChannelConfig()
+    channel = ChannelConfig(language="en")
     assert (target_words(channel), word_budget(channel)) == (25, 50)  # 10 с и потолок 20 с
     channel.max_video_length_seconds = 5  # потолок меньше цели - берём цель
     assert word_budget(channel) == 25
@@ -321,3 +321,11 @@ def test_launcher_bat_uses_windows_line_endings():
     data = LAUNCHER.read_bytes()
     assert b"\r\n" in data and b"\n" not in data.replace(b"\r\n", b"")
     assert b"run --publish %*" in data
+
+
+def test_russian_speech_is_slower():
+    from video_agents.agents.brief import target_words, word_budget
+    from video_agents.config import ChannelConfig
+
+    channel = ChannelConfig(language="ru", video_length_seconds=15, max_video_length_seconds=30)
+    assert (target_words(channel), word_budget(channel)) == (30, 60)

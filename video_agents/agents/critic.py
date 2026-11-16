@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from .brief import WORDS_PER_SECOND, channel_brief, target_words, word_budget
+from .brief import channel_brief, target_words, word_budget, words_per_second
 from ..models import Review, Script, VideoIdea
 
 SYSTEM = """Ты - строгий шеф-редактор коротких роликов. Оцениваешь сценарий так, как его
@@ -33,7 +33,7 @@ class CriticAgent:
             f"{channel_brief(self.channel)}\n\n"
             f"Проблема зрителя: {idea.viewer_problem}\nТема: {idea.topic}\n"
             f"Сценарий (JSON):\n{script.model_dump_json(indent=2)}\n\n"
-            f"В тексте диктора {words} слов (~{words / WORDS_PER_SECOND:.0f} секунд), "
+            f"В тексте диктора {words} слов (~{words / words_per_second(self.channel):.0f} секунд), "
             f"обычно ~{target_words(self.channel)} слов, максимум - {word_budget(self.channel)}.\n"
             "Дай оценку и конкретные правки."
         )

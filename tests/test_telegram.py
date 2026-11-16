@@ -234,3 +234,28 @@ def test_threads_app_message_is_deleted(bot, monkeypatch):
     assert ("deleteMessage", {"chat_id": OWNER, "message_id": 88}, None) in bot.api.calls
     assert "Тренды подключены, сейчас их 1" in bot.api.texts()[-1]
     assert threads.ThreadsApp(bot.pipeline.settings.secrets).token() == "TH|123|SECRET"
+
+
+def test_format_proposal_and_apply_with_voice(bot, monkeypatch, tmp_path):
+    from test_reformat import PROPOSAL
+
+    from video_agents import threads
+    from video_agents.agents.channel_advisor import ChannelAdvisorAgent
+    from video_agents.config import load_settings
+
+    bot.config_path = tmp_path / "config.yaml"
+    threads.save_posts([{"id": "1", "text": "Кипр", "views": 5}], bot.pipeline.store.root)
+    monkeypatch.setattr(ChannelAdvisorAgent, "propose", lambda self, posts, hint, language: PROPOSAL)
+
+    bot.handle(message("/format Кипр и обзоры"))
+    proposal_message = bot.api.sent()[-1]
+    assert "Жизнь на Кипре" in proposal_message["text"]
+    assert proposal_message["reply_markup"]["inline_keyboard"][1][0]["callback_data"] == "fa:female"
+
+    bot.handle(button("fa:female"))
+    assert "Формат канала обновлён" in bot.api.texts()[-1]
+    assert load_settings(bot.config_path).voice.voice == "ru-RU-SvetlanaNeural"
+    assert [i.topic for i in bot.pipeline.store.queue()] == PROPOSAL.example_topics
+
+    bot.handle(button("fa:male"))  # повторное нажатие - предложение уже применено
+    assert "устарело" in bot.api.texts()[-1]

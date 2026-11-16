@@ -1,14 +1,20 @@
-WORDS_PER_SECOND = 2.5
+# Сколько слов в секунду произносит диктор: русские слова длиннее английских.
+WORDS_PER_SECOND = {"ru": 2.0, "uk": 2.0}
+DEFAULT_WORDS_PER_SECOND = 2.5
+
+
+def words_per_second(channel) -> float:
+    return WORDS_PER_SECOND.get(channel.language.lower()[:2], DEFAULT_WORDS_PER_SECOND)
 
 
 def target_words(channel) -> int:
     """Сколько слов диктора в ролике обычной (целевой) длины."""
-    return round(channel.video_length_seconds * WORDS_PER_SECOND)
+    return round(channel.video_length_seconds * words_per_second(channel))
 
 
 def word_budget(channel) -> int:
     """Абсолютный максимум слов диктора: длиннее ролик быть не может."""
-    return int(max(channel.max_video_length_seconds, channel.video_length_seconds) * WORDS_PER_SECOND)
+    return int(max(channel.max_video_length_seconds, channel.video_length_seconds) * words_per_second(channel))
 
 
 def channel_brief(channel) -> str:
