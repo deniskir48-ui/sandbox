@@ -35,13 +35,33 @@ class TTSProvider(Protocol):
     def synthesize(self, text: str, out_path: Path) -> Speech: ...
 
 
+# Запасной голос того же языка: голоса Microsoft иногда по очереди «пропадают» на время.
+FALLBACK_VOICES = {
+    "ru-RU-DmitryNeural": "ru-RU-SvetlanaNeural",
+    "ru-RU-SvetlanaNeural": "ru-RU-DmitryNeural",
+    "en-US-AndrewMultilingualNeural": "en-US-AvaMultilingualNeural",
+    "en-US-AvaMultilingualNeural": "en-US-AndrewMultilingualNeural",
+    "en-US-ChristopherNeural": "en-US-AndrewMultilingualNeural",
+}
+
+
 class EdgeTTS:
     """Бесплатные нейроголоса Microsoft Edge (ru-RU-DmitryNeural, ru-RU-SvetlanaNeural, ...)."""
 
-    def __init__(self, voice: str, rate: str = "+0%", attempts: int = 4):
+    def __init__(self, voice: str, rate: str = "+0%", attempts: int = 6, pause: float = 2.0):
         self.voice = voice
         self.rate = rate
         self.attempts = attempts
+        self.pause = pause
+
+    def use_fallback(self) -> bool:
+        """Переключиться на запасной голос (для всего ролика). False - запасного нет."""
+        fallback = FALLBACK_VOICES.get(self.voice)
+        if not fallback:
+            return False
+        log.warning("Голос %s сейчас не отвечает - ролик озвучит %s", self.voice, fallback)
+        self.voice = fallback
+        return True
 
     def synthesize(self, text: str, out_path: Path) -> Speech:
         # Бесплатный сервис иногда отвечает пустотой - повторяем с паузой.
@@ -55,8 +75,8 @@ class EdgeTTS:
                         f"edge-tts не озвучил текст голосом {self.voice}: {exc}. "
                         "Попробуйте другой голос (voice.voice в config.yaml) или ElevenLabs."
                     ) from exc
-                log.warning("edge-tts: попытка %d не удалась (%s), повторяем", attempt, exc)
-                time.sleep(2 * attempt)
+                log.info("edge-tts: попытка %d не удалась (%s), повторяем", attempt, exc)
+                time.sleep(self.pause * attempt)  # сбои идут волнами: ждём всё дольше, до полуминуты
 
     async def _stream(self, text: str, out_path: Path) -> list[Word]:
         import edge_tts

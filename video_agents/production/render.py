@@ -6,8 +6,10 @@ import logging
 import math
 import os
 import random
+import re
 import shutil
 import sys
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -81,9 +83,9 @@ class VideoProducer:
         previous: ClipPlan | None = None
         cursor = 0.0
 
-        for i, scene in enumerate(script.scenes):
-            log.info("Сцена %d/%d: озвучка и видеоряд", i + 1, len(script.scenes))
-            speech = self.tts.synthesize(scene.narration, job_dir / f"voice_{i:02d}.mp3")
+        speeches = self._speak_all(script, job_dir)
+        for i, (scene, speech) in enumerate(zip(script.scenes, speeches)):
+            log.info("Сцена %d/%d: видеоряд", i + 1, len(script.scenes))
             start, end = speech_window(speech)
             # Длительность сцены кратна кадру, чтобы звук и картинка не расходились.
             duration = math.ceil((end - start + self.video.scene_gap) * fps) / fps
@@ -116,6 +118,31 @@ class VideoProducer:
         final = job_dir / "final.mp4"
         self._final_mix(job_dir, raw_video, narration, final)
         return RenderResult(final, probe_duration(final))
+
+    def _speak_all(self, script: Script, job_dir: Path, rounds: int = 3, pause: float = 20.0) -> list:
+        """Сначала озвучиваем все фразы одним голосом, чтобы голоса не менялись посреди ролика.
+
+        Бесплатный сервис Microsoft иногда по полминуты молчит то одним голосом, то другим. Если голос не
+        ответил, весь ролик озвучивается запасным, потом снова основным; удачные фразы второй раз не заказываем.
+        """
+        done: dict[tuple[str, int], object] = {}
+        for round_ in range(rounds):
+            voice = str(getattr(self.tts, "voice", ""))
+            tag = re.sub(r"\W", "", voice.split("-")[-1])[:12] or "voice"
+            try:
+                speeches = []
+                for i, scene in enumerate(script.scenes):
+                    if (voice, i) not in done:
+                        done[(voice, i)] = self.tts.synthesize(scene.narration, job_dir / f"voice_{i:02d}_{tag}.mp3")
+                    speeches.append(done[(voice, i)])
+                return speeches
+            except Exception:
+                switch = getattr(self.tts, "use_fallback", None)
+                if round_ == rounds - 1 or not switch or not switch():
+                    raise
+                if round_:
+                    time.sleep(pause)  # оба голоса молчат - даём сервису передышку
+        raise RuntimeError("озвучка не удалась")
 
     def _find_clip(self, scene, script: Script, duration: float, used: set[tuple[str, int]],
                    previous: ClipPlan | None, seed: int = 1) -> ClipPlan | None:
