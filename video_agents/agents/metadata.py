@@ -18,8 +18,11 @@ class MetadataAgent:
         if source_text:
             source = (f"Ролик сделан по посту автора:\n«{source_text}»\n"
                       "Полезные подробности из поста, которые не вошли в ролик (расписания, часы, адреса, "
-                      "ссылки, названия), коротко добавь в подпись Instagram и описание YouTube - "
-                      "зритель найдёт их там.\n\n")
+                      "ссылки, названия, пошаговые советы), коротко и по пунктам добавь в подпись Instagram и "
+                      "описание YouTube - зритель найдёт их там.\n\n")
+        if "описани" in script.full_text.lower() or "подпис" in script.full_text.lower():
+            source += ("Ролик отправляет зрителя за подробностями в описание: ответ на это обещание обязательно "
+                       "должен быть в подписи Instagram, описании YouTube и (кратко) в подписи TikTok.\n\n")
         prompt = (
             f"{channel_brief(self.channel)}\n\n"
             f"Название: {script.title}\nТекст ролика: {script.full_text}\n\n"
