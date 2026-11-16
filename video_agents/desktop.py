@@ -218,6 +218,22 @@ class DesktopApp:
         self.tasks.submit("Пересобираю видео", work)
         return "Пересобираю видео по тому же сценарию (это бесплатно)"
 
+    def do_rewrite(self, data: dict) -> str:
+        job_id = self._job(data)
+
+        def work() -> None:
+            pipeline = self.pipeline()
+            job = pipeline.store.load(job_id)
+            if any(upload.ok for upload in job.uploads.values()):
+                self.tasks.say("Этот ролик уже опубликован - сделайте новый.", "error")
+                return
+            job.reviews, job.error = [], None
+            pipeline.write(job)
+            self._report(pipeline.produce(job))
+
+        self.tasks.submit("Переписываю сценарий", work)
+        return "Пишу сценарий заново по той же теме"
+
     def do_reject(self, data: dict) -> str:
         from .storage import JobStore
 

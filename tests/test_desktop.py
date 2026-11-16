@@ -146,3 +146,15 @@ def test_shortcut_survives_odd_powershell_output(monkeypatch):
 
     monkeypatch.setattr(desktop.subprocess, "run", failing_run)
     assert desktop.install_shortcut() is None
+
+
+def test_rewrite_writes_a_new_script_for_the_same_topic(app):
+    post(app, "make", topic="Дежурные аптеки на Кипре")
+    job = state(app)["jobs"][0]
+    post(app, "rewrite", job=job["id"])
+    current = state(app)["jobs"]
+    assert len(current) == 1 and current[0]["id"] == job["id"]
+    assert current[0]["status"] == "produced" and current[0]["topic"] == "Дежурные аптеки на Кипре"
+    post(app, "publish", job=job["id"])
+    post(app, "rewrite", job=job["id"])
+    assert any("уже опубликован" in line["text"] for line in state(app)["log"])

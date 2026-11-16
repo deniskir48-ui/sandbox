@@ -215,7 +215,7 @@ class Pipeline:
                 script = self.writer.revise(job.idea, script, review)
             script = self._fit_length(job, script)
             job.script = script
-            job.meta = self.meta_agent.generate(script)
+            job.meta = self.meta_agent.generate(script, job.idea.source_text)
             disclaimer = self.settings.channel.disclaimer.strip()
             if disclaimer:
                 job.meta.youtube_description += f"\n\n{disclaimer}"

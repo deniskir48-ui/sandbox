@@ -226,6 +226,7 @@ function renderJobs(jobs) {
         ${job.caption ? `<details><summary>Подпись к посту</summary><pre>${esc(job.caption)}</pre><button data-copy>Скопировать</button></details>` : ""}
         <div class="actions">
           ${canPublish ? `<button class="primary" data-a="publish">✅ Опубликовать</button>` : ""}
+          ${job.status === "produced" && job.has_video ? `<button data-a="rewrite" title="Написать текст заново по той же теме: платно, как новый ролик">✍️ Переписать</button>` : ""}
           ${canRerender ? `<button data-a="rerender" title="Собрать видео заново по тому же тексту: бесплатно">🔄 Пересобрать</button>` : ""}
           ${job.status !== "published" && job.status !== "partially_published" ? `<button data-a="reject" title="Убрать из списка">🗑</button>` : ""}
           <button data-a="open_folder" title="Открыть папку с файлами">📁</button>
@@ -233,6 +234,7 @@ function renderJobs(jobs) {
       el.querySelectorAll("[data-a]").forEach((b) => b.onclick = () => {
         if (b.dataset.a === "reject" && !confirm("Убрать этот ролик? Он не будет опубликован.")) return;
         if (b.dataset.a === "publish" && !confirm("Опубликовать ролик во все подключённые соцсети?")) return;
+        if (b.dataset.a === "rewrite" && !confirm("Написать сценарий заново? Это платно, примерно как новый ролик.")) return;
         act(b.dataset.a, {job: job.id});
       });
       const copy = el.querySelector("[data-copy]");
