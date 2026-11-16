@@ -16,7 +16,7 @@ from .storage import JobStore
 
 log = logging.getLogger(__name__)
 
-ROLES = ("ideas", "script", "critic", "footage", "metadata")
+ROLES = ("ideas", "script", "critic", "footage", "metadata", "screen")
 
 
 class Pipeline:
@@ -95,12 +95,48 @@ class Pipeline:
         used = {job.idea.source_post_id for job in self.store.all()
                 if job.idea and job.idea.source_post_id and job.status != "failed"}
         config = self.settings.threads
-        picked = threads.pick_posts(posts, used, count, config.min_views, config.min_age_days, config.min_post_chars)
+        candidates = threads.pick_posts(posts, used, len(posts), config.min_views, config.min_age_days,
+                                        config.min_post_chars)
+        picked = self._screen_posts(candidates, count)
         if picked:
             log.info("Берём %d пост(а) из Threads для переделки в ролики", len(picked))
         else:
             log.info("Подходящих постов в Threads нет - тему придумает агент идей")
         return [threads.post_to_idea(post) for post in picked]
+
+    def _screen_posts(self, candidates: list[dict], count: int) -> list[dict]:
+        """Пропускает посты-вопросы и посты не по теме канала. Решения запоминаются: пост проверяется один раз."""
+        from . import threads
+        from .agents.post_screener import PostScreenerAgent
+
+        workspace = Path(self.settings.workspace)
+        niche = self.settings.channel.niche
+        verdicts = threads.load_screening(workspace, niche)
+        screener = PostScreenerAgent(self.llms["screen"], self.settings.channel)
+        picked: list[dict] = []
+        for start in range(0, len(candidates), 10):
+            batch = candidates[start:start + 10]
+            unknown = [post for post in batch if str(post["id"]) not in verdicts]
+            if unknown:
+                try:
+                    for post_id, (use, reason) in screener.screen(unknown).items():
+                        verdicts[post_id] = {"use": use, "reason": reason}
+                except Exception as exc:
+                    log.warning("Не удалось проверить посты: %s", exc)
+                    break
+                threads.save_screening(workspace, verdicts, niche)
+            for post in batch:
+                verdict = verdicts.get(str(post["id"]))
+                if not verdict:
+                    continue
+                if verdict["use"]:
+                    picked.append(post)
+                    if len(picked) == count:
+                        return picked
+                else:
+                    log.info("Пропускаем пост: %s - %s", " ".join(post.get("text", "").split())[:60],
+                             verdict["reason"])
+        return picked
 
     def enqueue(self, ideas: list[VideoIdea]) -> None:
         with self.store.lock:
