@@ -145,6 +145,8 @@ class ThreadsConfig(BaseModel):
     min_views: int | None = None  # не меньше стольких просмотров; пусто - медиана по вашим постам
     min_age_days: float = 2  # свежему посту даём набрать просмотры, прежде чем решать
     min_post_chars: int = 80  # из совсем коротких постов ролик не сделать
+    topic_filter: bool = True  # пропускать посты не по теме канала (false - брать все темы)
+    fresh_days: float = 7  # афиши и другие посты с датами моложе этого идут вне очереди, старше - устарели
 
 
 class Settings(BaseModel):

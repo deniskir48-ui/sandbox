@@ -35,7 +35,9 @@ class ChannelAdvisorAgent:
     def __init__(self, llm):
         self.llm = llm
 
-    def propose(self, posts: list[dict], hint: str = "", language: str = "ru") -> ChannelProposal:
+    def propose(self, posts: list[dict], hint: str = "", language: str = "ru",
+                all_topics: bool = False) -> ChannelProposal:
+        """all_topics - канал-блог со всеми темами автора: ничего не исключать, правила - по типам постов."""
         best = sorted((p for p in posts if p.get("text")), key=score, reverse=True)[:30]
         recent = [p for p in posts if p.get("text")][:20]  # выгрузка идёт от новых к старым
         prompt = (
@@ -46,6 +48,12 @@ class ChannelAdvisorAgent:
             + "\n\nПоследние посты:\n"
             + "\n".join(f"- {describe(p)}" for p in recent)
             + "\n\nПредложи формат канала коротких роликов."
+            + ("\n\nВажно: ролики будут переделками ВСЕХ постов автора, кроме вопросов без ответа. Поэтому "
+               "канал - это его личный блог: в niche перечисли все его темы, ничего не исключай (даже если "
+               "какая-то тема слабее по цифрам). Правила напиши по типам постов: личный опыт и советы, "
+               "истории, разборы слов или фактов, списки мест, афиши и дайджесты событий (сжимать до 3-5 "
+               "событий с датами) - чтобы сценарист знал, как адаптировать каждый тип. Правил, которые "
+               "подходят только одному типу, не делай общими." if all_topics else "")
         )
         return self.llm.structured(system=SYSTEM, prompt=prompt, output_model=ChannelProposal, effort="high")
 

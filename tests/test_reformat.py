@@ -87,14 +87,18 @@ def test_cli_channel_from_threads(tmp_path, monkeypatch, capsys):
     monkeypatch.setenv("ANTHROPIC_API_KEY", "test")
     Path("config.yaml").write_text(CONFIG + "workspace: ws\n", encoding="utf-8")
     threads.save_posts([{"id": "1", "text": "Аренда на Кипре", "views": 900}], Path("ws"))
-    monkeypatch.setattr(ChannelAdvisorAgent, "propose", lambda self, posts, hint, language: PROPOSAL)
+    monkeypatch.setattr(ChannelAdvisorAgent, "propose", lambda self, posts, hint, language, all_topics: PROPOSAL)
     answers = iter(["2", "да"])
     monkeypatch.setattr("builtins.input", lambda prompt="": next(answers))
 
-    assert cli.main(["channel", "from-threads", "--hint", "Кипр"]) == 0
+    assert cli.main(["channel", "from-threads", "--hint", "Кипр", "--all-topics"]) == 0
     assert "Сколько стоит жизнь в Лимассоле" in capsys.readouterr().out
     settings = load_settings("config.yaml")
     assert settings.channel.language == "ru" and settings.voice.voice == "ru-RU-SvetlanaNeural"
+    assert settings.threads.topic_filter is False  # «все темы» - отборщик не режет по теме
+    from video_agents.storage import JobStore
+
+    assert JobStore("ws").queue() == []  # ролики пойдут из постов - темы агента в очередь не ставим
 
 
 def test_set_value_changes_one_setting_and_validates(tmp_path):
@@ -120,3 +124,32 @@ def test_set_value_changes_one_setting_and_validates(tmp_path):
     live = Settings()
     apply_to(live, "subtitles.show_scene_text", True)
     assert live.subtitles.show_scene_text is True
+
+
+
+def test_advisor_all_topics_mode_asks_for_blog_format():
+    seen = {}
+
+    class LLM:
+        def structured(self, *, prompt, **kw):
+            seen["prompt"] = prompt
+            return PROPOSAL
+
+    ChannelAdvisorAgent(LLM()).propose([{"id": "1", "text": "x", "views": 1}], all_topics=True)
+    assert "ничего не исключай" in seen["prompt"] and "афиши" in seen["prompt"]
+
+
+def test_screener_without_topic_filter_does_not_mention_topic_rule():
+    from video_agents.agents.post_screener import PostScreenerAgent, Screening
+    from video_agents.config import ChannelConfig
+
+    systems = []
+
+    class LLM:
+        def structured(self, *, system, **kw):
+            systems.append(system)
+            return Screening(verdicts=[])
+
+    PostScreenerAgent(LLM(), ChannelConfig(), topic_filter=False).screen([{"id": "1", "text": "t"}])
+    PostScreenerAgent(LLM(), ChannelConfig(), topic_filter=True).screen([{"id": "1", "text": "t"}])
+    assert "не по теме" not in systems[0] and "не по теме" in systems[1]

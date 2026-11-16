@@ -293,6 +293,21 @@ def pick_posts(posts: list[dict], used_ids: set[str], count: int, min_views: int
     return [post for _, post in candidates[:count]]
 
 
+def recent_posts(posts: list[dict], used_ids: set[str], days: float, min_chars: int = 80,
+                 now: datetime | None = None) -> list[dict]:
+    """Посты за последние days дней (новые первыми) - кандидаты «вне очереди», например свежие афиши."""
+    now = now or datetime.now()
+    fresh = []
+    for post in posts:
+        moment = published_at(post)
+        if (moment is None or now - moment > timedelta(days=days) or post.get("id") in used_ids
+                or post.get("media_type") == "REPOST_FACADE" or len((post.get("text") or "").strip()) < min_chars):
+            continue
+        fresh.append((moment, post))
+    fresh.sort(key=lambda item: item[0], reverse=True)
+    return [post for _, post in fresh]
+
+
 def post_to_idea(post: dict):
     from .models import VideoIdea
 

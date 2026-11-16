@@ -58,6 +58,8 @@ def main(argv: list[str] | None = None) -> int:
     channel.add_argument("action", choices=["from-threads"])
     channel.add_argument("--hint", default="", help="в двух словах, о чём вы пишете")
     channel.add_argument("--language", default="ru", help="язык роликов (ru, en, ...)")
+    channel.add_argument("--all-topics", action="store_true",
+                         help="канал-блог со всеми вашими темами: посты не отсеиваются по теме")
 
     trends = sub.add_parser("trends", help="тренды Threads сейчас (США или Япония)")
     trends.add_argument("number", nargs="?", type=int, help="номер тренда - показать популярные посты по нему")
@@ -115,7 +117,7 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     if args.command == "channel":
-        return _channel_from_threads(settings, args.config, args.hint, args.language)
+        return _channel_from_threads(settings, args.config, args.hint, args.language, args.all_topics)
 
     if args.command == "trends":
         return _trends(settings, args.number)
@@ -258,7 +260,7 @@ def _schedule(args) -> int:
     return 0
 
 
-def _channel_from_threads(settings, config_path: str, hint: str, language: str) -> int:
+def _channel_from_threads(settings, config_path: str, hint: str, language: str, all_topics: bool = False) -> int:
     from pathlib import Path
 
     from . import threads
@@ -274,15 +276,20 @@ def _channel_from_threads(settings, config_path: str, hint: str, language: str) 
         return 1
     pipeline = Pipeline(settings)
     print(f"Изучаю {len(posts)} постов из Threads, это займёт около минуты...\n")
-    proposal = ChannelAdvisorAgent(pipeline.llms["ideas"]).propose(posts, hint, language)
+    proposal = ChannelAdvisorAgent(pipeline.llms["ideas"]).propose(posts, hint, language, all_topics)
     print(proposal_text(proposal))
     answer = input(f"\nГолос диктора: 1 - {VOICES['male'][0]}, 2 - {VOICES['female'][0]} (Enter - 1): ").strip()
     voice = VOICES["female" if answer == "2" else "male"][1]
     if input("Применить этот формат? (да/нет): ").strip().lower() not in ("да", "д", "yes", "y"):
         print("Ничего не меняю.")
         return 0
-    removed = apply_proposal(pipeline, Path(config_path), proposal, language, voice)
-    print(f"\nГотово! Формат канала обновлён в {config_path}, в очереди {len(proposal.example_topics)} новых тем.")
+    removed = apply_proposal(pipeline, Path(config_path), proposal, language, voice,
+                             topic_filter=False if all_topics else None, queue_examples=not all_topics)
+    if all_topics:
+        print(f"\nГотово! Формат канала обновлён в {config_path}. Ролики пойдут из ваших постов "
+              "(если включено: set channel.source threads).")
+    else:
+        print(f"\nГотово! Формат канала обновлён в {config_path}, в очереди {len(proposal.example_topics)} новых тем.")
     if removed:
         print(f"Старые темы ({removed}) убраны из очереди и сохранены в {workspace / 'ideas_queue.backup.json'}.")
     return 0

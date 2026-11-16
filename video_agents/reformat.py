@@ -15,7 +15,8 @@ VOICES = {
 }
 
 
-def write_config(path: Path, proposal: ChannelProposal, language: str, voice: str) -> None:
+def write_config(path: Path, proposal: ChannelProposal, language: str, voice: str,
+                 topic_filter: bool | None = None) -> None:
     """Меняет в config.yaml только канал и голос; комментарии и остальные настройки сохраняются."""
     yaml = YAML()  # режим round-trip: сохраняет комментарии и порядок ключей
     data = yaml.load(path.read_text(encoding="utf-8")) if path.exists() else None
@@ -33,14 +34,19 @@ def write_config(path: Path, proposal: ChannelProposal, language: str, voice: st
     voice_section = data.setdefault("voice", {})
     voice_section["provider"] = "edge"
     voice_section["voice"] = voice
+    if topic_filter is not None:
+        data.setdefault("threads", {})["topic_filter"] = topic_filter
     with open(path, "w", encoding="utf-8") as fh:
         yaml.dump(data, fh)
 
 
-def apply_proposal(pipeline, config_path: Path, proposal: ChannelProposal, language: str, voice: str) -> int:
-    """Применяет формат сразу (без перезапуска) и ставит в очередь первые темы. Возвращает, сколько старых
-    тем убрано из очереди (они сохраняются в ideas_queue.backup.json)."""
-    write_config(config_path, proposal, language, voice)
+def apply_proposal(pipeline, config_path: Path, proposal: ChannelProposal, language: str, voice: str,
+                   topic_filter: bool | None = None, queue_examples: bool = True) -> int:
+    """Применяет формат сразу (без перезапуска). queue_examples - заменить очередь на предложенные темы;
+    возвращает, сколько старых тем убрано (они сохраняются в ideas_queue.backup.json)."""
+    write_config(config_path, proposal, language, voice, topic_filter)
+    if topic_filter is not None:
+        pipeline.settings.threads.topic_filter = topic_filter
 
     channel = pipeline.settings.channel  # агенты держат ссылку на этот объект - меняем его на месте
     channel.niche = proposal.niche
@@ -54,6 +60,8 @@ def apply_proposal(pipeline, config_path: Path, proposal: ChannelProposal, langu
     pipeline.settings.voice.provider = "edge"
     pipeline.settings.voice.voice = voice
     pipeline._producer = None  # пересоздастся с новым голосом
+    if not queue_examples:  # ролики пойдут из постов - очередь не трогаем
+        return 0
 
     store = pipeline.store
     with store.lock:
