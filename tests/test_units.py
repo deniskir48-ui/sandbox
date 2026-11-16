@@ -1,3 +1,5 @@
+import pytest
+
 from video_agents.config import SubtitleConfig
 from video_agents.production.subtitles import ass_time, build_ass, group_words, hex_to_ass
 from video_agents.production.tts import Word, words_from_characters
@@ -376,3 +378,15 @@ def test_auto_update_interval_git_guard_and_bat_skip(monkeypatch, tmp_path):
     state.unlink()
     assert updater.auto_update(tmp_path, state) == [] and len(calls) == 1  # рабочая копия разработчика
     importlib.reload(patched)
+
+
+def test_speech_window_trims_silence_around_words():
+    from pathlib import Path
+
+    from video_agents.production.render import speech_window
+    from video_agents.production.tts import Speech, Word
+
+    speech = Speech(Path("x.mp3"), 3.0, [Word("Привет", 0.45, 0.9), Word("мир", 0.95, 2.1)])
+    assert speech_window(speech) == pytest.approx((0.41, 2.18))
+    assert speech_window(Speech(Path("x.mp3"), 2.0, [])) == (0.0, 2.0)
+    assert speech_window(Speech(Path("x.mp3"), 1.0, [Word("a", 0.0, 1.0)])) == (0.0, 1.0)

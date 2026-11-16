@@ -75,7 +75,7 @@ class VideoConfig(BaseModel):
     width: int = 1080
     height: int = 1920
     fps: int = 30
-    scene_gap: float = 0.15
+    scene_gap: float = 0.06  # пауза между фразами (тишина по краям озвучки обрезается)
     music_dir: str = "assets/music"
     music_volume: float = 0.12
     fonts_dir: str = "assets/fonts"

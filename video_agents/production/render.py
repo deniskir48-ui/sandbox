@@ -39,6 +39,16 @@ class ClipPlan:
     start: float = 0.0
 
 
+def speech_window(speech, lead: float = 0.04, tail: float = 0.08) -> tuple[float, float]:
+    """Где в озвучке начинается и кончается речь: синтез добавляет тишину по краям каждой фразы, а между
+    сценами она складывается в заметные паузы. Границы берём по таймингу слов с небольшим запасом."""
+    if not speech.words:
+        return 0.0, speech.duration
+    start = max(0.0, speech.words[0].start - lead)
+    end = min(speech.duration, speech.words[-1].end + tail)
+    return (start, end) if end > start else (0.0, speech.duration)
+
+
 def _first_long_enough(clips: list[Clip], duration: float) -> Clip:
     """Самый релевантный из достаточно длинных (порядок поиска = релевантность)."""
     return next((clip for clip in clips if clip.duration >= duration), clips[0])
@@ -70,15 +80,16 @@ class VideoProducer:
         for i, scene in enumerate(script.scenes):
             log.info("Сцена %d/%d: озвучка и видеоряд", i + 1, len(script.scenes))
             speech = self.tts.synthesize(scene.narration, job_dir / f"voice_{i:02d}.mp3")
+            start, end = speech_window(speech)
             # Длительность сцены кратна кадру, чтобы звук и картинка не расходились.
-            duration = math.ceil((speech.duration + self.video.scene_gap) * fps) / fps
+            duration = math.ceil((end - start + self.video.scene_gap) * fps) / fps
 
             audio_path = job_dir / f"voice_{i:02d}.wav"
-            run_ffmpeg(["-i", str(speech.audio_path), "-af", "apad", "-t", f"{duration:.3f}",
+            run_ffmpeg(["-ss", f"{start:.3f}", "-i", str(speech.audio_path), "-af", "apad", "-t", f"{duration:.3f}",
                         "-ar", "48000", "-ac", "2", str(audio_path)])
             scene_audio.append(audio_path)
 
-            words.extend(Word(w.text, w.start + cursor, w.end + cursor) for w in speech.words)
+            words.extend(Word(w.text, w.start - start + cursor, w.end - start + cursor) for w in speech.words)
             if self.subs.show_scene_text and scene.on_screen_text.strip():
                 captions.append((cursor, cursor + duration, scene.on_screen_text.strip()))
 
