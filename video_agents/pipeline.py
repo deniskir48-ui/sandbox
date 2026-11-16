@@ -148,7 +148,8 @@ class Pipeline:
             return " ".join(post.get("text", "").split())[:60]
 
         picked: list[dict] = []
-        for start in range(0, len(fresh), 10):  # 1. свежие афиши и события - пока не устарели
+        include_events = self.settings.threads.include_events
+        for start in range(0, len(fresh) if include_events else 0, 10):  # 1. свежие афиши - пока не устарели
             batch = fresh[start:start + 10]
             if not judge(batch):
                 return picked
@@ -175,6 +176,8 @@ class Pipeline:
                     continue
                 if not verdict["use"]:
                     log.info("Пропускаем пост: %s - %s", short(post), verdict["reason"])
+                elif verdict.get("time_sensitive") and not include_events:
+                    log.info("Пропускаем афишу (для них нужен другой формат): %s", short(post))
                 elif verdict.get("time_sensitive") and post["id"] in fresh_ids:
                     continue  # уже рассмотрен выше
                 elif verdict.get("time_sensitive") and not still_relevant(verdict, post):

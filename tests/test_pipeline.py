@@ -534,6 +534,10 @@ def test_fresh_event_posts_jump_the_queue_and_old_ones_expire(settings):
                         post("event-expired-fresh", 1), post("event-christmas", 20), post("story-2", 100)],
                        Path(settings.workspace))
     settings.channel.source = "threads"
+    settings.threads.include_events = True
     pipeline = Pipeline(settings, llm=FakeLLM(), producer=VideoProducer(settings, FakeTTS()))
     assert [i.source_post_id for i in pipeline.threads_ideas(5)] == ["event-fresh", "story-1", "story-2",
                                                                      "event-christmas"]
+
+    settings.threads.include_events = False  # по умолчанию афиши не берём совсем
+    assert [i.source_post_id for i in pipeline.threads_ideas(5)] == ["story-1", "story-2"]
