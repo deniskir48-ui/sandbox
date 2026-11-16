@@ -95,47 +95,77 @@ class Pipeline:
         used = {job.idea.source_post_id for job in self.store.all()
                 if job.idea and job.idea.source_post_id and job.status != "failed"}
         config = self.settings.threads
-        candidates = threads.pick_posts(posts, used, len(posts), config.min_views, config.min_age_days,
-                                        config.min_post_chars)
-        picked = self._screen_posts(candidates, count)
+        fresh = threads.recent_posts(posts, used, config.fresh_days, config.min_post_chars)
+        backlog = threads.pick_posts(posts, used, len(posts), config.min_views, config.min_age_days,
+                                     config.min_post_chars)
+        picked = self._screen_posts(fresh, backlog, count)
         if picked:
             log.info("Берём %d пост(а) из Threads для переделки в ролики", len(picked))
         else:
             log.info("Подходящих постов в Threads нет - тему придумает агент идей")
         return [threads.post_to_idea(post) for post in picked]
 
-    def _screen_posts(self, candidates: list[dict], count: int) -> list[dict]:
-        """Пропускает посты-вопросы и посты не по теме канала. Решения запоминаются: пост проверяется один раз."""
+    def _screen_posts(self, fresh: list[dict], backlog: list[dict], count: int) -> list[dict]:
+        """Сначала свежие посты с датами (афиши) - вне очереди, затем остальные от старых к новым.
+
+        Отборщик пропускает вопросы без ответа (и посты не по теме, если включён threads.topic_filter);
+        посты с датами вне окна свежести считаются устаревшими. Решения запоминаются.
+        """
         from . import threads
         from .agents.post_screener import PostScreenerAgent
 
         workspace = Path(self.settings.workspace)
-        niche = self.settings.channel.niche
-        verdicts = threads.load_screening(workspace, niche)
-        screener = PostScreenerAgent(self.llms["screen"], self.settings.channel)
-        picked: list[dict] = []
-        for start in range(0, len(candidates), 10):
-            batch = candidates[start:start + 10]
+        topic_filter = self.settings.threads.topic_filter
+        key = f"{self.settings.channel.niche}|topic_filter={topic_filter}"  # сменились правила - проверяем заново
+        verdicts = threads.load_screening(workspace, key)
+        screener = PostScreenerAgent(self.llms["screen"], self.settings.channel, topic_filter)
+
+        def judge(batch: list[dict]) -> bool:
             unknown = [post for post in batch if str(post["id"]) not in verdicts]
-            if unknown:
-                try:
-                    for post_id, (use, reason) in screener.screen(unknown).items():
-                        verdicts[post_id] = {"use": use, "reason": reason}
-                except Exception as exc:
-                    log.warning("Не удалось проверить посты: %s", exc)
-                    break
-                threads.save_screening(workspace, verdicts, niche)
+            if not unknown:
+                return True
+            try:
+                verdicts.update(screener.screen(unknown))
+            except Exception as exc:
+                log.warning("Не удалось проверить посты: %s", exc)
+                return False
+            threads.save_screening(workspace, verdicts, key)
+            return True
+
+        def short(post: dict) -> str:
+            return " ".join(post.get("text", "").split())[:60]
+
+        picked: list[dict] = []
+        for start in range(0, len(fresh), 10):  # 1. свежие афиши и события - пока не устарели
+            batch = fresh[start:start + 10]
+            if not judge(batch):
+                return picked
+            for post in batch:
+                verdict = verdicts.get(str(post["id"]), {})
+                if verdict.get("use") and verdict.get("time_sensitive"):
+                    log.info("Свежий пост с датами - берём вне очереди: %s", short(post))
+                    picked.append(post)
+                    if len(picked) == count:
+                        return picked
+        fresh_ids = {post["id"] for post in fresh}
+        rest = [post for post in backlog if post not in picked]
+        for start in range(0, len(rest), 10):  # 2. остальные - от старых к новым
+            batch = rest[start:start + 10]
+            if not judge(batch):
+                return picked
             for post in batch:
                 verdict = verdicts.get(str(post["id"]))
                 if not verdict:
                     continue
-                if verdict["use"]:
+                if not verdict["use"]:
+                    log.info("Пропускаем пост: %s - %s", short(post), verdict["reason"])
+                elif verdict.get("time_sensitive"):
+                    if post["id"] not in fresh_ids:
+                        log.info("Пропускаем устаревший пост с датами: %s", short(post))
+                else:
                     picked.append(post)
                     if len(picked) == count:
                         return picked
-                else:
-                    log.info("Пропускаем пост: %s - %s", " ".join(post.get("text", "").split())[:60],
-                             verdict["reason"])
         return picked
 
     def enqueue(self, ideas: list[VideoIdea]) -> None:

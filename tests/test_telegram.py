@@ -245,7 +245,7 @@ def test_format_proposal_and_apply_with_voice(bot, monkeypatch, tmp_path):
 
     bot.config_path = tmp_path / "config.yaml"
     threads.save_posts([{"id": "1", "text": "Кипр", "views": 5}], bot.pipeline.store.root)
-    monkeypatch.setattr(ChannelAdvisorAgent, "propose", lambda self, posts, hint, language: PROPOSAL)
+    monkeypatch.setattr(ChannelAdvisorAgent, "propose", lambda self, posts, hint, language, *a: PROPOSAL)
 
     bot.handle(message("/format Кипр и обзоры"))
     proposal_message = bot.api.sent()[-1]

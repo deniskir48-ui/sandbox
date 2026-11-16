@@ -43,13 +43,14 @@ class FakeLLM:
             return Review(score=9 if approved else 5, approved=approved, strengths=["хук"],
                           problems=[] if approved else ["слабый финал"],
                           rewrite_instructions="" if approved else "усиль финал")
-        if output_model.__name__ == "Screening":  # отбор постов: id с «skip» пропускаем
+        if output_model.__name__ == "Screening":  # отбор постов: id с «skip» пропускаем, с «event» - афиши
             import re
 
             from video_agents.agents.post_screener import PostVerdict, Screening
 
             ids = re.findall(r"\[id=([^\]]+)\]", prompt)
-            return Screening(verdicts=[PostVerdict(post_id=i, use="skip" not in i, reason="тест") for i in ids])
+            return Screening(verdicts=[PostVerdict(post_id=i, use="skip" not in i, time_sensitive="event" in i,
+                                                   reason="тест") for i in ids])
         if output_model is PlatformMeta:
             return PlatformMeta(youtube_title="Венера", youtube_description="Описание #space",
                                 youtube_tags=["космос"], instagram_caption="Подпись", tiktok_caption="Подпись #space")
@@ -483,7 +484,7 @@ def test_screening_skips_questions_and_remembers_verdicts(settings):
 
     ideas = pipeline.threads_ideas(5)
     assert [i.source_post_id for i in ideas] == ["good-1", "good-2"]
-    verdicts = threads.load_screening(workspace, settings.channel.niche)
+    verdicts = threads.load_screening(workspace, f"{settings.channel.niche}|topic_filter=True")
     assert verdicts["skip-question"]["use"] is False and verdicts["good-1"]["use"] is True
 
     pipeline.threads_ideas(5)
@@ -511,3 +512,23 @@ def test_screening_failure_does_not_pass_unchecked_posts(settings):
 
     pipeline = Pipeline(settings, llm=Broken(), producer=VideoProducer(settings, FakeTTS()))
     assert pipeline.threads_ideas(3) == []
+
+
+
+def test_fresh_event_posts_jump_the_queue_and_old_ones_expire(settings):
+    from datetime import datetime, timedelta, timezone
+
+    from video_agents import threads
+
+    def post(pid, days, views=1000):
+        moment = (datetime.now(timezone.utc) - timedelta(days=days)).strftime("%Y-%m-%dT%H:%M:%S%z")
+        return {"id": pid, "text": "Достаточно длинный текст поста для проверки отбора. " * 3, "views": views,
+                "timestamp": moment}
+
+    # свежая афиша опубликована вчера и с малыми просмотрами - всё равно идёт первой;
+    # афиша двухмесячной давности устарела и пропускается
+    threads.save_posts([post("event-old", 60), post("story-1", 300), post("event-fresh", 1, views=5),
+                        post("story-2", 100)], Path(settings.workspace))
+    settings.channel.source = "threads"
+    pipeline = Pipeline(settings, llm=FakeLLM(), producer=VideoProducer(settings, FakeTTS()))
+    assert [i.source_post_id for i in pipeline.threads_ideas(3)] == ["event-fresh", "story-1", "story-2"]

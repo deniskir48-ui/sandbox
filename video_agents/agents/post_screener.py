@@ -8,19 +8,23 @@ from .brief import channel_brief
 
 SYSTEM = """Ты отбираешь посты автора из Threads, которые потом переделают в короткие ролики его канала.
 
-Пропускай (use = false):
-1. Посты-вопросы к подписчикам: автор спрашивает совета, мнения или рекомендации («где купить…»,
-   «посоветуйте…», «выбираю…, что скажете?») и сам не даёт ни ответа, ни истории, ни вывода.
-   Если вопрос - только приём, а дальше автор сам рассказывает или отвечает, пост подходит.
-2. Посты не по теме канала (описание канала ниже): из них выйдет ролик, который не нужен его зрителям.
+Пропускай (use = false) посты-вопросы к подписчикам: автор спрашивает совета, мнения или рекомендации
+(«где купить…», «посоветуйте…», «выбираю…, что скажете?») и сам не даёт ни ответа, ни истории, ни вывода.
+Если вопрос - только приём, а дальше автор сам рассказывает или отвечает, пост подходит.
+{topic_rule}
+Бери (use = true): посты с мыслью, историей, фактом, советом, личным опытом, списком мест или событий.
 
-Бери (use = true): посты с мыслью, историей, фактом, советом или личным опытом по теме канала.
-Отвечай по каждому посту, причину - коротко."""
+Отдельно отметь time_sensitive = true у постов, привязанных к датам: афиши, дайджесты событий на неделю,
+акции, расписания, «в эти выходные…». Устаревание по датам проверяет программа - такие посты не отбрасывай
+из-за этого сам. Отвечай по каждому посту, причину - коротко."""
+
+TOPIC_RULE = "Также пропускай посты не по теме канала (описание ниже): ролик из них не нужен его зрителям.\n"
 
 
 class PostVerdict(BaseModel):
     post_id: str = Field(description="id поста из списка")
-    use: bool = Field(description="true - из поста получится ролик для этого канала")
+    use: bool = Field(description="true - из поста получится ролик")
+    time_sensitive: bool = Field(description="true - пост привязан к датам (афиша, события, акции)")
     reason: str = Field(description="Коротко, почему")
 
 
@@ -29,14 +33,17 @@ class Screening(BaseModel):
 
 
 class PostScreenerAgent:
-    def __init__(self, llm, channel):
+    def __init__(self, llm, channel, topic_filter: bool = True):
         self.llm = llm
         self.channel = channel
+        self.topic_filter = topic_filter
 
-    def screen(self, posts: list[dict]) -> dict[str, tuple[bool, str]]:
-        """{id поста: (брать ли, причина)}."""
+    def screen(self, posts: list[dict]) -> dict[str, dict]:
+        """{id поста: {"use", "time_sensitive", "reason"}}."""
         listing = "\n\n".join(f"[id={post['id']}]\n{' '.join((post.get('text') or '').split())[:1500]}"
                               for post in posts)
         prompt = f"{channel_brief(self.channel)}\n\nПосты:\n\n{listing}"
-        result = self.llm.structured(system=SYSTEM, prompt=prompt, output_model=Screening, effort="low")
-        return {verdict.post_id: (verdict.use, verdict.reason) for verdict in result.verdicts}
+        system = SYSTEM.format(topic_rule=TOPIC_RULE if self.topic_filter else "")
+        result = self.llm.structured(system=system, prompt=prompt, output_model=Screening, effort="low")
+        return {v.post_id: {"use": v.use, "time_sensitive": v.time_sensitive, "reason": v.reason}
+                for v in result.verdicts}
