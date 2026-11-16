@@ -153,3 +153,25 @@ def test_screener_without_topic_filter_does_not_mention_topic_rule():
     PostScreenerAgent(LLM(), ChannelConfig(), topic_filter=False).screen([{"id": "1", "text": "t"}])
     PostScreenerAgent(LLM(), ChannelConfig(), topic_filter=True).screen([{"id": "1", "text": "t"}])
     assert "не по теме" not in systems[0] and "не по теме" in systems[1]
+
+
+def test_cli_threads_exclude_appends_topic(tmp_path, monkeypatch, capsys):
+    from video_agents import cli
+
+    monkeypatch.chdir(tmp_path)
+    Path("config.yaml").write_text(CONFIG, encoding="utf-8")
+    assert cli.main(["threads", "--exclude", "работа в IT"]) == 0
+    assert cli.main(["threads", "--exclude", "работа в IT"]) == 0  # повтор не дублирует
+    assert cli.main(["threads", "--exclude", "политика"]) == 0
+    assert load_settings("config.yaml").threads.exclude_topics == ["работа в IT", "политика"]
+    assert "# главная модель" in Path("config.yaml").read_text(encoding="utf-8")
+
+
+def test_cli_threads_priorities_replace_list(tmp_path, monkeypatch, capsys):
+    from video_agents import cli
+
+    monkeypatch.chdir(tmp_path)
+    Path("config.yaml").write_text(CONFIG, encoding="utf-8")
+    assert cli.main(["threads", "--priorities", "Кипр: полезное, места", "Греческий", "Спорт"]) == 0
+    assert load_settings("config.yaml").threads.priorities == ["Кипр: полезное, места", "Греческий", "Спорт"]
+    assert "1. Кипр: полезное, места" in capsys.readouterr().out

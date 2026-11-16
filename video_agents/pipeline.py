@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import logging
-from datetime import datetime
+from datetime import datetime, timedelta
 from contextlib import contextmanager
 from pathlib import Path
 from typing import Callable
@@ -106,84 +106,78 @@ class Pipeline:
             log.info("Подходящих постов в Threads нет - тему придумает агент идей")
         return [threads.post_to_idea(post) for post in picked]
 
-    def _screen_posts(self, fresh: list[dict], backlog: list[dict], count: int) -> list[dict]:
-        """Сначала свежие посты с датами (афиши) - вне очереди, затем остальные от старых к новым.
+    def screening_key(self) -> str:
+        """Под этим ключом хранятся решения отборщика: сменились тема, фильтр, исключения или рубрики -
+        проверяем посты заново."""
+        config = self.settings.threads
+        return (f"{self.settings.channel.niche}|topic_filter={config.topic_filter}"
+                f"|exclude={'; '.join(config.exclude_topics)}|rubrics={'; '.join(config.priorities)}"
+                f"|v3")  # v3: рубрики и дайджесты
 
-        Отборщик пропускает вопросы без ответа (и посты не по теме, если включён threads.topic_filter);
-        посты с датами вне окна свежести считаются устаревшими. Решения запоминаются.
+    def _screen_posts(self, fresh: list[dict], backlog: list[dict], count: int) -> list[dict]:
+        """Выбирает посты для роликов.
+
+        Отборщик пропускает вопросы без ответа (и посты не по теме или на исключённые темы) и относит пост
+        к рубрике. Первыми идут ещё актуальные посты про одно событие (у них есть срок), затем остальные -
+        по приоритету рубрик (threads.priorities), внутри рубрики от старых к новым. Дайджесты событий
+        пропускаются, если не включён threads.include_events. Решения запоминаются.
         """
         from . import threads
-        from .agents.post_screener import PostScreenerAgent
+        from .agents.post_screener import PostScreenerAgent, category_name
 
         workspace = Path(self.settings.workspace)
-        topic_filter = self.settings.threads.topic_filter
-        # Сменились тема, фильтр или правила отбора (v2: даты актуальности) - проверяем посты заново.
-        key = f"{self.settings.channel.niche}|topic_filter={topic_filter}|v2"
+        config = self.settings.threads
+        key = self.screening_key()
         verdicts = threads.load_screening(workspace, key)
-        screener = PostScreenerAgent(self.llms["screen"], self.settings.channel, topic_filter)
+        screener = PostScreenerAgent(self.llms["screen"], self.settings.channel, config.topic_filter,
+                                     config.exclude_topics, config.priorities)
 
-        def judge(batch: list[dict]) -> bool:
-            unknown = [post for post in batch if str(post["id"]) not in verdicts]
-            if not unknown:
-                return True
+        candidates = list({post["id"]: post for post in backlog + fresh}.values())
+        unknown = [post for post in candidates if str(post["id"]) not in verdicts]
+        for start in range(0, len(unknown), 10):
             try:
-                verdicts.update(screener.screen(unknown))
+                verdicts.update(screener.screen(unknown[start:start + 10]))
             except Exception as exc:
                 log.warning("Не удалось проверить посты: %s", exc)
-                return False
+                break
             threads.save_screening(workspace, verdicts, key)
-            return True
 
         today = datetime.now().date()
+        ranks = {category_name(rubric): n for n, rubric in enumerate(config.priorities)}
+        backlog_ids = {post["id"] for post in backlog}
 
-        def still_relevant(verdict: dict, post: dict) -> bool:
-            """Пост с датами полезен, пока не прошёл его последний день (а без даты - fresh_days от публикации)."""
+        def relevant_until(verdict: dict, post: dict):
+            """Последний день актуальности; без даты - fresh_days от публикации."""
             try:
-                return datetime.strptime(verdict.get("relevant_until", ""), "%Y-%m-%d").date() >= today
+                return datetime.strptime(verdict.get("relevant_until", ""), "%Y-%m-%d").date()
             except ValueError:
                 moment = threads.published_at(post)
-                return bool(moment) and (today - moment.date()).days <= self.settings.threads.fresh_days
+                return moment.date() + timedelta(days=config.fresh_days) if moment else today - timedelta(days=1)
 
         def short(post: dict) -> str:
             return " ".join(post.get("text", "").split())[:60]
 
-        picked: list[dict] = []
-        for start in range(0, len(fresh), 10):  # 1. свежие афиши и события - пока не устарели
-            batch = fresh[start:start + 10]
-            if not judge(batch):
-                return picked
-            for post in batch:
-                verdict = verdicts.get(str(post["id"]), {})
-                if not (verdict.get("use") and verdict.get("time_sensitive")):
-                    continue
-                if not still_relevant(verdict, post):
-                    log.info("Пропускаем устаревший пост с датами: %s", short(post))
-                    continue
-                log.info("Свежий пост с датами - берём вне очереди: %s", short(post))
-                picked.append(post)
-                if len(picked) == count:
-                    return picked
-        fresh_ids = {post["id"] for post in fresh}
-        rest = [post for post in backlog if post not in picked]
-        for start in range(0, len(rest), 10):  # 2. остальные - от старых к новым
-            batch = rest[start:start + 10]
-            if not judge(batch):
-                return picked
-            for post in batch:
-                verdict = verdicts.get(str(post["id"]))
-                if not verdict:
-                    continue
-                if not verdict["use"]:
-                    log.info("Пропускаем пост: %s - %s", short(post), verdict["reason"])
-                elif verdict.get("time_sensitive") and post["id"] in fresh_ids:
-                    continue  # уже рассмотрен выше
-                elif verdict.get("time_sensitive") and not still_relevant(verdict, post):
+        urgent, regular = [], []
+        for post in candidates:
+            verdict = verdicts.get(str(post["id"]))
+            if not verdict:
+                continue  # не проверен (например, сбой) - не берём
+            if not verdict["use"]:
+                log.info("Пропускаем пост: %s - %s", short(post), verdict["reason"])
+            elif verdict.get("digest") and not config.include_events:
+                log.info("Пропускаем афишу (для них нужен другой формат): %s", short(post))
+            elif verdict.get("time_sensitive"):
+                until = relevant_until(verdict, post)
+                if until < today:
                     log.info("Пропускаем устаревший пост с датами: %s", short(post))
                 else:
-                    picked.append(post)
-                    if len(picked) == count:
-                        return picked
-        return picked
+                    urgent.append((until, {**post, "rubric": verdict.get("category", "")}))
+            elif post["id"] in backlog_ids:  # свежий обычный пост ждёт, пока наберёт просмотры
+                rank = ranks.get(verdict.get("category", ""), len(ranks))
+                regular.append((rank, threads.published_at(post), {**post, "rubric": verdict.get("category", "")}))
+        urgent.sort(key=lambda item: item[0])  # ближайшее событие - первым
+        regular.sort(key=lambda item: (item[0], item[1]))
+        return [post for _, post in urgent][:count] + [post for _, _, post in regular][:max(0, count - len(urgent))]
 
     def enqueue(self, ideas: list[VideoIdea]) -> None:
         with self.store.lock:

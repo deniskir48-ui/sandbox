@@ -272,3 +272,14 @@ def test_set_command_updates_file_and_running_settings(bot, tmp_path):
     assert bot.pipeline.settings.subtitles.show_scene_text is True
     bot.handle(message("/set subtitles.bogus 1"))
     assert bot.api.texts()[-1].startswith("❌")
+
+
+def test_priorities_command(bot, tmp_path):
+    from video_agents.config import load_settings
+
+    bot.config_path = tmp_path / "config.yaml"
+    bot.handle(message("/priorities\n1. Кипр: полезное, места\n2. Греческий\n- Спорт"))
+    assert load_settings(bot.config_path).threads.priorities == ["Кипр: полезное, места", "Греческий", "Спорт"]
+    assert bot.pipeline.settings.threads.priorities[0] == "Кипр: полезное, места"
+    bot.handle(message("/priorities"))
+    assert "1. Кипр: полезное, места" in bot.api.texts()[-1]
