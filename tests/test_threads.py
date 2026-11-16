@@ -112,3 +112,34 @@ def test_token_saved_and_refreshed(tmp_path, monkeypatch):
     assert auth.token() == "OLD"
     monkeypatch.setattr(threads.time, "time", lambda: 10**12)
     assert auth.token() == "NEW" and calls[-1] == threads.REFRESH_URL
+
+
+TRENDS = {"trends": [
+    {"title": "Ozempic and muscle loss", "description": "People debate...", "trend_id": "9876543210123456"},
+    {"title": "Marathon season", "trend_id": "1111"},
+]}
+
+
+def test_trends_use_app_token_and_country(tmp_path, monkeypatch):
+    calls = []
+
+    def fake_get(url, token, **params):
+        calls.append((url, token, params))
+        return TRENDS
+
+    monkeypatch.setattr(threads, "_get", fake_get)
+    app = threads.ThreadsApp(Secrets(threads_app_file=str(tmp_path / "app.json")))
+    assert not app.is_configured()
+    assert [t["title"] for t in app.save(" 123 ", "s3cret\n", "US")] == ["Ozempic and muscle loss", "Marathon season"]
+    assert calls[0] == ("https://graph.threads.com/v1.0/trending_topics", "TH|123|s3cret", {"country_code": "US"})
+    assert app.token() == "TH|123|s3cret"
+
+
+def test_trend_posts_explain_missing_approval(monkeypatch):
+    def denied(url, token, **params):
+        assert url.endswith("/9876543210123456/posts") and params["trending_post_type"] == "top"
+        raise threads.ThreadsError("Threads API: Application does not have permission for this action")
+
+    monkeypatch.setattr(threads, "_get", denied)
+    with pytest.raises(threads.ThreadsError, match="одобрения"):
+        threads.fetch_trend_posts("TH|1|2", "9876543210123456")

@@ -201,3 +201,36 @@ def test_threads_report_sends_summary_and_table(bot, monkeypatch):
     assert "постов 2" in summary and summary.index("Belly fat myth") < summary.index("Protein")
     document = bot.api.calls[-1]
     assert document[0] == "sendDocument" and document[2]["document"][0] == "threads_posts.xlsx"
+
+
+def test_trends_list_and_posts_buttons(bot, monkeypatch):
+    from video_agents import threads
+    from video_agents.telegram.bot import TRENDS
+
+    monkeypatch.setattr(threads.ThreadsApp, "token", lambda self: "TH|1|2")
+    monkeypatch.setattr(threads, "fetch_trends", lambda token, country: [
+        {"title": "Ozempic and muscle loss", "description": "Debate", "trend_id": "987"}])
+    monkeypatch.setattr(threads, "fetch_trend_posts", lambda token, trend_id: [
+        {"username": "coach", "text": "Lift heavy on GLP-1", "permalink": "https://threads.com/x"}])
+
+    bot.handle(message(TRENDS))
+    trends_message = bot.api.sent()[-1]
+    assert "1. Ozempic and muscle loss" in trends_message["text"]
+    assert trends_message["reply_markup"]["inline_keyboard"][0][0]["callback_data"] == "tp:987"
+    assert bot.pipeline.store.queue() == []  # тренды сами в очередь не попадают
+
+    bot.handle(button("tp:987"))
+    assert "@coach: Lift heavy on GLP-1" in bot.api.texts()[-1]
+
+
+def test_threads_app_message_is_deleted(bot, monkeypatch):
+    from video_agents import threads
+
+    bot.pipeline.settings.secrets.threads_app_file = str(bot.pipeline.store.root / "app.json")
+    monkeypatch.setattr(threads, "fetch_trends", lambda token, country: [{"title": "t", "trend_id": "1"}])
+    update = message("/threads_app 123 SECRET")
+    update["message"]["message_id"] = 88
+    bot.handle(update)
+    assert ("deleteMessage", {"chat_id": OWNER, "message_id": 88}, None) in bot.api.calls
+    assert "Тренды подключены, сейчас их 1" in bot.api.texts()[-1]
+    assert threads.ThreadsApp(bot.pipeline.settings.secrets).token() == "TH|123|SECRET"

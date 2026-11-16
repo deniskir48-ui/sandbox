@@ -43,9 +43,13 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("update", help="обновить программу до последней версии с GitHub")
 
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
-    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok", "telegram", "threads"])
+    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok", "telegram", "threads",
+                                           "threads-trends"])
 
     sub.add_parser("threads", help="выгрузить свои посты из Threads со статистикой (таблица для Excel)")
+
+    trends = sub.add_parser("trends", help="тренды Threads сейчас (США или Япония)")
+    trends.add_argument("number", nargs="?", type=int, help="номер тренда - показать популярные посты по нему")
 
     sub.add_parser("bot", help="запустить Telegram-бота (управление с телефона)")
 
@@ -85,6 +89,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "bot":
         return _bot(settings)
+
+    if args.command == "trends":
+        return _trends(settings, args.number)
 
     if args.command == "threads":
         return _threads(settings)
@@ -242,6 +249,32 @@ def _bot(settings) -> int:
     return 0
 
 
+def _trends(settings, number: int | None) -> int:
+    from . import threads
+
+    try:
+        token = threads.ThreadsApp(settings.secrets).token()
+        items = threads.fetch_trends(token, settings.threads.trends_country)
+        if number is None:
+            print(f"Тренды Threads ({settings.threads.trends_country}) прямо сейчас:\n")
+            for n, trend in enumerate(items, 1):
+                print(f"{n}. {trend['title']}" + (f" - {trend['description']}" if trend.get("description") else ""))
+            print("\nПосты по тренду: python -m video_agents trends НОМЕР")
+            return 0
+        if not 1 <= number <= len(items):
+            print(f"Нет тренда №{number}: сейчас их {len(items)}.")
+            return 1
+        trend = items[number - 1]
+        print(f"Популярные посты по тренду «{trend['title']}»:\n")
+        for post in threads.fetch_trend_posts(token, trend["trend_id"]):
+            text = " ".join((post.get("text") or "").split())
+            print(f"@{post.get('username', '?')}: {text[:200]}\n    {post.get('permalink', '')}")
+    except threads.ThreadsError as exc:
+        print(f"Ошибка: {exc}")
+        return 1
+    return 0
+
+
 def _threads(settings) -> int:
     from pathlib import Path
 
@@ -263,6 +296,21 @@ def _threads(settings) -> int:
 
 
 def _auth(platform: str, settings) -> int:
+    if platform == "threads-trends":
+        from .threads import ThreadsApp, ThreadsError
+
+        print("Нужны ID и секрет приложения Threads: кабинет Meta -> ваше приложение -> сценарий Threads ->")
+        print("Settings (Настройки) -> «Threads App ID» и «Threads App Secret» (секрет показывается по кнопке Show).")
+        app_id = input("Threads App ID: ")
+        app_secret = input("Threads App Secret: ")
+        try:
+            trends = ThreadsApp(settings.secrets).save(app_id, app_secret, settings.threads.trends_country)
+        except ThreadsError as exc:
+            print(f"Не подошло: {exc}")
+            return 1
+        print(f"Готово! Тренды подключены, сейчас их {len(trends)}. Посмотреть: python -m video_agents trends")
+        return 0
+
     if platform == "threads":
         from .threads import ThreadsAuth
 
