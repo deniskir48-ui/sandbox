@@ -41,7 +41,7 @@ def test_fetch_posts_with_insights_and_pagination(monkeypatch):
          + [{"id": f"x{i}", "media_type": "REPOST_FACADE"} for i in range(49)],
          "paging": {"cursors": {"after": "1"}}},
         {"data": [{"id": "p2", "media_type": "VIDEO", "text": "Protein timing", "timestamp": "t2"}],
-         "paging": {"cursors": {"after": "2"}}},
+         "paging": {"cursors": {"before": "1"}}},  # последняя страница: курсора «дальше» нет
     ]
     insights = {"p1": {"views": 1200, "likes": 40, "replies": 5, "reposts": 2, "quotes": 1, "shares": 3},
                 "p2": {"likes": 10, "replies": 1, "reposts": 0, "quotes": 0}, "no_views": {"p2"}}
@@ -55,16 +55,39 @@ def test_fetch_posts_with_insights_and_pagination(monkeypatch):
     assert calls[0][1]["fields"] == threads.POST_FIELDS
 
 
-def test_save_posts_writes_excel_friendly_csv(tmp_path):
-    posts = [{"id": "p1", "text": "Line one\nline two; with semicolon", "views": 10, "likes": 2,
-              "timestamp": "2026-11-01", "media_type": "TEXT_POST", "permalink": "https://threads.com/p1"}]
+def test_save_posts_writes_excel_table(tmp_path):
+    from datetime import date
+
+    from openpyxl import load_workbook
+
+    posts = [{"id": "p1", "text": "Line one\nline two", "views": 200, "likes": 10, "replies": 4, "reposts": 2,
+              "quotes": 0, "shares": 4, "timestamp": "2026-11-02T10:15:00+0000", "media_type": "TEXT_POST",
+              "permalink": "https://threads.com/p1"},
+             {"id": "p2", "text": "No stats", "timestamp": "bad", "media_type": "VIDEO"}]
     table = threads.save_posts(posts, tmp_path)
-    raw = table.read_bytes()
-    assert raw.startswith(b"\xef\xbb\xbf")  # BOM - Excel распознаёт UTF-8
-    rows = list(csv.reader(table.read_text(encoding="utf-8-sig").splitlines(), delimiter=";"))
-    assert rows[0][:3] == ["timestamp", "text", "views"]
-    assert rows[1][1] == "Line one line two; with semicolon"
+    assert table.name == "threads_posts.xlsx"
+
+    sheet = load_workbook(table).active
+    assert [c.value for c in sheet[1]][:5] == ["Дата", "Время", "День недели", "Текст", "Просмотры"]
+    row = [c.value for c in sheet[2]]
+    moment = threads.published_at(posts[0])
+    assert row[0].date() == moment.date() and row[1] == moment.strftime("%H:%M")
+    assert row[2] == threads.WEEKDAYS[moment.weekday()] and moment.date() in (date(2026, 11, 2), date(2026, 11, 1))
+    assert row[3] == "Line one line two" and row[4] == 200
+    assert row[10] == 0.1  # (10 + 4 + 2 + 0 + 4) / 200
+    assert sheet["K2"].number_format == "0.00%" and sheet.freeze_panes == "A2" and sheet.auto_filter.ref
+    assert [c.value for c in sheet[3]][:4] == [None, None, None, "No stats"]  # кривая дата не ломает выгрузку
     assert threads.load_posts(tmp_path) == posts
+
+
+def test_fetch_all_posts_until_last_page(monkeypatch):
+    pages = {None: {"data": [{"id": "a", "text": "1"}], "paging": {"cursors": {"after": "c1"}}},
+             "c1": {"data": [{"id": "b", "text": "2"}], "paging": {"cursors": {"after": "c2"}}},
+             "c2": {"data": [{"id": "c", "text": "3"}], "paging": {"cursors": {"after": "c2"}}}}
+    monkeypatch.setattr(threads, "_get", lambda url, token, **params: pages[params.get("after")]
+                        if url.endswith("/me/threads") else {"data": []})
+    assert [p["id"] for p in threads.fetch_posts("T")] == ["a", "b", "c"]
+    assert [p["id"] for p in threads.fetch_posts("T", max_posts=2)] == ["a", "b"]
 
 
 def test_ideas_context_uses_fresh_cache_and_top_posts(tmp_path, monkeypatch):

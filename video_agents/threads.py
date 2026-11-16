@@ -1,15 +1,15 @@
 """Выгрузка своих постов из Threads со статистикой (Threads API).
 
-Посты и их метрики сохраняются в workspace/threads_posts.json и в таблицу threads_posts.csv (открывается
-в Excel), а лучшие по просмотрам получает агент идей - как подсказку, что заходит аудитории.
+Все посты и их метрики сохраняются в workspace/threads_posts.json и в таблицу Excel threads_posts.xlsx
+(для аналитики), а лучшие по просмотрам получает агент идей - как подсказку, что заходит аудитории.
 """
 
 from __future__ import annotations
 
-import csv
 import json
 import logging
 import time
+from datetime import datetime
 from pathlib import Path
 
 import requests
@@ -22,7 +22,8 @@ REFRESH_AFTER = 7 * 24 * 3600  # ключ живёт 60 дней; продлев
 METRICS = ["views", "likes", "replies", "reposts", "quotes", "shares"]
 BASIC_METRICS = ["likes", "replies", "reposts", "quotes"]  # views и shares Meta помечает как «в разработке»
 POST_FIELDS = "id,media_type,text,permalink,timestamp"
-CACHE_HOURS = 24
+CACHE_HOURS = 24 * 7  # для подсказок агенту идей выгрузка обновляется раз в неделю
+WEEKDAYS = ["пн", "вт", "ср", "чт", "пт", "сб", "вс"]
 
 
 class ThreadsError(RuntimeError):
@@ -88,11 +89,11 @@ def _insights(media_id: str, token: str) -> dict[str, int]:
     return {}
 
 
-def fetch_posts(token: str, max_posts: int = 200) -> list[dict]:
-    """Свои посты (новые первыми) с метриками."""
+def fetch_posts(token: str, max_posts: int | None = None) -> list[dict]:
+    """Все свои посты (новые первыми) с метриками; max_posts - ограничить количество."""
     posts: list[dict] = []
     after = None
-    while len(posts) < max_posts:
+    while max_posts is None or len(posts) < max_posts:
         params = {"fields": POST_FIELDS, "limit": 50}
         if after:
             params["after"] = after
@@ -104,25 +105,73 @@ def fetch_posts(token: str, max_posts: int = 200) -> list[dict]:
             if post.get("media_type") == "REPOST_FACADE":  # чужой пост, который вы репостнули
                 continue
             posts.append({**post, **_insights(post["id"], token)})
-        after = page.get("paging", {}).get("cursors", {}).get("after")
-        if not after or len(batch) < 50:
+        log.info("Выгружено постов: %d", len(posts))
+        next_after = page.get("paging", {}).get("cursors", {}).get("after")
+        if not next_after or next_after == after:  # дальше страниц нет
             break
-    return posts[:max_posts]
+        after = next_after
+    return posts if max_posts is None else posts[:max_posts]
+
+
+COLUMNS = [  # (заголовок, ширина колонки)
+    ("Дата", 12), ("Время", 8), ("День недели", 8), ("Текст", 60), ("Просмотры", 11), ("Лайки", 9),
+    ("Ответы", 9), ("Репосты", 9), ("Цитаты", 9), ("Поделились", 11), ("Вовлечённость", 13), ("Тип", 12),
+    ("Ссылка", 40),
+]
+
+
+def published_at(post: dict) -> datetime | None:
+    """Время публикации по часам этого компьютера (Threads отдаёт его в UTC)."""
+    try:
+        return datetime.strptime(post["timestamp"], "%Y-%m-%dT%H:%M:%S%z").astimezone().replace(tzinfo=None)
+    except (KeyError, ValueError):
+        return None
+
+
+def engagement(post: dict) -> float | None:
+    """Доля реакций от просмотров: (лайки + ответы + репосты + цитаты + «поделились») / просмотры."""
+    if not post.get("views"):
+        return None
+    return sum(post.get(m, 0) for m in METRICS if m != "views") / post["views"]
 
 
 def save_posts(posts: list[dict], workspace: Path) -> Path:
-    """JSON для программы и CSV для Excel (разделитель «;» и BOM - чтобы русский Excel открыл как надо)."""
+    """JSON для программы и таблица Excel для аналитики (фильтры, закреплённая шапка, даты - датами)."""
+    from openpyxl import Workbook
+    from openpyxl.styles import Font
+    from openpyxl.utils import get_column_letter
+
     workspace.mkdir(parents=True, exist_ok=True)
     (workspace / "threads_posts.json").write_text(
         json.dumps({"fetched_at": time.time(), "posts": posts}, ensure_ascii=False, indent=2), encoding="utf-8")
-    table = workspace / "threads_posts.csv"
-    columns = ["timestamp", "text", *METRICS, "media_type", "permalink"]
-    with open(table, "w", encoding="utf-8-sig", newline="") as fh:
-        writer = csv.writer(fh, delimiter=";")
-        writer.writerow(columns)
-        for post in posts:
-            writer.writerow([" ".join(str(post.get(c, "")).split()) if c == "text" else post.get(c, "")
-                             for c in columns])
+
+    book = Workbook()
+    sheet = book.active
+    sheet.title = "Посты Threads"
+    sheet.append([title for title, _ in COLUMNS])
+    for post in posts:
+        moment = published_at(post)
+        sheet.append([
+            moment.date() if moment else None,
+            moment.strftime("%H:%M") if moment else None,
+            WEEKDAYS[moment.weekday()] if moment else None,
+            " ".join(post.get("text", "").split()),
+            *[post.get(metric) for metric in METRICS],
+            engagement(post),
+            post.get("media_type"),
+            post.get("permalink"),
+        ])
+    for index, (_, width) in enumerate(COLUMNS, 1):
+        sheet.column_dimensions[get_column_letter(index)].width = width
+    for cell in sheet[1]:
+        cell.font = Font(bold=True)
+    for row in sheet.iter_rows(min_row=2):
+        row[0].number_format = "DD.MM.YYYY"
+        row[10].number_format = "0.00%"
+    sheet.freeze_panes = "A2"
+    sheet.auto_filter.ref = sheet.dimensions
+    table = workspace / "threads_posts.xlsx"
+    book.save(table)
     return table
 
 

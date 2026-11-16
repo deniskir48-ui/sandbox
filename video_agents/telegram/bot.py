@@ -322,11 +322,11 @@ class Bot:
         self._with_progress("Выгружаю посты и статистику из Threads",
                             lambda: posts.extend(refresh(self.pipeline.settings.secrets, workspace)))
         best = top_posts(posts)
-        lines = [f"📊 Threads: постов {len(posts)}. Лучшие по просмотрам:", ""]
+        lines = [f"📊 Threads: выгружено постов {len(posts)}. Лучшие по просмотрам:", ""]
         lines += [f"{n}. {describe(post)}" for n, post in enumerate(best, 1)]
         lines += ["", "Агент идей теперь учитывает эти посты."]
         self.api.send(self.chat_id, "\n".join(lines))
-        self.api.send_document(self.chat_id, workspace / "threads_posts.csv", "Все посты - таблица для Excel")
+        self.api.send_document(self.chat_id, workspace / "threads_posts.xlsx", "Все посты со статистикой - таблица Excel")
 
     def _task_failed(self, title: str, exc: Exception) -> None:
         try:

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import logging
+import os
 import sys
 
 from .config import load_settings
@@ -251,10 +252,13 @@ def _threads(settings) -> int:
     except threads.ThreadsError as exc:
         print(f"Ошибка: {exc}")
         return 1
-    print(f"Выгружено постов: {len(posts)}. Таблица: {Path(settings.workspace) / 'threads_posts.csv'}\n")
+    table = Path(settings.workspace) / "threads_posts.xlsx"
+    print(f"Выгружено постов: {len(posts)}. Таблица Excel: {table}\n")
     print("Лучшие по просмотрам:")
     for number, post in enumerate(threads.top_posts(posts), 1):
         print(f"{number}. {threads.describe(post)}")
+    if os.name == "nt":
+        os.startfile(table)  # noqa: S606 - открыть таблицу в Excel
     return 0
 
 

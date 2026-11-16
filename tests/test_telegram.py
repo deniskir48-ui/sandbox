@@ -200,4 +200,4 @@ def test_threads_report_sends_summary_and_table(bot, monkeypatch):
     summary = bot.api.texts()[-1]
     assert "постов 2" in summary and summary.index("Belly fat myth") < summary.index("Protein")
     document = bot.api.calls[-1]
-    assert document[0] == "sendDocument" and document[2]["document"][0] == "threads_posts.csv"
+    assert document[0] == "sendDocument" and document[2]["document"][0] == "threads_posts.xlsx"
