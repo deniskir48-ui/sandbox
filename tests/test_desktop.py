@@ -122,3 +122,27 @@ def test_speed_view_handles_negative_and_odd_values():
     assert settings_view(settings)["speed"] == -5
     settings.voice.rate = "fast"
     assert settings_view(settings)["speed"] == 0
+
+
+def test_shortcut_survives_odd_powershell_output(monkeypatch):
+    import subprocess
+
+    from video_agents import desktop
+
+    monkeypatch.setattr(desktop, "IS_WINDOWS", True)
+    calls = []
+
+    def fake_run(command, **kwargs):
+        calls.append(kwargs)
+        return subprocess.CompletedProcess(command, 0, stdout=None, stderr=None)
+
+    monkeypatch.setattr(desktop.subprocess, "run", fake_run)
+    assert desktop.install_shortcut() is not None
+    # Вывод PowerShell читаем как UTF-8 без падений на «неправильных» байтах.
+    assert calls[0]["encoding"] == "utf-8" and calls[0]["errors"] == "replace"
+
+    def failing_run(command, **kwargs):
+        return subprocess.CompletedProcess(command, 1, stdout="", stderr=None)
+
+    monkeypatch.setattr(desktop.subprocess, "run", failing_run)
+    assert desktop.install_shortcut() is None

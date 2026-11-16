@@ -39,6 +39,7 @@ SHORTCUT_NAME = "Видео-агент"
 VOICES = {"male": "ru-RU-DmitryNeural", "female": "ru-RU-SvetlanaNeural"}
 JOB_ID = re.compile(r"^[\w-]{1,64}$")
 UPDATE_CHECK_SECONDS = 3600
+IS_WINDOWS = os.name == "nt"
 
 
 def topic_tag(topic: str) -> str:
@@ -533,8 +534,11 @@ def serve(config_path: str = "config.yaml", port: int = PORT, open_browser: bool
 
 
 def install_shortcut(config_path: str = "config.yaml") -> Path | None:
-    """Ярлык «Видео-агент» на рабочем столе: открывает окно программы без чёрного окна консоли."""
-    if os.name != "nt":
+    """Ярлык «Видео-агент» на рабочем столе: открывает окно программы без чёрного окна консоли.
+
+    Сбой здесь не мешает работе: программа откроется и без ярлыка.
+    """
+    if not IS_WINDOWS:
         return None
     scripts = Path(sys.executable).parent
     target = scripts / "pythonw.exe"
@@ -542,6 +546,8 @@ def install_shortcut(config_path: str = "config.yaml") -> Path | None:
         target = Path(sys.executable)
     config = str(Path(config_path).resolve())
     script = (
+        # Путь к рабочему столу может быть с кириллицей: просим PowerShell отвечать в UTF-8.
+        "[Console]::OutputEncoding = [Text.Encoding]::UTF8;"
         "$desktop = [Environment]::GetFolderPath('Desktop');"
         f"$link = Join-Path $desktop '{SHORTCUT_NAME}.lnk';"
         "$s = (New-Object -ComObject WScript.Shell).CreateShortcut($link);"
@@ -553,12 +559,18 @@ def install_shortcut(config_path: str = "config.yaml") -> Path | None:
         "$s.Save();"
         "Write-Output $link"
     )
-    result = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script],
-                            capture_output=True, text=True, timeout=60, **NO_WINDOW)
-    if result.returncode != 0:
-        log.warning("Не удалось создать ярлык: %s", result.stderr.strip())
+    try:
+        result = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-Command", script],
+                                capture_output=True, text=True, encoding="utf-8", errors="replace", timeout=60,
+                                **NO_WINDOW)
+    except (OSError, subprocess.SubprocessError) as exc:
+        log.warning("Не удалось создать ярлык: %s", exc)
         return None
-    return Path(result.stdout.strip().splitlines()[-1]) if result.stdout.strip() else None
+    if result.returncode != 0:
+        log.warning("Не удалось создать ярлык: %s", (result.stderr or "").strip())
+        return None
+    lines = (result.stdout or "").strip().splitlines()
+    return Path(lines[-1].strip()) if lines else Path(SHORTCUT_NAME + ".lnk")
 
 
 def _ps(text: str) -> str:

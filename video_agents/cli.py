@@ -368,7 +368,11 @@ def _app(settings, config_path: str, open_browser: bool = True) -> int:
 
     marker = Path(settings.workspace) / ".shortcut_installed"
     if os.name == "nt" and not marker.exists():
-        link = desktop.install_shortcut(config_path)
+        try:
+            link = desktop.install_shortcut(config_path)
+        except Exception as exc:  # без ярлыка программа всё равно работает
+            print(f"Ярлык на рабочем столе создать не удалось: {exc}")
+            link = None
         if link:
             marker.parent.mkdir(parents=True, exist_ok=True)
             marker.write_text(str(link), encoding="utf-8")
