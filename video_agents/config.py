@@ -119,6 +119,7 @@ class Secrets(BaseModel):
     instagram_token_file: str = "secrets/instagram_token.json"
     telegram_file: str = "secrets/telegram.json"  # токен бота и чат владельца (python -m video_agents auth telegram)
     threads_token_file: str = "secrets/threads_token.json"  # ключ Threads для выгрузки статистики
+    threads_app_file: str = "secrets/threads_app.json"  # ID и секрет приложения Threads (для трендов)
     tiktok_client_key: str | None = None
     tiktok_client_secret: str | None = None
     tiktok_redirect_uri: str | None = None
@@ -134,6 +135,10 @@ class Secrets(BaseModel):
         return cls(**values)
 
 
+class ThreadsConfig(BaseModel):
+    trends_country: Literal["US", "JP"] = "US"  # Meta отдаёт тренды только для США и Японии
+
+
 class Settings(BaseModel):
     channel: ChannelConfig = Field(default_factory=ChannelConfig)
     llm: LLMConfig = Field(default_factory=LLMConfig)
@@ -142,6 +147,7 @@ class Settings(BaseModel):
     subtitles: SubtitleConfig = Field(default_factory=SubtitleConfig)
     video: VideoConfig = Field(default_factory=VideoConfig)
     publish: PublishConfig = Field(default_factory=PublishConfig)
+    threads: ThreadsConfig = Field(default_factory=ThreadsConfig)
     workspace: str = "workspace"
     secrets: Secrets = Field(default_factory=Secrets, exclude=True)
 

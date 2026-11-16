@@ -219,3 +219,48 @@ def ideas_context(secrets, workspace: Path) -> str:
             posts = load_posts(workspace) or []
     best = top_posts(posts)
     return "\n".join(f"- {describe(post)}" for post in best)
+
+
+# --- Тренды Threads (Threads Trending Topics) ---
+# Запросы идут от имени приложения (ключ «TH|ID|секрет»), а не пользователя. Список трендов доступен сразу,
+# посты по тренду - только после одобрения Meta («advanced access»). По условиям Meta данные трендов нельзя
+# передавать дальше или изменять, поэтому программа только показывает их владельцу.
+
+
+class ThreadsApp:
+    def __init__(self, secrets):
+        self.path = Path(secrets.threads_app_file)
+
+    def is_configured(self) -> bool:
+        return self.path.exists()
+
+    def save(self, app_id: str, app_secret: str, country: str = "US") -> list[dict]:
+        """Проверяет ID и секрет пробным запросом трендов и сохраняет их."""
+        token = f"TH|{app_id.strip()}|{app_secret.strip()}"
+        trends = fetch_trends(token, country)
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self.path.write_text(json.dumps({"app_id": app_id.strip(), "app_secret": app_secret.strip()}),
+                             encoding="utf-8")
+        return trends
+
+    def token(self) -> str:
+        if not self.path.exists():
+            raise ThreadsError("Тренды не подключены: python -m video_agents auth threads-trends")
+        data = json.loads(self.path.read_text(encoding="utf-8"))
+        return f"TH|{data['app_id']}|{data['app_secret']}"
+
+
+def fetch_trends(app_token: str, country: str = "US") -> list[dict]:
+    """Текущие тренды: [{"title", "description", "trend_id"}]. Обновляются не чаще раза в час."""
+    return _get(f"{API}/trending_topics", app_token, country_code=country).get("trends", [])
+
+
+def fetch_trend_posts(app_token: str, trend_id: str, kind: str = "top", limit: int = 10) -> list[dict]:
+    """Популярные (top) или свежие (recent) посты по тренду. Нужно одобрение Meta."""
+    try:
+        page = _get(f"{API}/{trend_id}/posts", app_token, trending_post_type=kind, limit=limit,
+                    fields="id,username,text,permalink,timestamp,media_type")
+    except ThreadsError as exc:
+        raise ThreadsError("Посты по трендам Meta отдаёт только после одобрения функции "
+                           f"«Threads Trending Topics» для приложения (advanced access). Ответ API: {exc}") from exc
+    return page.get("data", [])

@@ -43,9 +43,18 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("update", help="обновить программу до последней версии с GitHub")
 
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
-    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok", "telegram", "threads"])
+    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok", "telegram", "threads",
+                                           "threads-trends"])
 
     sub.add_parser("threads", help="выгрузить свои посты из Threads со статистикой (таблица для Excel)")
+
+    channel = sub.add_parser("channel", help="сменить формат канала по вашим постам из Threads")
+    channel.add_argument("action", choices=["from-threads"])
+    channel.add_argument("--hint", default="", help="в двух словах, о чём вы пишете")
+    channel.add_argument("--language", default="ru", help="язык роликов (ru, en, ...)")
+
+    trends = sub.add_parser("trends", help="тренды Threads сейчас (США или Япония)")
+    trends.add_argument("number", nargs="?", type=int, help="номер тренда - показать популярные посты по нему")
 
     sub.add_parser("bot", help="запустить Telegram-бота (управление с телефона)")
 
@@ -84,7 +93,13 @@ def main(argv: list[str] | None = None) -> int:
         return _schedule(args)
 
     if args.command == "bot":
-        return _bot(settings)
+        return _bot(settings, args.config)
+
+    if args.command == "channel":
+        return _channel_from_threads(settings, args.config, args.hint, args.language)
+
+    if args.command == "trends":
+        return _trends(settings, args.number)
 
     if args.command == "threads":
         return _threads(settings)
@@ -222,7 +237,37 @@ def _schedule(args) -> int:
     return 0
 
 
-def _bot(settings) -> int:
+def _channel_from_threads(settings, config_path: str, hint: str, language: str) -> int:
+    from pathlib import Path
+
+    from . import threads
+    from .agents.channel_advisor import ChannelAdvisorAgent, proposal_text
+    from .pipeline import Pipeline
+    from .reformat import VOICES, apply_proposal
+
+    workspace = Path(settings.workspace)
+    try:
+        posts = threads.load_posts(workspace) or threads.refresh(settings.secrets, workspace)
+    except threads.ThreadsError as exc:
+        print(f"Ошибка: {exc}")
+        return 1
+    pipeline = Pipeline(settings)
+    print(f"Изучаю {len(posts)} постов из Threads, это займёт около минуты...\n")
+    proposal = ChannelAdvisorAgent(pipeline.llms["ideas"]).propose(posts, hint, language)
+    print(proposal_text(proposal))
+    answer = input(f"\nГолос диктора: 1 - {VOICES['male'][0]}, 2 - {VOICES['female'][0]} (Enter - 1): ").strip()
+    voice = VOICES["female" if answer == "2" else "male"][1]
+    if input("Применить этот формат? (да/нет): ").strip().lower() not in ("да", "д", "yes", "y"):
+        print("Ничего не меняю.")
+        return 0
+    removed = apply_proposal(pipeline, Path(config_path), proposal, language, voice)
+    print(f"\nГотово! Формат канала обновлён в {config_path}, в очереди {len(proposal.example_topics)} новых тем.")
+    if removed:
+        print(f"Старые темы ({removed}) убраны из очереди и сохранены в {workspace / 'ideas_queue.backup.json'}.")
+    return 0
+
+
+def _bot(settings, config_path: str = "config.yaml") -> int:
     from pathlib import Path
 
     from .pipeline import Pipeline
@@ -238,7 +283,33 @@ def _bot(settings) -> int:
     handler = logging.FileHandler(log_file, encoding="utf-8")
     handler.setFormatter(logging.Formatter("%(asctime)s %(levelname)-7s %(name)s: %(message)s"))
     logging.getLogger().addHandler(handler)
-    Bot(TelegramAPI(access.token), access.chat_id, Pipeline(settings)).run_forever()
+    Bot(TelegramAPI(access.token), access.chat_id, Pipeline(settings), config_path=Path(config_path)).run_forever()
+    return 0
+
+
+def _trends(settings, number: int | None) -> int:
+    from . import threads
+
+    try:
+        token = threads.ThreadsApp(settings.secrets).token()
+        items = threads.fetch_trends(token, settings.threads.trends_country)
+        if number is None:
+            print(f"Тренды Threads ({settings.threads.trends_country}) прямо сейчас:\n")
+            for n, trend in enumerate(items, 1):
+                print(f"{n}. {trend['title']}" + (f" - {trend['description']}" if trend.get("description") else ""))
+            print("\nПосты по тренду: python -m video_agents trends НОМЕР")
+            return 0
+        if not 1 <= number <= len(items):
+            print(f"Нет тренда №{number}: сейчас их {len(items)}.")
+            return 1
+        trend = items[number - 1]
+        print(f"Популярные посты по тренду «{trend['title']}»:\n")
+        for post in threads.fetch_trend_posts(token, trend["trend_id"]):
+            text = " ".join((post.get("text") or "").split())
+            print(f"@{post.get('username', '?')}: {text[:200]}\n    {post.get('permalink', '')}")
+    except threads.ThreadsError as exc:
+        print(f"Ошибка: {exc}")
+        return 1
     return 0
 
 
@@ -263,6 +334,21 @@ def _threads(settings) -> int:
 
 
 def _auth(platform: str, settings) -> int:
+    if platform == "threads-trends":
+        from .threads import ThreadsApp, ThreadsError
+
+        print("Нужны ID и секрет приложения Threads: кабинет Meta -> ваше приложение -> сценарий Threads ->")
+        print("Settings (Настройки) -> «Threads App ID» и «Threads App Secret» (секрет показывается по кнопке Show).")
+        app_id = input("Threads App ID: ")
+        app_secret = input("Threads App Secret: ")
+        try:
+            trends = ThreadsApp(settings.secrets).save(app_id, app_secret, settings.threads.trends_country)
+        except ThreadsError as exc:
+            print(f"Не подошло: {exc}")
+            return 1
+        print(f"Готово! Тренды подключены, сейчас их {len(trends)}. Посмотреть: python -m video_agents trends")
+        return 0
+
     if platform == "threads":
         from .threads import ThreadsAuth
 
