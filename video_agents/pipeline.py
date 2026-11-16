@@ -123,7 +123,7 @@ class Pipeline:
         пропускаются, если не включён threads.include_events. Решения запоминаются.
         """
         from . import threads
-        from .agents.post_screener import PostScreenerAgent, category_name
+        from .agents.post_screener import PostScreenerAgent, rubric_rank
 
         workspace = Path(self.settings.workspace)
         config = self.settings.threads
@@ -143,7 +143,6 @@ class Pipeline:
             threads.save_screening(workspace, verdicts, key)
 
         today = datetime.now().date()
-        ranks = {category_name(rubric): n for n, rubric in enumerate(config.priorities)}
         backlog_ids = {post["id"] for post in backlog}
 
         def relevant_until(verdict: dict, post: dict):
@@ -173,7 +172,7 @@ class Pipeline:
                 else:
                     urgent.append((until, {**post, "rubric": verdict.get("category", "")}))
             elif post["id"] in backlog_ids:  # свежий обычный пост ждёт, пока наберёт просмотры
-                rank = ranks.get(verdict.get("category", ""), len(ranks))
+                rank = rubric_rank(verdict.get("category", ""), config.priorities)
                 regular.append((rank, threads.published_at(post), {**post, "rubric": verdict.get("category", "")}))
         urgent.sort(key=lambda item: item[0])  # ближайшее событие - первым
         regular.sort(key=lambda item: (item[0], item[1]))

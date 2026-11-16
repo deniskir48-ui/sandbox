@@ -329,3 +329,15 @@ def test_russian_speech_is_slower():
 
     channel = ChannelConfig(language="ru", video_length_seconds=15, max_video_length_seconds=30)
     assert (target_words(channel), word_budget(channel)) == (30, 60)
+
+
+def test_rubric_rank_tolerates_typos():
+    from video_agents.agents.post_screener import rubric_rank
+
+    rubrics = ["Кипр: полезное", "Греческий язык: разборы слов", "Спорт и тренировки", "Остальное"]
+    assert rubric_rank("Кипр", rubrics) == 0
+    assert rubric_rank("Кипар", rubrics) == 0
+    assert rubric_rank("греческий язык", rubrics) == 1
+    assert rubric_rank("Спорт и тренировка", rubrics) == 2
+    assert rubric_rank("Кулинария", rubrics) == 4
+    assert rubric_rank("Кипр", []) == 0
