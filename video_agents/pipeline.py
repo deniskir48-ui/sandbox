@@ -71,7 +71,12 @@ class Pipeline:
     # --- Этапы ---
 
     def ideas(self, count: int) -> list[VideoIdea]:
-        ideas = self.idea_agent.generate(count, self.store.past_topics())
+        from .threads import ideas_context
+
+        signals = ideas_context(self.settings.secrets, Path(self.settings.workspace))
+        if signals:
+            log.info("Агент идей учитывает лучшие посты из Threads")
+        ideas = self.idea_agent.generate(count, self.store.past_topics(), signals)
         self.store.log_ideas(ideas)
         return ideas
 

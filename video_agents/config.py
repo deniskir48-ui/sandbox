@@ -118,6 +118,7 @@ class Secrets(BaseModel):
     instagram_user_id: str | None = None
     instagram_token_file: str = "secrets/instagram_token.json"
     telegram_file: str = "secrets/telegram.json"  # токен бота и чат владельца (python -m video_agents auth telegram)
+    threads_token_file: str = "secrets/threads_token.json"  # ключ Threads для выгрузки статистики
     tiktok_client_key: str | None = None
     tiktok_client_secret: str | None = None
     tiktok_redirect_uri: str | None = None

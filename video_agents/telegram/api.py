@@ -52,6 +52,11 @@ class TelegramAPI:
             if "not modified" not in str(exc):
                 raise
 
+    def send_document(self, chat_id: int, path: Path, caption: str = "") -> dict:
+        with open(path, "rb") as fh:
+            return self.call("sendDocument", files={"document": (path.name, fh)}, http_timeout=120,
+                             chat_id=chat_id, caption=caption[:1024])
+
     def send_video(self, chat_id: int, path: Path, caption: str, keyboard: dict | None = None) -> dict:
         with open(path, "rb") as fh:
             return self.call("sendVideo", files={"video": (path.name, fh, "video/mp4")}, http_timeout=300,

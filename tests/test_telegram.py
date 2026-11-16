@@ -175,3 +175,29 @@ def test_second_bot_instance_exits_on_conflict(bot):
 
     bot.api.call = conflict
     bot.run_forever()  # не зависает: завершается сам
+
+
+def test_threads_token_message_is_deleted_and_saved(bot, monkeypatch):
+    from video_agents import threads
+
+    bot.pipeline.settings.secrets.threads_token_file = str(bot.pipeline.store.root / "threads.json")
+    monkeypatch.setattr(threads, "_get", lambda url, token, **p: {"id": "u1", "username": "denis.strength"})
+    update = message("/threads SECRET-TOKEN")
+    update["message"]["message_id"] = 77
+    bot.handle(update)
+    assert ("deleteMessage", {"chat_id": OWNER, "message_id": 77}, None) in bot.api.calls
+    assert "Threads @denis.strength подключён" in bot.api.texts()[-1]
+
+
+def test_threads_report_sends_summary_and_table(bot, monkeypatch):
+    from video_agents import threads
+    from video_agents.telegram.bot import THREADS
+
+    posts = [{"id": "1", "text": "Belly fat myth", "views": 900}, {"id": "2", "text": "Protein", "views": 50}]
+    monkeypatch.setattr(threads, "fetch_posts", lambda token: posts)
+    monkeypatch.setattr(threads.ThreadsAuth, "token", lambda self: "T")
+    bot.handle(message(THREADS))
+    summary = bot.api.texts()[-1]
+    assert "постов 2" in summary and summary.index("Belly fat myth") < summary.index("Protein")
+    document = bot.api.calls[-1]
+    assert document[0] == "sendDocument" and document[2]["document"][0] == "threads_posts.csv"

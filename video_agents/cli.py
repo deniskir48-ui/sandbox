@@ -42,7 +42,9 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("update", help="обновить программу до последней версии с GitHub")
 
     auth = sub.add_parser("auth", help="однократная авторизация на платформе")
-    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok", "telegram"])
+    auth.add_argument("platform", choices=["youtube", "instagram", "tiktok", "telegram", "threads"])
+
+    sub.add_parser("threads", help="выгрузить свои посты из Threads со статистикой (таблица для Excel)")
 
     sub.add_parser("bot", help="запустить Telegram-бота (управление с телефона)")
 
@@ -82,6 +84,9 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "bot":
         return _bot(settings)
+
+    if args.command == "threads":
+        return _threads(settings)
 
     from .pipeline import Pipeline
 
@@ -236,7 +241,32 @@ def _bot(settings) -> int:
     return 0
 
 
+def _threads(settings) -> int:
+    from pathlib import Path
+
+    from . import threads
+
+    try:
+        posts = threads.refresh(settings.secrets, Path(settings.workspace))
+    except threads.ThreadsError as exc:
+        print(f"Ошибка: {exc}")
+        return 1
+    print(f"Выгружено постов: {len(posts)}. Таблица: {Path(settings.workspace) / 'threads_posts.csv'}\n")
+    print("Лучшие по просмотрам:")
+    for number, post in enumerate(threads.top_posts(posts), 1):
+        print(f"{number}. {threads.describe(post)}")
+    return 0
+
+
 def _auth(platform: str, settings) -> int:
+    if platform == "threads":
+        from .threads import ThreadsAuth
+
+        token = input("Вставьте ключ Threads (из кабинета разработчика Meta) и нажмите Enter:\n")
+        data = ThreadsAuth(settings.secrets).save(token)
+        print(f"Готово! Подключён Threads @{data['username']}. Ключ будет продлеваться автоматически.")
+        return 0
+
     if platform == "telegram":
         from .telegram import setup
 

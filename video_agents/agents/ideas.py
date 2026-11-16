@@ -51,13 +51,18 @@ class IdeaAgent:
             log.warning("Ресёрч трендов не удался, работаем без него: %s", exc)
             return ""
 
-    def generate(self, count: int, past_topics: list[str]) -> list[VideoIdea]:
+    def generate(self, count: int, past_topics: list[str], audience_signals: str = "") -> list[VideoIdea]:
+        """audience_signals - лучшие посты автора (например, из Threads) с их статистикой."""
         research = self.research()
         past = "\n".join(f"- {topic}" for topic in past_topics[-100:]) or "- (пока ничего)"
         prompt = (
             f"{channel_brief(self.channel)}\n\n"
             f"Темы, которые уже были (не повторять):\n{past}\n\n"
             + (f"Свежие находки ресёрчера:\n{research}\n\n" if research else "")
+            + (f"Посты автора, которые лучше всего зашли его аудитории в Threads (с просмотрами и реакциями).\n"
+               f"Это сигнал, какие проблемы и подача цепляют именно его подписчиков: развивай эти темы\n"
+               f"и смежные, но не копируй посты дословно и не повторяй уже снятые темы.\n"
+               f"{audience_signals}\n\n" if audience_signals else "")
             + f"Предложи {max(count * 3, 5)} идей и отсортируй их от самой сильной к слабой."
         )
         result = self.llm.structured(system=IDEAS_SYSTEM, prompt=prompt, output_model=IdeaList, effort="medium")

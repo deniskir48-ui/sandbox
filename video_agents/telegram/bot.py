@@ -23,8 +23,9 @@ IDEAS = "💡 Идеи"
 MAKE = "🎬 Сделать ролик"
 QUEUE = "📋 Очередь"
 STATS = "💰 Расходы"
+THREADS = "📊 Threads"
 MENU = {
-    "keyboard": [[{"text": IDEAS}, {"text": MAKE}], [{"text": QUEUE}, {"text": STATS}]],
+    "keyboard": [[{"text": IDEAS}, {"text": MAKE}], [{"text": QUEUE}, {"text": STATS}, {"text": THREADS}]],
     "resize_keyboard": True,
     "is_persistent": True,
 }
@@ -33,7 +34,8 @@ HELP = (
     f"{IDEAS} - придумаю 5 тем, понравившиеся нажмите - они встанут в очередь\n"
     f"{MAKE} - сделаю ролик (тема из очереди или новая) и пришлю на проверку\n"
     f"{QUEUE} - темы, которые ждут своей очереди\n"
-    f"{STATS} - сколько стоили ролики\n\n"
+    f"{STATS} - сколько стоили ролики\n"
+    f"{THREADS} - статистика ваших постов в Threads и таблица для Excel\n\n"
     "Любое другое сообщение я добавлю в очередь как тему ролика."
 )
 STALE_SECONDS = 300  # команды, отправленные, пока бот был выключен, не выполняем
@@ -87,6 +89,7 @@ class Bot:
         self.worker = Worker(self._task_failed, sync=sync)
         self.idea_batches: dict[str, list[VideoIdea]] = {}
         self.offset = 0
+        self._message_id = None  # последнее сообщение владельца (чтобы удалить присланный ключ)
 
     # --- Цикл опроса Telegram ---
 
@@ -130,6 +133,7 @@ class Bot:
             return  # чужие чаты игнорируем: бот частный
         if time.time() - message.get("date", time.time()) > STALE_SECONDS:
             return
+        self._message_id = message.get("message_id")
         self.on_text((message.get("text") or "").strip())
 
     # --- Текстовые команды ---
@@ -147,6 +151,10 @@ class Bot:
             self._show_queue()
         elif text in (STATS, "/stats"):
             self.api.send(self.chat_id, stats_text(self.pipeline.store.all()))
+        elif text.startswith("/threads "):
+            self._connect_threads(text.split(maxsplit=1)[1])
+        elif text in (THREADS, "/threads"):
+            self._submit("Выгружаю статистику Threads", self._threads_report)
         elif text.startswith("/"):
             self.api.send(self.chat_id, HELP, MENU)
         else:
@@ -289,6 +297,36 @@ class Bot:
             removed = ideas.pop(index)
             self.pipeline.store.save_queue(ideas)
         self.api.send(self.chat_id, f"🗑 Убрал из очереди: {removed.topic}")
+
+    def _connect_threads(self, token: str) -> None:
+        from ..threads import ThreadsAuth, ThreadsError
+
+        try:  # ключ не должен оставаться в переписке
+            self.api.call("deleteMessage", chat_id=self.chat_id, message_id=self._message_id)
+        except TelegramError:
+            pass
+        try:
+            data = ThreadsAuth(self.pipeline.settings.secrets).save(token)
+        except ThreadsError as exc:
+            self.api.send(self.chat_id, f"❌ Ключ не подошёл: {exc}")
+            return
+        self.api.send(self.chat_id, f"✅ Threads @{data['username']} подключён. Нажмите {THREADS}, чтобы выгрузить посты.")
+
+    def _threads_report(self) -> None:
+        from pathlib import Path
+
+        from ..threads import describe, refresh, top_posts
+
+        workspace = Path(self.pipeline.settings.workspace)
+        posts: list[dict] = []
+        self._with_progress("Выгружаю посты и статистику из Threads",
+                            lambda: posts.extend(refresh(self.pipeline.settings.secrets, workspace)))
+        best = top_posts(posts)
+        lines = [f"📊 Threads: постов {len(posts)}. Лучшие по просмотрам:", ""]
+        lines += [f"{n}. {describe(post)}" for n, post in enumerate(best, 1)]
+        lines += ["", "Агент идей теперь учитывает эти посты."]
+        self.api.send(self.chat_id, "\n".join(lines))
+        self.api.send_document(self.chat_id, workspace / "threads_posts.csv", "Все посты - таблица для Excel")
 
     def _task_failed(self, title: str, exc: Exception) -> None:
         try:
