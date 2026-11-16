@@ -43,14 +43,17 @@ class FakeLLM:
             return Review(score=9 if approved else 5, approved=approved, strengths=["хук"],
                           problems=[] if approved else ["слабый финал"],
                           rewrite_instructions="" if approved else "усиль финал")
-        if output_model.__name__ == "Screening":  # отбор постов: id с «skip» пропускаем, с «event» - афиши
+        if output_model.__name__ == "Screening":
+            # отбор постов по id: «skip» - пропустить, «event» - событие («digest» - подборка, «expired» - прошло),
+            # «cy»/«sport» - рубрика
             import re
 
             from video_agents.agents.post_screener import PostVerdict, Screening
 
             ids = re.findall(r"\[id=([^,\]]+)", prompt)
             return Screening(verdicts=[
-                PostVerdict(post_id=i, use="skip" not in i, time_sensitive="event" in i,
+                PostVerdict(post_id=i, use="skip" not in i, time_sensitive="event" in i, digest="digest" in i,
+                            category="Кипр" if "cy" in i else "Спорт" if "sport" in i else "",
                             relevant_until=("2000-01-01" if "expired" in i else "2099-12-31") if "event" in i else "",
                             reason="тест") for i in ids])
         if output_model is PlatformMeta:
@@ -517,7 +520,7 @@ def test_screening_failure_does_not_pass_unchecked_posts(settings):
 
 
 
-def test_fresh_event_posts_jump_the_queue_and_old_ones_expire(settings):
+def test_events_and_rubric_priorities(settings):
     from datetime import datetime, timedelta, timezone
 
     from video_agents import threads
@@ -527,20 +530,21 @@ def test_fresh_event_posts_jump_the_queue_and_old_ones_expire(settings):
         return {"id": pid, "text": "Достаточно длинный текст поста для проверки отбора. " * 3, "views": views,
                 "timestamp": moment}
 
-    # свежая афиша опубликована вчера и с малыми просмотрами - всё равно идёт первой;
-    # афиша, опубликованная вчера, но про уже прошедшие события (как кинопоказы 11-15 ноября 16-го), пропускается;
-    # старая афиша про прошедшие события пропускается; старая, но ещё актуальная (Рождество) - берётся по порядку
-    threads.save_posts([post("event-expired-old", 60), post("story-1", 300), post("event-fresh", 1, views=5),
-                        post("event-expired-fresh", 1), post("event-christmas", 20), post("story-2", 100)],
-                       Path(settings.workspace))
+    threads.save_posts([
+        post("sport-old", 400), post("other-old", 350), post("cy-new", 30), post("cy-old", 300),
+        post("event-ochi", 1, views=5),            # одно событие впереди: свежее и с малыми просмотрами - всё равно первым
+        post("event-expired-cinema", 1),           # свежий пост про прошедшие события
+        post("event-digest-week", 2),              # подборка событий - пропускаем, пока афиши выключены
+        post("event-expired-old", 60),
+    ], Path(settings.workspace))
     settings.channel.source = "threads"
-    settings.threads.include_events = True
+    settings.threads.priorities = ["Кипр: полезное о жизни на Кипре", "Спорт", "Остальное"]
     pipeline = Pipeline(settings, llm=FakeLLM(), producer=VideoProducer(settings, FakeTTS()))
-    assert [i.source_post_id for i in pipeline.threads_ideas(5)] == ["event-fresh", "story-1", "story-2",
-                                                                     "event-christmas"]
+    ids = [i.source_post_id for i in pipeline.threads_ideas(10)]
+    assert ids == ["event-ochi", "cy-old", "cy-new", "sport-old", "other-old"]
 
-    settings.threads.include_events = False  # по умолчанию афиши не берём совсем
-    assert [i.source_post_id for i in pipeline.threads_ideas(5)] == ["story-1", "story-2"]
+    settings.threads.include_events = True  # с афишами дайджест тоже берётся (событие впереди)
+    assert "event-digest-week" in [i.source_post_id for i in pipeline.threads_ideas(10)]
 
 
 def test_excluded_topics_reach_screener_and_reset_cache(settings):

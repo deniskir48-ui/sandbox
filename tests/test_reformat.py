@@ -165,3 +165,13 @@ def test_cli_threads_exclude_appends_topic(tmp_path, monkeypatch, capsys):
     assert cli.main(["threads", "--exclude", "политика"]) == 0
     assert load_settings("config.yaml").threads.exclude_topics == ["работа в IT", "политика"]
     assert "# главная модель" in Path("config.yaml").read_text(encoding="utf-8")
+
+
+def test_cli_threads_priorities_replace_list(tmp_path, monkeypatch, capsys):
+    from video_agents import cli
+
+    monkeypatch.chdir(tmp_path)
+    Path("config.yaml").write_text(CONFIG, encoding="utf-8")
+    assert cli.main(["threads", "--priorities", "Кипр: полезное, места", "Греческий", "Спорт"]) == 0
+    assert load_settings("config.yaml").threads.priorities == ["Кипр: полезное, места", "Греческий", "Спорт"]
+    assert "1. Кипр: полезное, места" in capsys.readouterr().out

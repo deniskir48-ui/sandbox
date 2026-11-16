@@ -42,6 +42,7 @@ HELP = (
     f"{TRENDS} - что сейчас в тренде в Threads\n"
     "/format - подобрать формат канала по вашим постам в Threads\n"
     "/exclude тема - никогда не делать ролики из постов на эту тему\n"
+    "/priorities - рубрики по приоритету, каждая с новой строки после команды\n"
     "/set раздел.поле значение - изменить настройку (например /set subtitles.show_scene_text true)\n\n"
     "Любое другое сообщение я добавлю в очередь как тему ролика."
 )
@@ -163,6 +164,8 @@ class Bot:
             self.api.send(self.chat_id, stats_text(self.pipeline.store.all()))
         elif text.startswith("/threads "):
             self._connect_threads(text.split(maxsplit=1)[1])
+        elif text.startswith("/priorities"):
+            self._set_priorities(text)
         elif text.startswith("/exclude "):
             from ..config_edit import add_to_list
 
@@ -343,6 +346,22 @@ class Bot:
             self.api.send(self.chat_id, f"❌ Ключ не подошёл: {exc}")
             return
         self.api.send(self.chat_id, f"✅ Threads @{data['username']} подключён. Нажмите {THREADS}, чтобы выгрузить посты.")
+
+    def _set_priorities(self, text: str) -> None:
+        from ..config_edit import set_list
+
+        lines = [line.strip(" -•\t") for line in text.splitlines()[1:]]
+        lines = [line.split(".", 1)[1].strip() if line[:1].isdigit() and "." in line[:4] else line for line in lines]
+        if not any(lines):
+            current = self.pipeline.settings.threads.priorities
+            self.api.send(self.chat_id, "Рубрики по приоритету:\n" + ("\n".join(
+                f"{n}. {r}" for n, r in enumerate(current, 1)) or "не заданы") +
+                "\n\nЧтобы задать: /priorities, а со следующей строки - рубрики по одной на строку.")
+            return
+        rubrics = set_list(self.config_path, "threads.priorities", lines)
+        self.pipeline.settings.threads.priorities = rubrics
+        self.api.send(self.chat_id, "✅ Рубрики по приоритету:\n" + "\n".join(
+            f"{n}. {r}" for n, r in enumerate(rubrics, 1)))
 
     def _set_option(self, parts: list[str]) -> None:
         from ..config_edit import ConfigEditError, apply_to, set_value

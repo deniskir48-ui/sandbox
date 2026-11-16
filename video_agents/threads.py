@@ -316,7 +316,8 @@ def post_to_idea(post: dict):
     return VideoIdea(
         viewer_problem=text[:120], relatability=10, topic=text[:80],
         angle="адаптация поста автора из Threads", hook="на усмотрение сценариста",
-        why_it_works=f"Пост уже зашёл аудитории в Threads ({stats or 'есть отклик'})",
+        why_it_works=(f"Рубрика: {post['rubric']}. " if post.get("rubric") else "")
+        + f"Пост уже зашёл аудитории в Threads ({stats or 'есть отклик'})",
         source_post_id=str(post["id"]), source_text=post.get("text", ""),
     )
 

@@ -48,6 +48,8 @@ def main(argv: list[str] | None = None) -> int:
 
     threads_cmd = sub.add_parser("threads", help="выгрузить свои посты из Threads со статистикой (таблица для Excel)")
     threads_cmd.add_argument("--exclude", metavar="ТЕМА", help="никогда не делать ролики из постов на эту тему")
+    threads_cmd.add_argument("--priorities", nargs="+", metavar="РУБРИКА",
+                             help="рубрики по приоритету, например: \"Кипр: полезное, места\" \"Греческий\" \"Спорт\"")
     threads_cmd.add_argument("--next", type=int, nargs="?", const=5, default=None,
                              help="показать, какие посты станут следующими роликами (по умолчанию 5)")
 
@@ -124,6 +126,14 @@ def main(argv: list[str] | None = None) -> int:
         return _trends(settings, args.number)
 
     if args.command == "threads":
+        if args.priorities:
+            from pathlib import Path
+
+            from .config_edit import set_list
+
+            rubrics = set_list(Path(args.config), "threads.priorities", args.priorities)
+            print("Рубрики по приоритету:\n" + "\n".join(f"{n}. {r}" for n, r in enumerate(rubrics, 1)))
+            return 0
         if args.exclude:
             from pathlib import Path
 

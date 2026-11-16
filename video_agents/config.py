@@ -151,6 +151,9 @@ class ThreadsConfig(BaseModel):
     include_events: bool = False
     # Темы, посты на которые не превращать в ролики никогда (например «работа в IT»).
     exclude_topics: list[str] = Field(default_factory=list)
+    # Рубрики по приоритету: «Название: что в неё входит». Сначала идут посты первой рубрики, потом второй...
+    # Пусто - без приоритетов, просто от старых к новым.
+    priorities: list[str] = Field(default_factory=list)
     fresh_days: float = 7  # афиши моложе этого (без даты актуальности) идут вне очереди, старше - устарели
 
 
