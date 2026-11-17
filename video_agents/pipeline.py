@@ -90,9 +90,12 @@ class Pipeline:
             tts = make_tts(self.settings.voice, self.settings.secrets)
             footage = make_footage(self.settings.footage, self.settings.secrets, Path(self.settings.workspace) / "footage_cache")
             editor = FootageEditorAgent(self.llms["footage"]) if footage and self.settings.footage.ai_selection else None
-            images = make_ai_images(self.settings.footage, self.settings.secrets,
-                                    Path(self.settings.workspace) / "footage_cache")
-            self._producer = VideoProducer(self.settings, tts, footage, editor, images)
+            from .production.library import make_library
+
+            cache = Path(self.settings.workspace) / "footage_cache"
+            images = make_ai_images(self.settings.footage, self.settings.secrets, cache)
+            library = make_library(self.settings.footage, cache, self.llms["footage"])
+            self._producer = VideoProducer(self.settings, tts, footage, editor, images, library)
         return self._producer
 
     # --- Этапы ---

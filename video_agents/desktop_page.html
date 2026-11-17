@@ -152,6 +152,20 @@
       <p class="hint">Изменения действуют со следующего ролика. Чтобы применить к готовому - «Пересобрать».</p>
     </section>
     <section>
+      <h2>Мои кадры</h2>
+      <p class="hint" id="library-info" style="margin-top:0"></p>
+      <div class="row">
+        <button id="open-library">📁 Открыть папку</button>
+        <button id="study-library" title="ИИ посмотрит новые файлы и запишет, что на них (доли цента за файл)">🔍 Изучить новые</button>
+      </div>
+      <div class="setting" style="margin-top:6px">
+        <label>Только мои кадры (без стоков и картинок ИИ)</label>
+        <input type="checkbox" id="library_only">
+      </div>
+      <p class="hint">Кидайте в папку свои видео и фото с телефона - можно по подпапкам. При монтаже ваши кадры
+        подбираются к фразам первыми; новые файлы изучаются сами при следующем ролике.</p>
+    </section>
+    <section>
       <h2>Посты из Threads</h2>
       <div class="row">
         <button id="next-posts">Какие посты пойдут в ролики</button>
@@ -359,6 +373,7 @@ function renderSettings(s) {
   $("length").value = s.length;
   $("auto_publish").checked = s.auto_publish;
   $("show_scene_text").checked = s.show_scene_text;
+  if (state) $("library_only").checked = state.library.only;
 }
 
 function speedText(v) { v = Number(v); return v === 0 ? "обычная" : (v > 0 ? "+" : "") + v + "%"; }
@@ -374,7 +389,12 @@ function render(s) {
     "а видео сниму, когда нажмёте «Снять видео»." + (s.settings.auto_publish ? " Готовый ролик сразу опубликуется." : "");
   const isDraft = (j) => j.status === "scripted" || j.status === "new";
   renderDrafts(s.jobs.filter(isDraft));
-  renderJobs(s.jobs.filter((j) => !isDraft(j))); renderQueue(s.queue); renderPosts(s.next_posts); renderLog(s.log); renderSettings(s.settings);
+  renderJobs(s.jobs.filter((j) => !isDraft(j)));
+  const lib = s.library, total = lib.videos + lib.photos;
+  $("library-info").textContent = total
+    ? `В папке: видео ${lib.videos}, фото ${lib.photos}; изучено ${lib.studied}.`
+    : "Папка пока пустая. Нажмите «Открыть папку» и скопируйте туда свои видео и фото.";
+  $("library-info").title = lib.folder; renderQueue(s.queue); renderPosts(s.next_posts); renderLog(s.log); renderSettings(s.settings);
   $("stats").innerHTML = `<div><b>${s.stats.videos}</b><span>роликов</span></div>
     <div><b>$${s.stats.total.toFixed(2)}</b><span>всего</span></div>
     <div><b>$${s.stats.average.toFixed(2)}</b><span>в среднем за ролик</span></div>`;
@@ -415,6 +435,9 @@ $("voice").querySelectorAll("button").forEach((b) => b.onclick = () => setting("
 $("length").onchange = () => setting("length", Number($("length").value));
 $("auto_publish").onchange = () => setting("auto_publish", $("auto_publish").checked);
 $("show_scene_text").onchange = () => setting("show_scene_text", $("show_scene_text").checked);
+$("library_only").onchange = () => setting("library_only", $("library_only").checked);
+$("open-library").onclick = () => act("open_library");
+$("study-library").onclick = () => act("study_library");
 
 refresh();
 </script>

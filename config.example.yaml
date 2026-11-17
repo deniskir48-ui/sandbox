@@ -36,6 +36,8 @@ voice:
 footage:
   provider: auto          # auto (Pexels или Pixabay - чей ключ есть) | pexels | pixabay | none (цветной фон)
   ai_selection: true      # агент-монтажёр смотрит превью и выбирает видео, подходящее к тексту
+  library_dir: assets/my_footage  # ваши видео и фото: подбираются к фразам в первую очередь
+  library_only: false     # true - только ваши кадры, без стоков и картинок ИИ
   photos: true            # нет подходящего видео - стоковое фото с наездом камеры
   ai_images: pollinations # нет ни видео, ни фото - картинка ИИ (бесплатно); none - цветной фон
 

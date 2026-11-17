@@ -201,3 +201,17 @@ def test_redraft_picks_up_the_full_thread_text(app):
     threads.save_posts([{"id": "root", "text": full}], Path(pipeline.settings.workspace))
     post(app, "redraft", job=job["id"])
     assert pipeline.store.load(job["id"]).idea.source_text == full
+
+
+def test_library_section_shows_folder_and_toggle(app, tmp_path, monkeypatch):
+    folder = tmp_path / "my_footage"
+    post(app, "setting", key="library_only", value=True)
+    from video_agents.config_edit import set_value
+
+    set_value(app.config_path, "footage.library_dir", str(folder))
+    lib = state(app)["library"]
+    assert lib == {"folder": str(folder.resolve()), "videos": 0, "photos": 0, "studied": 0, "only": True}
+    assert post(app, "open_library").status_code == 200 and folder.is_dir()
+    (folder / "a.mp4").write_bytes(b"x")
+    (folder / "b.JPG").write_bytes(b"x")
+    assert state(app)["library"]["videos"] == 1 and state(app)["library"]["photos"] == 1

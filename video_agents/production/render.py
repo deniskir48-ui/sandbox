@@ -59,7 +59,7 @@ def _first_long_enough(clips: list[Clip], duration: float) -> Clip:
 
 
 class VideoProducer:
-    def __init__(self, settings, tts: TTSProvider, footage=None, editor=None, images=None):
+    def __init__(self, settings, tts: TTSProvider, footage=None, editor=None, images=None, library=None):
         self.video = settings.video
         self.subs = settings.subtitles
         self.colors = settings.footage.fallback_colors
@@ -69,6 +69,8 @@ class VideoProducer:
         self.editor = editor
         self.images = images  # генератор картинок ИИ - последний вариант кадра
         self.photos = settings.footage.photos
+        self.library = library  # свои кадры автора - в первую очередь
+        self.library_only = settings.footage.library_only
         self._crop_cache: dict[Path, str | None] = {}
 
     def produce(self, script: Script, job_dir: Path) -> RenderResult:
@@ -85,6 +87,7 @@ class VideoProducer:
         cursor = 0.0
 
         speeches = self._speak_all(script, job_dir)
+        own = self._own_picks(script)
         for i, (scene, speech) in enumerate(zip(script.scenes, speeches)):
             log.info("Сцена %d/%d: видеоряд", i + 1, len(script.scenes))
             start, end = speech_window(speech)
@@ -101,7 +104,11 @@ class VideoProducer:
             if self.subs.show_scene_text and scene.on_screen_text.strip():
                 captions.append((cursor, cursor + duration, scene.on_screen_text.strip()))
 
-            plan = self._find_clip(scene, script, duration, used_footage, previous, seed=i + 1)
+            plan = self._own_clip(own, i, previous)
+            if plan is None and not self.library_only:
+                plan = self._find_clip(scene, script, duration, used_footage, previous, seed=i + 1)
+            elif plan is None:
+                plan = previous or next((ClipPlan(item.path, kind=item.kind) for item in own if item), None)
             video_path = job_dir / f"scene_{i:02d}.mp4"
             self._render_scene(plan, duration, video_path, self.colors[i % len(self.colors)])
             if plan:
@@ -120,6 +127,25 @@ class VideoProducer:
         final = job_dir / "final.mp4"
         self._final_mix(job_dir, raw_video, narration, final)
         return RenderResult(final, probe_duration(final))
+
+    def _own_picks(self, script: Script) -> list:
+        if not self.library:
+            return [None] * len(script.scenes)
+        try:
+            return self.library.pick(script.title, [scene.narration for scene in script.scenes], log.info)
+        except Exception as exc:
+            log.warning("Не удалось подобрать ваши кадры (беру стоки): %s", exc)
+            return [None] * len(script.scenes)
+
+    @staticmethod
+    def _own_clip(own: list, index: int, previous: ClipPlan | None) -> ClipPlan | None:
+        item = own[index] if index < len(own) else None
+        if not item:
+            return None
+        if previous and previous.path == item.path:
+            return previous  # тот же файл, что в прошлой фразе: видео просто продолжается
+        log.info("Сцена %d: ваш кадр %s", index + 1, item.rel)
+        return ClipPlan(item.path, kind=item.kind)
 
     def _speak_all(self, script: Script, job_dir: Path, rounds: int = 3, pause: float = 20.0) -> list:
         """Сначала озвучиваем все фразы одним голосом, чтобы голоса не менялись посреди ролика.
