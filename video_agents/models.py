@@ -54,6 +54,12 @@ class Scene(BaseModel):
         "от самого точного к более общему; описывают то, что буквально видно в кадре"
     )
     on_screen_text: str = Field(description="Короткая надпись на экране (до 5 слов) или пустая строка")
+    image_prompt: str = Field(
+        default="",
+        description="Запасная картинка, если на стоках не найдётся кадра: описание НА АНГЛИЙСКОМ сцены БЕЗ людей - "
+        "только предметы и места, без надписей (например 'blister of pills and a glass of water on a kitchen "
+        "table, evening' или 'closed pharmacy door with green cross, quiet street')",
+    )
 
     @model_validator(mode="before")
     @classmethod

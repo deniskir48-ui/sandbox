@@ -76,6 +76,7 @@ class VideoProducer:
         fps = self.video.fps
 
         words: list[Word] = []
+        breaks: set[int] = set()
         scene_audio: list[Path] = []
         scene_video: list[Path] = []
         captions: list[tuple[float, float, str]] = []
@@ -95,6 +96,7 @@ class VideoProducer:
                         "-ar", "48000", "-ac", "2", str(audio_path)])
             scene_audio.append(audio_path)
 
+            breaks.add(len(words))  # с этого слова начинается новая фраза - субтитр её не склеит с прошлой
             words.extend(Word(w.text, w.start - start + cursor, w.end - start + cursor) for w in speech.words)
             if self.subs.show_scene_text and scene.on_screen_text.strip():
                 captions.append((cursor, cursor + duration, scene.on_screen_text.strip()))
@@ -113,7 +115,7 @@ class VideoProducer:
         self._concat(scene_video, raw_video, job_dir / "video_list.txt")
 
         (job_dir / "subs.ass").write_text(
-            build_ass(words, self.subs, self.video.width, self.video.height, captions), encoding="utf-8"
+            build_ass(words, self.subs, self.video.width, self.video.height, captions, breaks), encoding="utf-8"
         )
         final = job_dir / "final.mp4"
         self._final_mix(job_dir, raw_video, narration, final)
@@ -164,12 +166,9 @@ class VideoProducer:
             if chosen:
                 return self._download(chosen, used, previous)
         if self.images and scene.visual_queries:
-            try:
-                path = self.images.generate(scene.visual_queries[0], seed=seed)
-                log.info("Кадра на стоках нет - нарисовал картинку: %s", scene.visual_queries[0])
-                return ClipPlan(path, kind="image", trim_bottom=0.06 if self.images.watermarked else 0.0)
-            except Exception as exc:
-                log.warning("Картинку нарисовать не удалось: %s", exc)
+            plan = self._draw(scene, script, seed)
+            if plan:
+                return plan
         if pool:
             chosen = self._ask_editor(pool[:10], scene.narration, script.title, relaxed=True)
             if chosen:
@@ -179,6 +178,31 @@ class VideoProducer:
             log.info("Подходящего кадра нет - продолжаем кадр предыдущей сцены")
             return previous
         log.warning("Подходящего кадра нет - будет цветной фон")
+        return None
+
+    def _draw(self, scene, script: Script, seed: int) -> ClipPlan | None:
+        """Картинка ИИ по описанию кадра. Монтажёр проверяет её так же строго, как стоковые кадры:
+        генератор бывает понимает запрос странно (например, «болит живот» - как фотосессию)."""
+        # Описание картинки без людей от сценариста; у старых сценариев его нет - берём общий сюжет ролика.
+        subjects = [subject for subject in [scene.image_prompt, *script.backup_queries[:1], scene.visual_queries[0]]
+                    if subject.strip()]
+        for attempt, subject in enumerate(list(dict.fromkeys(subjects))[:2]):
+            try:
+                path = self.images.generate(subject, seed=seed + 100 * attempt)
+            except Exception as exc:
+                log.warning("Картинку нарисовать не удалось: %s", exc)
+                return None
+            if self.editor:
+                try:
+                    verdict = self.editor.choose(scene.narration, script.title, [path.read_bytes()])
+                except Exception as exc:
+                    log.warning("Монтажёр не ответил: %s", exc)
+                    verdict = None
+                if verdict is None:
+                    log.info("Монтажёр забраковал нарисованную картинку '%s'", subject)
+                    continue
+            log.info("Кадра на стоках нет - нарисовал картинку: %s", subject)
+            return ClipPlan(path, kind="image", trim_bottom=0.06 if self.images.watermarked else 0.0)
         return None
 
     def _search(self, search, queries: list[str], scene, script: Script, duration: float,

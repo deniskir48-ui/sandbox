@@ -637,8 +637,8 @@ def test_pollinations_retries_and_caches(tmp_path, monkeypatch):
     calls = []
 
     class Response:
-        def __init__(self, ok):
-            self.ok = ok
+        def __init__(self, ok, status=200, text=""):
+            self.ok, self.status_code, self.text = ok, status, text
             self.headers = {"Content-Type": "image/jpeg" if ok else "text/html"}
             self.content = b"\xff\xd8jpeg"
 
@@ -647,15 +647,17 @@ def test_pollinations_retries_and_caches(tmp_path, monkeypatch):
 
     def fake_get(url, params, headers, timeout):
         calls.append((url, params, headers))
-        return Response(ok=len(calls) > 1)
+        if len(calls) == 1:  # лимит бесплатного генератора
+            return Response(False, 402, '{"error": {"message": "Free limit reached. Retry after 42s"}}')
+        return Response(ok=len(calls) > 2)
 
     monkeypatch.setattr(ai_images.requests, "get", fake_get)
     generator = ai_images.PollinationsImages(tmp_path, pause=0)
     path = generator.generate("pharmacy counter", seed=3)
-    assert path.read_bytes() == b"\xff\xd8jpeg" and len(calls) == 2
-    assert "pharmacy%20counter" in calls[0][0] and "no%20text" in calls[0][0]
+    assert path.read_bytes() == b"\xff\xd8jpeg" and len(calls) == 3
+    assert "pharmacy%20counter" in calls[0][0] and "still%20life" in calls[0][0] and "no%20" not in calls[0][0]
     assert calls[0][1]["width"] == 1080 and calls[0][1]["height"] == 1920 and calls[0][2] == {}
-    assert generator.generate("pharmacy counter", seed=3) == path and len(calls) == 2  # из кэша
+    assert generator.generate("pharmacy counter", seed=3) == path and len(calls) == 3  # из кэша
     assert generator.watermarked and not ai_images.PollinationsImages(tmp_path, "tok").watermarked
 
 
@@ -741,3 +743,30 @@ def test_voices_alternate_and_good_phrases_are_kept(settings, tmp_path, monkeypa
     # Дмитрий споткнулся на 2-й фразе, Светлана - на 1-й; третий круг снова Дмитрий: 1-я фраза уже есть.
     assert tts.used == [("ru-RU-DmitryNeural", "Венера"), ("ru-RU-DmitryNeural", "Подпишись"),
                         ("ru-RU-SvetlanaNeural", "Венера"), ("ru-RU-DmitryNeural", "Подпишись")]
+
+
+def test_subtitles_never_glue_two_phrases():
+    from video_agents.production.subtitles import group_words
+    from video_agents.production.tts import Word
+
+    # Пауз между фразами почти нет: «скрутило живот» и «искать» идут подряд.
+    words = [Word(t, i * 0.3, i * 0.3 + 0.28) for i, t in enumerate(["сразу", "скрутило", "живот", "искать", "аптеку"])]
+    assert [[w.text for w in g] for g in group_words(words, 3)] == [["сразу", "скрутило", "живот"], ["искать", "аптеку"]]
+    words = [Word(t, i * 0.3, i * 0.3 + 0.28) for i, t in enumerate(["скрутило", "живот", "искать", "аптеку"])]
+    assert [[w.text for w in g] for g in group_words(words, 3, breaks={0, 2})] == [["скрутило", "живот"],
+                                                                                  ["искать", "аптеку"]]
+
+
+def test_editor_rejects_strange_ai_image_and_we_try_another(settings, tmp_path, monkeypatch):
+    plans = _plans(monkeypatch)
+    footage = FakeFootage({})
+    footage._dir = tmp_path
+    editor = FakeEditor([None, 0])  # первая картинка - «фотосессия», вторая годится
+    images = FakeImages(tmp_path)
+    script = _two_scene_script(["pharmacy"])
+    script = script.model_copy(update={"scenes": [script.scenes[0].model_copy(
+        update={"visual_queries": ["man stomach pain"], "image_prompt": "pills and a glass of water on a table"})]})
+    VideoProducer(settings, FakeTTS(), footage, editor, images).produce(script, tmp_path / "job")
+    # Сначала картинка без людей от сценариста, затем общий сюжет ролика; людей по запросу сцены не рисуем первыми.
+    assert images.prompts == ["pills and a glass of water on a table", "pharmacy"]
+    assert plans[0].kind == "image"
