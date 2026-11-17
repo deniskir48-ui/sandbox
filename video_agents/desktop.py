@@ -153,6 +153,7 @@ class DesktopApp:
             "next_posts": self.next_posts,
             "settings": settings_view(settings),
             "connected": connections(settings),
+            "library": library_view(settings),
             "stats": {"videos": len(jobs), "paid": len(paid), "total": round(total, 2),
                       "average": round(total / len(paid), 2) if paid else 0},
         }
@@ -350,6 +351,29 @@ class DesktopApp:
         self.next_posts = None
         return f"Посты на тему «{text}» больше не пойдут в ролики"
 
+    def do_open_library(self, data: dict) -> str:
+        from .production.library import open_folder
+
+        folder = open_folder(Path(self.settings().footage.library_dir))
+        return f"Папка открыта: {folder.resolve()}"
+
+    def do_study_library(self, data: dict) -> str:
+        def work() -> None:
+            from .production.library import make_library
+
+            settings = self.settings()
+            pipeline = self.pipeline()
+            library = make_library(settings.footage, Path(settings.workspace) / "footage_cache",
+                                   pipeline.llms["footage"])
+            if not library:
+                self.tasks.say("В папке пока нет видео и фото", "error")
+                return
+            items = library.scan(self.tasks.say)
+            self.tasks.say(f"Изучено ваших кадров: {len(items)}. Они пойдут в ролики в первую очередь.", "ok")
+
+        self.tasks.submit("Изучаю ваши кадры", work)
+        return "Изучаю ваши кадры"
+
     def do_threads_report(self, data: dict) -> str:
         def work() -> None:
             from . import threads
@@ -377,6 +401,8 @@ class DesktopApp:
             maximum = self.settings().channel.max_video_length_seconds
             if maximum < length:
                 set_value(self.config_path, "channel.max_video_length_seconds", str(length))
+        elif key == "library_only":
+            set_value(self.config_path, "footage.library_only", "true" if value else "false")
         elif key in ("auto_publish", "show_scene_text"):
             section = "publish" if key == "auto_publish" else "subtitles"
             set_value(self.config_path, f"{section}.{key}", "true" if value else "false")
@@ -436,6 +462,20 @@ def job_view(job: Job) -> dict:
         "review": (f"{job.reviews[-1].score}/10" if job.reviews else ""),
         "date": job.created_at.astimezone().strftime("%d.%m %H:%M"),
     }
+
+
+def library_view(settings) -> dict:
+    from .production.library import count_media
+
+    folder = Path(settings.footage.library_dir)
+    index = Path(settings.workspace) / "footage_cache" / "my_footage" / "index.json"
+    try:
+        studied = sum(1 for entry in json.loads(index.read_text(encoding="utf-8")).values()
+                      if entry.get("description"))
+    except (OSError, ValueError):
+        studied = 0
+    return {"folder": str(folder.resolve()), **count_media(folder), "studied": studied,
+            "only": settings.footage.library_only}
 
 
 def settings_view(settings) -> dict:

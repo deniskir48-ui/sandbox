@@ -55,6 +55,9 @@ class FootageConfig(BaseModel):
     provider: Literal["auto", "pexels", "pixabay", "none"] = "auto"
     ai_selection: bool = True  # агент-монтажёр смотрит превью и выбирает подходящее видео
     candidates: int = 4  # сколько вариантов показывать ему на каждый запрос
+    # Свои видео и фото автора: подбираются к фразам раньше всего остального
+    library_dir: str = "assets/my_footage"
+    library_only: bool = False  # true - только свои кадры, без стоков и картинок ИИ
     photos: bool = True  # нет подходящего видео - ищем стоковое фото (оживляется наездом камеры)
     # Нет ни видео, ни фото - картинка ИИ: pollinations (бесплатно) | none (цветной фон)
     ai_images: Literal["pollinations", "none"] = "pollinations"
