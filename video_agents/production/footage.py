@@ -128,15 +128,22 @@ class PixabayFootage(StockFootage):
 
 
     def search_photos(self, query: str) -> list[Clip]:
-        response = requests.get(
-            "https://pixabay.com/api/",
-            params={"key": self.api_key, "q": query[:100], "image_type": "photo", "orientation": "vertical",
-                    "safesearch": "true", "per_page": 20},
-            timeout=30,
-        )
-        response.raise_for_status()
+        # Сначала вертикальные, затем любые (горизонтальные обрежем под 9:16): так находится больше.
+        hits: dict[int, dict] = {}
+        for orientation in ("vertical", "all"):
+            response = requests.get(
+                "https://pixabay.com/api/",
+                params={"key": self.api_key, "q": query[:100], "image_type": "photo", "orientation": orientation,
+                        "safesearch": "true", "per_page": 20},
+                timeout=30,
+            )
+            response.raise_for_status()
+            for hit in response.json().get("hits", []):
+                hits.setdefault(hit["id"], hit)
+            if len(hits) >= 8:
+                break
         return [Clip(hit["id"], 0, hit["largeImageURL"], hit.get("webformatURL", ""), "image")
-                for hit in response.json().get("hits", []) if hit.get("largeImageURL")]
+                for hit in hits.values() if hit.get("largeImageURL")]
 
 
 def make_footage(footage_config, secrets, cache_dir: Path) -> StockFootage | None:

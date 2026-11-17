@@ -26,12 +26,17 @@ def clean_word(text: str) -> str:
     return re.sub(r"[{}\\]", "", text).strip()
 
 
-def group_words(words: list[Word], max_words: int, max_gap: float = 0.6) -> list[list[Word]]:
-    """Режем поток слов на короткие фразы: по количеству слов, паузам и концу предложения."""
+def group_words(words: list[Word], max_words: int, max_gap: float = 0.6,
+                breaks: set[int] | frozenset[int] = frozenset()) -> list[list[Word]]:
+    """Режем поток слов на короткие фразы: по количеству слов, паузам, концу предложения и границам сцен.
+
+    breaks - номера слов, с которых начинается новая фраза диктора: субтитр никогда не склеивает
+    конец одной фразы с началом следующей (пауз между фразами почти нет, по ним не определить).
+    """
     groups: list[list[Word]] = []
     current: list[Word] = []
-    for word in words:
-        if current and (len(current) >= max_words or word.start - current[-1].end > max_gap):
+    for index, word in enumerate(words):
+        if current and (len(current) >= max_words or word.start - current[-1].end > max_gap or index in breaks):
             groups.append(current)
             current = []
         current.append(word)
@@ -49,6 +54,7 @@ def build_ass(
     width: int,
     height: int,
     captions: list[tuple[float, float, str]] = (),
+    breaks: set[int] | frozenset[int] = frozenset(),
 ) -> str:
     """captions - надписи сцен вверху кадра: (начало, конец, текст)."""
     primary = hex_to_ass(cfg.color)
@@ -71,7 +77,7 @@ def build_ass(
         f"Dialogue: 1,{ass_time(start)},{ass_time(end)},Caption,,0,0,0,,{clean_word(text)}"
         for start, end, text in captions
     ]
-    groups = group_words(words, cfg.max_words)
+    groups = group_words(words, cfg.max_words, breaks=breaks)
     for index, group in enumerate(groups):
         tokens = [clean_word(w.text) for w in group]
         if cfg.uppercase:

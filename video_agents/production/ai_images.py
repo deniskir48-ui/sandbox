@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import logging
+import re
 import time
 from pathlib import Path
 from urllib.parse import quote
@@ -16,8 +17,10 @@ import requests
 
 log = logging.getLogger(__name__)
 
-STYLE = ("photorealistic photo, natural light, vertical composition, "
-         "no text, no letters, no signs, no captions, no watermark")
+# Только предметы и места: людей бесплатная модель рисует плохо и норовит сделать «фотосессию»,
+# а запреты («no ...») такие модели не понимают и делают наоборот - поэтому описываем лишь то, что нужно.
+STYLE = "still life photo, {subject}, empty scene, photorealistic, natural light, vertical composition"
+RETRY_AFTER = re.compile(r"[Rr]etry after (\d+)")
 
 
 class PollinationsImages:
@@ -25,7 +28,7 @@ class PollinationsImages:
     name = "pollinations"
 
     def __init__(self, cache_dir: Path, token: str | None = None, width: int = 1080, height: int = 1920,
-                 attempts: int = 3, pause: float = 5.0):
+                 attempts: int = 4, pause: float = 5.0):
         self.cache_dir = cache_dir
         self.cache_dir.mkdir(parents=True, exist_ok=True)
         self.token = token
@@ -37,7 +40,7 @@ class PollinationsImages:
         return not self.token
 
     def generate(self, subject: str, seed: int = 1) -> Path:
-        prompt = f"{subject.strip()}, {STYLE}"
+        prompt = STYLE.format(subject=subject.strip().rstrip("."))
         key = hashlib.sha1(f"{prompt}|{seed}|{bool(self.token)}".encode()).hexdigest()[:16]
         path = self.cache_dir / f"ai_{key}.jpg"
         if path.exists() and path.stat().st_size > 0:
@@ -48,6 +51,14 @@ class PollinationsImages:
         for attempt in range(self.attempts):
             try:
                 response = requests.get(self.URL + quote(prompt), params=params, headers=headers, timeout=180)
+                if response.status_code in (402, 429):
+                    # Без ключа - одна картинка в 45 секунд: ждём, сколько сказал сервис, и пробуем снова.
+                    match = RETRY_AFTER.search(response.text or "")
+                    wait = min(int(match.group(1)) + 2 if match else 47, 90)
+                    log.info("Генератор картинок просит подождать %d с", wait)
+                    time.sleep(wait * (1 if self.pause else 0))
+                    error = RuntimeError(f"лимит бесплатного генератора (HTTP {response.status_code})")
+                    continue
                 response.raise_for_status()
                 if not response.headers.get("Content-Type", "").startswith("image/"):
                     raise RuntimeError(f"вместо картинки пришло {response.headers.get('Content-Type')}")
