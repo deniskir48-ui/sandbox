@@ -125,6 +125,34 @@
   </div>
   <div>
     <section>
+      <h2>Ролик каждый день</h2>
+      <div class="setting">
+        <label>Делать сам каждый день</label>
+        <input type="checkbox" id="daily_enabled">
+      </div>
+      <div class="setting">
+        <label>Во сколько</label>
+        <input type="time" id="daily_time">
+      </div>
+      <div class="setting">
+        <label>Сразу выкладывать в Instagram</label>
+        <input type="checkbox" id="daily_publish">
+      </div>
+      <div class="row" style="margin-top:8px"><button class="primary" id="daily-now">▶ Сделать ролик дня сейчас</button></div>
+      <p class="hint" id="daily-info"></p>
+      <p class="hint">Тему выбираю сам: ваши кадры, наброски, посты Threads, новости, погода (и луна).
+        Компьютер должен быть включён; если в это время он был выключен - сделаю, как только включите.</p>
+    </section>
+    <section>
+      <h2>Наброски</h2>
+      <ul class="list" id="notes"></ul>
+      <div class="row" style="margin-top:10px">
+        <input type="text" id="note-text" placeholder="Мысль для ролика: «зимой на пляже никого - и это лучшее время»">
+        <button id="note-add">Добавить</button>
+      </div>
+      <p class="hint">Наброски можно класть и текстовыми файлами (.txt) в папку с кадрами.</p>
+    </section>
+    <section>
       <h2>Настройки</h2>
       <div class="setting">
         <label>Скорость голоса: <b id="speed-label"></b></label>
@@ -154,6 +182,10 @@
     <section>
       <h2>Мои кадры</h2>
       <p class="hint" id="library-info" style="margin-top:0"></p>
+      <div class="row" style="margin-bottom:8px">
+        <input type="text" id="library-dir" placeholder="Папка с кадрами">
+        <button id="library-dir-save" title="Например, папка OneDrive или Google Диска, куда телефон сам загружает фото">Сменить</button>
+      </div>
       <div class="row">
         <button id="open-library">📁 Открыть папку</button>
         <button id="study-library" title="ИИ посмотрит новые файлы и запишет, что на них (доли цента за файл)">🔍 Изучить новые</button>
@@ -328,6 +360,31 @@ function renderDrafts(drafts) {
   $("drafts").replaceChildren(frag);
 }
 
+let lastNotes = "";
+function renderNotes(notes) {
+  const key = JSON.stringify(notes);
+  if (key === lastNotes) return;
+  lastNotes = key;
+  $("notes").innerHTML = notes.length ? "" : '<li class="empty">Пока нет. Запишите мысль - из неё может выйти ролик.</li>';
+  for (const note of notes) {
+    const li = document.createElement("li");
+    li.innerHTML = `<span>${esc(note.text)}${note.file ? `<small class="hint"> - файл ${esc(note.file)}</small>` : ""}</span>` +
+      (note.file ? "" : `<button title="Удалить">✕</button>`);
+    const b = li.querySelector("button");
+    if (b) b.onclick = () => act("note_remove", {id: note.id});
+    $("notes").appendChild(li);
+  }
+}
+
+function renderDaily(d) {
+  if (!settingsBusy && document.activeElement?.id !== "daily_time") {
+    $("daily_enabled").checked = d.enabled; $("daily_time").value = d.time; $("daily_publish").checked = d.publish;
+  }
+  const last = d.last_date ? `Последний: ${d.last_date}${d.last_topic ? " - «" + d.last_topic + "»" : ""}` +
+    (d.last_status === "failed" ? " (не получился, причина - в ходе работы)" : "") : "Ещё не делал.";
+  $("daily-info").textContent = (d.enabled ? `Включено, каждый день в ${d.time}. ` : "Выключено. ") + last;
+}
+
 function renderQueue(items) {
   const key = JSON.stringify(items);
   if (key === lastQueue) return;
@@ -394,7 +451,9 @@ function render(s) {
   $("library-info").textContent = total
     ? `В папке: видео ${lib.videos}, фото ${lib.photos}; изучено ${lib.studied}.`
     : "Папка пока пустая. Нажмите «Открыть папку» и скопируйте туда свои видео и фото.";
-  $("library-info").title = lib.folder; renderQueue(s.queue); renderPosts(s.next_posts); renderLog(s.log); renderSettings(s.settings);
+  $("library-info").title = lib.folder;
+  if (document.activeElement?.id !== "library-dir") $("library-dir").value = lib.folder;
+  renderDaily(s.daily); renderNotes(s.notes); renderQueue(s.queue); renderPosts(s.next_posts); renderLog(s.log); renderSettings(s.settings);
   $("stats").innerHTML = `<div><b>${s.stats.videos}</b><span>роликов</span></div>
     <div><b>$${s.stats.total.toFixed(2)}</b><span>всего</span></div>
     <div><b>$${s.stats.average.toFixed(2)}</b><span>в среднем за ролик</span></div>`;
@@ -436,6 +495,16 @@ $("length").onchange = () => setting("length", Number($("length").value));
 $("auto_publish").onchange = () => setting("auto_publish", $("auto_publish").checked);
 $("show_scene_text").onchange = () => setting("show_scene_text", $("show_scene_text").checked);
 $("library_only").onchange = () => setting("library_only", $("library_only").checked);
+$("library-dir-save").onclick = () => setting("library_dir", $("library-dir").value);
+$("daily_enabled").onchange = () => setting("daily_enabled", $("daily_enabled").checked);
+$("daily_time").onchange = () => setting("daily_time", $("daily_time").value);
+$("daily_publish").onchange = () => setting("daily_publish", $("daily_publish").checked);
+$("daily-now").onclick = () => {
+  if (confirm($("daily_publish").checked ? "Сделать ролик дня и сразу выложить его?" : "Сделать ролик дня? Он будет ждать вашей проверки."))
+    act("daily_now", {publish: $("daily_publish").checked});
+};
+$("note-add").onclick = () => { act("note_add", {text: $("note-text").value}); $("note-text").value = ""; };
+$("note-text").onkeydown = (e) => { if (e.key === "Enter") $("note-add").click(); };
 $("open-library").onclick = () => act("open_library");
 $("study-library").onclick = () => act("study_library");
 

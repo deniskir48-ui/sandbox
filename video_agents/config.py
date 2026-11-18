@@ -164,6 +164,17 @@ class ThreadsConfig(BaseModel):
     fresh_days: float = 7  # афиши моложе этого (без даты актуальности) идут вне очереди, старше - устарели
 
 
+class DailyConfig(BaseModel):
+    """Ролик каждый день: тему выбирает планировщик (ваши кадры, наброски, Threads, новости, погода)."""
+
+    enabled: bool = False
+    time: str = "10:40"  # во сколько (по часам компьютера); окно программы должно быть запущено
+    publish: bool = True  # сразу выкладывать; false - ролик ждёт вашей проверки
+    city: str = "Лимассол"  # для погоды
+    latitude: float = 34.68
+    longitude: float = 33.04
+
+
 class Settings(BaseModel):
     channel: ChannelConfig = Field(default_factory=ChannelConfig)
     llm: LLMConfig = Field(default_factory=LLMConfig)
@@ -173,6 +184,7 @@ class Settings(BaseModel):
     video: VideoConfig = Field(default_factory=VideoConfig)
     publish: PublishConfig = Field(default_factory=PublishConfig)
     threads: ThreadsConfig = Field(default_factory=ThreadsConfig)
+    daily: DailyConfig = Field(default_factory=DailyConfig)
     workspace: str = "workspace"
     auto_update: bool = True  # раз в час тихо подтягивать свежую версию программы с GitHub
     secrets: Secrets = Field(default_factory=Secrets, exclude=True)

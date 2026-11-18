@@ -249,6 +249,82 @@ class Pipeline:
             self._finish_script(job, script)
             return job
 
+    # --- Ролик дня: тему выбирает планировщик ---
+
+    def plan_today(self) -> VideoIdea:
+        """Тема на сегодня из всего, что есть: свои кадры, наброски, посты Threads, новости, погода и луна."""
+        from .agents.planner import PlannerAgent
+        from .daily_context import today_context
+        from .notes import Notes
+        from .production.library import make_library
+        from .threads import ThreadsAuth
+
+        settings, workspace = self.settings, Path(self.settings.workspace)
+        self.progress("Смотрю ваши кадры, наброски, Threads и новости")
+        library = make_library(settings.footage, workspace / "footage_cache", self.llms["footage"])
+        items = library.scan(self.progress) if library else []
+        media = [f"{'видео' if item.kind == 'video' else 'фото'}, добавлен {item.added or '?'}, "
+                 + (f"уже был в роликах: {item.used}" if item.used else "ещё не использован")
+                 + f": {item.description}" for item in items]
+        notes = Notes(workspace, Path(settings.footage.library_dir)).fresh()
+        posts: list[VideoIdea] = []
+        if ThreadsAuth(settings.secrets).is_configured():
+            try:
+                posts = self.threads_ideas(3)
+            except Exception as exc:
+                log.warning("Посты из Threads не получены: %s", exc)
+        planner = PlannerAgent(self.llms["ideas"], settings.channel, settings.llm.web_research)
+        plan = planner.plan(
+            today=today_context(settings.daily.city, settings.daily.latitude, settings.daily.longitude),
+            media=media, notes=notes, posts=[post.source_text for post in posts],
+            past_topics=self.store.past_topics(), news=planner.news())
+        log.info("Тема дня: %s (%s)", plan.topic, plan.why_today)
+        self.progress(f"Тема дня: {plan.topic}")
+        idea = VideoIdea(viewer_problem=plan.viewer_problem, relatability=8, topic=plan.topic, angle=plan.angle,
+                         hook=plan.hook, why_it_works=f"Источник: {plan.source}. {plan.why_today}")
+        chosen_notes = [note for note in notes if note["id"] in plan.note_ids]
+        material = plan.material + "".join(f"\n\nНабросок автора: {note['text']}" for note in chosen_notes)
+        if 1 <= plan.threads_post <= len(posts):
+            post = posts[plan.threads_post - 1]
+            idea.source_post_id = post.source_post_id
+            idea.source_text = post.source_text + (f"\n\nДополнительно: {material}" if material.strip() else "")
+        else:
+            idea.source_text = material
+        idea.footage_hint = [f"{items[n - 1].rel} — {items[n - 1].description}"
+                             for n in dict.fromkeys(plan.media) if 1 <= n <= len(items)]
+        idea.note_ids = [note["id"] for note in chosen_notes]
+        return idea
+
+    def daily(self, publish: bool | None = None) -> Job:
+        """Ролик дня от начала до конца: тема, сценарий, монтаж, подпись и (если включено) публикация."""
+        from .notes import Notes
+
+        publish = self.settings.daily.publish if publish is None else publish
+        mark = self.ledger.mark() if self.ledger else 0
+        job = Job()
+        try:
+            job.idea = self.plan_today()
+        except Exception as exc:
+            log.exception("Тему дня выбрать не удалось")
+            job.status, job.error = "failed", f"тема дня: {exc}"
+        finally:
+            if self.ledger:
+                self._add_cost(job, self.ledger.since(mark))
+            self.store.save(job)
+        if job.status == "failed":
+            return job
+        try:
+            self.write(job)
+            self.produce(job)
+            Notes(Path(self.settings.workspace), Path(self.settings.footage.library_dir)).mark_used(job.idea.note_ids)
+            if publish:
+                self.publish(job)
+        except Exception as exc:
+            log.exception("Ролик дня %s упал", job.id)
+            job.status, job.error = "failed", str(exc)
+            self.store.save(job)
+        return job
+
     # --- Сценарий на согласование: автор смотрит текст, правит или просит другой вариант, потом - видео ---
 
     def draft(self, topic: str | None = None) -> Job:
@@ -371,7 +447,9 @@ class Pipeline:
     def produce(self, job: Job) -> Job:
         with self._costs(job):
             self.progress("Монтирую видео: озвучка, подбор кадров, субтитры")
-            result = self.producer.produce(job.script, self.store.job_dir(job))
+            preferred = [hint.split(" — ", 1)[0] for hint in job.idea.footage_hint] if job.idea else []
+            extra = {"preferred": preferred} if preferred else {}
+            result = self.producer.produce(job.script, self.store.job_dir(job), **extra)
             job.video_path = str(result.video_path)
             job.duration = result.duration
             job.status = "produced"

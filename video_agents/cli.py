@@ -38,6 +38,10 @@ def main(argv: list[str] | None = None) -> int:
     render = sub.add_parser("render", help="пересобрать видео по сохранённому сценарию")
     render.add_argument("job_id")
 
+    daily = sub.add_parser("daily", help="ролик дня: тема из ваших кадров, набросков, Threads, новостей -> видео")
+    group = daily.add_mutually_exclusive_group()
+    group.add_argument("--publish", dest="publish", action="store_true", default=None, help="выложить сразу")
+    group.add_argument("--no-publish", dest="publish", action="store_false", help="только смонтировать")
     sub.add_parser("list", help="список роликов")
     queue = sub.add_parser("queue", help="очередь тем: показать, добавить, убрать")
     queue.add_argument("action", nargs="?", choices=["add", "remove", "clear"],
@@ -190,6 +194,14 @@ def main(argv: list[str] | None = None) -> int:
 
         notify_jobs(settings, jobs)  # если подключён Telegram - пришлём ролики туда
         return 0 if all(job.status != "failed" for job in jobs) else 1
+
+    if args.command == "daily":
+        job = pipeline.daily(args.publish)
+        _print_job(job)
+        from .telegram.messages import notify_jobs
+
+        notify_jobs(settings, [job])
+        return 0 if job.status != "failed" else 1
 
     if args.command == "ideas":
         _print_ideas(pipeline.ideas(args.count))

@@ -215,3 +215,30 @@ def test_library_section_shows_folder_and_toggle(app, tmp_path, monkeypatch):
     (folder / "a.mp4").write_bytes(b"x")
     (folder / "b.JPG").write_bytes(b"x")
     assert state(app)["library"]["videos"] == 1 and state(app)["library"]["photos"] == 1
+
+
+def test_daily_schedule_and_notes(app, monkeypatch):
+    from datetime import datetime
+
+    post(app, "setting", key="daily_time", value="10:40")
+    assert post(app, "setting", key="daily_time", value="25:99").status_code == 400
+    post(app, "setting", key="daily_publish", value=False)
+    assert not app.daily_due(datetime(2026, 11, 18, 12, 0))  # выключено
+    post(app, "setting", key="daily_enabled", value=True)
+    assert not app.daily_due(datetime(2026, 11, 18, 9, 0))  # ещё рано
+    assert app.daily_due(datetime(2026, 11, 18, 12, 0))  # пора (в том числе если в 10:40 компьютер был выключен)
+
+    ran = []
+    monkeypatch.setattr(type(app.pipeline()), "daily", lambda self, publish=None: ran.append(publish) or
+                        __import__("video_agents.models", fromlist=["Job"]).Job(status="produced"))
+    app.run_daily()
+    assert ran == [None]
+    assert not app.daily_due(datetime.now().replace(hour=23))  # сегодня уже сделан
+    daily = state(app)["daily"]
+    assert daily["enabled"] and daily["time"] == "10:40" and daily["publish"] is False and daily["last_status"] == "produced"
+
+    post(app, "note_add", text="Зимой на пляже никого")
+    notes = state(app)["notes"]
+    assert [n["text"] for n in notes] == ["Зимой на пляже никого"]
+    post(app, "note_remove", id=notes[0]["id"])
+    assert state(app)["notes"] == []

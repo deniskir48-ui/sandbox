@@ -19,6 +19,7 @@ import sys
 import threading
 import time
 import webbrowser
+from datetime import date, datetime
 from http import HTTPStatus
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
@@ -154,6 +155,8 @@ class DesktopApp:
             "settings": settings_view(settings),
             "connected": connections(settings),
             "library": library_view(settings),
+            "daily": {**settings.daily.model_dump(include={"enabled", "time", "publish"}), **self.daily_state()},
+            "notes": notes_view(settings),
             "stats": {"videos": len(jobs), "paid": len(paid), "total": round(total, 2),
                       "average": round(total / len(paid), 2) if paid else 0},
         }
@@ -401,6 +404,23 @@ class DesktopApp:
             maximum = self.settings().channel.max_video_length_seconds
             if maximum < length:
                 set_value(self.config_path, "channel.max_video_length_seconds", str(length))
+        elif key == "daily_enabled":
+            set_value(self.config_path, "daily.enabled", "true" if value else "false")
+            if value and IS_WINDOWS:
+                link = install_autostart(str(self.config_path))
+                return ("Включено. Программа будет запускаться вместе с Windows и делать ролик сама"
+                        if link else "Включено (автозапуск с Windows настроить не удалось)")
+        elif key == "daily_time":
+            if not re.fullmatch(r"([01]\d|2[0-3]):[0-5]\d", str(value)):
+                raise ValueError("Время в формате ЧЧ:ММ")
+            set_value(self.config_path, "daily.time", f"'{value}'")
+        elif key == "daily_publish":
+            set_value(self.config_path, "daily.publish", "true" if value else "false")
+        elif key == "library_dir":
+            folder = Path(str(value).strip().strip('"'))
+            if not str(folder).strip() or not folder.is_dir():
+                raise ValueError("Такой папки нет - проверьте путь")
+            set_value(self.config_path, "footage.library_dir", json.dumps(str(folder.resolve())))
         elif key == "library_only":
             set_value(self.config_path, "footage.library_only", "true" if value else "false")
         elif key in ("auto_publish", "show_scene_text"):
@@ -423,6 +443,79 @@ class DesktopApp:
 
         self.tasks.submit("Проверяю обновления", work)
         return "Проверяю обновления"
+
+    # --- Ролик дня ---
+
+    @property
+    def daily_state_file(self) -> Path:
+        return Path(self.settings().workspace) / "daily_state.json"
+
+    def daily_state(self) -> dict:
+        try:
+            return json.loads(self.daily_state_file.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            return {}
+
+    def _save_daily_state(self, **values) -> None:
+        state = {**self.daily_state(), **values}
+        self.daily_state_file.parent.mkdir(parents=True, exist_ok=True)
+        self.daily_state_file.write_text(json.dumps(state, ensure_ascii=False), encoding="utf-8")
+
+    def daily_due(self, now: datetime | None = None) -> bool:
+        """Пора ли делать ролик дня: включено, время настало, сегодня ещё не делали, программа свободна.
+        Если компьютер был выключен в назначенное время, ролик сделается, как только окно запустится."""
+        now = now or datetime.now()
+        daily = self.settings().daily
+        return (daily.enabled and now.strftime("%H:%M") >= daily.time
+                and self.daily_state().get("last_date") != now.date().isoformat() and self.tasks.idle())
+
+    def run_daily(self, publish: bool | None = None) -> None:
+        self._save_daily_state(last_date=date.today().isoformat())  # даже при сбое - не больше раза в день
+
+        def work() -> None:
+            pipeline = self.pipeline()
+            job = pipeline.daily(publish)
+            self._save_daily_state(last_job=job.id, last_topic=job.idea.topic if job.idea else "",
+                                   last_status=job.status)
+            self._report(job)
+            if job.status == "produced":
+                self.tasks.say("Ролик дня готов и ждёт вашей проверки - кнопка «Опубликовать» под ним.", "ok")
+            try:
+                from .telegram.messages import notify_jobs
+
+                notify_jobs(pipeline.settings, [job])
+            except Exception as exc:
+                log.warning("Уведомление в Telegram не отправлено: %s", exc)
+
+        self.tasks.submit("Ролик дня", work)
+
+    def daily_loop(self) -> None:
+        while True:
+            try:
+                if self.daily_due():
+                    self.run_daily()
+            except Exception as exc:
+                log.warning("Расписание ролика дня: %s", exc)
+            time.sleep(30)
+
+    def do_daily_now(self, data: dict) -> str:
+        self.run_daily(publish=bool(data.get("publish", self.settings().daily.publish)))
+        return "Делаю ролик дня: тема, сценарий, монтаж - минут 5-10"
+
+    def do_note_add(self, data: dict) -> str:
+        from .notes import Notes
+
+        text = (data.get("text") or "").strip()
+        if not text:
+            return "Напишите набросок"
+        Notes(Path(self.settings().workspace)).add(text)
+        return "Набросок сохранён"
+
+    def do_note_remove(self, data: dict) -> str:
+        from .notes import Notes
+
+        Notes(Path(self.settings().workspace)).remove(str(data.get("id", "")))
+        return "Набросок удалён"
 
     def auto_update_loop(self, server: ThreadingHTTPServer) -> None:
         """Раз в час, когда ничего не делается, тихо обновляет программу и перезапускает окно."""
@@ -462,6 +555,13 @@ def job_view(job: Job) -> dict:
         "review": (f"{job.reviews[-1].score}/10" if job.reviews else ""),
         "date": job.created_at.astimezone().strftime("%d.%m %H:%M"),
     }
+
+
+def notes_view(settings) -> list[dict]:
+    from .notes import Notes
+
+    return [{"id": note["id"], "text": note["text"][:400], "file": note.get("file", "")}
+            for note in Notes(Path(settings.workspace), Path(settings.footage.library_dir)).fresh()]
 
 
 def library_view(settings) -> dict:
@@ -633,6 +733,7 @@ def serve(config_path: str = "config.yaml", port: int = PORT, open_browser: bool
     server = ThreadingHTTPServer(("127.0.0.1", port), make_handler(app))
     server.daemon_threads = True
     threading.Thread(target=app.auto_update_loop, args=(server,), daemon=True).start()
+    threading.Thread(target=app.daily_loop, daemon=True).start()
     log.info("Окно программы: %s", url)
     if open_browser:
         threading.Timer(0.5, webbrowser.open, args=(url,)).start()
@@ -647,7 +748,13 @@ def serve(config_path: str = "config.yaml", port: int = PORT, open_browser: bool
     return 0
 
 
-def install_shortcut(config_path: str = "config.yaml") -> Path | None:
+def install_autostart(config_path: str = "config.yaml") -> Path | None:
+    """Окно программы запускается вместе с Windows (без браузера) - чтобы ролик дня делался сам."""
+    return install_shortcut(config_path, folder="Startup", name="Видео-агент (ролик дня)", extra=" --no-browser")
+
+
+def install_shortcut(config_path: str = "config.yaml", folder: str = "Desktop", name: str = SHORTCUT_NAME,
+                     extra: str = "") -> Path | None:
     """Ярлык «Видео-агент» на рабочем столе: открывает окно программы без чёрного окна консоли.
 
     Сбой здесь не мешает работе: программа откроется и без ярлыка.
@@ -662,11 +769,11 @@ def install_shortcut(config_path: str = "config.yaml") -> Path | None:
     script = (
         # Путь к рабочему столу может быть с кириллицей: просим PowerShell отвечать в UTF-8.
         "[Console]::OutputEncoding = [Text.Encoding]::UTF8;"
-        "$desktop = [Environment]::GetFolderPath('Desktop');"
-        f"$link = Join-Path $desktop '{SHORTCUT_NAME}.lnk';"
+        f"$desktop = [Environment]::GetFolderPath('{folder}');"
+        f"$link = Join-Path $desktop '{_ps(name)}.lnk';"
         "$s = (New-Object -ComObject WScript.Shell).CreateShortcut($link);"
         f"$s.TargetPath = '{_ps(str(target))}';"
-        f"$s.Arguments = '-m video_agents --config \"{_ps(config)}\" app';"
+        f"$s.Arguments = '-m video_agents --config \"{_ps(config)}\" app{extra}';"
         f"$s.WorkingDirectory = '{_ps(str(ROOT))}';"
         "$s.IconLocation = 'shell32.dll,115';"
         "$s.Description = 'Ролики: сценарии, монтаж, публикация';"
@@ -684,7 +791,7 @@ def install_shortcut(config_path: str = "config.yaml") -> Path | None:
         log.warning("Не удалось создать ярлык: %s", (result.stderr or "").strip())
         return None
     lines = (result.stdout or "").strip().splitlines()
-    return Path(lines[-1].strip()) if lines else Path(SHORTCUT_NAME + ".lnk")
+    return Path(lines[-1].strip()) if lines else Path(name + ".lnk")
 
 
 def _ps(text: str) -> str:

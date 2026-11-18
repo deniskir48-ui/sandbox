@@ -73,7 +73,7 @@ class VideoProducer:
         self.library_only = settings.footage.library_only
         self._crop_cache: dict[Path, str | None] = {}
 
-    def produce(self, script: Script, job_dir: Path) -> RenderResult:
+    def produce(self, script: Script, job_dir: Path, preferred: list[str] = ()) -> RenderResult:
         job_dir.mkdir(parents=True, exist_ok=True)
         fps = self.video.fps
 
@@ -87,7 +87,7 @@ class VideoProducer:
         cursor = 0.0
 
         speeches = self._speak_all(script, job_dir)
-        own = self._own_picks(script)
+        own = self._own_picks(script, preferred)
         for i, (scene, speech) in enumerate(zip(script.scenes, speeches)):
             log.info("Сцена %d/%d: видеоряд", i + 1, len(script.scenes))
             start, end = speech_window(speech)
@@ -128,11 +128,15 @@ class VideoProducer:
         self._final_mix(job_dir, raw_video, narration, final)
         return RenderResult(final, probe_duration(final))
 
-    def _own_picks(self, script: Script) -> list:
+    def _own_picks(self, script: Script, preferred: list[str] = ()) -> list:
         if not self.library:
             return [None] * len(script.scenes)
         try:
-            return self.library.pick(script.title, [scene.narration for scene in script.scenes], log.info)
+            picks = self.library.pick(script.title, [scene.narration for scene in script.scenes], log.info,
+                                      preferred=list(preferred))
+            if hasattr(self.library, "mark_used"):
+                self.library.mark_used(sorted({item.rel for item in picks if item}))
+            return picks
         except Exception as exc:
             log.warning("Не удалось подобрать ваши кадры (беру стоки): %s", exc)
             return [None] * len(script.scenes)
