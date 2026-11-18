@@ -91,6 +91,30 @@ def kind_of(title, what):
     return "christmas-other", "festival"
 
 
+# Пометки редактора в «Что будет» переписываем для читателя или убираем (внутренняя кухня таблицы).
+READER = [
+    (r"\s*Подтверждено муниципалитетом[^.]*\.?", ""),
+    (r"\s*Это один комплекс, не два разных события\.?", ""),
+    (r"\s*Отдельное новое событие;?\s*", " "),
+    (r"Источники расходятся: (.+?), дату нужно уточнить\.?", r"Дата в афишах разная — \1, уточняйте у организатора."),
+    (r"Точное время вечернего зажжения ёлки уточнить у организатора", "Точное время зажжения ёлки уточняйте у организатора"),
+    (r"Точную площадь и программу уточнить", "Точное место и программу уточняйте у организатора"),
+    (r"Стоимость уточнить", "Стоимость уточняйте у организатора"),
+    (r"\bуточнить у\b", "уточняйте у"),
+    (r"\bлучше перепроверить\b", "лучше уточнить у организатора"),
+    (r"\bПроверить\b", "Проверяйте"),
+    (r"(\S+) нужно уточнить", r"\1 уточняйте у организатора"),
+]
+
+
+def for_reader(text):
+    for rx, rep in READER:
+        text = re.sub(rx, rep, text)
+    text = re.sub(r"\s{2,}", " ", text).strip(" ;")
+    text = re.sub(r"([.!?]\s+)([а-яё])", lambda m: m.group(1) + m.group(2).upper(), text)  # заглавная после точки
+    return text if not text or text.endswith((".", "!", "?", "»", ")")) else text + "."
+
+
 def write(out, slug, lines, dry, stats):
     path = os.path.join(out, f"{slug}.yaml")
     if os.path.exists(path) and MARK not in open(path, encoding="utf-8").read():
@@ -121,7 +145,7 @@ def main():
         if not name or not rng or not url:
             continue
         venue, _, rest = what.partition(":") if ":" in what else ("", "", what)
-        summary = rest.strip()
+        summary = for_reader(rest.strip())
         summary = summary[:1].upper() + summary[1:]
         lines = [MARK, "# Лист «Рождественские парки · Telegram» таблицы афиши (обновлено 18.11.2026).",
                  f"title: {q(name)}", "status: published", "type: festival", "priority: 2",
@@ -145,6 +169,7 @@ def main():
         if not started or not vals[3]:
             continue
         when, city, venue, title, what, _, check = vals
+        what = for_reader(what)
         if PARK.search(title):
             stats["пропущено"] += 1
             continue

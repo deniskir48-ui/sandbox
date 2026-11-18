@@ -136,3 +136,10 @@ python3 scripts/import-research.py import/catalog.xlsx             # запис�
 ```
 
 Скрипт заполняет черновики из листа «Карточки сайта — исследование» и не трогает опубликованные и вручную уточнённые карточки (подробности — в начале скрипта и DEC-W35).
+
+### Рождественский лендинг (отдельная страница)
+
+```bash
+python3 scripts/import-christmas.py import/afisha-tg.xlsx   # листы «Рождество» и «Рождественские парки · Telegram»
+node scripts/build-christmas-standalone.mjs                  # → standalone/christmas.html
+```
