@@ -27,6 +27,9 @@ class VideoIdea(BaseModel):
     # Не для модели (скрыто из схемы ответа): заполняется, когда ролик - адаптация поста автора из Threads.
     source_post_id: SkipJsonSchema[str] = ""
     source_text: SkipJsonSchema[str] = ""
+    # Ежедневный план: кадры автора, из которых задуман ролик («путь — что на нём»), и использованные наброски.
+    footage_hint: SkipJsonSchema[list[str]] = []
+    note_ids: SkipJsonSchema[list[str]] = []
 
     @model_validator(mode="before")
     @classmethod

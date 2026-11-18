@@ -9,6 +9,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import time
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -29,6 +30,8 @@ class LibraryItem:
     kind: str  # video | image
     path: Path  # что монтировать: исходное видео или повёрнутая как надо копия фото
     description: str
+    added: str = ""  # когда файл впервые попал в папку (дата изучения)
+    used: int = 0  # в скольких роликах уже был
 
 
 def media_files(folder: Path) -> list[Path]:
@@ -111,6 +114,8 @@ class FootageLibrary:
                 index[rel] = {"stamp": self._stamp(path), "error": str(exc)[:300]}
                 self._save(index)
                 continue
+            entry["added"] = index.get(rel, {}).get("added") or time.strftime("%Y-%m-%d")
+            entry["used"] = index.get(rel, {}).get("used", 0)
             index[rel] = entry
             self._save(index)  # сохраняем после каждого файла: прерванное изучение не пропадёт
             log.info("Изучен %s (%d/%d): %s", rel, number, len(fresh), entry["description"])
@@ -118,15 +123,25 @@ class FootageLibrary:
         for rel in [rel for rel in index if rel not in present]:  # файл удалили из папки
             del index[rel]
         self._save(index)
-        return [LibraryItem(rel, entry["kind"], Path(entry["path"]), entry["description"])
+        return [LibraryItem(rel, entry["kind"], Path(entry["path"]), entry["description"], entry.get("added", ""),
+                            entry.get("used", 0))
                 for rel, entry in index.items() if entry.get("description") and Path(entry["path"]).exists()]
 
-    def pick(self, title: str, phrases: list[str], progress=lambda text: None) -> list[LibraryItem | None]:
-        """Свой кадр к каждой фразе (или None, если подходящего нет)."""
+    def mark_used(self, rels: list[str]) -> None:
+        index = self._load()
+        for rel in rels:
+            if rel in index:
+                index[rel]["used"] = index[rel].get("used", 0) + 1
+        self._save(index)
+
+    def pick(self, title: str, phrases: list[str], progress=lambda text: None,
+             preferred: list[str] = ()) -> list[LibraryItem | None]:
+        """Свой кадр к каждой фразе (или None, если подходящего нет). preferred - кадры, под которые задуман ролик."""
         items = self.scan(progress)
         if not items or not self.match:
             return [None] * len(phrases)
-        chosen = self.match(title, phrases, [item.description for item in items])
+        chosen = self.match(title, phrases, [("[задуман для этого ролика] " if item.rel in preferred else "")
+                                             + item.description for item in items])
         picks = [items[i] if i is not None and 0 <= i < len(items) else None for i in chosen]
         found = sum(1 for p in picks if p)
         log.info("Ваши кадры подошли к %d из %d фраз", found, len(phrases))

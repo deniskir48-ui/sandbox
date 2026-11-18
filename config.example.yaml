@@ -69,3 +69,11 @@ publish:
     privacy_level: PUBLIC_TO_EVERYONE # до аудита приложения TikTok разрешает только SELF_ONLY
 
 workspace: workspace
+
+daily:                    # ролик каждый день: тему выбирает планировщик (кадры, наброски, Threads, новости, погода)
+  enabled: false
+  time: "10:40"           # по часам компьютера; окно программы должно быть запущено (включение режима добавит его в автозагрузку)
+  publish: true           # сразу выкладывать; false - ролик ждёт проверки
+  city: Лимассол          # для погоды
+  latitude: 34.68
+  longitude: 33.04

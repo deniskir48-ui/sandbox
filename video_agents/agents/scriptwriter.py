@@ -49,7 +49,11 @@ class ScriptwriterAgent:
         self.channel = channel
 
     def _brief(self, idea: VideoIdea) -> str:
-        if idea.source_text:
+        footage = ""
+        if idea.footage_hint:
+            footage = ("\n\nКадры автора, из которых будет смонтирован ролик - пиши так, чтобы фразы ложились "
+                       "на них:\n" + "\n".join(f"- {line}" for line in idea.footage_hint))
+        if idea.source_post_id and idea.source_text:
             return (
                 f"{channel_brief(self.channel)}\n\n"
                 f"Ролик - адаптация поста автора из Threads, который уже зашёл аудитории "
@@ -59,12 +63,22 @@ class ScriptwriterAgent:
                 "(расписания, сайты, списки, оговорки, побочные темы) пойдёт в описание ролика. "
                 "Если в посте есть решение или лайфхак - оно обязательно в ролике. "
                 "Если это афиша или дайджест событий - оставь 3-5 самых интересных, даты и места коротко. "
-                "Хук - самый удивительный факт поста, переписанный для речи."
+                "Хук - самый удивительный факт поста, переписанный для речи." + footage
+            )
+        if idea.source_text:
+            return (
+                f"{channel_brief(self.channel)}\n\n"
+                f"Тема: {idea.topic}\nСитуация зрителя: {idea.viewer_problem}\nУгол подачи: {idea.angle}\n"
+                f"Идея крючка: {idea.hook}\n\n"
+                f"Материал (из набросков и постов автора, новостей) - опирайся на него и не выдумывай факты:\n"
+                f"«{idea.source_text}»\n\n"
+                "Построй ролик по каркасу драматургии: один неожиданный факт для крючка и одно главное решение; "
+                "подробности (сайты, расписания, списки) - в описание ролика." + footage
             )
         return (
             f"{channel_brief(self.channel)}\n\n"
             f"Проблема зрителя: {idea.viewer_problem}\n"
-            f"Тема: {idea.topic}\nУгол подачи: {idea.angle}\nХук: {idea.hook}"
+            f"Тема: {idea.topic}\nУгол подачи: {idea.angle}\nХук: {idea.hook}" + footage
         )
 
     def _length(self) -> str:

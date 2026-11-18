@@ -36,7 +36,11 @@ class CriticAgent:
 
     def review(self, idea: VideoIdea, script: Script) -> Review:
         words = len(script.full_text.split())
-        if idea.source_text:
+        if idea.source_text and not idea.source_post_id:
+            subject = (f"Тема: {idea.topic}\nСитуация зрителя: {idea.viewer_problem}\n"
+                       "Проверь, что факты взяты из материала и ничего не выдумано сверх него. "
+                       f"Материал:\n«{idea.source_text}»\n")
+        elif idea.source_text:
             subject = ("Ролик - адаптация поста автора из Threads. Проверь, что смысл, факты и интонация автора "
                        "сохранены, решение или вывод из поста не потеряны и ничего не выдумано сверх поста. "
                        f"Пост:\n«{idea.source_text}»\n")

@@ -100,7 +100,7 @@ def test_library_only_never_uses_stock(tmp_path):
     item = LibraryItem("beach.mp4", "video", folder / "beach.mp4", "пляж")
 
     class OnlySecond:
-        def pick(self, title, phrases, progress=None):
+        def pick(self, title, phrases, progress=None, preferred=()):
             return [None, item]  # к первой фразе своего кадра нет
 
     class NoStock:
