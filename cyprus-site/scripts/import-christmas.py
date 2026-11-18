@@ -101,6 +101,7 @@ READER = [
     (r"Точную площадь и программу уточнить", "Точное место и программу уточняйте у организатора"),
     (r"Стоимость уточнить", "Стоимость уточняйте у организатора"),
     (r"\bуточнить у\b", "уточняйте у"),
+    (r"\(время закрытия уточнить\)", "(время закрытия уточняйте у организатора)"),
     (r"\bлучше перепроверить\b", "лучше уточнить у организатора"),
     (r"\bПроверить\b", "Проверяйте"),
     (r"(\S+) нужно уточнить", r"\1 уточняйте у организатора"),
@@ -152,8 +153,8 @@ def main():
                  f"date: {q(rng[0])}", f"end_date: {q(rng[1])}", f"city: {q(city)}",
                  f"venue: {q(venue.strip())}" if venue.strip() else None,
                  f"summary: {q(summary[:200])}",
-                 f"hours: {q(hours)}" if hours else None,
-                 f"price: {q(price)}" if price else None,
+                 f"hours: {q(for_reader(hours).rstrip('.'))}" if hours else None,
+                 f"price: {q(for_reader(price).rstrip('.'))}" if price else None,
                  f"ticket_url: {q(url)}", "sources:", f"  - title: {q('Источник из таблицы афиши')}", f"    url: {q(url)}",
                  "tags: [christmas, christmas-parks]"]
         write(out, f"{slugify(name)}-{rng[0]}", lines, dry, stats)

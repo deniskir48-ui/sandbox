@@ -30,20 +30,16 @@
   .counts b { color: var(--warm); font-variant-numeric: tabular-nums; }
   h2 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; margin: 34px 0 14px; }
 
-  .parks { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
-  .park { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 9px; }
-  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-  .place { font-size: .76rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sky); }
-  .status { font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--sun) 20%, transparent); color: #ffb488; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+  .tag { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--warm); }
+  .status { font-size: .74rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: color-mix(in srgb, var(--sun) 20%, transparent); color: #ffb488; }
   .status:empty { display: none; }
   .status.now { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
-  .park h3 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.25; margin: 0; text-wrap: balance; }
-  .when { margin: 0; font-weight: 600; color: var(--warm); font-variant-numeric: tabular-nums; }
-  .desc { margin: 0; color: #d6e0ec; }
-  .facts { margin: 0; display: grid; gap: 4px; font-size: .9rem; }
-  .facts div { display: grid; grid-template-columns: 86px 1fr; gap: 8px; }
-  .facts dt { color: var(--muted); } .facts dd { margin: 0; }
-  .links { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-weight: 600; font-size: .92rem; }
+  .ev.is-park .stub { background: color-mix(in srgb, var(--warm) 14%, var(--card)); }
+  .ev.is-park .stub span { color: var(--warm); }
+  .ev-facts { margin: 0; display: grid; gap: 2px; font-size: .86rem; color: var(--muted); }
+  .ev-facts b { color: var(--text); font-weight: 600; }
+  .links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-weight: 600; font-size: .9rem; }
   .links a { text-decoration: none; }
 
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
@@ -51,7 +47,7 @@
   .chip em { font-style: normal; color: var(--muted); font-weight: 500; }
   .chip[aria-pressed="true"] { background: var(--sky); border-color: var(--sky); color: #0a1120; }
   .chip[aria-pressed="true"] em { color: inherit; opacity: .7; }
-  .chip:focus-visible, .links a:focus-visible, .more:focus-visible { outline: 2px solid var(--warm); outline-offset: 3px; border-radius: 6px; }
+  .chip:focus-visible, .links a:focus-visible { outline: 2px solid var(--warm); outline-offset: 3px; border-radius: 6px; }
   .evs { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
   .ev { display: grid; grid-template-columns: 64px minmax(0, 1fr); background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
   .stub { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 12px 4px; background: color-mix(in srgb, var(--sky) 14%, var(--card)); border-right: 1px dashed var(--line); text-align: center; }
@@ -61,10 +57,9 @@
   .ev h3 { margin: 0; font-size: 1.02rem; line-height: 1.3; }
   .ev-place { margin: 0; font-size: .86rem; color: var(--muted); }
   .ev-desc { margin: 0; font-size: .93rem; color: #d6e0ec; }
-  .more { justify-self: start; font-weight: 600; font-size: .9rem; text-decoration: none; }
   footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
   .brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 600; color: var(--text); }
-  @media (min-width: 640px) { .park { padding: 22px 24px; } .ev { grid-template-columns: 76px minmax(0, 1fr); } }
+  @media (min-width: 640px) { .ev { grid-template-columns: 76px minmax(0, 1fr); } }
 </style>
 
 <div class="wrap">
@@ -76,355 +71,506 @@
     <p class="kicker">Сезон 2026–2027</p>
     <h1>Рождество <em>на&nbsp;Кипре</em></h1>
     <p class="lead">Хэллоуинские тыквы ещё не везде убрали, а Санта-Клаусы уже готовятся к выходу на работу. Здесь рождественские парки острова и праздники ближайших дней: ёлки, деревни, ярмарки.</p>
-    <p class="counts"><span><b>4</b> парка</span><span><b id="n-week">31</b> праздников в подборке</span></p>
+    <p class="counts"><span><b id="n-parks">4</b> рождественских парка</span><span><b id="n-week">31</b> праздников ближайших дней</span></p>
   </header>
 
-  <h2>Рождественские парки</h2>
-  <ul class="parks" id="parks">
-    <li class="park" data-start="2026-11-13" data-end="2027-01-10" data-time="17:00">
-      <div class="row"><span class="place">Никосия · Ров Д’Авила возле старого города</span><span class="status"></span></div>
-      <h3>Nicosia Christmas Fairyland / Paramythoupoli</h3>
-      <p class="when">13 ноября — 10 января</p>
-      <p class="desc">Аттракционы, ярмарка и праздничные угощения.</p>
-      <dl class="facts">
-        <div><dt>Часы</dt><dd>По опубликованному расписанию: будни 17:00–23:00, выходные с 15:00 (время закрытия уточнить)</dd></div>
-        <div><dt>Стоимость</dt><dd>Цены на аттракционы уточняются</dd></div>
-      </dl>
-      <div class="links">
-        <a href="https://mycypruslife.com/christmas-events-in-cyprus-in-2026/" target="_blank" rel="noopener">Источник ↗</a>
-        <a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A0%D0%BE%D0%B2%20%D0%94%E2%80%99%D0%90%D0%B2%D0%B8%D0%BB%D0%B0%20%D0%B2%D0%BE%D0%B7%D0%BB%D0%B5%20%D1%81%D1%82%D0%B0%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0%20%D0%9D%D0%B8%D0%BA%D0%BE%D1%81%D0%B8%D1%8F" target="_blank" rel="noopener">На карте ↗</a>
-      </div>
-    </li>
-    <li class="park" data-start="2026-11-20" data-end="2027-01-17" data-time="16:00">
-      <div class="row"><span class="place">Лимассол · Старый порт и площадь Какоянни</span><span class="status"></span></div>
-      <h3>Limassol Christmas Land</h3>
-      <p class="when">20 ноября — 17 января</p>
-      <p class="desc">Аттракционы, карусели, праздничные угощения.</p>
-      <dl class="facts">
-        <div><dt>Часы</dt><dd>Пн–пт 16:00–23:00; сб–вс 12:00–23:00</dd></div>
-        <div><dt>Стоимость</dt><dd>Стоимость входа и аттракционов уточняется</dd></div>
-      </dl>
-      <div class="links">
-        <a href="https://cyprus.wiz-guide.com/agenda/limassol-christmas-land/25570" target="_blank" rel="noopener">Источник ↗</a>
-        <a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A1%D1%82%D0%B0%D1%80%D1%8B%D0%B9%20%D0%BF%D0%BE%D1%80%D1%82%20%D0%B8%20%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C%20%D0%9A%D0%B0%D0%BA%D0%BE%D1%8F%D0%BD%D0%BD%D0%B8%20%D0%9B%D0%B8%D0%BC%D0%B0%D1%81%D1%81%D0%BE%D0%BB" target="_blank" rel="noopener">На карте ↗</a>
-      </div>
-    </li>
-    <li class="park" data-start="2026-11-20" data-end="2026-11-22" data-time="17:00">
-      <div class="row"><span class="place">Колосси (Лимассол) · Kolossi Park</span><span class="status"></span></div>
-      <h3>Santa Park Fest</h3>
-      <p class="when">20 ноября — 22 ноября</p>
-      <p class="desc">Ярмарка, луна-парк, детские активности, уличная еда, выступления.</p>
-      <dl class="facts">
-        <div><dt>Часы</dt><dd>Ежедневно 17:00–22:00</dd></div>
-        <div><dt>Стоимость</dt><dd>Вход бесплатный; отдельные аттракционы могут быть платными</dd></div>
-      </dl>
-      <div class="links">
-        <a href="https://eventshub.cy/en/event/santa-park-fest-2026-11-20" target="_blank" rel="noopener">Источник ↗</a>
-        <a href="https://www.google.com/maps/search/?api=1&amp;query=Kolossi%20Park%20%D0%9A%D0%BE%D0%BB%D0%BE%D1%81%D1%81%D0%B8%20(%D0%9B%D0%B8%D0%BC%D0%B0%D1%81%D1%81%D0%BE%D0%BB)" target="_blank" rel="noopener">На карте ↗</a>
-      </div>
-    </li>
-    <li class="park" data-start="2026-11-21" data-end="2027-01-31" data-time="">
-      <div class="row"><span class="place">Паралимни</span><span class="status"></span></div>
-      <h3>Pinocchio Christmas Theme Park</h3>
-      <p class="when">21 ноября — 31 января</p>
-      <p class="desc">Тематический семейный парк по истории Пиноккио; отдельная программа праздничных мероприятий.</p>
-      <dl class="facts">
-        <div><dt>Часы</dt><dd>Муниципалитет пока не опубликовал часы</dd></div>
-        <div><dt>Стоимость</dt><dd>Муниципалитет пока не опубликовал стоимость</dd></div>
-      </dl>
-      <div class="links">
-        <a href="https://pdm.org.cy/en/christmas2026paralimni/" target="_blank" rel="noopener">Источник ↗</a>
-        <a href="https://www.google.com/maps/search/?api=1&amp;query=Pinocchio%20Christmas%20Theme%20Park%20%D0%9F%D0%B0%D1%80%D0%B0%D0%BB%D0%B8%D0%BC%D0%BD%D0%B8" target="_blank" rel="noopener">На карте ↗</a>
-      </div>
-    </li>
-  </ul>
-
-  <h2>Праздники ближайших дней</h2>
   <div class="chips" role="group" aria-label="Что показать">
-    <button type="button" class="chip" id="k-all" data-kind="" aria-pressed="true">Все <em id="n-all">31</em></button>
+    <button type="button" class="chip" id="k-all" data-kind="" aria-pressed="true">Все <em id="n-all">35</em></button>
+    <button type="button" class="chip" id="k-christmas-parks" data-kind="christmas-parks" aria-pressed="false">Парки <em>4</em></button>
     <button type="button" class="chip" id="k-christmas-villages" data-kind="christmas-villages" aria-pressed="false">Рождественские деревни <em>9</em></button>
     <button type="button" class="chip" id="k-christmas-lights" data-kind="christmas-lights" aria-pressed="false">Ёлки и огни <em>7</em></button>
     <button type="button" class="chip" id="k-christmas-markets" data-kind="christmas-markets" aria-pressed="false">Ярмарки <em>5</em></button>
     <button type="button" class="chip" id="k-christmas-other" data-kind="christmas-other" aria-pressed="false">Мастер-классы и другое <em>10</em></button>
   </div>
   <ul class="evs" id="evs">
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-21">
+    <li class="ev is-park" data-kind="christmas-parks" data-start="2026-11-13" data-end="2027-01-10" data-time="17:00">
+      <div class="stub" aria-hidden="true"><b>13</b><span>ноя</span><i>до 10 янв</i></div>
+      <div class="ev-body">
+        <div class="row"><span class="tag">Парк</span><span class="status"></span></div>
+        <h3>Nicosia Christmas Fairyland / Paramythoupoli</h3>
+        <p class="ev-place">Никосия · Ров Д’Авила возле старого города</p>
+        <p class="ev-desc">Аттракционы, ярмарка и праздничные угощения.</p>
+        <p class="ev-facts"><span><b>Часы:</b> По опубликованному расписанию: будни 17:00–23:00, выходные с 15:00 (время закрытия уточняйте у организатора)</span><span><b>Стоимость:</b> Цены на аттракционы уточняются</span></p>
+        <div class="links">
+          <a href="https://mycypruslife.com/christmas-events-in-cyprus-in-2026/" target="_blank" rel="noopener">Подробнее ↗</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A0%D0%BE%D0%B2%20%D0%94%E2%80%99%D0%90%D0%B2%D0%B8%D0%BB%D0%B0%20%D0%B2%D0%BE%D0%B7%D0%BB%D0%B5%20%D1%81%D1%82%D0%B0%D1%80%D0%BE%D0%B3%D0%BE%20%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D0%B0%20%D0%9D%D0%B8%D0%BA%D0%BE%D1%81%D0%B8%D1%8F" target="_blank" rel="noopener">На карте ↗</a>
+        </div>
+      </div>
+    </li>
+    <li class="ev is-park" data-kind="christmas-parks" data-start="2026-11-20" data-end="2027-01-17" data-time="16:00">
+      <div class="stub" aria-hidden="true"><b>20</b><span>ноя</span><i>до 17 янв</i></div>
+      <div class="ev-body">
+        <div class="row"><span class="tag">Парк</span><span class="status"></span></div>
+        <h3>Limassol Christmas Land</h3>
+        <p class="ev-place">Лимассол · Старый порт и площадь Какоянни</p>
+        <p class="ev-desc">Аттракционы, карусели, праздничные угощения.</p>
+        <p class="ev-facts"><span><b>Часы:</b> Пн–пт 16:00–23:00; сб–вс 12:00–23:00</span><span><b>Стоимость:</b> Стоимость входа и аттракционов уточняется</span></p>
+        <div class="links">
+          <a href="https://cyprus.wiz-guide.com/agenda/limassol-christmas-land/25570" target="_blank" rel="noopener">Подробнее ↗</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=%D0%A1%D1%82%D0%B0%D1%80%D1%8B%D0%B9%20%D0%BF%D0%BE%D1%80%D1%82%20%D0%B8%20%D0%BF%D0%BB%D0%BE%D1%89%D0%B0%D0%B4%D1%8C%20%D0%9A%D0%B0%D0%BA%D0%BE%D1%8F%D0%BD%D0%BD%D0%B8%20%D0%9B%D0%B8%D0%BC%D0%B0%D1%81%D1%81%D0%BE%D0%BB" target="_blank" rel="noopener">На карте ↗</a>
+        </div>
+      </div>
+    </li>
+    <li class="ev is-park" data-kind="christmas-parks" data-start="2026-11-20" data-end="2026-11-22" data-time="17:00">
+      <div class="stub" aria-hidden="true"><b>20–22</b><span>ноя</span><i>пт–вс</i></div>
+      <div class="ev-body">
+        <div class="row"><span class="tag">Парк</span><span class="status"></span></div>
+        <h3>Santa Park Fest</h3>
+        <p class="ev-place">Колосси (Лимассол) · Kolossi Park</p>
+        <p class="ev-desc">Ярмарка, луна-парк, детские активности, уличная еда, выступления.</p>
+        <p class="ev-facts"><span><b>Часы:</b> Ежедневно 17:00–22:00</span><span><b>Стоимость:</b> Вход бесплатный; отдельные аттракционы могут быть платными</span></p>
+        <div class="links">
+          <a href="https://eventshub.cy/en/event/santa-park-fest-2026-11-20" target="_blank" rel="noopener">Подробнее ↗</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Kolossi%20Park%20%D0%9A%D0%BE%D0%BB%D0%BE%D1%81%D1%81%D0%B8%20(%D0%9B%D0%B8%D0%BC%D0%B0%D1%81%D1%81%D0%BE%D0%BB)" target="_blank" rel="noopener">На карте ↗</a>
+        </div>
+      </div>
+    </li>
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-20" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>20–21</b><span>ноя</span><i>пт–сб</i></div>
       <div class="ev-body">
+        
         <h3>Мастер-класс: рождественские носки, родитель + ребёнок</h3>
         <p class="ev-place">Никосия · Yfantourgeio TheWorkplace</p>
         <p class="ev-desc">Декорирование рождественских носков для родителей с детьми 2–8 лет; в афишах указано €30 за пару. Дата в афишах разная — 20 или 21 ноября, уточняйте у организатора.</p>
-        <a class="more" href="https://cypruseventsmap.com/events/paint-decorate-your-christmas-stockings-workshop-in-nicosia/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/events/paint-decorate-your-christmas-stockings-workshop-in-nicosia/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-20">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-20" data-end="2026-11-20" data-time="">
       <div class="stub" aria-hidden="true"><b>20</b><span>ноя</span><i>пт</i></div>
       <div class="ev-body">
+        
         <h3>Мастер-класс: керамическая ёлка</h3>
         <p class="ev-place">Лимассол · Meltemi Creative Areas · в 18:00</p>
         <p class="ev-desc">Создание праздничного декора. Стоимость уточняйте у организатора.</p>
-        <a class="more" href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev is-park" data-kind="christmas-parks" data-start="2026-11-21" data-end="2027-01-31" data-time="">
+      <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>до 31 янв</i></div>
+      <div class="ev-body">
+        <div class="row"><span class="tag">Парк</span><span class="status"></span></div>
+        <h3>Pinocchio Christmas Theme Park</h3>
+        <p class="ev-place">Паралимни</p>
+        <p class="ev-desc">Тематический семейный парк по истории Пиноккио; отдельная программа праздничных мероприятий.</p>
+        <p class="ev-facts"><span><b>Часы:</b> Муниципалитет пока не опубликовал часы</span><span><b>Стоимость:</b> Муниципалитет пока не опубликовал стоимость</span></p>
+        <div class="links">
+          <a href="https://pdm.org.cy/en/christmas2026paralimni/" target="_blank" rel="noopener">Подробнее ↗</a>
+          <a href="https://www.google.com/maps/search/?api=1&amp;query=Pinocchio%20Christmas%20Theme%20Park%20%D0%9F%D0%B0%D1%80%D0%B0%D0%BB%D0%B8%D0%BC%D0%BD%D0%B8" target="_blank" rel="noopener">На карте ↗</a>
+        </div>
+      </div>
+    </li>
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Фикарду</h3>
         <p class="ev-place">Фикарду · рождественская деревня</p>
         <p class="ev-desc">Праздничное оформление и события в исторической деревне.</p>
-        <a class="more" href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Какопетрия</h3>
         <p class="ev-place">Какопетрия · рождественская деревня</p>
         <p class="ev-desc">Праздничная площадка в горной деревне.</p>
-        <a class="more" href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Калопанайотис</h3>
         <p class="ev-place">Калопанайотис · рождественская деревня</p>
         <p class="ev-desc">Сезонные ярмарки и семейные активности.</p>
-        <a class="more" href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Лефкара</h3>
         <p class="ev-place">Лефкара · рождественская деревня</p>
         <p class="ev-desc">Рождественский сезон в деревне ремесленников.</p>
-        <a class="more" href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-markets" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Bazaar for Little Heroes</h3>
         <p class="ev-place">Колосси · замок Колосси · в 09:00</p>
         <p class="ev-desc">Благотворительная рождественская ярмарка.</p>
-        <a class="more" href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-markets" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Праздничная ярмарка Anthologion</h3>
         <p class="ev-place">Лимассол · Anthologion Floral Boutique · в 10:00</p>
         <p class="ev-desc">Праздничное мероприятие цветочного бутика, ярмарочный формат и угощения. Уточнить адрес, часы окончания и программу.</p>
-        <a class="more" href="https://cypruseventsmap.com/limassol/christmas/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/limassol/christmas/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas at Costas Argyrou Museum</h3>
         <p class="ev-place">Ларнака · Музей Костаса Аргиру · в 10:30</p>
         <p class="ev-desc">Семейные мероприятия в музее, в афише бесплатный вход.</p>
-        <a class="more" href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Киперунда</h3>
         <p class="ev-place">Киперунда · рождественская деревня · в 10:30</p>
         <p class="ev-desc">Кинозона, квест-комната, мастер-классы, парад эльфов, включение огней в 18:00.</p>
-        <a class="more" href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Лофу</h3>
         <p class="ev-place">Лофу · начальная школа · в 11:00</p>
         <p class="ev-desc">Первое участие Лофу в официальной программе; открытие и огни ёлки в 17:00. Точное время зажжения ёлки уточняйте у организатора.</p>
-        <a class="more" href="https://www.limassoltourism.com/events/official-opening-of-the-lofou-christmas-village/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.limassoltourism.com/events/official-opening-of-the-lofou-christmas-village/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>«Лодка добра» / Karavi tis Prosforas</h3>
         <p class="ev-place">Айя-Напа · муниципальный музей Thalassa · в 11:00</p>
         <p class="ev-desc">Семейное благотворительное мероприятие музея Thalassa, в рождественской афише. Формат благотворительных активностей уточняйте у музея.</p>
-        <a class="more" href="https://www.agianapa.org.cy/images/easycms/events/documents/1311/MonthlyEventsNov2026En.pdf" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.agianapa.org.cy/images/easycms/events/documents/1311/MonthlyEventsNov2026En.pdf" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-markets" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Mall of Cyprus: праздничный маркет</h3>
         <p class="ev-place">Никосия · Mall of Cyprus · в 11:00</p>
         <p class="ev-desc">Рождественские лавки и прогулки в торговом центре, вход бесплатный.</p>
-        <a class="more" href="https://mallofcyprus.com/christmas-market-2026-your-christmas-story-starts-here/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://mallofcyprus.com/christmas-market-2026-your-christmas-story-starts-here/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-markets" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>SENSE by the Beach Christmas Market</h3>
         <p class="ev-place">Пафос · SENSE by the Beach · в 11:00</p>
         <p class="ev-desc">Рождественский маркет у моря.</p>
-        <a class="more" href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Статос–Айос-Фотиос</h3>
         <p class="ev-place">Статос–Айос-Фотиос · рождественская деревня · в 11:30</p>
         <p class="ev-desc">Мастер-классы, 16:30 танцы, 17:00–18:00 зажжение огней и 18:30–20:00 концерт.</p>
-        <a class="more" href="https://www.visitcyprus.com/wp-content/uploads/2026/11/statos-christmas-villages-2026-2027_en.pdf" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.visitcyprus.com/wp-content/uploads/2026/11/statos-christmas-villages-2026-2027_en.pdf" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Дериния</h3>
         <p class="ev-place">Дериния · площадь Панагии · в 14:30</p>
         <p class="ev-desc">Огни ёлки в 19:00, шоу дронов в 19:15, затем концерт · Проверяйте расписание дрон-шоу непосредственно перед посещением.</p>
-        <a class="more" href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-lights" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Alphamega: рождественские праздники сразу в четырёх городских точках</h3>
         <p class="ev-place">Несколько городов · Никосия, Лимассол, Пафос · 4 магазина Alphamega · в 15:00</p>
         <p class="ev-desc">Ёлки загораются одновременно в 17:30; Санта, музыка, конкурсы. Engomi — открытый показ «Клаус» в 18:30. Engomi, Kapsalos (Лимассол), Astromeritis и Paphos Aphrodite. Бесплатно.</p>
-        <a class="more" href="https://www.alphamega.com.cy/en/news/everything-that-makes-christmas-christmas-at-alphamega" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.alphamega.com.cy/en/news/everything-that-makes-christmas-christmas-at-alphamega" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-lights" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas on the Sea: зажжение ёлки</h3>
         <p class="ev-place">Лимассол · Limassol Marina · в 16:00</p>
         <p class="ev-desc">С 16:00 рождественская ярмарка и мастер-классы; в 17:45 зажжение огней 12-метровой ёлки, с 18:30 концерт; Санта и подарки. Бесплатное городское событие.</p>
-        <a class="more" href="https://www.limassolmarina.com/event/christmas-sea-lighting-ceremony-2026" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.limassolmarina.com/event/christmas-sea-lighting-ceremony-2026" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Tree Workshop: текстильная 3D-ёлка</h3>
         <p class="ev-place">Никосия · кампус University of Cyprus · в 16:00</p>
         <p class="ev-desc">Мастер-класс по созданию объёмной ёлки из остатков ткани, 18+, бесплатный, количество мест ограничено. Нужна регистрация.</p>
-        <a class="more" href="https://eventshub.cy/event/christmas-tree-workshop-sew-your-own-3d-christmas-tree-2026-11-21" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://eventshub.cy/event/christmas-tree-workshop-sew-your-own-3d-christmas-tree-2026-11-21" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-lights" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Зажжение рождественских огней Лиопетри</h3>
         <p class="ev-place">Лиопетри · центральная площадь · в 16:00</p>
         <p class="ev-desc">Муниципальное открытие рождественских украшений в Лиопетри.</p>
-        <a class="more" href="https://www.agianapa.org.cy/images/easycms/events/documents/1311/MonthlyEventsNov2026En.pdf" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.agianapa.org.cy/images/easycms/events/documents/1311/MonthlyEventsNov2026En.pdf" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-villages" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-villages" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Village: Агрос</h3>
         <p class="ev-place">Агрос · площадь Каурас · в 16:30</p>
         <p class="ev-desc">В 16:30 аквагрим и ростовые персонажи; в 17:30 зажжение огней и живая джазовая музыка. Местные часы и программа уточняются.</p>
-        <a class="more" href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.visitcyprus.com/christmas-villages-of-cyprus/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-21">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="">
       <div class="stub" aria-hidden="true"><b>21</b><span>ноя</span><i>сб</i></div>
       <div class="ev-body">
+        
         <h3>Рождественский благотворительный концерт Rotary</h3>
         <p class="ev-place">Ларнака · Municipal Theatre G. Lykourgos · в 19:00</p>
         <p class="ev-desc">Пятый ежегодный праздничный концерт, €10–20.</p>
-        <a class="more" href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>«Волшебная лампа Рождества»</h3>
         <p class="ev-place">Пафос · Markideio Theatre · в 11:00</p>
         <p class="ev-desc">Семейный спектакль, €14.</p>
-        <a class="more" href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>Akaki Christmas 2026</h3>
         <p class="ev-place">Акаки · главная площадь · в 12:00</p>
         <p class="ev-desc">Рождественское событие на центральной площади.</p>
-        <a class="more" href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-lights" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>Фестиваль рождественского шоколада</h3>
         <p class="ev-place">Менику · площадь Агиос Киприанос · в 14:00</p>
         <p class="ev-desc">Второй рождественский фестиваль шоколада и праздничное зажжение огней на площади Агиос Киприанос в Менику. 14:00–23:00.</p>
-        <a class="more" href="https://eventshub.cy/en/event/2o-christougenniatiko-festival-sokolatas-2026-11-22" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://eventshub.cy/en/event/2o-christougenniatiko-festival-sokolatas-2026-11-22" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>Открытие «Тайного дома Санты»</h3>
         <p class="ev-place">Сиа · двор общинного совета · в 15:00</p>
         <p class="ev-desc">Бесплатный семейный праздник: игры, угощения, музыка, Санта приезжает в 16:00. Организатор Sia Volunteers Association.</p>
-        <a class="more" href="https://cypruspassion.com/ru/events-in-cyprus/secret-santa-house-sia-2026/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruspassion.com/ru/events-in-cyprus/secret-santa-house-sia-2026/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-lights" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>Праздничное включение огней MyMall</h3>
         <p class="ev-place">Лимассол · MyMall, вход B · в 16:00</p>
         <p class="ev-desc">Ёлка, Луис Патсалидес, Astero и Tefkros, Санта, конкурсы и подарки.</p>
-        <a class="more" href="https://www.mymall.com.cy/xmas-lighting-event-22-11/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.mymall.com.cy/xmas-lighting-event-22-11/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-lights" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>Зажжение рождественских огней Авгору</h3>
         <p class="ev-place">Авгору · центральная площадь · в 16:00</p>
         <p class="ev-desc">Муниципальная церемония включения рождественской иллюминации.</p>
-        <a class="more" href="https://www.agianapa.org.cy/images/easycms/events/documents/1311/MonthlyEventsNov2026En.pdf" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://www.agianapa.org.cy/images/easycms/events/documents/1311/MonthlyEventsNov2026En.pdf" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-other" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>Christmas Stocking Painting</h3>
         <p class="ev-place">Ларнака · Old Market Street · в 16:30</p>
         <p class="ev-desc">Мастер-класс росписи рождественских носков; €35.</p>
-        <a class="more" href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://cypruseventsmap.com/next-week/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-markets" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-markets" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>Открытие рождественской ярмарки / Marseaux</h3>
         <p class="ev-place">Никосия · Mall of Cyprus (парковка 1-го этажа) · в 17:00</p>
         <p class="ev-desc">Открытие рождественского рынка: Marseaux в 17:00, зажжение огней в 17:30; бесплатно, отдельные аттракционы платные.</p>
-        <a class="more" href="https://mallofcyprus.com/marseaux-is-coming-let-christmas-begin-%F0%9F%8E%84%F0%9F%8E%A4/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://mallofcyprus.com/marseaux-is-coming-let-christmas-begin-%F0%9F%8E%84%F0%9F%8E%A4/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
-    <li class="ev" data-kind="christmas-lights" data-end="2026-11-22">
+    <li class="ev" data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="">
       <div class="stub" aria-hidden="true"><b>22</b><span>ноя</span><i>вс</i></div>
       <div class="ev-body">
+        
         <h3>Зажжение рождественских огней Паралимни</h3>
         <p class="ev-place">Паралимни · площадь Агиос Георгиос · в 17:00</p>
         <p class="ev-desc">Танцевальные номера, хор, ёлка загорается в 19:00, затем праздничный концерт; бесплатно. Точное место и программу уточняйте у организатора.</p>
-        <a class="more" href="https://pdm.org.cy/en/christmas2026paralimni/" target="_blank" rel="noopener">Подробнее ↗</a>
+        
+        <div class="links">
+          <a href="https://pdm.org.cy/en/christmas2026paralimni/" target="_blank" rel="noopener">Подробнее ↗</a>
+          
+        </div>
       </div>
     </li>
   </ul>
@@ -444,27 +590,23 @@
     var d = function (iso) { return new Date(iso + 'T12:00:00Z'); };
     var human = function (iso) { return d(iso).getUTCDate() + ' ' + MON[d(iso).getUTCMonth()]; };
 
-    var parks = Array.prototype.slice.call(document.querySelectorAll('.park'));
-    parks.forEach(function (li) {
+    Array.prototype.slice.call(document.querySelectorAll('.ev.is-park')).forEach(function (li) {
       var s = li.dataset.start, e = li.dataset.end, t = li.dataset.time, el = li.querySelector('.status');
-      if (e < today) { li.hidden = true; return; }
+      if (e < today) return;
       if (s > today) {
         var n = Math.round((d(s) - d(today)) / 86400000);
         el.textContent = n === 1 ? 'Откроется завтра' + (t ? ' в ' + t : '') : n < 7 ? 'Откроется ' + DAYS[d(s).getUTCDay()] : 'Откроется ' + human(s);
-        li.dataset.rank = 1;
       } else {
         el.textContent = e === today ? 'Сегодня последний день' : 'Работает до ' + human(e);
-        el.classList.add('now'); li.dataset.rank = 0;
+        el.classList.add('now');
       }
     });
-    var pl = document.getElementById('parks');
-    parks.sort(function (a, b) { return (a.dataset.rank || 2) - (b.dataset.rank || 2); }).forEach(function (li) { pl.appendChild(li); });
-
     var evs = Array.prototype.slice.call(document.querySelectorAll('.ev'));
     evs.forEach(function (li) { if (li.dataset.end < today) li.remove(); });
     var live = Array.prototype.slice.call(document.querySelectorAll('.ev'));
     document.getElementById('n-all').textContent = live.length;
-    document.getElementById('n-week').textContent = live.length;
+    document.getElementById('n-parks').textContent = live.filter(function (li) { return li.classList.contains('is-park'); }).length;
+    document.getElementById('n-week').textContent = live.filter(function (li) { return !li.classList.contains('is-park'); }).length;
     var chips = document.querySelectorAll('.chip');
     chips.forEach(function (c) {
       var k = c.dataset.kind;

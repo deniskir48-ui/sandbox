@@ -16,6 +16,7 @@ const MON = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл
 const MON_FULL = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 const WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
 const KINDS = [
+  ['christmas-parks', 'Парки'],
   ['christmas-villages', 'Рождественские деревни'],
   ['christmas-lights', 'Ёлки и огни'],
   ['christmas-markets', 'Ярмарки'],
@@ -34,44 +35,35 @@ const events = fs.readdirSync(DIR).filter((f) => f.endsWith('.yaml'))
 const key = (e) => `${e.date}T${e.time ?? '00:00'}`;
 const parks = events.filter((e) => e.tags.includes('christmas-parks')).sort((a, b) => key(a).localeCompare(key(b)));
 const week = events.filter((e) => !e.tags.includes('christmas-parks')).sort((a, b) => key(a).localeCompare(key(b)));
-const kindOf = (e) => (KINDS.find(([t]) => e.tags.includes(t)) ?? KINDS[3])[0];
-const kinds = KINDS.map(([t, label]) => ({ t, label, n: week.filter((e) => kindOf(e) === t).length })).filter((k) => k.n);
+const kindOf = (e) => (KINDS.find(([t]) => e.tags.includes(t)) ?? KINDS[4])[0];
+// Один список: парки — такие же строки, как праздники, по дате начала (идущие с ноября — первыми).
+const list = [...parks, ...week].sort((a, b) => key(a).localeCompare(key(b)));
+const kinds = KINDS.map(([t, label]) => ({ t, label, n: list.filter((e) => kindOf(e) === t).length })).filter((k) => k.n);
 const updated = new Intl.DateTimeFormat('ru-RU', { day: 'numeric', month: 'long', timeZone: 'Europe/Nicosia' }).format(new Date());
-
-const parkCard = (e) => {
-  const end = e.end_date ?? e.date;
-  const open = (e.hours ?? '').match(/\d{1,2}:\d{2}/)?.[0] ?? '';
-  return `
-    <li class="park" data-start="${e.date}" data-end="${end}" data-time="${open}">
-      <div class="row"><span class="place">${esc(e.city)}${e.venue ? ` · ${esc(e.venue)}` : ''}</span><span class="status"></span></div>
-      <h3>${esc(e.title)}</h3>
-      <p class="when">${full(e.date)} — ${full(end)}</p>
-      ${e.summary ? `<p class="desc">${esc(e.summary)}</p>` : ''}
-      <dl class="facts">
-        ${e.hours ? `<div><dt>Часы</dt><dd>${esc(e.hours)}</dd></div>` : ''}
-        ${e.price ? `<div><dt>Стоимость</dt><dd>${esc(e.price)}</dd></div>` : ''}
-      </dl>
-      <div class="links">
-        ${e.ticket_url ? `<a href="${esc(e.ticket_url)}" target="_blank" rel="noopener">Источник ↗</a>` : ''}
-        <a href="${esc(map(`${e.venue ?? e.title} ${e.city}`))}" target="_blank" rel="noopener">На карте ↗</a>
-      </div>
-    </li>`;
-};
 
 const eventRow = (e) => {
   const end = e.end_date ?? e.date;
   const range = end !== e.date;
-  const stubDay = range ? `${day(e.date).getUTCDate()}–${day(end).getUTCDate()}` : `${day(e.date).getUTCDate()}`;
-  const stubSub = range ? `${WD[day(e.date).getUTCDay()]}–${WD[day(end).getUTCDay()]}` : WD[day(e.date).getUTCDay()];
-  const meta = [e.time ? `в ${e.time}` : '', e.price ?? ''].filter(Boolean).join(' · ');
+  const sameMonth = day(e.date).getUTCMonth() === day(end).getUTCMonth();
+  // Корешок даты: «20–22 ноя» внутри месяца, «20 ноя / до 17 янв» для сезонных.
+  const stubDay = range && sameMonth ? `${day(e.date).getUTCDate()}–${day(end).getUTCDate()}` : `${day(e.date).getUTCDate()}`;
+  const stubSub = !range ? WD[day(e.date).getUTCDay()] : sameMonth ? `${WD[day(e.date).getUTCDay()]}–${WD[day(end).getUTCDay()]}` : `до ${short(end)}`;
+  const park = e.tags.includes('christmas-parks');
+  const open = (e.hours ?? '').match(/\d{1,2}:\d{2}/)?.[0] ?? '';
+  const meta = [e.time ? `в ${e.time}` : '', park ? '' : e.price ?? ''].filter(Boolean).join(' · ');
   return `
-    <li class="ev" data-kind="${kindOf(e)}" data-end="${end}">
+    <li class="ev${park ? ' is-park' : ''}" data-kind="${kindOf(e)}" data-start="${e.date}" data-end="${end}" data-time="${open}">
       <div class="stub" aria-hidden="true"><b>${stubDay}</b><span>${MON[day(e.date).getUTCMonth()]}</span><i>${stubSub}</i></div>
       <div class="ev-body">
+        ${park ? '<div class="row"><span class="tag">Парк</span><span class="status"></span></div>' : ''}
         <h3>${esc(e.title)}</h3>
         <p class="ev-place">${esc(e.city)}${e.venue ? ` · ${esc(e.venue)}` : ''}${meta ? ` · ${esc(meta)}` : ''}</p>
         ${e.summary ? `<p class="ev-desc">${esc(e.summary)}</p>` : ''}
-        ${e.ticket_url ? `<a class="more" href="${esc(e.ticket_url)}" target="_blank" rel="noopener">Подробнее ↗</a>` : ''}
+        ${park && (e.hours || e.price) ? `<p class="ev-facts">${e.hours ? `<span><b>Часы:</b> ${esc(e.hours)}</span>` : ''}${e.price ? `<span><b>Стоимость:</b> ${esc(e.price)}</span>` : ''}</p>` : ''}
+        <div class="links">
+          ${e.ticket_url ? `<a href="${esc(e.ticket_url)}" target="_blank" rel="noopener">Подробнее ↗</a>` : ''}
+          ${park ? `<a href="${esc(map(`${e.venue ?? e.title} ${e.city}`))}" target="_blank" rel="noopener">На карте ↗</a>` : ''}
+        </div>
       </div>
     </li>`;
 };
@@ -108,20 +100,16 @@ const html = `<title>Рождество на Кипре</title>
   .counts b { color: var(--warm); font-variant-numeric: tabular-nums; }
   h2 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; margin: 34px 0 14px; }
 
-  .parks { list-style: none; padding: 0; margin: 0; display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); }
-  .park { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 20px; display: flex; flex-direction: column; gap: 9px; }
-  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-  .place { font-size: .76rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--sky); }
-  .status { font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--sun) 20%, transparent); color: #ffb488; }
+  .row { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+  .tag { font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--warm); }
+  .status { font-size: .74rem; font-weight: 700; padding: 2px 9px; border-radius: 999px; background: color-mix(in srgb, var(--sun) 20%, transparent); color: #ffb488; }
   .status:empty { display: none; }
   .status.now { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
-  .park h3 { font-family: var(--display); font-weight: 600; font-size: 1.15rem; line-height: 1.25; margin: 0; text-wrap: balance; }
-  .when { margin: 0; font-weight: 600; color: var(--warm); font-variant-numeric: tabular-nums; }
-  .desc { margin: 0; color: #d6e0ec; }
-  .facts { margin: 0; display: grid; gap: 4px; font-size: .9rem; }
-  .facts div { display: grid; grid-template-columns: 86px 1fr; gap: 8px; }
-  .facts dt { color: var(--muted); } .facts dd { margin: 0; }
-  .links { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-weight: 600; font-size: .92rem; }
+  .ev.is-park .stub { background: color-mix(in srgb, var(--warm) 14%, var(--card)); }
+  .ev.is-park .stub span { color: var(--warm); }
+  .ev-facts { margin: 0; display: grid; gap: 2px; font-size: .86rem; color: var(--muted); }
+  .ev-facts b { color: var(--text); font-weight: 600; }
+  .links { display: flex; flex-wrap: wrap; gap: 6px 16px; font-weight: 600; font-size: .9rem; }
   .links a { text-decoration: none; }
 
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
@@ -129,7 +117,7 @@ const html = `<title>Рождество на Кипре</title>
   .chip em { font-style: normal; color: var(--muted); font-weight: 500; }
   .chip[aria-pressed="true"] { background: var(--sky); border-color: var(--sky); color: #0a1120; }
   .chip[aria-pressed="true"] em { color: inherit; opacity: .7; }
-  .chip:focus-visible, .links a:focus-visible, .more:focus-visible { outline: 2px solid var(--warm); outline-offset: 3px; border-radius: 6px; }
+  .chip:focus-visible, .links a:focus-visible { outline: 2px solid var(--warm); outline-offset: 3px; border-radius: 6px; }
   .evs { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
   .ev { display: grid; grid-template-columns: 64px minmax(0, 1fr); background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
   .stub { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; padding: 12px 4px; background: color-mix(in srgb, var(--sky) 14%, var(--card)); border-right: 1px dashed var(--line); text-align: center; }
@@ -139,10 +127,9 @@ const html = `<title>Рождество на Кипре</title>
   .ev h3 { margin: 0; font-size: 1.02rem; line-height: 1.3; }
   .ev-place { margin: 0; font-size: .86rem; color: var(--muted); }
   .ev-desc { margin: 0; font-size: .93rem; color: #d6e0ec; }
-  .more { justify-self: start; font-weight: 600; font-size: .9rem; text-decoration: none; }
   footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
   .brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 600; color: var(--text); }
-  @media (min-width: 640px) { .park { padding: 22px 24px; } .ev { grid-template-columns: 76px minmax(0, 1fr); } }
+  @media (min-width: 640px) { .ev { grid-template-columns: 76px minmax(0, 1fr); } }
 </style>
 
 <div class="wrap">
@@ -155,19 +142,14 @@ const html = `<title>Рождество на Кипре</title>
     <p class="kicker">Сезон 2026–2027</p>
     <h1>Рождество <em>на&nbsp;Кипре</em></h1>
     <p class="lead">Хэллоуинские тыквы ещё не везде убрали, а Санта-Клаусы уже готовятся к выходу на работу. Здесь рождественские парки острова и праздники ближайших дней: ёлки, деревни, ярмарки.</p>
-    <p class="counts"><span><b>${parks.length}</b> парка</span><span><b id="n-week">${week.length}</b> праздников в подборке</span></p>
+    <p class="counts"><span><b id="n-parks">${parks.length}</b> рождественских парка</span><span><b id="n-week">${week.length}</b> праздников ближайших дней</span></p>
   </header>
 
-  <h2>Рождественские парки</h2>
-  <ul class="parks" id="parks">${parks.map(parkCard).join('')}
-  </ul>
-
-  <h2>Праздники ближайших дней</h2>
   <div class="chips" role="group" aria-label="Что показать">
-    <button type="button" class="chip" id="k-all" data-kind="" aria-pressed="true">Все <em id="n-all">${week.length}</em></button>
+    <button type="button" class="chip" id="k-all" data-kind="" aria-pressed="true">Все <em id="n-all">${list.length}</em></button>
     ${kinds.map((k) => `<button type="button" class="chip" id="k-${k.t}" data-kind="${k.t}" aria-pressed="false">${k.label} <em>${k.n}</em></button>`).join('\n    ')}
   </div>
-  <ul class="evs" id="evs">${week.map(eventRow).join('')}
+  <ul class="evs" id="evs">${list.map(eventRow).join('')}
   </ul>
 
   <footer>
@@ -185,27 +167,23 @@ const html = `<title>Рождество на Кипре</title>
     var d = function (iso) { return new Date(iso + 'T12:00:00Z'); };
     var human = function (iso) { return d(iso).getUTCDate() + ' ' + MON[d(iso).getUTCMonth()]; };
 
-    var parks = Array.prototype.slice.call(document.querySelectorAll('.park'));
-    parks.forEach(function (li) {
+    Array.prototype.slice.call(document.querySelectorAll('.ev.is-park')).forEach(function (li) {
       var s = li.dataset.start, e = li.dataset.end, t = li.dataset.time, el = li.querySelector('.status');
-      if (e < today) { li.hidden = true; return; }
+      if (e < today) return;
       if (s > today) {
         var n = Math.round((d(s) - d(today)) / 86400000);
         el.textContent = n === 1 ? 'Откроется завтра' + (t ? ' в ' + t : '') : n < 7 ? 'Откроется ' + DAYS[d(s).getUTCDay()] : 'Откроется ' + human(s);
-        li.dataset.rank = 1;
       } else {
         el.textContent = e === today ? 'Сегодня последний день' : 'Работает до ' + human(e);
-        el.classList.add('now'); li.dataset.rank = 0;
+        el.classList.add('now');
       }
     });
-    var pl = document.getElementById('parks');
-    parks.sort(function (a, b) { return (a.dataset.rank || 2) - (b.dataset.rank || 2); }).forEach(function (li) { pl.appendChild(li); });
-
     var evs = Array.prototype.slice.call(document.querySelectorAll('.ev'));
     evs.forEach(function (li) { if (li.dataset.end < today) li.remove(); });
     var live = Array.prototype.slice.call(document.querySelectorAll('.ev'));
     document.getElementById('n-all').textContent = live.length;
-    document.getElementById('n-week').textContent = live.length;
+    document.getElementById('n-parks').textContent = live.filter(function (li) { return li.classList.contains('is-park'); }).length;
+    document.getElementById('n-week').textContent = live.filter(function (li) { return !li.classList.contains('is-park'); }).length;
     var chips = document.querySelectorAll('.chip');
     chips.forEach(function (c) {
       var k = c.dataset.kind;
