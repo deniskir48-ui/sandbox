@@ -3,8 +3,10 @@
  * Отдельная страница «Рождество на Кипре» — одним файлом, без остального сайта (DEC-W38).
  *   node scripts/build-christmas-standalone.mjs        → standalone/christmas.html
  * Данные — те же события Афиши с метками christmas-* (scripts/import-christmas.py), только status: published.
- * Список — одинаковые компактные карточки; по нажатию открывается карточка события (адрес #e-<id>, его можно отправить).
- * Единственная ссылка наружу — «Открыть на карте». Прошедшее скрывается по дате на Кипре, статус парков считается там же.
+ * Список — плитки одного размера (2 в ряд на телефоне, 3–4 на компьютере); по нажатию открывается карточка события
+ * (адрес #e-<id>, его можно отправить). Единственная ссылка наружу — «Открыть на карте»: запрос по-английски
+ * «место, город, Cyprus» из src/data/map-places.json, иначе Google находит одноимённые места в Испании и Греции.
+ * Прошедшее скрывается по дате на Кипре, статус парков считается там же.
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -23,14 +25,21 @@ const KINDS = [
   ['christmas-markets', 'Ярмарки', 'Ярмарка'],
   ['christmas-other', 'Мастер-классы и другое', 'Праздник'],
 ];
-const NOT_A_PLACE = /несколько городов|место уточн/i;
+const PLACES = JSON.parse(fs.readFileSync(path.resolve('src/data/map-places.json'), 'utf8'));
 
 const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const day = (iso) => new Date(iso + 'T12:00:00Z');
 const short = (iso) => `${day(iso).getUTCDate()} ${MON[day(iso).getUTCMonth()]}`;
 const full = (iso) => `${day(iso).getUTCDate()} ${MON_FULL[day(iso).getUTCMonth()]}`;
-const mapUrl = (e) => (NOT_A_PLACE.test(`${e.city} ${e.venue ?? ''}`) ? null
-  : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${e.venue ?? e.title} ${e.city}`)}`);
+// Ссылка на карту только по Кипру: известное место — «место, город, Cyprus», иначе — город или деревня.
+// Города нет в словаре (например, «Несколько городов») — кнопки нет.
+const noMap = [];
+const mapUrl = (e) => {
+  const city = PLACES.cities[e.city];
+  if (!city) { noMap.push(e.city); return null; }
+  const q = [PLACES.venues[e.venue ?? ''], city, 'Cyprus'].filter(Boolean).join(', ');
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+};
 
 const events = fs.readdirSync(DIR).filter((f) => f.endsWith('.yaml'))
   .map((f) => ({ id: 'e-' + f.replace(/\.yaml$/, ''), ...parse(fs.readFileSync(path.join(DIR, f), 'utf8')) }))
@@ -40,15 +49,13 @@ const list = events.sort((a, b) => key(a).localeCompare(key(b)));
 const kindOf = (e) => KINDS.find(([t]) => e.tags.includes(t)) ?? KINDS[4];
 const kinds = KINDS.map(([t, label]) => ({ t, label, n: list.filter((e) => kindOf(e)[0] === t).length })).filter((k) => k.n);
 
-// Строка «когда» на карточке и в карточке события.
-const whenShort = (e) => {
+// Дата на плитке: «сб, 21 ноя», «20–22 ноя», «20 ноя – 17 янв». У парков скрипт заменит её статусом.
+const dateShort = (e) => {
   const end = e.end_date ?? e.date;
   if (e.tags.includes('christmas-parks')) return `до ${short(end)}`;
-  if (end !== e.date) {
-    const sameMonth = day(e.date).getUTCMonth() === day(end).getUTCMonth();
-    return sameMonth ? `${day(e.date).getUTCDate()}–${short(end)}` : `${short(e.date)} — ${short(end)}`;
-  }
-  return e.time ? `${WD[day(e.date).getUTCDay()]}, ${e.time}` : WD_FULL[day(e.date).getUTCDay()];
+  if (end === e.date) return `${WD[day(e.date).getUTCDay()]}, ${short(e.date)}`;
+  const sameMonth = day(e.date).getUTCMonth() === day(end).getUTCMonth();
+  return sameMonth ? `${day(e.date).getUTCDate()}–${short(end)}` : `${short(e.date)} – ${short(end)}`;
 };
 const whenFull = (e) => {
   const end = e.end_date ?? e.date;
@@ -57,20 +64,13 @@ const whenFull = (e) => {
 };
 
 const card = (e) => {
-  const end = e.end_date ?? e.date;
-  const range = end !== e.date;
-  const sameMonth = day(e.date).getUTCMonth() === day(end).getUTCMonth();
-  const stubDay = range && sameMonth ? `${day(e.date).getUTCDate()}–${day(end).getUTCDate()}` : `${day(e.date).getUTCDate()}`;
   const park = e.tags.includes('christmas-parks');
   return `
-    <li data-kind="${kindOf(e)[0]}" data-end="${end}">
+    <li data-kind="${kindOf(e)[0]}" data-end="${e.end_date ?? e.date}">
       <a class="ev${park ? ' is-park' : ''}" href="#${e.id}" data-id="${e.id}">
-        <span class="stub" aria-hidden="true"><b>${stubDay}</b><span>${MON[day(e.date).getUTCMonth()]}</span></span>
-        <span class="ev-body">
-          <span class="ev-title">${esc(e.title)}</span>
-          <span class="ev-place">${esc(e.city)}${e.venue ? ` · ${esc(e.venue)}` : ''}</span>
-          <span class="ev-when" data-when>${esc(whenShort(e))}</span>
-        </span>
+        <span class="ev-date" data-when>${esc(dateShort(e))}</span>
+        <span class="ev-title">${esc(e.title)}</span>
+        <span class="ev-foot"><span class="ev-city">${esc(e.city)}</span>${e.time ? `<span class="ev-time">${esc(e.time)}</span>` : ''}</span>
       </a>
     </li>`;
 };
@@ -103,7 +103,7 @@ const html = `<title>Рождество на Кипре</title>
   body { background: var(--night); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5;
     padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
   body.locked { overflow: hidden; }
-  .wrap { max-width: 900px; margin: 0 auto; }
+  .wrap { max-width: 1040px; margin: 0 auto; }
   .garland { display: block; width: 100%; height: 50px; }
   .bulb { animation: tw 3.2s ease-in-out infinite; } .bulb:nth-child(3n) { animation-delay: .8s; } .bulb:nth-child(3n+1) { animation-delay: 1.7s; }
   @keyframes tw { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
@@ -119,21 +119,22 @@ const html = `<title>Рождество на Кипре</title>
   .chip[aria-pressed="true"] { background: var(--sky); border-color: var(--sky); color: #0a1120; }
   .chip[aria-pressed="true"] em { color: inherit; opacity: .7; }
 
-  /* Все карточки одной высоты и устройства: корешок даты, название (до 2 строк), место (1 строка), «когда». */
-  .evs { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 380px), 1fr)); }
-  .ev { display: grid; grid-template-columns: 64px minmax(0, 1fr); height: 100%; min-height: 104px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; color: inherit; text-decoration: none; transition: border-color .15s, background .15s; }
+  /* Плитки одного размера: дата, название (до 3 строк), внизу город и время. 2 в ряд на телефоне, 3–4 на компьютере. */
+  .evs { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; }
+  @media (min-width: 640px) { .evs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; } }
+  @media (min-width: 900px) { .evs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+  .evs > li { display: flex; }
+  .ev { flex: 1; display: flex; flex-direction: column; gap: 10px; min-width: 0; padding: 12px 12px 11px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; color: inherit; text-decoration: none; transition: border-color .15s, background .15s; }
+  @media (min-width: 640px) { .ev { padding: 14px 14px 13px; } }
   .ev:hover { border-color: #3a4d74; background: var(--card-hi); }
-  .stub { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; padding: 10px 4px; background: color-mix(in srgb, var(--sky) 14%, var(--card)); border-right: 1px dashed var(--line); text-align: center; }
-  .stub b { font-family: var(--display); font-size: 1.1rem; line-height: 1.1; font-variant-numeric: tabular-nums; }
-  .stub span { font-size: .82rem; color: var(--sky); font-weight: 600; }
-  .is-park .stub { background: color-mix(in srgb, var(--warm) 14%, var(--card)); }
-  .is-park .stub span { color: var(--warm); }
-  .ev-body { padding: 12px 14px; display: flex; flex-direction: column; justify-content: center; gap: 3px; min-width: 0; }
-  .ev-title + .ev-place { margin-top: 1px; }
-  .ev-title { font-weight: 650; font-size: 1rem; line-height: 1.3; min-height: 2.6em; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .ev-place { font-size: .86rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .ev-when { font-size: .86rem; font-weight: 600; color: var(--warm); }
-  .ev-when.now { color: var(--ok); }
+  .ev-date { align-self: flex-start; max-width: 100%; font-size: .78rem; font-weight: 700; line-height: 1.25; padding: 4px 9px; border-radius: 999px; background: color-mix(in srgb, var(--sky) 16%, transparent); color: var(--sky); font-variant-numeric: tabular-nums; }
+  .is-park .ev-date { background: color-mix(in srgb, var(--warm) 16%, transparent); color: var(--warm); }
+  .is-park .ev-date.now { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
+  .ev-title { flex: 1; font-weight: 650; font-size: .95rem; line-height: 1.3; min-height: 3.9em; overflow-wrap: anywhere; hyphens: auto; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  @media (min-width: 640px) { .ev-title { font-size: 1rem; } }
+  .ev-foot { display: flex; align-items: baseline; gap: 8px; font-size: .84rem; }
+  .ev-city { flex: 1; min-width: 0; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ev-time { flex: none; font-weight: 700; color: var(--warm); font-variant-numeric: tabular-nums; }
   .ev:focus-visible, .chip:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
 
   /* Карточка события */
@@ -155,10 +156,9 @@ const html = `<title>Рождество на Кипре</title>
 
   footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
   .brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 600; color: var(--text); }
-  @media (min-width: 640px) { .ev { grid-template-columns: 72px minmax(0, 1fr); } }
 </style>
 
-<div class="wrap">
+<div class="wrap" lang="ru">
   <svg class="garland" viewBox="0 0 800 50" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0 8 Q100 42 200 14 T400 14 T600 14 T800 8" fill="none" stroke="#2a3a5c" stroke-width="2"/>
     ${[[40, 19, '#ffd38a'], [95, 28, '#9fd5f2'], [150, 26, '#f26b21'], [205, 15, '#ffd38a'], [260, 21, '#7ee2b8'], [315, 28, '#9fd5f2'], [365, 21, '#f26b21'], [415, 14, '#ffd38a'], [470, 22, '#9fd5f2'], [520, 28, '#7ee2b8'], [570, 21, '#f26b21'], [620, 14, '#ffd38a'], [675, 22, '#9fd5f2'], [725, 27, '#f26b21'], [775, 15, '#ffd38a']]
@@ -203,14 +203,18 @@ const html = `<title>Рождество на Кипре</title>
     try { today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Nicosia' }).format(new Date()); } catch (e) { today = new Date().toISOString().slice(0, 10); }
     var d = function (iso) { return new Date(iso + 'T12:00:00Z'); };
     var human = function (iso) { return d(iso).getUTCDate() + ' ' + MON[d(iso).getUTCMonth()]; };
-    // Статус парка: работает до… / откроется…
+    var MON_S = ${JSON.stringify(MON)};
+    var shortDay = function (iso) { return d(iso).getUTCDate() + ' ' + MON_S[d(iso).getUTCMonth()]; };
+    // Статус парка: работает до… / откроется… (на плитке — коротко, в карточке — полностью).
     var status = function (x) {
       if (!x.park || x.end < today) return null;
       if (x.start > today) {
         var n = Math.round((d(x.start) - d(today)) / 86400000);
-        return { text: n === 1 ? 'Откроется завтра' : n < 7 ? 'Откроется ' + DAYS[d(x.start).getUTCDay()] : 'Откроется ' + human(x.start), now: false };
+        return { text: n === 1 ? 'Откроется завтра' : n < 7 ? 'Откроется ' + DAYS[d(x.start).getUTCDay()] : 'Откроется ' + human(x.start),
+          tile: n === 1 ? 'Откроется завтра' : 'Откроется ' + shortDay(x.start), now: false };
       }
-      return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end), now: true };
+      return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end),
+        tile: x.end === today ? 'Последний день' : 'Работает до ' + shortDay(x.end), now: true };
     };
 
     // Список: прошедшее скрыто, у парков в строке «когда» — статус.
@@ -218,7 +222,7 @@ const html = `<title>Рождество на Кипре</title>
     var live = Array.prototype.slice.call(document.querySelectorAll('#evs > li'));
     live.forEach(function (li) {
       var a = li.querySelector('.ev'), st = status(DATA[a.dataset.id]);
-      if (st) { var w = a.querySelector('[data-when]'); w.textContent = st.text; if (st.now) w.classList.add('now'); }
+      if (st) { var w = a.querySelector('[data-when]'); w.textContent = st.tile; if (st.now) w.classList.add('now'); }
     });
     var chips = document.querySelectorAll('.chip');
     chips.forEach(function (c) {
@@ -265,3 +269,4 @@ const html = `<title>Рождество на Кипре</title>
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, html);
 console.log(`standalone/christmas.html: ${list.length} событий (${kinds.map((k) => `${k.label} ${k.n}`).join(', ')})`);
+if (noMap.length) console.log(`без карты (города нет в map-places.json): ${[...new Set(noMap)].join(', ')}`);
