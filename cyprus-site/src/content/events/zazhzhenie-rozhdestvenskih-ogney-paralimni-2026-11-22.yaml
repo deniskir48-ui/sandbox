@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Зажжение рождественских огней Паралимни"
+status: published
+type: festival
+priority: 3
+date: "2026-11-22"
+time: "17:00"
+city: "Паралимни"
+venue: "площадь Агиос Георгиос"
+summary: "Танцевальные номера, хор, ёлка загорается в 19:00, затем праздничный концерт; бесплатно. Точную площадь и программу уточнить"
+ticket_url: "https://pdm.org.cy/en/christmas2026paralimni/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://pdm.org.cy/en/christmas2026paralimni/"
+tags: [christmas, christmas-lights]

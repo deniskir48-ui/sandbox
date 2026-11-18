@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Mall of Cyprus: праздничный маркет"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+time: "11:00"
+city: "Никосия"
+venue: "Mall of Cyprus"
+summary: "Рождественские лавки и прогулки в торговом центре, вход бесплатный."
+ticket_url: "https://mallofcyprus.com/christmas-market-2026-your-christmas-story-starts-here/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://mallofcyprus.com/christmas-market-2026-your-christmas-story-starts-here/"
+tags: [christmas, christmas-markets]

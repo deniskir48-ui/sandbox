@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Открытие «Тайного дома Санты»"
+status: published
+type: festival
+priority: 3
+date: "2026-11-22"
+time: "15:00"
+city: "Сиа"
+venue: "двор общинного совета"
+summary: "Бесплатный семейный праздник: игры, угощения, музыка, Санта приезжает в 16:00. Отдельное новое событие; организатор Sia Volunteers Association"
+ticket_url: "https://cypruspassion.com/ru/events-in-cyprus/secret-santa-house-sia-2026/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruspassion.com/ru/events-in-cyprus/secret-santa-house-sia-2026/"
+tags: [christmas, christmas-other]

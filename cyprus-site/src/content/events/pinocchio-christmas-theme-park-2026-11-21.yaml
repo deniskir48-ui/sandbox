@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождественские парки · Telegram» таблицы афиши (обновлено 18.11.2026).
+title: "Pinocchio Christmas Theme Park"
+status: published
+type: festival
+priority: 2
+date: "2026-11-21"
+end_date: "2027-01-31"
+city: "Паралимни"
+summary: "Тематический семейный парк по истории Пиноккио; отдельная программа праздничных мероприятий"
+hours: "Муниципалитет пока не опубликовал часы"
+price: "Муниципалитет пока не опубликовал стоимость"
+ticket_url: "https://pdm.org.cy/en/christmas2026paralimni/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://pdm.org.cy/en/christmas2026paralimni/"
+tags: [christmas, christmas-parks]

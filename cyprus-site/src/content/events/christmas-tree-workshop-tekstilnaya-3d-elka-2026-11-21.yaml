@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Christmas Tree Workshop: текстильная 3D-ёлка"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-21"
+time: "16:00"
+city: "Никосия"
+venue: "кампус University of Cyprus"
+summary: "Мастер-класс по созданию объёмной ёлки из остатков ткани, 18+, бесплатный, количество мест ограничено. Нужна регистрация"
+ticket_url: "https://eventshub.cy/event/christmas-tree-workshop-sew-your-own-3d-christmas-tree-2026-11-21"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventshub.cy/event/christmas-tree-workshop-sew-your-own-3d-christmas-tree-2026-11-21"
+tags: [christmas, christmas-other]

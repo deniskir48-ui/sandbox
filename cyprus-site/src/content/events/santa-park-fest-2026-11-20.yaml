@@ -1,0 +1,18 @@
+# christmas-import
+# Лист «Рождественские парки · Telegram» таблицы афиши (обновлено 18.11.2026).
+title: "Santa Park Fest"
+status: published
+type: festival
+priority: 2
+date: "2026-11-20"
+end_date: "2026-11-22"
+city: "Колосси (Лимассол)"
+venue: "Kolossi Park"
+summary: "Ярмарка, луна-парк, детские активности, уличная еда, выступления"
+hours: "Ежедневно 17:00–22:00"
+price: "Вход бесплатный; отдельные аттракционы могут быть платными"
+ticket_url: "https://eventshub.cy/en/event/santa-park-fest-2026-11-20"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventshub.cy/en/event/santa-park-fest-2026-11-20"
+tags: [christmas, christmas-parks]

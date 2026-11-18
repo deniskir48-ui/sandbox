@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: Сверить детали
+title: "Christmas Bazaar for Little Heroes"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+time: "09:00"
+city: "Колосси"
+venue: "замок Колосси"
+summary: "Благотворительная рождественская ярмарка."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"
+tags: [christmas, christmas-markets]

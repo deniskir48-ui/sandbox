@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: Сверить детали
+title: "Мастер-класс: керамическая ёлка"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-20"
+time: "18:00"
+city: "Лимассол"
+venue: "Meltemi Creative Areas"
+summary: "Создание праздничного декора. Стоимость уточнить"
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"
+tags: [christmas, christmas-other]

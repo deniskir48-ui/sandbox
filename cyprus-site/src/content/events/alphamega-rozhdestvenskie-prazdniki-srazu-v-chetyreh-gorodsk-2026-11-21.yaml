@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Alphamega: рождественские праздники сразу в четырёх городских точках"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+time: "15:00"
+city: "Несколько городов"
+venue: "Никосия, Лимассол, Пафос · 4 магазина Alphamega"
+summary: "Ёлки загораются одновременно в 17:30; Санта, музыка, конкурсы. Engomi — открытый показ «Клаус» в 18:30. Engomi, Kapsalos (Лимассол), Astromeritis и Paphos Aphrodite. Бесплатно."
+ticket_url: "https://www.alphamega.com.cy/en/news/everything-that-makes-christmas-christmas-at-alphamega"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.alphamega.com.cy/en/news/everything-that-makes-christmas-christmas-at-alphamega"
+tags: [christmas, christmas-lights]

@@ -76,6 +76,8 @@ const events = defineCollection({
       description: z.string().optional(),
       ticket_url: z.string().url().optional(), // билеты или официальная страница
       price: z.string().optional(), // только проверенная цена, например «€25–40»
+      hours: z.string().optional(), // часы работы для долгих событий (парки, ярмарки)
+      tags: z.array(z.string()).default([]), // тематические подборки: christmas, christmas-parks и т. д.
       organizer: z.string().optional(), // slug компании из Гида
       sources: z.array(source).default([]),
       verified_at: z.coerce.date().optional(),

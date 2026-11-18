@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Праздничное включение огней MyMall"
+status: published
+type: festival
+priority: 3
+date: "2026-11-22"
+time: "16:00"
+city: "Лимассол"
+venue: "MyMall, вход B"
+summary: "Ёлка, Луис Патсалидес, Astero и Tefkros, Санта, конкурсы и подарки."
+ticket_url: "https://www.mymall.com.cy/xmas-lighting-event-22-11/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.mymall.com.cy/xmas-lighting-event-22-11/"
+tags: [christmas, christmas-lights]

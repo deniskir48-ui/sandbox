@@ -52,6 +52,7 @@ const jsonLd = {
         <dl class="facts">
           <div><dt>Когда</dt><dd>{when}</dd></div>
           <div><dt>Где</dt><dd>{d.city}{d.venue ? `, ${d.venue}` : ''}</dd></div>
+          {d.hours && <div><dt>Часы работы</dt><dd>{d.hours}</dd></div>}
           {d.price && <div><dt>Цена</dt><dd>{d.price}</dd></div>}
           {organizer && <div><dt>Организатор</dt><dd><a href={`/services/${organizer.id}/`}>{organizer.data.name}</a></dd></div>}
         </dl>

@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Christmas Village: Дериния"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+time: "14:30"
+city: "Дериния"
+venue: "площадь Панагии"
+summary: "Огни ёлки в 19:00, шоу дронов в 19:15, затем концерт · Проверить расписание дрон-шоу непосредственно перед посещением"
+ticket_url: "https://www.visitcyprus.com/christmas-villages-of-cyprus/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.visitcyprus.com/christmas-villages-of-cyprus/"
+tags: [christmas, christmas-villages]

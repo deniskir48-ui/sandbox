@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Открытие рождественской ярмарки / Marseaux"
+status: published
+type: festival
+priority: 3
+date: "2026-11-22"
+time: "17:00"
+city: "Никосия"
+venue: "Mall of Cyprus (парковка 1-го этажа)"
+summary: "Открытие рождественского рынка: Marseaux в 17:00, зажжение огней в 17:30; бесплатно, отдельные аттракционы платные."
+ticket_url: "https://mallofcyprus.com/marseaux-is-coming-let-christmas-begin-%F0%9F%8E%84%F0%9F%8E%A4/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://mallofcyprus.com/marseaux-is-coming-let-christmas-begin-%F0%9F%8E%84%F0%9F%8E%A4/"
+tags: [christmas, christmas-markets]

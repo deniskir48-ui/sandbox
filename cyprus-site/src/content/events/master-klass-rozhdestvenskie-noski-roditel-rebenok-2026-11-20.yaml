@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: Сверить дату
+title: "Мастер-класс: рождественские носки, родитель + ребёнок"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-20"
+end_date: "2026-11-21"
+city: "Никосия"
+venue: "Yfantourgeio TheWorkplace"
+summary: "Декорирование рождественских носков для родителей с детьми 2–8 лет; в афишах указано €30 за пару. Источники расходятся: 20 или 21 ноября, дату нужно уточнить."
+ticket_url: "https://cypruseventsmap.com/events/paint-decorate-your-christmas-stockings-workshop-in-nicosia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/paint-decorate-your-christmas-stockings-workshop-in-nicosia/"
+tags: [christmas, christmas-other]

@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Christmas Village: Статос–Айос-Фотиос"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+time: "11:30"
+city: "Статос–Айос-Фотиос"
+venue: "рождественская деревня"
+summary: "Мастер-классы, 16:30 танцы, 17:00–18:00 зажжение огней и 18:30–20:00 концерт."
+ticket_url: "https://www.visitcyprus.com/wp-content/uploads/2026/11/statos-christmas-villages-2026-2027_en.pdf"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.visitcyprus.com/wp-content/uploads/2026/11/statos-christmas-villages-2026-2027_en.pdf"
+tags: [christmas, christmas-villages]

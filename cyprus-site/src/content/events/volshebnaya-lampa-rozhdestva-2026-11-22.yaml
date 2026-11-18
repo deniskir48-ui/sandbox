@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: Сверить детали
+title: "«Волшебная лампа Рождества»"
+status: published
+type: kids
+priority: 3
+date: "2026-11-22"
+time: "11:00"
+city: "Пафос"
+venue: "Markideio Theatre"
+summary: "Семейный спектакль, €14."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"
+tags: [christmas, christmas-other]

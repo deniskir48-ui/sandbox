@@ -1,0 +1,18 @@
+# christmas-import
+# Лист «Рождественские парки · Telegram» таблицы афиши (обновлено 18.11.2026).
+title: "Nicosia Christmas Fairyland / Paramythoupoli"
+status: published
+type: festival
+priority: 2
+date: "2026-11-13"
+end_date: "2027-01-10"
+city: "Никосия"
+venue: "Ров Д’Авила возле старого города"
+summary: "Аттракционы, ярмарка и праздничные угощения"
+hours: "По опубликованному расписанию: будни 17:00–23:00, выходные с 15:00 (время закрытия уточнить)"
+price: "Цены на аттракционы уточняются"
+ticket_url: "https://mycypruslife.com/christmas-events-in-cyprus-in-2026/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://mycypruslife.com/christmas-events-in-cyprus-in-2026/"
+tags: [christmas, christmas-parks]

@@ -12,6 +12,7 @@ import { getPublishedCompanies, getUpcomingEvents, getPublishedArticles } from '
 const companies = await getPublishedCompanies();
 const upcoming = await getUpcomingEvents();
 const events = upcoming.slice(0, 6);
+const xmasCount = upcoming.filter((e) => e.data.tags.includes('christmas')).length;
 const articles = (await getPublishedArticles()).slice(0, 3);
 const count = (slug: string) => companies.filter((c) => c.data.section === slug).length;
 
@@ -39,6 +40,17 @@ const quick = [
       </p>
     )}
   </section>
+
+  {xmasCount > 0 && (
+    <a class="xmas-banner" href="/christmas/">
+      <span class="xb-text">
+        <span class="xb-kicker">Сезон 2026–2027</span>
+        <span class="xb-title">Рождество на Кипре</span>
+        <span class="xb-sub">Рождественские парки, ёлки, деревни и ярмарки — {xmasCount} событий в одной подборке</span>
+      </span>
+      <span class="xb-cta">Смотреть <Icon name="arrow" size={18} /></span>
+    </a>
+  )}
 
   <div class="section-head"><h2>Гид по компаниям и сервисам</h2><a href="/catalog/">Все разделы</a></div>
   <ul class="tiles">
@@ -117,6 +129,20 @@ const quick = [
   .tile-title { min-width: 0; max-width: 100%; font-weight: 650; font-size: 0.95rem; line-height: 1.25; overflow-wrap: break-word; hyphens: auto; }
   .tile-count { font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
 
+  .xmas-banner {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 20px;
+    margin: 18px 0 6px; padding: 20px 22px; border-radius: var(--radius); text-decoration: none;
+    color: #eef3f9; background: radial-gradient(120% 120% at 85% 0%, #1b2c4f 0%, #0b1324 65%, #080d19 100%);
+    background-image: radial-gradient(circle at 12% 18%, #ffd38a 0 2px, transparent 3px), radial-gradient(circle at 34% 10%, #9fd5f2 0 2px, transparent 3px),
+      radial-gradient(circle at 58% 16%, #f26b21 0 2px, transparent 3px), radial-gradient(circle at 80% 9%, #7ee2b8 0 2px, transparent 3px),
+      radial-gradient(120% 120% at 85% 0%, #1b2c4f 0%, #0b1324 65%, #080d19 100%);
+  }
+  .xmas-banner:hover { color: #fff; }
+  .xb-text { display: grid; gap: 4px; min-width: 0; }
+  .xb-kicker { font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #9fd5f2; }
+  .xb-title { font-family: var(--font-display, inherit); font-size: 1.35rem; font-weight: 700; color: #fff; }
+  .xb-sub { color: #b9c6d8; font-size: .95rem; }
+  .xb-cta { display: inline-flex; align-items: center; gap: 6px; font-weight: 700; padding: 10px 16px; border-radius: 999px; background: #ffd38a; color: #1c1300; }
   .add-band {
     margin-top: 48px; padding: 22px; border-radius: var(--radius);
     background: var(--btn-bg); color: var(--btn-text);

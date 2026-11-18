@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: По источнику
+title: "Christmas on the Sea: зажжение ёлки"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+time: "16:00"
+city: "Лимассол"
+venue: "Limassol Marina"
+summary: "С 16:00 рождественская ярмарка и мастер-классы; в 17:45 зажжение огней 12-метровой ёлки, с 18:30 концерт; Санта и подарки. Бесплатное городское событие"
+ticket_url: "https://www.limassolmarina.com/event/christmas-sea-lighting-ceremony-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.limassolmarina.com/event/christmas-sea-lighting-ceremony-2026"
+tags: [christmas, christmas-lights]

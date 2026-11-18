@@ -1,0 +1,17 @@
+# christmas-import
+# Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
+# Проверка в таблице: Сверить детали
+title: "Akaki Christmas 2026"
+status: published
+type: festival
+priority: 3
+date: "2026-11-22"
+time: "12:00"
+city: "Акаки"
+venue: "главная площадь"
+summary: "Рождественское событие на центральной площади."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"
+tags: [christmas, christmas-other]
