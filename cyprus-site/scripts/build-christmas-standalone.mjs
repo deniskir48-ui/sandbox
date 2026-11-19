@@ -270,7 +270,7 @@ const html = `<title>Рождество на Кипре</title>
 
   <footer>
     <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg>${esc(SITE_NAME)}</span>
-    <span>Время, цены и программа могут меняться — перед поездкой уточняйте у организаторов.</span>
+    <span>${esc(SITE_NAME)} — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>
   </footer>
 </div>
 
