@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Большой арабоязычный концерт; места от €100. ✓ Афиша · Греческий язык
+title: "Mohamad Iskandar & Shadi Ibrahim"
+status: published
+type: concert
+priority: 3
+date: "2026-11-20"
+time: "21:00"
+city: "Лимассол"
+venue: "OPUS"
+summary: "Большой арабоязычный концерт; места от €100."
+ticket_url: "https://wgolimassol.com/en/calendar/2026-11"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://wgolimassol.com/en/calendar/2026-11"

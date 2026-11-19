@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Музыкальный концерт. Подробности программы уточнить
+title: "Bach Extended"
+status: published
+type: concert
+priority: 3
+date: "2026-11-20"
+time: "20:00"
+city: "Пафос"
+venue: "Technopolis 20"
+summary: "Музыкальный концерт. Подробности программы уточняйте у организатора."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Живой джаз-трио; €13–15. На странице More.com дата 18 ноября
+title: "Marios Toumbas Jazz Trio"
+status: published
+type: concert
+priority: 3
+date: "2026-11-18"
+time: "21:00"
+city: "Никосия"
+venue: "Sarah's Jazz Club"
+summary: "Живой джаз-трио; €13–15. На странице More.com дата 18 ноября."
+ticket_url: "https://www.more.com/cy-en/tickets/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.more.com/cy-en/tickets/"

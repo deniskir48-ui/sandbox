@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Lee Weller: reggae & ska"
+status: published
+type: concert
+priority: 3
+date: "2026-11-18"
+time: "20:30"
+city: "Пафос"
+venue: "Monara Live Bar"
+summary: "Живой концерт регги и ска."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

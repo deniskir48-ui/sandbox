@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Юбилейная детская постановка AntiLogos, €10. Греческая семейная постановка · Греческий язык
+title: "Triplari and the Dragon of Milia"
+status: published
+type: kids
+priority: 3
+date: "2026-11-22"
+time: "11:00"
+city: "Никосия"
+venue: "Theatro Ena"
+summary: "Юбилейная детская постановка AntiLogos, €10. Греческая семейная постановка."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

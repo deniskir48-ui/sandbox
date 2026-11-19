@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+title: "ALL OF IT (Алистер Макдауэлл)"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-16"
+time: "20:00"
+city: "Никосия"
+venue: "Ktirion 53"
+summary: "Постановка по пьесе А. Макдауэлла; €15."
+ticket_url: "https://www.more.com/cy-en/tickets/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.more.com/cy-en/tickets/"

@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Мелодик-техно с Kevin de Vries, Key M и Damen; ETKO Hangar, 18+. Цена €20–30 в источниках, сверить с продавцом
+title: "Kevin de Vries"
+status: published
+type: concert
+priority: 3
+date: "2026-11-21"
+time: "19:00"
+city: "Лимассол"
+venue: "ETKO"
+summary: "Мелодик-техно с Kevin de Vries, Key M и Damen; ETKO Hangar, 18+. Цена €20–30 — уточняйте у продавца."
+ticket_url: "https://etkocyprus.com/events/kevindevries"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://etkocyprus.com/events/kevindevries"

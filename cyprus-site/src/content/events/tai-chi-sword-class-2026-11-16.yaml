@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Tai Chi Sword Class"
+status: published
+type: sport
+priority: 3
+date: "2026-11-16"
+time: "18:30"
+city: "Никосия"
+venue: "Home of Cooperation"
+summary: "Спортивное занятие, €12."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

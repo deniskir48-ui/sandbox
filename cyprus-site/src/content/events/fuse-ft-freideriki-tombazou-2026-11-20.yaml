@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "FUSE ft. Freideriki Tombazou"
+status: published
+type: concert
+priority: 3
+date: "2026-11-20"
+time: "23:00"
+city: "Никосия"
+venue: "DownTown Live"
+summary: "Вокальный вечер."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

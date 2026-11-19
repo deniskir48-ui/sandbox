@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Джаз, соул и импровизация с группой Soulful Groove Collective; €8, для профессиональных музыкантов/учеников музыка бесплатно при подтверждении. Площадка именно Lemba Cultural Village, Пафос, не театр Rialto в Лимассоле
+title: "Soulful Groove Collective — Cyprus Jazz & World Music Showcase"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-21"
+time: "20:00"
+city: "Лемба"
+venue: "Lemba Cultural Village"
+summary: "Джаз, соул и импровизация с группой Soulful Groove Collective; €8, для профессиональных музыкантов/учеников музыка бесплатно при подтверждении."
+ticket_url: "https://rialto.interticket.com/program/pre-event-cyprus-jazz-and-world-music-showcase-3538"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rialto.interticket.com/program/pre-event-cyprus-jazz-and-world-music-showcase-3538"

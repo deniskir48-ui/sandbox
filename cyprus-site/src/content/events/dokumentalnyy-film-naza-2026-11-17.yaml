@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Несколько показов документального фильма; €7. 17, 18, 19, 20, 21, 22 ноября в разных слотах
+title: "Документальный фильм NAZA"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-17"
+end_date: "2026-11-22"
+city: "Никосия"
+venue: "Pantheon Theatre"
+summary: "Несколько показов документального фильма; €7. 17, 18, 19, 20, 21, 22 ноября в разных слотах."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

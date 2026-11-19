@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Комедийная театральная постановка, от €35. Уточнить язык и формат
+title: "Italian Passions with Cypriot Twist"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-21"
+time: "19:30"
+city: "Ипсонас"
+venue: "Municipal Theatre"
+summary: "Комедийная театральная постановка, от €35. Уточняйте язык и формат."
+ticket_url: "https://wgolimassol.com/en/calendar/2026-11"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://wgolimassol.com/en/calendar/2026-11"

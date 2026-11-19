@@ -1,0 +1,15 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Fairytale Christmas Village"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+time: "12:00"
+city: "Никосия"
+summary: "Городская рождественская площадка, в афише бесплатная."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

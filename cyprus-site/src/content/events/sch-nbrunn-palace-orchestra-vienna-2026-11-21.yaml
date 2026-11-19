@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Венский оркестр с программой вальсов, заявленная цена от €40. Время 20:30, билеты через организатора
+title: "Schönbrunn Palace Orchestra Vienna"
+status: published
+type: concert
+priority: 3
+date: "2026-11-21"
+time: "20:30"
+city: "Пафос"
+venue: "Markideio Theatre"
+summary: "Венский оркестр с программой вальсов, заявленная цена от €40. Время 20:30, билеты через организатора."
+ticket_url: "https://www.schoenbrunnorchester.com/en/concerts"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.schoenbrunnorchester.com/en/concerts"

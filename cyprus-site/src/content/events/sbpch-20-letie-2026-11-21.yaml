@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Русскоязычная группа с юбилейной программой и новым альбомом; €49–79. Концерт на русском; 20:00–21:30
+title: "СБПЧ: 20-летие"
+status: published
+type: concert
+priority: 3
+date: "2026-11-21"
+time: "20:00"
+city: "Лимассол"
+venue: "OPUS Events Venue"
+summary: "Русскоязычная группа с юбилейной программой и новым альбомом; €49–79. Концерт на русском; 20:00–21:30."
+ticket_url: "https://www.limassoltourism.com/events/samoye-bolshoye-prostoye-chislo-sbpch-opus-events-venue/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.limassoltourism.com/events/samoye-bolshoye-prostoye-chislo-sbpch-opus-events-venue/"

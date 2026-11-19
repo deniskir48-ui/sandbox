@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+title: "Candlelight: музыка Ханса Циммера"
+status: published
+type: concert
+priority: 3
+date: "2026-11-21"
+time: "20:30"
+city: "Никосия"
+venue: "Pallas Theatre"
+summary: "Струнный квартет при свечах: музыка из «Интерстеллара», «Начала» и других фильмов; билеты от €26."
+ticket_url: "https://feverup.com/m/669432/en"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://feverup.com/m/669432/en"

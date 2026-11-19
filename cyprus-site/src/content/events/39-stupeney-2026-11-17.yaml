@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Театральная комедия, €18–25. Спектакль на греческом языке · Греческий язык
+title: "«39 ступеней»"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-17"
+time: "20:30"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Театральная комедия, €18–25. Спектакль на греческом языке."
+ticket_url: "https://lima.events/en?category=theatre-and-shows"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://lima.events/en?category=theatre-and-shows"

@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "DJ Tuesdays at Sarah’s Jazz Club"
+status: published
+type: talk
+priority: 3
+date: "2026-11-17"
+time: "20:30"
+city: "Никосия"
+venue: "Sarah's Jazz Club"
+summary: "Музыкальная встреча с диджеем, вход бесплатный."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

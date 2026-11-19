@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Entre dos mares / My Two Places"
+status: published
+type: exhibition
+priority: 3
+date: "2026-11-19"
+time: "18:30"
+city: "Никосия"
+venue: "CVAR Museum"
+summary: "Фотовыставка, свободный вход."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Джаз-концерт, €15. ✓ Билетная афиша · Греческий язык
+title: "WINDCRAFT BACK: Federico Pascucci & LARVA"
+status: published
+type: concert
+priority: 3
+date: "2026-11-22"
+time: "20:00"
+city: "Никосия"
+venue: "Ella Music House"
+summary: "Джаз-концерт, €15."
+ticket_url: "https://www.more.com/cy-en/tickets/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.more.com/cy-en/tickets/"

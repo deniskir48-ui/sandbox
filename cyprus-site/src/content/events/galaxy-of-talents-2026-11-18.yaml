@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: 17-й фестиваль юных талантов: танцы, музыка и гимнастика; русский, английский и греческий; билеты €15–35. Два вечера
+title: "Galaxy of Talents"
+status: published
+type: festival
+priority: 3
+date: "2026-11-18"
+end_date: "2026-11-19"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "17-й фестиваль юных талантов: танцы, музыка и гимнастика; русский, английский и греческий; билеты €15–35. Два вечера."
+ticket_url: "https://rialto.interticket.com/program/galaxy-of-talents-2918?lang=en"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rialto.interticket.com/program/galaxy-of-talents-2918?lang=en"

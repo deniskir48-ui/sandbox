@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Музыкально-театральная постановка о Э. Палликаридисе, €20. На греческом · Греческий язык
+title: "To Kokkino Gramma — Ларнака"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-20"
+time: "20:30"
+city: "Ларнака"
+venue: "Municipal Theatre G. Lykourgos"
+summary: "Музыкально-театральная постановка о Э. Палликаридисе, €20. На греческом."
+ticket_url: "https://lima.events/en?category=theatre-and-shows"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://lima.events/en?category=theatre-and-shows"

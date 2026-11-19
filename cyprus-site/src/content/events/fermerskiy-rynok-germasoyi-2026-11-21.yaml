@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Локальная фермерская ярмарка в районе Мезовуни. Прямой контакт рынка и часы проверить
+title: "Фермерский рынок Гермасойи"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+city: "Гермасойя"
+venue: "Rigaines 2, Mesovouni"
+summary: "Локальная фермерская ярмарка в районе Мезовуни. Прямой контакт рынка и часы уточняйте у организатора."
+ticket_url: "https://cypruseventsmap.com/towns/germasogeia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/towns/germasogeia/"

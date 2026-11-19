@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Живая кипрская музыка; €15. Вокальная программа · Греческий язык
+title: "Sounds of Cyprus"
+status: published
+type: concert
+priority: 3
+date: "2026-11-22"
+time: "20:00"
+city: "Лимассол"
+venue: "Laniteio Theatre"
+summary: "Живая кипрская музыка; €15. Вокальная программа."
+ticket_url: "https://wgolimassol.com/en/calendar/2026-11"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://wgolimassol.com/en/calendar/2026-11"

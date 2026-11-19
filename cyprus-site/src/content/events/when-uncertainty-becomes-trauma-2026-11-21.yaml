@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "When Uncertainty Becomes Trauma"
+status: published
+type: talk
+priority: 3
+date: "2026-11-21"
+time: "12:00"
+city: "Лимассол"
+venue: "Carob Mills"
+summary: "Публичная лекция Саваса Саввопулоса."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

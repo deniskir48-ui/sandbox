@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Интерактивная выставка-перформанс Лии Хараки до 17 января; открытие 21 ноября, вход бесплатный. Объединены открытие и воскресное посещение; 21.11 открытие 18:00–22:00
+title: "Sanctuary of Calliope: Lia Haraki"
+status: published
+type: exhibition
+priority: 3
+date: "2026-11-21"
+time: "18:00"
+city: "Лимассол"
+venue: "PSI Foundation, Synergatismou 27"
+summary: "Интерактивная выставка-перформанс Лии Хараки до 17 января; открытие 21 ноября, вход бесплатный. 21.11 открытие 18:00–22:00."
+ticket_url: "https://psi.art/exhibitions/sanctuary-of-calliope-lia-haraki/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://psi.art/exhibitions/sanctuary-of-calliope-lia-haraki/"

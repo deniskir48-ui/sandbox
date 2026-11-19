@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Барбер и Чайковский, солистка Диана Тищенко; €12–25. Инструментальный
+title: "Симфонический оркестр Кипра: Starlight 2"
+status: published
+type: concert
+priority: 3
+date: "2026-11-19"
+time: "20:30"
+city: "Никосия"
+venue: "Strovolos Municipal Theatre"
+summary: "Барбер и Чайковский, солистка Диана Тищенко; €12–25. Инструментальный."
+ticket_url: "https://www.visitcyprus.com/events/list/?tribe-bar-date=2026-11-07"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.visitcyprus.com/events/list/?tribe-bar-date=2026-11-07"

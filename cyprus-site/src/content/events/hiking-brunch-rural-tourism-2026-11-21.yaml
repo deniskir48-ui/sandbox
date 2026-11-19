@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Hiking, brunch & rural tourism"
+status: published
+type: talk
+priority: 3
+date: "2026-11-21"
+time: "09:30"
+city: "Ларнака"
+venue: "Christoudia Winery"
+summary: "Пешая прогулка, поздний завтрак и знакомство с сельским туризмом."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

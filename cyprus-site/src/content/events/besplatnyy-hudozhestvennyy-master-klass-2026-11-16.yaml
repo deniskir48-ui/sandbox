@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Занятие по изобразительному искусству, возраст участников уточнить.
+title: "Бесплатный художественный мастер-класс"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-16"
+time: "10:00"
+city: "Никосия"
+venue: "Bank of Cyprus Cultural Foundation"
+summary: "Занятие по изобразительному искусству, возраст участников уточняйте у организатора."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

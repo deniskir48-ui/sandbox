@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Бесплатная экскурсия по Старому городу Пафоса"
+status: published
+type: tour
+priority: 3
+date: "2026-11-19"
+time: "09:30"
+city: "Пафос"
+venue: "Old Town"
+summary: "Пешая экскурсия по историческому району."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

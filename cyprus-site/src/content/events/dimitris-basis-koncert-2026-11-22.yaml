@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Выступление греческого певца. Уточнить площадку · Греческий язык
+title: "Димитрис Басис: концерт"
+status: published
+type: concert
+priority: 3
+date: "2026-11-22"
+time: "19:30"
+city: "Лефкара"
+summary: "Выступление греческого певца. Уточняйте площадку."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

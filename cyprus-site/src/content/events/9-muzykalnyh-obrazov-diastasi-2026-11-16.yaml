@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+title: "«9 музыкальных образов»: Diastasi"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-16"
+time: "20:30"
+city: "Ларнака"
+venue: "Municipal Theatre G. Lykourgos"
+summary: "Музыкально-театральная программа; около €25."
+ticket_url: "https://lima.events/en?category=theatre-and-shows"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://lima.events/en?category=theatre-and-shows"

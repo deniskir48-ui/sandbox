@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Живой оркестр и музыка из кино, благотворительная программа; €20. ✓ Афиша · Греческий язык
+title: "Cinema in Concert: Orchestra Lumière"
+status: published
+type: concert
+priority: 3
+date: "2026-11-18"
+time: "20:00"
+city: "Никосия"
+venue: "Pallas Theatre"
+summary: "Живой оркестр и музыка из кино, благотворительная программа; €20."
+ticket_url: "https://cyprusnow.app/?from=2026-11-14&to=2026-11-21&type=music-nightlife"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/?from=2026-11-14&to=2026-11-21&type=music-nightlife"

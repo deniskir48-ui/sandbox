@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Детское чтение и обсуждение, €10. Уточнить запись
+title: "Русскоязычный книжный клуб для детей 7–9 лет"
+status: published
+type: kids
+priority: 3
+date: "2026-11-17"
+time: "15:00"
+city: "Пафос"
+venue: "Bookberry"
+summary: "Детское чтение и обсуждение, €10. Уточняйте запись."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+title: "Линда: сольный концерт"
+status: published
+type: concert
+priority: 3
+date: "2026-11-18"
+time: "20:00"
+city: "Лимассол"
+venue: "OPUS Events Venue"
+summary: "Большой концерт российской рок-певицы; билеты от €69."
+ticket_url: "https://wgolimassol.com/en/calendar/2026-11"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://wgolimassol.com/en/calendar/2026-11"

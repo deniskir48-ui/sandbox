@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Музыкально-театральная постановка о поэте Эвагорасе Палликаридисе; €20. Также 20 ноября в Ларнаке · Греческий язык
+title: "To Kokkino Gramma"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-18"
+time: "20:00"
+city: "Пафос"
+venue: "Markideio Theatre"
+summary: "Музыкально-театральная постановка о поэте Эвагорасе Палликаридисе; €20. Также 20 ноября в Ларнаке."
+ticket_url: "https://lima.events/en?category=theatre-and-shows"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://lima.events/en?category=theatre-and-shows"

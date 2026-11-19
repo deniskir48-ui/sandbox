@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Театральный детектив, €6–15. Точное время по афише
+title: "«Убийство в Восточном экспрессе»"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-18"
+time: "20:30"
+city: "Лимассол"
+venue: "Pattihio Theatre"
+summary: "Театральный детектив, €6–15. Точное время по афише."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

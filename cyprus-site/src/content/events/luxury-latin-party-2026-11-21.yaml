@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Luxury Latin Party"
+status: published
+type: party
+priority: 3
+date: "2026-11-21"
+end_date: "2026-11-22"
+city: "Никосия"
+venue: "Bailemos Dance School"
+summary: "Латиноамериканская вечеринка, €15."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

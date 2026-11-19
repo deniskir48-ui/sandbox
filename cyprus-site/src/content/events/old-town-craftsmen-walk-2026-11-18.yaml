@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Old Town & Craftsmen Walk"
+status: published
+type: tour
+priority: 3
+date: "2026-11-18"
+time: "10:00"
+city: "Лимассол"
+venue: "Tourist Information Centre"
+summary: "Бесплатная прогулка по историческому центру и ремесленным точкам."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

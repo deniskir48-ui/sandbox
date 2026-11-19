@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Струнный квартет исполняет Coldplay и Ed Sheeran при свечах, от €20. Общий календарь Fever указывает 18:00 на 21.11, но страница выбранного сеанса может показывать 20:30; проверить при бронировании
+title: "Candlelight: Coldplay & Ed Sheeran"
+status: published
+type: concert
+priority: 3
+date: "2026-11-21"
+time: "18:00"
+city: "Никосия"
+venue: "Pallas Theatre"
+summary: "Струнный квартет исполняет Coldplay и Ed Sheeran при свечах, от €20. Время сеанса уточняйте при покупке билета."
+ticket_url: "https://feverup.com/m/669429/en"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://feverup.com/m/669429/en"

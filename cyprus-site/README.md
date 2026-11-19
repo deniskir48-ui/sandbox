@@ -137,14 +137,15 @@ python3 scripts/import-research.py import/catalog.xlsx             # запис�
 
 Скрипт заполняет черновики из листа «Карточки сайта — исследование» и не трогает опубликованные и вручную уточнённые карточки (подробности — в начале скрипта и DEC-W35).
 
-### Рождественский лендинг (отдельная страница)
+### Сайт для публикации: афиша и Рождество (без остального сайта)
 
 ```bash
 python3 scripts/import-christmas.py import/afisha-tg.xlsx   # листы «Рождество» и «Рождественские парки · Telegram»
-node scripts/build-christmas-standalone.mjs                  # → standalone/christmas.html и папка standalone/site/
-SITE_URL=https://другой-домен SITE_NAME="Название" node scripts/build-christmas-standalone.mjs   # по умолчанию citycompas.com, City Compas
+python3 scripts/import-week.py import/afisha-tg.xlsx       # лист «Все мероприятия» — вся афиша недели
+node scripts/build-site.mjs                                  # → папка standalone/site/ (афиша и Рождество) и standalone/christmas.html
+SITE_URL=https://другой-домен SITE_NAME="Название" node scripts/build-site.mjs   # по умолчанию citycompas.com, City Compas
 ```
 
-`standalone/site/` — готовая папка для хостинга (например, Cloudflare Pages → Upload assets): страница лежит по адресу `/cyprus/christmas/`,
-главная и `/christmas/` временно (302) ведут на неё, есть иконка, превью для мессенджеров (`og.png`) и страница 404. Почему так — DEC-W39.
+`standalone/site/` — готовая папка для хостинга (например, Cloudflare Pages → Upload assets): афиша — `/cyprus/afisha/`, Рождество — `/cyprus/christmas/`;
+главная и `/afisha/` временно (302) ведут на афишу, `/christmas/` — на Рождество, есть иконка, превью для мессенджеров (`og.png`) и страница 404. Почему так — DEC-W39.
 Архив для загрузки: `cd standalone/site && zip -qr ../citycompas-site.zip .`

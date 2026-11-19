@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Городской беговой фестиваль и благотворительное событие, от €10. ✓ Афиша · Греческий язык
+title: "Break the Loop: благотворительный забег"
+status: published
+type: sport
+priority: 3
+date: "2026-11-22"
+time: "11:00"
+city: "Лимассол"
+venue: "Molos"
+summary: "Городской беговой фестиваль и благотворительное событие, от €10."
+ticket_url: "https://outcy.com/ru/events?city=limassol&page=2"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://outcy.com/ru/events?city=limassol&page=2"

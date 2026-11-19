@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Spoon Carving: History and Art"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-22"
+time: "10:00"
+city: "Эпископи"
+venue: "Environmental Info Centre"
+summary: "Лекция и мастер-класс по изготовлению деревянных ложек; €6."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

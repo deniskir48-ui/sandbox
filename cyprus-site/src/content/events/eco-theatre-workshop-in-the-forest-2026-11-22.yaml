@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Eco-Theatre Workshop in the Forest"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-22"
+time: "15:30"
+city: "Авгору"
+venue: "CyHerbia Botanical Park"
+summary: "Театральное занятие на природе."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

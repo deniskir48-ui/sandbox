@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Artist Talks for Kids"
+status: published
+type: kids
+priority: 3
+date: "2026-11-21"
+time: "10:00"
+city: "Никосия"
+venue: "Кипрский музей"
+summary: "Бесплатная музейная арт-программа для детей."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

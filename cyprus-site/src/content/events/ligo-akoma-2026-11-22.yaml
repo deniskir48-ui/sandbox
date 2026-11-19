@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Детская постановка о мечтах и взрослении, €10. ✓ Билетная афиша · Греческий язык
+title: "«Лиго Акома»"
+status: published
+type: kids
+priority: 3
+date: "2026-11-22"
+time: "11:00"
+city: "Никосия"
+venue: "Maskarini Theatre"
+summary: "Детская постановка о мечтах и взрослении, €10."
+ticket_url: "https://www.more.com/cy-en/tickets/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.more.com/cy-en/tickets/"

@@ -1,0 +1,15 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Effective Management of EU-Funded Projects"
+status: published
+type: talk
+priority: 3
+date: "2026-11-16"
+time: "08:30"
+city: "Лимассол"
+summary: "Семинар по управлению проектами с финансированием ЕС."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

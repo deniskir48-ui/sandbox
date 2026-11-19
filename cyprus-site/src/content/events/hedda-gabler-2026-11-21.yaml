@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Спектакль по Ибсену. Объединены повторные показы Hedda Gabler в Theatro Ena; время уточнить
+title: "Hedda Gabler"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-21"
+end_date: "2026-11-22"
+city: "Никосия"
+venue: "Theatro Ena"
+summary: "Спектакль по Ибсену. Время уточняйте у организатора."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

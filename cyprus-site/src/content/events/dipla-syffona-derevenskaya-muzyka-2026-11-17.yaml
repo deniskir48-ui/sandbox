@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Музыкальная встреча, связанная с деревенской традицией. Уточнить вход и программу · Греческий язык
+title: "Dipla Syffona: деревенская музыка"
+status: published
+type: talk
+priority: 3
+date: "2026-11-17"
+time: "18:30"
+city: "Никосия"
+venue: "YALLA Collective Space"
+summary: "Музыкальная встреча, связанная с деревенской традицией. Уточняйте вход и программу."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

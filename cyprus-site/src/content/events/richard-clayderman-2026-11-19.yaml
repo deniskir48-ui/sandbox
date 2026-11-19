@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Французский пианист с ансамблем струнных; от €69. Инструментальный, без языкового барьера
+title: "Richard Clayderman"
+status: published
+type: concert
+priority: 3
+date: "2026-11-19"
+time: "20:00"
+city: "Лимассол"
+venue: "Monte Caputo"
+summary: "Французский пианист с ансамблем струнных; от €69. Инструментальный, без языкового барьера."
+ticket_url: "https://wgolimassol.com/en/event/clayderman-monte-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://wgolimassol.com/en/event/clayderman-monte-2026"

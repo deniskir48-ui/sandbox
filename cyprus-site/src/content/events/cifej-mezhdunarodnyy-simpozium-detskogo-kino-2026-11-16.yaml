@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "CIFEJ: международный симпозиум детского кино"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-16"
+end_date: "2026-11-17"
+city: "Никосия"
+venue: "культурная лаборатория Agioi Omologites"
+summary: "Обсуждение детского и подросткового кино; в афишах указан свободный вход."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

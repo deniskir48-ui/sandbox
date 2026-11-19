@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "TTAVLAKI GOES TO MAKARIOU 42"
+status: published
+type: festival
+priority: 3
+date: "2026-11-21"
+time: "14:00"
+city: "Никосия"
+venue: "Makariou 42"
+summary: "Городское событие для любителей нард."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

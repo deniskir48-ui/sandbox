@@ -1,0 +1,15 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "12-й International Funds Summit & EXPO"
+status: published
+type: exhibition
+priority: 3
+date: "2026-11-16"
+time: "08:30"
+city: "Никосия"
+summary: "Конференция фондовой и финансовой индустрии; профессиональная аудитория."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

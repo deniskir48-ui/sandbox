@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+# Как в таблице: Стендап, €13. Уточнить язык · Греческий язык
+title: "Stantar Comedy Show: Yiorgos Kyriakou"
+status: published
+type: standup
+priority: 3
+date: "2026-11-19"
+time: "20:00"
+city: "Лимассол"
+venue: "Da Vinci"
+summary: "Стендап, €13. Уточняйте язык."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

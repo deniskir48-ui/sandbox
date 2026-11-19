@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "En Torno a Falla"
+status: published
+type: concert
+priority: 3
+date: "2026-11-22"
+time: "19:00"
+city: "Пафос"
+venue: "Technopolis 20"
+summary: "Гитарный концерт Тимофеоса Стилианидиса, €15,38."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

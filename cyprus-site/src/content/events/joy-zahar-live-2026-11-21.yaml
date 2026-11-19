@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "Joy Zahar Live"
+status: published
+type: concert
+priority: 3
+date: "2026-11-21"
+time: "21:30"
+city: "Ларнака"
+venue: "Ammos"
+summary: "Вечер живой музыки."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"

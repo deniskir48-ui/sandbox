@@ -1,0 +1,17 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: По источнику
+# Как в таблице: Новая версия комедии Аристофана; €10. Показы также 18, 20, 22 ноября, детали проверить · Греческий язык
+title: "«Лисистрата: Cyprus Edition 3.0»"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-17"
+time: "18:00"
+city: "Никосия"
+venue: "Flea Theatre"
+summary: "Новая версия комедии Аристофана; €10. Показы также 18, 20, 22 ноября, детали уточняйте у организатора."
+ticket_url: "https://lima.events/en?category=theatre-and-shows"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://lima.events/en?category=theatre-and-shows"

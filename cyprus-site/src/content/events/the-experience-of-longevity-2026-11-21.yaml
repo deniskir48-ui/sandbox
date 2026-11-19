@@ -1,0 +1,16 @@
+# week-import
+# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
+# Проверка в таблице: Сверить детали
+title: "The Experience of Longevity"
+status: published
+type: talk
+priority: 3
+date: "2026-11-21"
+time: "12:30"
+city: "Лимассол"
+venue: "St Raphael Resort"
+summary: "Открытая лекция о долголетии."
+ticket_url: "https://cypruseventsmap.com/next-week/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/next-week/"
