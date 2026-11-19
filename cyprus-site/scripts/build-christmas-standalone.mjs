@@ -11,7 +11,7 @@
  *
  * Устроено так, чтобы выдержать сотни событий (дальше сюда же придёт обычная афиша):
  *  - три компактных фильтра в одну строку — выпадающие списки «Когда» (сегодня, завтра, эти и следующие выходные,
- *    любая дата сезона из календаря),
+ *    любая дата сезона из своего календаря — без календаря браузера, который в рамках и на компьютере не открывался),
  *    «Где» (районы из src/data/regions.json), «Что» (виды) и «Сбросить», когда что-то выбрано;
  *  - один общий список без заголовков: сначала ближайшее; то, что уже идёт (парки, выставки), стоит как «сегодня»;
  *    при выборе дня — однодневные события этого дня и всё долгое, что в этот день открыто;
@@ -181,20 +181,35 @@ const html = `<title>Рождество на Кипре</title>
 
   /* Фильтры: три выпадающих списка в одну строку. Видна кнопка-«таблетка» с выбранным значением,
      поверх неё — прозрачный <select>, поэтому на телефоне открывается родной выбор. */
-  .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  .filters { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
   @media (min-width: 640px) { .filters { gap: 8px; } }
   .pick { position: relative; display: inline-flex; align-items: center; gap: 3px; padding: 8px 8px 8px 11px; border: 1px solid var(--line); border-radius: 999px;
     background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
   @media (min-width: 640px) { .pick { gap: 6px; padding: 9px 11px 9px 14px; font-size: .9rem; } }
   .pick:hover { border-color: #3a4d74; }
-  .pick[hidden] { display: none; }
-  .pick select, .pick input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; border: 0; appearance: none; }
+  .pick select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; border: 0; appearance: none; }
   .pick .chev { flex: none; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
   .pick-ic:empty { display: none; } .pick-ic { display: inline-flex; } .pick-ic .ic { width: 18px; height: 18px; }
   .pick.on { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0a1120; }
   .pick:focus-within { outline: 2px solid var(--warm); outline-offset: 2px; }
   .clear { font: 600 .9rem var(--body); color: var(--sky); background: none; border: 0; padding: 8px 4px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
   .clear[hidden] { display: none; }
+  /* Свой календарь для «Выбрать дату…»: одинаково работает на компьютере, телефоне и внутри чужой рамки. */
+  .cal { position: absolute; top: calc(100% + 8px); left: 0; z-index: 15; width: 300px; max-width: 100%; box-sizing: border-box; padding: 12px;
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 14px 34px rgba(0, 0, 0, .5); }
+  .cal[hidden] { display: none; }
+  .cal-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; font-weight: 700; }
+  .cal-nav { width: 36px; height: 36px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); font-size: 1.25rem; line-height: 1; cursor: pointer; }
+  .cal-nav:disabled { opacity: .3; cursor: default; }
+  .cal-g { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; text-align: center; }
+  .cal-g .wd { font-size: .74rem; color: var(--muted); padding: 2px 0 4px; }
+  .cal-g button { position: relative; height: 38px; border: 0; border-radius: 10px; background: transparent; color: var(--text); font: 600 .92rem var(--body); cursor: pointer; }
+  .cal-g button:hover:not(:disabled) { background: var(--card-hi); }
+  .cal-g button:disabled { color: #4a5875; cursor: default; }
+  .cal-g button.today { box-shadow: inset 0 0 0 1px var(--sky); }
+  .cal-g button.has::after { content: ""; position: absolute; left: 50%; bottom: 4px; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--warm); }
+  .cal-g button.sel { background: var(--text); color: var(--night); }
+  .cal-nav:focus-visible, .cal-g button:focus-visible { outline: 2px solid var(--warm); outline-offset: 1px; }
 
   #list { margin-top: 20px; }
   .more { display: block; width: 100%; max-width: 340px; margin: 14px auto 0; padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--body); cursor: pointer; }
@@ -258,10 +273,13 @@ const html = `<title>Рождество на Кипре</title>
 
   <div class="filters" role="group" aria-label="Фильтры">
     <label class="pick"><span class="pick-t">Все дни</span>${CHEV}<select id="f-date" aria-label="Когда"><option value="">Все дни</option></select></label>
-    <label class="pick" id="p-day" hidden><span class="pick-t">Выберите дату</span>${CHEV}<input type="date" id="f-day" aria-label="Дата"></label>
     <label class="pick"><span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>
     <label class="pick"><span class="pick-ic"></span><span class="pick-t">Все события</span>${CHEV}<select id="f-kind" aria-label="Что"><option value="">Все события</option>${kinds.map((k) => `<option value="${k.t}">${k.label}</option>`).join('')}</select></label>
     <button type="button" class="clear" id="clear" hidden>Сбросить</button>
+    <div class="cal" id="cal" role="dialog" aria-label="Выберите дату" hidden>
+      <div class="cal-h"><button type="button" class="cal-nav" id="cal-prev" aria-label="Предыдущий месяц">‹</button><b id="cal-m"></b><button type="button" class="cal-nav" id="cal-next" aria-label="Следующий месяц">›</button></div>
+      <div class="cal-g" id="cal-g"></div>
+    </div>
   </div>
 
   <div id="list">
@@ -406,34 +424,58 @@ const html = `<title>Рождество на Кипре</title>
     Object.keys(picks).forEach(function (k) {
       picks[k].addEventListener('change', function () {
         var v = picks[k].value;
-        if (k === 'date' && v === 'pick') { picks.date.value = state.date; openDay(); return; }
+        if (k === 'date' && v === 'pick') { picks.date.value = state.date; openCal(); return; }
         state[k] = v;
-        if (k === 'date') { state.days = !v ? null : PERIODS[v] || [v.slice(2)]; el('p-day').hidden = true; }
+        if (k === 'date') { state.days = !v ? null : PERIODS[v] || [v.slice(2)]; closeCal(); }
         sync(); render();
       });
     });
-    // «Выбрать дату…»: календарь телефона/браузера в пределах сезона. Если открыть его сразу нельзя
-    // (например, страница внутри чужой рамки), рядом появляется кнопка «Выберите дату».
-    var dayIn = el('f-day');
-    dayIn.min = today; dayIn.max = seasonEnd;
-    function openDay() {
-      el('p-day').hidden = false; sync();
-      try { dayIn.showPicker(); } catch (e) { dayIn.focus(); }
+    // «Выбрать дату…»: свой календарь в пределах сезона (с сегодняшнего дня до конца последнего события).
+    // Точкой отмечены дни, на которые есть однодневные события.
+    var MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+    var eventDays = {}; items.forEach(function (li) { if (!li.dataset.long) eventDays[li.dataset.start] = 1; });
+    var cal = el('cal'), calYM = today.slice(0, 7);
+    var ym = function (iso, n) { var y = +iso.slice(0, 4), m = +iso.slice(5, 7) - 1 + n; y += Math.floor(m / 12); m = ((m % 12) + 12) % 12; return y + '-' + (m < 9 ? '0' : '') + (m + 1); };
+    function drawCal() {
+      var y = +calYM.slice(0, 4), m = +calYM.slice(5, 7) - 1;
+      el('cal-m').textContent = MONTHS[m] + ' ' + y;
+      el('cal-prev').disabled = calYM <= today.slice(0, 7);
+      el('cal-next').disabled = calYM >= seasonEnd.slice(0, 7);
+      var g = el('cal-g'), html = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map(function (w) { return '<span class="wd">' + w + '</span>'; }).join('');
+      var lead = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7, n = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+      for (var i = 0; i < lead; i++) html += '<span></span>';
+      var sel = state.days && state.days.length === 1 ? state.days[0] : '';
+      for (var dd = 1; dd <= n; dd++) {
+        var iso = calYM + '-' + (dd < 10 ? '0' : '') + dd, off = iso < today || iso > seasonEnd;
+        var cls = [iso === today ? 'today' : '', eventDays[iso] ? 'has' : '', iso === sel ? 'sel' : ''].join(' ').trim();
+        html += '<button type="button" data-d="' + iso + '"' + (cls ? ' class="' + cls + '"' : '') + (off ? ' disabled' : '') + ' aria-label="' + dayLabel(iso) + '">' + dd + '</button>';
+      }
+      g.innerHTML = html;
     }
-    dayIn.addEventListener('change', function () {
-      var iso = dayIn.value; if (!iso) return;
+    function openCal() {
+      calYM = state.days ? state.days[0].slice(0, 7) : today.slice(0, 7);
+      drawCal(); cal.hidden = false;
+      var b = cal.querySelector('.cal-g button.sel') || cal.querySelector('.cal-g button:not(:disabled)'); if (b) b.focus();
+    }
+    function closeCal() { cal.hidden = true; }
+    el('cal-prev').addEventListener('click', function () { calYM = ym(calYM, -1); drawCal(); });
+    el('cal-next').addEventListener('click', function () { calYM = ym(calYM, 1); drawCal(); });
+    el('cal-g').addEventListener('click', function (e) {
+      var b = e.target.closest('button[data-d]'); if (!b || b.disabled) return;
+      var iso = b.dataset.d;
       all('#f-date option').forEach(function (o) { if (o.value.indexOf('d:') === 0) o.remove(); });
       var v = iso === today ? 'today' : iso === tomorrow ? 'tomorrow' : 'd:' + iso;
       if (v.indexOf('d:') === 0) { var o = document.createElement('option'); o.value = v; o.textContent = dayLabel(iso); picks.date.insertBefore(o, pickOpt); }
       picks.date.value = v; state.date = v; state.days = [iso];
-      el('p-day').hidden = true; dayIn.value = '';
-      sync(); render();
+      closeCal(); sync(); render(); picks.date.focus();
     });
+    document.addEventListener('click', function (e) { if (!cal.hidden && !cal.contains(e.target) && e.target !== picks.date) closeCal(); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !cal.hidden) { closeCal(); picks.date.focus(); } });
     el('more').addEventListener('click', function () { shown += page(); render(true); });
     function resetAll() {
       state = { date: '', days: null, reg: '', kind: '' };
       Object.keys(picks).forEach(function (k) { picks[k].value = ''; });
-      el('p-day').hidden = true;
+      closeCal();
       sync(); render();
     }
     el('reset').addEventListener('click', resetAll);
