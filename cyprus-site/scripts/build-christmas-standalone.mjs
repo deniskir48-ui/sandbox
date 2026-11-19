@@ -5,8 +5,8 @@
  * Данные — те же события Афиши с метками christmas-* (scripts/import-christmas.py), только status: published.
  *
  * Устроено так, чтобы выдержать сотни событий (дальше сюда же придёт обычная афиша):
- *  - три фильтра одной строкой каждый: «Когда» (сегодня, завтра, дни с событиями), «Где» (районы из src/data/regions.json),
- *    «Что» (виды); на телефоне строки листаются вбок;
+ *  - три компактных фильтра в одну строку — выпадающие списки «Когда» (сегодня, завтра, дни с событиями),
+ *    «Где» (районы из src/data/regions.json), «Что» (виды) и «Сбросить», когда что-то выбрано;
  *  - один общий список без заголовков: сначала ближайшее; то, что уже идёт (парки, выставки), стоит как «сегодня»;
  *    при выборе дня — однодневные события этого дня и всё долгое, что в этот день открыто;
  *  - видно несколько рядов, дальше — кнопка «Показать ещё N».
@@ -130,6 +130,7 @@ const detail = Object.fromEntries(list.map((e) => [e.id, {
   start: e.date, end: e.end_date ?? e.date, park: e.tags.includes('christmas-parks'),
 }]));
 
+const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 const LOGO = 'M4.00 16.38 L5.34 17.01 L6.17 16.25 L7.10 15.49 L8.45 15.24 L9.90 15.75 L10.83 15.10 L10.83 13.27 L12.58 13.59 L14.85 13.80 L17.22 13.59 L19.80 13.16 L22.38 12.52 L24.96 11.23 L27.95 9.94 L26.51 11.02 L23.92 12.31 L21.55 13.91 L21.24 15.86 L22.69 17.79 L21.65 17.69 L19.28 17.79 L18.15 18.33 L17.84 19.40 L15.88 20.37 L13.09 20.69 L11.85 21.34 L11.02 22.20 L10.30 21.12 L8.45 21.12 L5.86 20.26 L5.03 19.08 L4.41 17.90 Z';
 
 const html = `<title>Рождество на Кипре</title>
@@ -140,7 +141,7 @@ const html = `<title>Рождество на Кипре</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap">
 <style>
   /* Вечерний Кипр в декабре: ночное небо, гирлянда, голубой и оранжевый «Гида по Кипру». Сознательно одна тёмная тема.
-     Раскладка: заголовок → три строки фильтров → один список плиток; карточка события открывается поверх списка. */
+     Раскладка: заголовок → строка фильтров → один список плиток; карточка события открывается поверх списка. */
   :root {
     color-scheme: dark;
     --night: #0a1120; --card: #111a2e; --card-hi: #16223b; --line: #22304d; --text: #eef3f9; --muted: #9fb0c8;
@@ -149,7 +150,7 @@ const html = `<title>Рождество на Кипре</title>
     --display: "Unbounded", "Onest", system-ui, sans-serif; --body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   html { background: var(--night); }
-  body { background: var(--night); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5;
+  body { margin: 0; background: var(--night); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5;
     padding-left: var(--gutter); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
   body.locked { overflow: hidden; }
   .wrap { max-width: 1040px; margin: 0 auto; }
@@ -166,16 +167,21 @@ const html = `<title>Рождество на Кипре</title>
   [data-kind="christmas-parks"] { --c: #ffa463; } [data-kind="christmas-villages"] { --c: #8fd0f5; } [data-kind="christmas-lights"] { --c: #6fe3a5; }
   [data-kind="christmas-markets"] { --c: #ffd166; } [data-kind="christmas-other"] { --c: #c4b0ff; }
 
-  /* Фильтры: три строки — когда, где, что. На телефоне каждая строка листается вбок, на компьютере переносится. */
-  .filters { display: grid; gap: 8px; }
-  .row { display: flex; gap: 8px; overflow-x: auto; margin-inline: calc(-1 * var(--gutter)); padding: 3px var(--gutter); scrollbar-width: none; }
-  .row::-webkit-scrollbar { display: none; }
-  @media (min-width: 700px) { .row { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; } }
-  .chip { flex: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font: 600 .9rem var(--body); color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
-  .chip[hidden] { display: none; }
-  .chip .ic { color: var(--c); }
-  .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0a1120; }
-  .chip[aria-pressed="true"] .ic { color: inherit; }
+  /* Фильтры: три выпадающих списка в одну строку. Видна кнопка-«таблетка» с выбранным значением,
+     поверх неё — прозрачный <select>, поэтому на телефоне открывается родной выбор. */
+  .filters { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+  @media (min-width: 640px) { .filters { gap: 8px; } }
+  .pick { position: relative; display: inline-flex; align-items: center; gap: 3px; padding: 8px 8px 8px 11px; border: 1px solid var(--line); border-radius: 999px;
+    background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
+  @media (min-width: 640px) { .pick { gap: 6px; padding: 9px 11px 9px 14px; font-size: .9rem; } }
+  .pick:hover { border-color: #3a4d74; }
+  .pick select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; border: 0; appearance: none; }
+  .pick .chev { flex: none; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
+  .pick-ic:empty { display: none; } .pick-ic { display: inline-flex; } .pick-ic .ic { width: 18px; height: 18px; }
+  .pick.on { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0a1120; }
+  .pick:focus-within { outline: 2px solid var(--warm); outline-offset: 2px; }
+  .clear { font: 600 .9rem var(--body); color: var(--sky); background: none; border: 0; padding: 8px 4px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+  .clear[hidden] { display: none; }
 
   #list { margin-top: 20px; }
   .more { display: block; width: 100%; max-width: 340px; margin: 14px auto 0; padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--body); cursor: pointer; }
@@ -202,7 +208,7 @@ const html = `<title>Рождество на Кипре</title>
   .ev-type .ic { width: 20px; height: 20px; }
   .ev-date { font-size: .88rem; font-weight: 600; font-variant-numeric: tabular-nums; }
   .ev-city { font-size: .86rem; color: var(--muted); }
-  .ev:focus-visible, .chip:focus-visible, .more:focus-visible, .empty button:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
+  .ev:focus-visible, .clear:focus-visible, .more:focus-visible, .empty button:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
 
   /* Карточка события */
   .shade[hidden] { display: none; }
@@ -236,18 +242,11 @@ const html = `<title>Рождество на Кипре</title>
     <h1>Рождество <em>на&nbsp;Кипре</em></h1>
   </header>
 
-  <div class="filters">
-    <div class="row" id="f-date" role="group" aria-label="Когда">
-      <button type="button" class="chip" data-v="" aria-pressed="true">Все даты</button>
-    </div>
-    <div class="row" id="f-reg" role="group" aria-label="Где">
-      <button type="button" class="chip" data-v="" aria-pressed="true">Весь Кипр</button>
-      ${regions.map((r) => `<button type="button" class="chip" data-v="${esc(r)}" aria-pressed="false">${esc(r)}</button>`).join('\n      ')}
-    </div>
-    <div class="row" id="f-kind" role="group" aria-label="Что">
-      <button type="button" class="chip" data-v="" aria-pressed="true">Все события</button>
-      ${kinds.map((k) => `<button type="button" class="chip" data-v="${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(KIND_ICON[k.t])}${k.label}</button>`).join('\n      ')}
-    </div>
+  <div class="filters" role="group" aria-label="Фильтры">
+    <label class="pick"><span class="pick-t">Все дни</span>${CHEV}<select id="f-date" aria-label="Когда"><option value="">Все дни</option></select></label>
+    <label class="pick"><span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>
+    <label class="pick"><span class="pick-ic"></span><span class="pick-t">Все события</span>${CHEV}<select id="f-kind" aria-label="Что"><option value="">Все события</option>${kinds.map((k) => `<option value="${k.t}">${k.label}</option>`).join('')}</select></label>
+    <button type="button" class="clear" id="clear" hidden>Сбросить</button>
   </div>
 
   <div id="list">
@@ -279,7 +278,7 @@ const html = `<title>Рождество на Кипре</title>
   (function () {
     var DATA = ${JSON.stringify(detail)};
     var MON = ${JSON.stringify(MON_FULL)}, MON_S = ${JSON.stringify(MON)}, WD = ${JSON.stringify(WD)};
-    var ICONS = ${JSON.stringify(Object.fromEntries(Object.keys(ICONS).map((k) => [k, svg(k)])))};
+    var ICONS = ${JSON.stringify(Object.fromEntries(Object.keys(ICONS).map((k) => [k, svg(k)])))}, KIND_ICON = ${JSON.stringify(KIND_ICON)};
     var DAYS = ['в воскресенье', 'в понедельник', 'во вторник', 'в среду', 'в четверг', 'в пятницу', 'в субботу'];
     var today;
     try { today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Nicosia' }).format(new Date()); } catch (e) { today = new Date().toISOString().slice(0, 10); }
@@ -307,12 +306,11 @@ const html = `<title>Рождество на Кипре</title>
     // «Когда»: сегодня, завтра и дальше дни, в которые есть однодневные события.
     var dates = {}; dates[today] = 1; dates[tomorrow] = 1;
     items.forEach(function (li) { if (!li.dataset.long) dates[li.dataset.start] = 1; });
-    var dateRow = el('f-date');
+    var picks = { date: el('f-date'), reg: el('f-reg'), kind: el('f-kind') };
     Object.keys(dates).sort().forEach(function (iso) {
-      var b = document.createElement('button');
-      b.type = 'button'; b.className = 'chip'; b.dataset.v = iso; b.setAttribute('aria-pressed', 'false');
-      b.textContent = iso === today ? 'Сегодня' : iso === tomorrow ? 'Завтра' : WD[d(iso).getUTCDay()] + ', ' + d(iso).getUTCDate() + ' ' + MON_S[d(iso).getUTCMonth()];
-      dateRow.appendChild(b);
+      var o = document.createElement('option'); o.value = iso;
+      o.textContent = iso === today ? 'Сегодня' : iso === tomorrow ? 'Завтра' : WD[d(iso).getUTCDay()] + ', ' + d(iso).getUTCDate() + ' ' + MON_S[d(iso).getUTCMonth()];
+      picks.date.appendChild(o);
     });
 
     var state = { date: '', reg: '', kind: '' }, shown = 0;
@@ -324,11 +322,23 @@ const html = `<title>Рождество на Кипре</title>
       return true;
     };
     // Районы и виды без событий (после того как прошедшее убрано) не показываем.
-    all('#f-reg .chip[data-v], #f-kind .chip[data-v]').forEach(function (c) {
-      if (!c.dataset.v) return;
-      var probe = { date: '', reg: '', kind: '' }; probe[c.parentNode.id === 'f-reg' ? 'reg' : 'kind'] = c.dataset.v;
-      c.hidden = !items.some(function (li) { return match(li, probe); });
+    all('#f-reg option, #f-kind option').forEach(function (o) {
+      if (!o.value) return;
+      var probe = { date: '', reg: '', kind: '' }; probe[o.parentNode.id === 'f-reg' ? 'reg' : 'kind'] = o.value;
+      if (!items.some(function (li) { return match(li, probe); })) o.remove();
     });
+    // Таблетка показывает выбранное; выбранный вид — его цветом и значком.
+    function sync() {
+      Object.keys(picks).forEach(function (k) {
+        var sel = picks[k], lab = sel.parentNode;
+        lab.querySelector('.pick-t').textContent = sel.options[sel.selectedIndex].text;
+        lab.classList.toggle('on', !!sel.value);
+      });
+      var kl = picks.kind.parentNode;
+      if (state.kind) { kl.dataset.kind = state.kind; kl.querySelector('.pick-ic').innerHTML = ICONS[KIND_ICON[state.kind]]; }
+      else { delete kl.dataset.kind; kl.querySelector('.pick-ic').innerHTML = ''; }
+      el('clear').hidden = !(state.date || state.reg || state.kind);
+    }
 
     // Все плитки одной высоты: по самой высокой видимой.
     var equalize = function () {
@@ -362,21 +372,18 @@ const html = `<title>Рождество на Кипре</title>
       el('empty').hidden = vis.length > 0;
       equalize();
     }
-    all('.filters .row').forEach(function (row) {
-      var keyName = { 'f-date': 'date', 'f-reg': 'reg', 'f-kind': 'kind' }[row.id];
-      row.addEventListener('click', function (e) {
-        var c = e.target.closest('.chip'); if (!c) return;
-        all('.chip', row).forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); });
-        state[keyName] = c.dataset.v; render();
-      });
+    Object.keys(picks).forEach(function (k) {
+      picks[k].addEventListener('change', function () { state[k] = picks[k].value; sync(); render(); });
     });
     el('more').addEventListener('click', function () { shown += page(); render(true); });
-    el('reset').addEventListener('click', function () {
+    function resetAll() {
       state = { date: '', reg: '', kind: '' };
-      all('.filters .row').forEach(function (row) { all('.chip', row).forEach(function (x, i) { x.setAttribute('aria-pressed', String(i === 0)); }); });
-      render();
-    });
-    render();
+      Object.keys(picks).forEach(function (k) { picks[k].value = ''; });
+      sync(); render();
+    }
+    el('reset').addEventListener('click', resetAll);
+    el('clear').addEventListener('click', resetAll);
+    sync(); render();
     var raf = 0;
     window.addEventListener('resize', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(equalize); });
     // Шрифты приходят позже первого расчёта — пересчитываем, когда они загрузятся.
