@@ -3,8 +3,8 @@
  * Отдельная страница «Рождество на Кипре» — одним файлом, без остального сайта (DEC-W38).
  *   node scripts/build-christmas-standalone.mjs        → standalone/christmas.html (страница для артефакта)
  *                                                      + standalone/site/ (папка для хостинга, например Cloudflare Pages)
- *   SITE_URL=https://домен SITE_NAME="Название" node scripts/build-christmas-standalone.mjs
- *     — с доменом в превью ссылки (Telegram и др.) появляется картинка standalone/og-christmas.png.
+ *   По умолчанию домен https://citycompas.com и название City Compas (DEC-W39); другие — через SITE_URL и SITE_NAME.
+ *   С доменом в превью ссылки (Telegram и др.) появляется картинка standalone/og-christmas.png.
  * Папка site/: страница по адресу /cyprus/christmas/ (там же она будет жить на основном сайте), временная (302)
  * переадресация с главной и коротких адресов, иконка, 404. Подробнее — DECISIONS.md (DEC-W39).
  * Данные — те же события Афиши с метками christmas-* (scripts/import-christmas.py), только status: published.
@@ -27,8 +27,8 @@ import { parse } from 'yaml';
 const DIR = path.resolve('src/content/events');
 const OUT = path.resolve('standalone/christmas.html');
 const SITE_DIR = path.resolve('standalone/site');
-const SITE_URL = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
-const SITE_NAME = process.env.SITE_NAME ?? 'Гид по Кипру';
+const SITE_URL = (process.env.SITE_URL ?? 'https://citycompas.com').replace(/\/+$/, '');
+const SITE_NAME = process.env.SITE_NAME ?? 'City Compas';
 const PAGE_PATH = '/cyprus/christmas/';
 const MON = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
 const MON_FULL = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
