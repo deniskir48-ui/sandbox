@@ -1,7 +1,12 @@
 #!/usr/bin/env node
 /**
  * Отдельная страница «Рождество на Кипре» — одним файлом, без остального сайта (DEC-W38).
- *   node scripts/build-christmas-standalone.mjs        → standalone/christmas.html
+ *   node scripts/build-christmas-standalone.mjs        → standalone/christmas.html (страница для артефакта)
+ *                                                      + standalone/site/ (папка для хостинга, например Cloudflare Pages)
+ *   SITE_URL=https://домен SITE_NAME="Название" node scripts/build-christmas-standalone.mjs
+ *     — с доменом в превью ссылки (Telegram и др.) появляется картинка standalone/og-christmas.png.
+ * Папка site/: страница по адресу /cyprus/christmas/ (там же она будет жить на основном сайте), временная (302)
+ * переадресация с главной и коротких адресов, иконка, 404. Подробнее — DECISIONS.md (DEC-W39).
  * Данные — те же события Афиши с метками christmas-* (scripts/import-christmas.py), только status: published.
  *
  * Устроено так, чтобы выдержать сотни событий (дальше сюда же придёт обычная афиша):
@@ -21,6 +26,10 @@ import { parse } from 'yaml';
 
 const DIR = path.resolve('src/content/events');
 const OUT = path.resolve('standalone/christmas.html');
+const SITE_DIR = path.resolve('standalone/site');
+const SITE_URL = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
+const SITE_NAME = process.env.SITE_NAME ?? 'Гид по Кипру';
+const PAGE_PATH = '/cyprus/christmas/';
 const MON = ['янв', 'фев', 'мар', 'апр', 'мая', 'июн', 'июл', 'авг', 'сен', 'окт', 'ноя', 'дек'];
 const MON_FULL = ['января', 'февраля', 'марта', 'апреля', 'мая', 'июня', 'июля', 'августа', 'сентября', 'октября', 'ноября', 'декабря'];
 const WD = ['вс', 'пн', 'вт', 'ср', 'чт', 'пт', 'сб'];
@@ -259,7 +268,7 @@ const html = `<title>Рождество на Кипре</title>
   </div>
 
   <footer>
-    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#9fd5f2"/><circle cx="23" cy="8.5" r="3.6" fill="#f26b21"/><path transform="translate(0 3)" d="${LOGO}" fill="#0e1116"/></svg>Гид по Кипру</span>
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#9fd5f2"/><circle cx="23" cy="8.5" r="3.6" fill="#f26b21"/><path transform="translate(0 3)" d="${LOGO}" fill="#0e1116"/></svg>${esc(SITE_NAME)}</span>
     <span>Время, цены и программа могут меняться — перед поездкой уточняйте у организаторов.</span>
   </footer>
 </div>
@@ -427,5 +436,49 @@ const html = `<title>Рождество на Кипре</title>
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, html);
 console.log(`standalone/christmas.html: ${list.length} событий (${kinds.map((k) => `${k.label} ${k.n}`).join(', ')}); районы: ${regions.map((r) => `${r} ${regCount.get(r)}`).join(', ')}`);
+// Папка для хостинга: полноценный HTML-документ с превью для мессенджеров.
+const DESC = 'Рождественские парки, деревни, ярмарки и праздники Кипра: даты, места и карта.';
+const cut = html.indexOf('</style>\n') + '</style>\n'.length;
+const head = html.slice(0, cut).replace('<meta name="claude:viewport-fit-sides" content="cover">\n', '');
+const doc = `<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#0a1120">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="${esc(SITE_NAME)}">
+<meta property="og:title" content="Рождество на Кипре — сезон 2026–2027">
+<meta property="og:description" content="${DESC}">${SITE_URL ? `
+<meta property="og:url" content="${SITE_URL}${PAGE_PATH}">
+<link rel="canonical" href="${SITE_URL}${PAGE_PATH}">
+<meta property="og:image" content="${SITE_URL}${PAGE_PATH}og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">` : ''}
+${head}</head>
+<body>
+${html.slice(cut)}</body>
+</html>
+`;
+fs.rmSync(SITE_DIR, { recursive: true, force: true });
+fs.mkdirSync(path.join(SITE_DIR, PAGE_PATH), { recursive: true });
+fs.writeFileSync(path.join(SITE_DIR, PAGE_PATH, 'index.html'), doc);
+fs.copyFileSync(path.resolve('standalone/og-christmas.png'), path.join(SITE_DIR, PAGE_PATH, 'og.png'));
+fs.copyFileSync(path.resolve('public/favicon.svg'), path.join(SITE_DIR, 'favicon.svg'));
+// 302 — временно: главная потом станет главной основного сайта, а браузеры не запомнят переадресацию навсегда.
+fs.writeFileSync(path.join(SITE_DIR, '_redirects'), [
+  `/ ${PAGE_PATH} 302`, `/cyprus ${PAGE_PATH} 302`, `/cyprus/ ${PAGE_PATH} 302`,
+  `/christmas ${PAGE_PATH} 302`, `/christmas/ ${PAGE_PATH} 302`, '',
+].join('\n'));
+fs.writeFileSync(path.join(SITE_DIR, '404.html'), `<!doctype html>
+<html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Страница не найдена</title><link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a1120;color:#eef3f9;font:16px/1.5 system-ui,sans-serif;padding:16px}a{color:#ffd38a}</style>
+</head><body><p>Такой страницы нет. <a href="${PAGE_PATH}">Рождество на Кипре</a></p></body></html>
+`);
+console.log(`standalone/site/: ${PAGE_PATH}index.html, og.png, favicon.svg, _redirects, 404.html${SITE_URL ? ` — для ${SITE_URL}` : ' — без SITE_URL: в превью ссылки не будет картинки'}`);
 if (unplaced.length) console.log(`без района (места нет в regions.json): ${[...new Set(unplaced)].join(', ')}`);
 if (noMap.length) console.log(`без карты (города нет в map-places.json): ${[...new Set(noMap)].join(', ')}`);

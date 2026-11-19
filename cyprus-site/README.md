@@ -141,5 +141,9 @@ python3 scripts/import-research.py import/catalog.xlsx             # запис�
 
 ```bash
 python3 scripts/import-christmas.py import/afisha-tg.xlsx   # листы «Рождество» и «Рождественские парки · Telegram»
-node scripts/build-christmas-standalone.mjs                  # → standalone/christmas.html
+node scripts/build-christmas-standalone.mjs                  # → standalone/christmas.html и папка standalone/site/
+SITE_URL=https://домен SITE_NAME="Название" node scripts/build-christmas-standalone.mjs   # с доменом — картинка в превью ссылки
 ```
+
+`standalone/site/` — готовая папка для хостинга (например, Cloudflare Pages → Upload assets): страница лежит по адресу `/cyprus/christmas/`,
+главная и `/christmas/` временно (302) ведут на неё, есть иконка, превью для мессенджеров (`og.png`) и страница 404. Почему так — DEC-W39.
