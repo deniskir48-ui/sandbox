@@ -122,6 +122,12 @@ def write(out, slug, lines, dry, stats):
         stats["не тронуто"] += 1
         return
     stats["обновлено" if os.path.exists(path) else "создано"] += 1
+    # Короткое название для плитки задаётся вручную — при обновлении сохраняем его.
+    if os.path.exists(path):
+        keep = [l for l in open(path, encoding="utf-8").read().splitlines() if l.startswith("short_title:")]
+        if keep:
+            i = next(i for i, l in enumerate(lines) if l and l.startswith("title:"))
+            lines = lines[:i + 1] + keep + lines[i + 1:]
     if not dry:
         with open(path, "w", encoding="utf-8") as f:
             f.write("\n".join(l for l in lines if l is not None) + "\n")

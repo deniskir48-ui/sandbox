@@ -55,7 +55,7 @@
   .empty { margin: 12px 0 0; color: var(--muted); }
   .empty button { font: 600 1rem var(--body); color: var(--sky); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 
-  /* Плитки одного размера: название (до 3 строк), под ним тип, даты, город. 2 в ряд на телефоне, 3–4 на компьютере. */
+  /* Плитки одного размера: короткое название (до 2 строк), под ним тип, даты, город. 2 в ряд на телефоне, 3–4 на компьютере. */
   .evs { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; }
   @media (min-width: 640px) { .evs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; } }
   @media (min-width: 900px) { .evs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
@@ -64,7 +64,7 @@
   .ev { box-sizing: border-box; flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 13px 12px 12px; background: color-mix(in srgb, var(--c) 13%, var(--night)); border: 1px solid color-mix(in srgb, var(--c) 42%, var(--night)); border-radius: 16px; color: inherit; text-decoration: none; transition: border-color .15s, background .15s; }
   @media (min-width: 640px) { .ev { padding: 15px 14px 14px; } }
   .ev:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 20%, var(--night)); }
-  .ev-title { flex: 1; font-weight: 650; font-size: .95rem; line-height: 1.3; overflow-wrap: anywhere; hyphens: auto; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .ev-title { flex: 1; font-weight: 650; font-size: .95rem; line-height: 1.3; overflow-wrap: anywhere; hyphens: auto; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   @media (min-width: 640px) { .ev-title { font-size: 1rem; } }
   .ev-meta { display: grid; gap: 3px; min-width: 0; }
   .ev-meta > span { overflow-wrap: anywhere; }
@@ -117,7 +117,7 @@
     <ul class="evs" id="evs">
       <li data-kind="christmas-parks" data-start="2026-11-13" data-end="2027-01-10" data-time="" data-reg="Никосия" data-long="1">
         <a class="ev" href="#e-nicosia-christmas-fairyland-paramythoupoli-2026-11-13" data-id="e-nicosia-christmas-fairyland-paramythoupoli-2026-11-13">
-          <span class="ev-title">Nicosia Christmas Fairyland / Paramythoupoli</span>
+          <span class="ev-title">Nicosia Christmas Fairyland</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/></svg>Парк</span>
             <span class="ev-date">13 ноя – 10 янв</span>
@@ -137,7 +137,7 @@
       </li>
       <li data-kind="christmas-other" data-start="2026-11-20" data-end="2026-11-21" data-time="" data-reg="Никосия" data-long="1">
         <a class="ev" href="#e-master-klass-rozhdestvenskie-noski-roditel-rebenok-2026-11-20" data-id="e-master-klass-rozhdestvenskie-noski-roditel-rebenok-2026-11-20">
-          <span class="ev-title">Мастер-класс: рождественские носки, родитель + ребёнок</span>
+          <span class="ev-title">Носки: родитель + ребёнок</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="17.5" r="3"/><path d="M8.6 15.4 17 3.5M15.4 15.4 7 3.5"/></svg>Мастер-класс</span>
             <span class="ev-date">20–21 ноя</span>
@@ -157,7 +157,7 @@
       </li>
       <li data-kind="christmas-other" data-start="2026-11-20" data-end="2026-11-20" data-time="18:00" data-reg="Лимассол">
         <a class="ev" href="#e-master-klass-keramicheskaya-elka-2026-11-20" data-id="e-master-klass-keramicheskaya-elka-2026-11-20">
-          <span class="ev-title">Мастер-класс: керамическая ёлка</span>
+          <span class="ev-title">Керамическая ёлка</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="17.5" r="3"/><path d="M8.6 15.4 17 3.5M15.4 15.4 7 3.5"/></svg>Мастер-класс</span>
             <span class="ev-date">пт, 20 ноя</span>
@@ -247,7 +247,7 @@
       </li>
       <li data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-reg="Пафос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06">
         <a class="ev" href="#e-christmas-village-statos-ayos-fotios-2026-11-21" data-id="e-christmas-village-statos-ayos-fotios-2026-11-21">
-          <span class="ev-title">Christmas Village: Статос–Айос-Фотиос</span>
+          <span class="ev-title">Christmas Village: Статос</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
             <span class="ev-date">21 ноя – 6 янв</span>
@@ -257,7 +257,7 @@
       </li>
       <li data-kind="christmas-parks" data-start="2026-11-21" data-end="2027-01-31" data-time="" data-reg="Айя-Напа и Протарас" data-long="1">
         <a class="ev" href="#e-pinocchio-christmas-theme-park-2026-11-21" data-id="e-pinocchio-christmas-theme-park-2026-11-21">
-          <span class="ev-title">Pinocchio Christmas Theme Park</span>
+          <span class="ev-title">Парк «Пиноккио»</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/></svg>Парк</span>
             <span class="ev-date">21 ноя – 31 янв</span>
@@ -267,7 +267,7 @@
       </li>
       <li data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="09:00" data-reg="Лимассол">
         <a class="ev" href="#e-christmas-bazaar-for-little-heroes-2026-11-21" data-id="e-christmas-bazaar-for-little-heroes-2026-11-21">
-          <span class="ev-title">Christmas Bazaar for Little Heroes</span>
+          <span class="ev-title">Bazaar for Little Heroes</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/></svg>Ярмарка</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -277,7 +277,7 @@
       </li>
       <li data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="10:00" data-reg="Лимассол">
         <a class="ev" href="#e-prazdnichnaya-yarmarka-anthologion-2026-11-21" data-id="e-prazdnichnaya-yarmarka-anthologion-2026-11-21">
-          <span class="ev-title">Праздничная ярмарка Anthologion</span>
+          <span class="ev-title">Ярмарка Anthologion</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/></svg>Ярмарка</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -287,7 +287,7 @@
       </li>
       <li data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="10:30" data-reg="Ларнака">
         <a class="ev" href="#e-christmas-at-costas-argyrou-museum-2026-11-21" data-id="e-christmas-at-costas-argyrou-museum-2026-11-21">
-          <span class="ev-title">Christmas at Costas Argyrou Museum</span>
+          <span class="ev-title">Рождество в музее Аргиру</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10.5" width="16" height="9.5" rx="1"/><rect x="3" y="7" width="18" height="3.5" rx="1"/><path d="M12 7v13M12 7c-1.2-3.2-5.5-3.6-4.8-.6M12 7c1.2-3.2 5.5-3.6 4.8-.6"/></svg>Праздник</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -297,7 +297,7 @@
       </li>
       <li data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="11:00" data-reg="Айя-Напа и Протарас">
         <a class="ev" href="#e-lodka-dobra-karavi-tis-prosforas-2026-11-21" data-id="e-lodka-dobra-karavi-tis-prosforas-2026-11-21">
-          <span class="ev-title">«Лодка добра» / Karavi tis Prosforas</span>
+          <span class="ev-title">«Лодка добра»</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10.5" width="16" height="9.5" rx="1"/><rect x="3" y="7" width="18" height="3.5" rx="1"/><path d="M12 7v13M12 7c-1.2-3.2-5.5-3.6-4.8-.6M12 7c1.2-3.2 5.5-3.6 4.8-.6"/></svg>Праздник</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -307,7 +307,7 @@
       </li>
       <li data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="11:00" data-reg="Никосия">
         <a class="ev" href="#e-mall-of-cyprus-prazdnichnyy-market-2026-11-21" data-id="e-mall-of-cyprus-prazdnichnyy-market-2026-11-21">
-          <span class="ev-title">Mall of Cyprus: праздничный маркет</span>
+          <span class="ev-title">Маркет в Mall of Cyprus</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/></svg>Ярмарка</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -317,7 +317,7 @@
       </li>
       <li data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="11:00" data-reg="Пафос">
         <a class="ev" href="#e-sense-by-the-beach-christmas-market-2026-11-21" data-id="e-sense-by-the-beach-christmas-market-2026-11-21">
-          <span class="ev-title">SENSE by the Beach Christmas Market</span>
+          <span class="ev-title">SENSE by the Beach</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/></svg>Ярмарка</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -327,7 +327,7 @@
       </li>
       <li data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="15:00" data-reg="Никосия|Лимассол|Пафос">
         <a class="ev" href="#e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21" data-id="e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21">
-          <span class="ev-title">Alphamega: рождественские праздники сразу в четырёх городских точках</span>
+          <span class="ev-title">Ёлки Alphamega в 4 городах</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Ёлка и огни</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -337,7 +337,7 @@
       </li>
       <li data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-reg="Лимассол">
         <a class="ev" href="#e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21" data-id="e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21">
-          <span class="ev-title">Christmas on the Sea: зажжение ёлки</span>
+          <span class="ev-title">Christmas on the Sea</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Ёлка и огни</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -347,7 +347,7 @@
       </li>
       <li data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-reg="Никосия">
         <a class="ev" href="#e-christmas-tree-workshop-tekstilnaya-3d-elka-2026-11-21" data-id="e-christmas-tree-workshop-tekstilnaya-3d-elka-2026-11-21">
-          <span class="ev-title">Christmas Tree Workshop: текстильная 3D-ёлка</span>
+          <span class="ev-title">Текстильная 3D-ёлка</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="17.5" r="3"/><path d="M8.6 15.4 17 3.5M15.4 15.4 7 3.5"/></svg>Мастер-класс</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -357,7 +357,7 @@
       </li>
       <li data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-reg="Айя-Напа и Протарас">
         <a class="ev" href="#e-zazhzhenie-rozhdestvenskih-ogney-liopetri-2026-11-21" data-id="e-zazhzhenie-rozhdestvenskih-ogney-liopetri-2026-11-21">
-          <span class="ev-title">Зажжение рождественских огней Лиопетри</span>
+          <span class="ev-title">Зажжение огней в Лиопетри</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Ёлка и огни</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -367,7 +367,7 @@
       </li>
       <li data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="19:00" data-reg="Ларнака">
         <a class="ev" href="#e-rozhdestvenskiy-blagotvoritelnyy-koncert-rotary-2026-11-21" data-id="e-rozhdestvenskiy-blagotvoritelnyy-koncert-rotary-2026-11-21">
-          <span class="ev-title">Рождественский благотворительный концерт Rotary</span>
+          <span class="ev-title">Концерт Rotary</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="17.5" r="3"/><path d="M10.5 17.5V4l7.5 3.5"/></svg>Концерт</span>
             <span class="ev-date">сб, 21 ноя</span>
@@ -397,7 +397,7 @@
       </li>
       <li data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="14:00" data-reg="Никосия">
         <a class="ev" href="#e-festival-rozhdestvenskogo-shokolada-2026-11-22" data-id="e-festival-rozhdestvenskogo-shokolada-2026-11-22">
-          <span class="ev-title">Фестиваль рождественского шоколада</span>
+          <span class="ev-title">Фестиваль шоколада</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Ёлка и огни</span>
             <span class="ev-date">вс, 22 ноя</span>
@@ -407,7 +407,7 @@
       </li>
       <li data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="15:00" data-reg="Никосия">
         <a class="ev" href="#e-otkrytie-taynogo-doma-santy-2026-11-22" data-id="e-otkrytie-taynogo-doma-santy-2026-11-22">
-          <span class="ev-title">Открытие «Тайного дома Санты»</span>
+          <span class="ev-title">«Тайный дом Санты»</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10.5" width="16" height="9.5" rx="1"/><rect x="3" y="7" width="18" height="3.5" rx="1"/><path d="M12 7v13M12 7c-1.2-3.2-5.5-3.6-4.8-.6M12 7c1.2-3.2 5.5-3.6 4.8-.6"/></svg>Праздник</span>
             <span class="ev-date">вс, 22 ноя</span>
@@ -417,7 +417,7 @@
       </li>
       <li data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="16:00" data-reg="Лимассол">
         <a class="ev" href="#e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22" data-id="e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22">
-          <span class="ev-title">Праздничное включение огней MyMall</span>
+          <span class="ev-title">Огни в MyMall</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Ёлка и огни</span>
             <span class="ev-date">вс, 22 ноя</span>
@@ -427,7 +427,7 @@
       </li>
       <li data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="16:00" data-reg="Айя-Напа и Протарас">
         <a class="ev" href="#e-zazhzhenie-rozhdestvenskih-ogney-avgoru-2026-11-22" data-id="e-zazhzhenie-rozhdestvenskih-ogney-avgoru-2026-11-22">
-          <span class="ev-title">Зажжение рождественских огней Авгору</span>
+          <span class="ev-title">Зажжение огней в Авгору</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Ёлка и огни</span>
             <span class="ev-date">вс, 22 ноя</span>
@@ -447,7 +447,7 @@
       </li>
       <li data-kind="christmas-markets" data-start="2026-11-22" data-end="2026-11-22" data-time="17:00" data-reg="Никосия">
         <a class="ev" href="#e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22" data-id="e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22">
-          <span class="ev-title">Открытие рождественской ярмарки / Marseaux</span>
+          <span class="ev-title">Открытие ярмарки</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/></svg>Ярмарка</span>
             <span class="ev-date">вс, 22 ноя</span>
@@ -457,7 +457,7 @@
       </li>
       <li data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="17:00" data-reg="Айя-Напа и Протарас">
         <a class="ev" href="#e-zazhzhenie-rozhdestvenskih-ogney-paralimni-2026-11-22" data-id="e-zazhzhenie-rozhdestvenskih-ogney-paralimni-2026-11-22">
-          <span class="ev-title">Зажжение рождественских огней Паралимни</span>
+          <span class="ev-title">Зажжение огней в Паралимни</span>
           <span class="ev-meta">
             <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Ёлка и огни</span>
             <span class="ev-date">вс, 22 ноя</span>
