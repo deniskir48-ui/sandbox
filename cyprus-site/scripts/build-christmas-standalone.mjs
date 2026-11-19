@@ -7,9 +7,9 @@
  * Устроено так, чтобы выдержать сотни событий (дальше сюда же придёт обычная афиша):
  *  - три фильтра одной строкой каждый: «Когда» (сегодня, завтра, дни с событиями), «Где» (районы из src/data/regions.json),
  *    «Что» (виды); на телефоне строки листаются вбок;
- *  - всё, что идёт больше одного дня (парки, выставки, фестивали), — отдельной группой без привязки к дню;
- *    при выборе дня в ней остаются только те, что в этот день открыты;
- *  - однодневные события — по дням; каждая группа показывает 1–2 ряда и кнопку «Показать ещё N».
+ *  - один общий список без заголовков: сначала ближайшее; то, что уже идёт (парки, выставки), стоит как «сегодня»;
+ *    при выборе дня — однодневные события этого дня и всё долгое, что в этот день открыто;
+ *  - видно несколько рядов, дальше — кнопка «Показать ещё N».
  * Плитки одного размера: название, тип со значком, даты, город. По нажатию — карточка события (адрес #e-<id>).
  * Единственная ссылка наружу — «Открыть на карте»: «место, город, Cyprus» из src/data/map-places.json.
  * Прошедшее скрывается по дате на Кипре, статус парков считается там же.
@@ -109,15 +109,10 @@ const whenFull = (e) => {
   return `${full(e.date)}, ${WD_FULL[day(e.date).getUTCDay()]}${e.time ? `, ${e.time}` : ''}`;
 };
 
-// Сначала всё, что идёт больше одного дня, — одной группой без привязки к дню; дальше однодневные по дням.
 const isLong = (e) => !!e.end_date && e.end_date !== e.date;
-const longList = list.filter(isLong);
-const dayList = list.filter((e) => !isLong(e));
-const DAY_TITLE = (iso) => { const w = WD_FULL[day(iso).getUTCDay()]; return `${w[0].toUpperCase()}${w.slice(1)}, ${full(iso)}`; };
-const days = [...new Set(dayList.map((e) => e.date))];
 
 const card = (e) => `
-      <li data-kind="${kindOf(e)[0]}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}>
+      <li data-kind="${kindOf(e)[0]}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}>
         <a class="ev" href="#${e.id}" data-id="${e.id}">
           <span class="ev-title">${esc(e.title)}</span>
           <span class="ev-meta">
@@ -127,13 +122,6 @@ const card = (e) => `
           </span>
         </a>
       </li>`;
-const section = (id, title, items, attrs = '', rel = false) => `
-    <section class="sec" id="${id}"${attrs} aria-label="${esc(title)}">
-      <h2 class="sec-h">${esc(title)}${rel ? ' <span class="rel" hidden></span>' : ''}</h2>
-      <ul class="evs">${items.map(card).join('')}
-      </ul>
-      <button type="button" class="more" hidden></button>
-    </section>`;
 
 // Данные для карточки события — только публичные поля.
 const detail = Object.fromEntries(list.map((e) => [e.id, {
@@ -152,7 +140,7 @@ const html = `<title>Рождество на Кипре</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap">
 <style>
   /* Вечерний Кипр в декабре: ночное небо, гирлянда, голубой и оранжевый «Гида по Кипру». Сознательно одна тёмная тема.
-     Раскладка: заголовок → три строки фильтров → «Идут не один день» → дни; карточка события открывается поверх списка. */
+     Раскладка: заголовок → три строки фильтров → один список плиток; карточка события открывается поверх списка. */
   :root {
     color-scheme: dark;
     --night: #0a1120; --card: #111a2e; --card-hi: #16223b; --line: #22304d; --text: #eef3f9; --muted: #9fb0c8;
@@ -189,15 +177,11 @@ const html = `<title>Рождество на Кипре</title>
   .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0a1120; }
   .chip[aria-pressed="true"] .ic { color: inherit; }
 
-  .sec { margin-top: 28px; }
-  .sec[hidden] { display: none; }
-  .sec-h { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-family: var(--display); font-weight: 700; font-size: 1.05rem; line-height: 1.25; }
-  @media (min-width: 640px) { .sec-h { font-size: 1.2rem; } }
-  .rel { font-family: var(--body); font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--text); color: var(--night); }
-  .more { display: block; width: 100%; max-width: 340px; margin: 12px auto 0; padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--body); cursor: pointer; }
+  #list { margin-top: 20px; }
+  .more { display: block; width: 100%; max-width: 340px; margin: 14px auto 0; padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--body); cursor: pointer; }
   .more[hidden] { display: none; }
   .more:hover { border-color: #3a4d74; background: var(--card); }
-  .empty { margin: 32px 0 0; color: var(--muted); }
+  .empty { margin: 12px 0 0; color: var(--muted); }
   .empty button { font: 600 1rem var(--body); color: var(--sky); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 
   /* Плитки одного размера: название (до 3 строк), под ним тип, даты, город. 2 в ряд на телефоне, 3–4 на компьютере. */
@@ -266,7 +250,10 @@ const html = `<title>Рождество на Кипре</title>
     </div>
   </div>
 
-  <div id="list">${section('s-long', 'Идут не один день', longList, ' data-long="1"')}${days.map((iso) => section(`d-${iso}`, DAY_TITLE(iso), dayList.filter((e) => e.date === iso), ` data-date="${iso}"`, true)).join('')}
+  <div id="list">
+    <ul class="evs" id="evs">${list.map(card).join('')}
+    </ul>
+    <button type="button" class="more" id="more" hidden></button>
     <p class="empty" id="empty" hidden>Ничего не нашлось. <button type="button" id="reset">Сбросить фильтры</button></p>
   </div>
 
@@ -313,14 +300,9 @@ const html = `<title>Рождество на Кипре</title>
       return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end), now: true };
     };
 
-    // Прошедшее убираем; у ближайших дней — «сегодня» / «завтра».
-    all('#list li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
-    var items = all('#list li');
-    var sections = all('.sec');
-    sections.forEach(function (sec) {
-      var r = sec.querySelector('.rel'), dt = sec.dataset.date;
-      if (r && (dt === today || dt === tomorrow)) { r.textContent = dt === today ? 'сегодня' : 'завтра'; r.hidden = false; }
-    });
+    // Прошедшее убираем.
+    all('#evs > li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
+    var items = all('#evs > li'), list = el('evs');
 
     // «Когда»: сегодня, завтра и дальше дни, в которые есть однодневные события.
     var dates = {}; dates[today] = 1; dates[tomorrow] = 1;
@@ -333,7 +315,7 @@ const html = `<title>Рождество на Кипре</title>
       dateRow.appendChild(b);
     });
 
-    var state = { date: '', reg: '', kind: '' }, opened = {};
+    var state = { date: '', reg: '', kind: '' }, shown = 0;
     var match = function (li, s) {
       if (s.kind && li.dataset.kind !== s.kind) return false;
       if (s.reg && li.dataset.reg.split('|').indexOf(s.reg) < 0) return false;
@@ -355,22 +337,26 @@ const html = `<title>Рождество на Кипре</title>
       tiles.forEach(function (t) { if (t.offsetParent) h = Math.max(h, t.getBoundingClientRect().height); });
       if (h) tiles.forEach(function (t) { t.style.minHeight = Math.ceil(h) + 'px'; });
     };
-    // Сколько плиток показывать в группе до «Показать ещё»: 1–2 ряда, на телефоне — 4 и 6.
-    var cols = function () { return matchMedia('(min-width: 900px)').matches ? 4 : matchMedia('(min-width: 640px)').matches ? 3 : 2; };
-    function render() {
-      var c = cols(), any = false;
-      sections.forEach(function (sec) {
-        var lis = all('li', sec), vis = lis.filter(function (li) { return match(li, state); });
-        var limit = sec.dataset.long ? (c === 2 ? 4 : c) : (c === 2 ? 6 : c * 2);
-        // Раскрыто, выбран день или под кнопкой осталось бы 1–2 плитки — показываем всё.
-        if (opened[sec.id] || (state.date && !sec.dataset.long) || vis.length - limit <= 2) limit = Infinity;
-        lis.forEach(function (li) { li.hidden = true; });
-        vis.forEach(function (li, i) { li.hidden = i >= limit; });
-        var rest = vis.length - Math.min(vis.length, limit), more = sec.querySelector('.more');
-        more.hidden = rest <= 0; if (rest > 0) more.textContent = 'Показать ещё ' + rest;
-        sec.hidden = !vis.length; if (vis.length) any = true;
-      });
-      el('empty').hidden = any;
+    // Порядок: сначала ближайшее. Уже идущее (парк открыт с 13-го) стоит как «сегодня» или как выбранный день;
+    // в один день — сначала однодневные по времени, потом долгие.
+    var sortKey = function (li) {
+      var from = state.date || today, eff = li.dataset.start < from ? from : li.dataset.start;
+      return eff + (li.dataset.long ? '1' : '0') + (li.dataset.time || '00:00') + li.dataset.start;
+    };
+    // Сколько плиток видно до «Показать ещё»: 6 рядов на телефоне, 4 на компьютере; кнопка добавляет столько же.
+    var page = function () { return matchMedia('(min-width: 900px)').matches ? 16 : 12; };
+    function render(keep) {
+      items.sort(function (a, b) { var x = sortKey(a), y = sortKey(b); return x < y ? -1 : x > y ? 1 : 0; });
+      items.forEach(function (li) { list.appendChild(li); });
+      var vis = items.filter(function (li) { return match(li, state); });
+      if (!keep) shown = page();
+      // Под кнопкой осталось бы 1–2 плитки — показываем всё.
+      var limit = vis.length - shown <= 2 ? vis.length : shown;
+      items.forEach(function (li) { li.hidden = true; });
+      vis.forEach(function (li, i) { li.hidden = i >= limit; });
+      var rest = vis.length - limit, more = el('more');
+      more.hidden = rest <= 0; if (rest > 0) more.textContent = 'Показать ещё ' + Math.min(rest, page());
+      el('empty').hidden = vis.length > 0;
       equalize();
     }
     all('.filters .row').forEach(function (row) {
@@ -381,7 +367,7 @@ const html = `<title>Рождество на Кипре</title>
         state[keyName] = c.dataset.v; render();
       });
     });
-    sections.forEach(function (sec) { sec.querySelector('.more').addEventListener('click', function () { opened[sec.id] = true; render(); }); });
+    el('more').addEventListener('click', function () { shown += page(); render(true); });
     el('reset').addEventListener('click', function () {
       state = { date: '', reg: '', kind: '' };
       all('.filters .row').forEach(function (row) { all('.chip', row).forEach(function (x, i) { x.setAttribute('aria-pressed', String(i === 0)); }); });
@@ -389,7 +375,7 @@ const html = `<title>Рождество на Кипре</title>
     });
     render();
     var raf = 0;
-    window.addEventListener('resize', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); });
+    window.addEventListener('resize', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(equalize); });
     // Шрифты приходят позже первого расчёта — пересчитываем, когда они загрузятся.
     if (document.fonts) { document.fonts.addEventListener('loadingdone', equalize); if (document.fonts.ready) document.fonts.ready.then(equalize); }
     window.addEventListener('load', equalize);
