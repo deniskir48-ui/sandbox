@@ -52,6 +52,20 @@ const kindOf = (e) => KINDS.find(([t]) => e.tags.includes(t)) ?? KINDS[4];
 // Тип на плитке: вид из фильтра, а для «Мастер-классы и другое» — тип события из Афиши.
 const OTHER_TYPES = { workshop: 'Мастер-класс', concert: 'Концерт', kids: 'Детям', theatre: 'Театр и шоу' };
 const typeOf = (e, i = 2) => (kindOf(e)[0] === 'christmas-other' ? OTHER_TYPES[e.type] ?? 'Праздник' : kindOf(e)[i]);
+// Значки типов — свои, линейные, 24×24; цвет берут от текста.
+const ICONS = {
+  park: '<circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/>',
+  village: '<path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/>',
+  tree: '<path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/>',
+  market: '<path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/>',
+  workshop: '<circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="17.5" r="3"/><path d="M8.6 15.4 17 3.5M15.4 15.4 7 3.5"/>',
+  concert: '<circle cx="7.5" cy="17.5" r="3"/><path d="M10.5 17.5V4l7.5 3.5"/>',
+  kids: '<path d="M12 16c-3.5 0-6-3.4-6-7a6 6 0 0 1 12 0c0 3.6-2.5 7-6 7zM11 17.5h2L12 16zM12 17.5c-1.5 1.5 1.5 2.5 0 4.5"/>',
+  holiday: '<rect x="4" y="10.5" width="16" height="9.5" rx="1"/><rect x="3" y="7" width="18" height="3.5" rx="1"/><path d="M12 7v13M12 7c-1.2-3.2-5.5-3.6-4.8-.6M12 7c1.2-3.2 5.5-3.6 4.8-.6"/>',
+};
+const KIND_ICON = { 'christmas-parks': 'park', 'christmas-villages': 'village', 'christmas-lights': 'tree', 'christmas-markets': 'market', 'christmas-other': 'workshop' };
+const iconOf = (e) => (kindOf(e)[0] === 'christmas-other' ? (ICONS[e.type] ? e.type : 'holiday') : KIND_ICON[kindOf(e)[0]]);
+const svg = (k) => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]}</svg>`;
 const kinds = KINDS.map(([t, label]) => ({ t, label, n: list.filter((e) => kindOf(e)[0] === t).length })).filter((k) => k.n);
 
 // Даты на плитке: «сб, 21 ноя», «20–22 ноя», «20 ноя – 17 янв».
@@ -74,7 +88,7 @@ const card = (e) => {
       <a class="ev${park ? ' is-park' : ''}" href="#${e.id}" data-id="${e.id}">
         <span class="ev-title">${esc(e.title)}</span>
         <span class="ev-meta">
-          <span class="ev-type">${esc(typeOf(e))}</span>
+          <span class="ev-type">${svg(iconOf(e))}${esc(typeOf(e))}</span>
           <span class="ev-date">${esc(dateShort(e))}</span>
           <span class="ev-city">${esc(e.city)}</span>
         </span>
@@ -84,7 +98,7 @@ const card = (e) => {
 
 // Данные для карточки события — только публичные поля.
 const detail = Object.fromEntries(list.map((e) => [e.id, {
-  kind: typeOf(e, 3), title: e.title, when: whenFull(e), place: `${e.city}${e.venue ? ` · ${e.venue}` : ''}`,
+  kind: typeOf(e, 3), icon: iconOf(e), title: e.title, when: whenFull(e), place: `${e.city}${e.venue ? ` · ${e.venue}` : ''}`,
   summary: e.summary ?? '', hours: e.hours ?? '', price: e.price ?? '', map: mapUrl(e),
   start: e.date, end: e.end_date ?? e.date, park: e.tags.includes('christmas-parks'),
 }]));
@@ -121,7 +135,7 @@ const html = `<title>Рождество на Кипре</title>
   h1 em { font-style: normal; color: var(--warm); }
 
   .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
-  .chip { font: 600 .9rem var(--body); color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+  .chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .9rem var(--body); color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
   .chip em { font-style: normal; color: var(--muted); font-weight: 500; }
   .chip[aria-pressed="true"] { background: var(--sky); border-color: var(--sky); color: #0a1120; }
   .chip[aria-pressed="true"] em { color: inherit; opacity: .7; }
@@ -138,7 +152,9 @@ const html = `<title>Рождество на Кипре</title>
   @media (min-width: 640px) { .ev-title { font-size: 1rem; } }
   .ev-meta { display: grid; gap: 3px; min-width: 0; }
   .ev-meta > span { overflow-wrap: anywhere; }
-  .ev-type { font-size: .78rem; font-weight: 700; color: var(--sky); }
+  .ic { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+  .ev-type { display: flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 700; color: var(--sky); }
+  .ev-type .ic { width: 18px; height: 18px; }
   .is-park .ev-type { color: var(--warm); }
   .ev-date { font-size: .88rem; font-weight: 600; font-variant-numeric: tabular-nums; }
   .ev-city { font-size: .86rem; color: var(--muted); }
@@ -151,7 +167,7 @@ const html = `<title>Рождество на Кипре</title>
     border-radius: 22px 22px 0 0; padding: 22px max(20px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px)); display: grid; gap: 12px; }
   @media (min-width: 700px) { .shade { align-items: center; } .sheet { border-radius: 22px; padding: 26px 28px; } }
   .close { position: absolute; top: 12px; right: 12px; width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--line); background: var(--night); color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer; }
-  .s-kind { font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--sky); padding-right: 44px; }
+  .s-kind { display: flex; align-items: center; gap: 8px; font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--sky); padding-right: 44px; }
   .sheet h2 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; line-height: 1.2; margin: 0; padding-right: 36px; text-wrap: balance; }
   .s-status { justify-self: start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--sun) 20%, transparent); color: #ffb488; }
   .s-status.now { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
@@ -178,7 +194,7 @@ const html = `<title>Рождество на Кипре</title>
 
   <div class="chips" role="group" aria-label="Что показать">
     <button type="button" class="chip" id="k-all" data-kind="" aria-pressed="true">Все <em>${list.length}</em></button>
-    ${kinds.map((k) => `<button type="button" class="chip" id="k-${k.t}" data-kind="${k.t}" aria-pressed="false">${k.label} <em>${k.n}</em></button>`).join('\n    ')}
+    ${kinds.map((k) => `<button type="button" class="chip" id="k-${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(KIND_ICON[k.t])}${k.label} <em>${k.n}</em></button>`).join('\n    ')}
   </div>
   <ul class="evs" id="evs">${list.map(card).join('')}
   </ul>
@@ -205,6 +221,7 @@ const html = `<title>Рождество на Кипре</title>
   (function () {
     var DATA = ${JSON.stringify(detail)};
     var MON = ${JSON.stringify(MON_FULL)};
+    var ICONS = ${JSON.stringify(Object.fromEntries(Object.keys(ICONS).map((k) => [k, svg(k)])))};
     var DAYS = ['в воскресенье', 'в понедельник', 'во вторник', 'в среду', 'в четверг', 'в пятницу', 'в субботу'];
     var today;
     try { today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Nicosia' }).format(new Date()); } catch (e) { today = new Date().toISOString().slice(0, 10); }
@@ -241,7 +258,7 @@ const html = `<title>Рождество на Кипре</title>
     function show() {
       var id = location.hash.slice(1), x = DATA[id];
       if (!x) { shade.hidden = true; document.body.classList.remove('locked'); if (last) { last.focus(); last = null; } return; }
-      el('s-kind').textContent = x.kind;
+      el('s-kind').innerHTML = ICONS[x.icon]; el('s-kind').appendChild(document.createTextNode(x.kind));
       el('s-title').textContent = x.title;
       var st = status(x), s = el('s-status');
       s.hidden = !st; if (st) { s.textContent = st.text; s.classList.toggle('now', st.now); }
