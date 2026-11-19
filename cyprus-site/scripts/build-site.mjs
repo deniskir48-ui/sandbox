@@ -155,7 +155,7 @@ const GARLAND = `  <svg class="garland" viewBox="0 0 800 50" preserveAspectRatio
 const TREE_SVG = `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS.tree}</svg>`;
 
 const XMAS = {
-  nav: 'Рождество на Кипре', path: '/cyprus/christmas/', og: 'standalone/og-christmas.png',
+  nav: 'Рождество на Кипре', tab: 'Рождество', tabIcon: 'tree', artifactUrl: 'https://claude.ai/artifact/LCR4o4541mrEkLVJNQg7Gi', path: '/cyprus/christmas/', og: 'standalone/og-christmas.png',
   title: 'Рождество на Кипре', ogTitle: 'Рождество на Кипре — сезон 2026–2027',
   description: 'Рождественские парки, деревни, ярмарки и праздники Кипра: даты, места и карта.',
   kicker: 'Сезон 2026–2027', h1: 'Рождество <em>на&nbsp;Кипре</em>', garland: true,
@@ -166,7 +166,7 @@ const XMAS = {
   iconOf: (e) => (xmasKind(e)[0] === 'christmas-other' ? (ICONS[e.type] ? e.type : 'holiday') : KIND_ICON[xmasKind(e)[0]]),
 };
 const AFISHA = {
-  nav: 'Афиша', path: '/cyprus/afisha/', og: 'standalone/og-afisha.png',
+  nav: 'Афиша', tab: 'Афиша', tabIcon: 'concert', artifactUrl: 'https://claude.ai/artifact/7UMwUiLpWMgKEsAppxyroe', path: '/cyprus/afisha/', og: 'standalone/og-afisha.png',
   title: 'Афиша Кипра', ogTitle: 'Афиша Кипра — концерты, спектакли, фестивали',
   description: 'Концерты, спектакли, выставки, детские события и фестивали Кипра: даты, места и карта.',
   kicker: 'Что происходит', h1: 'Афиша <em>Кипра</em>', garland: false,
@@ -184,7 +184,7 @@ const AFISHA = {
   },
 };
 const PAGES = [AFISHA, XMAS];
-const XMAS_ARTIFACT = 'https://claude.ai/artifact/LCR4o4541mrEkLVJNQg7Gi';
+const XMAS_ARTIFACT = XMAS.artifactUrl;
 
 function buildPage(cfg, { artifact = false } = {}) {
   const list = [...cfg.events].sort((a, b) => key(a).localeCompare(key(b)));
@@ -252,7 +252,24 @@ function buildPage(cfg, { artifact = false } = {}) {
        фестивали — жёлтый, спорт и прогулки — зелёный, остальное — серо-голубой. */
     [data-kind="g-music"] { --c: #8fd0f5; } [data-kind="g-stage"] { --c: #ffa463; } [data-kind="g-kids"] { --c: #ff9ec4; }
     [data-kind="g-learn"] { --c: #c4b0ff; } [data-kind="g-fest"] { --c: #ffd166; } [data-kind="g-active"] { --c: #6fe3a5; } [data-kind="g-other"] { --c: #a9b8cc; }
-    .top { height: 26px; }
+    .top { height: 14px; }
+    /* Верхняя полоса с разделами: всегда под рукой, при прокрутке остаётся сверху. */
+    .topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding-block: 10px; background: var(--night); border-bottom: 1px solid transparent; }
+    .topbar.stuck { border-bottom-color: var(--line); }
+    .tb-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text); text-decoration: none; font-family: var(--display); font-weight: 600; font-size: .86rem; white-space: nowrap; }
+    @media (min-width: 640px) { .tb-brand { font-size: .95rem; } }
+    .tb-brand svg { flex: none; }
+    @media (max-width: 379px) { .tb-brand span { display: none; } }
+    .tabs { display: flex; gap: 3px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
+    .tabs a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
+    @media (min-width: 640px) { .tabs a { padding: 7px 13px; font-size: .9rem; } }
+    .tabs a .ic { width: 16px; height: 16px; color: var(--c, var(--sky)); }
+    @media (max-width: 419px) { .tabs a .ic { display: none; } }  /* на узком телефоне — только слова, чтобы название не прижималось */
+    .tabs a:hover { color: var(--text); }
+    .tabs a[aria-current] { background: var(--text); color: var(--night); }
+    .tabs a[aria-current] .ic { color: inherit; }
+    .tb-brand:focus-visible, .tabs a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
     .xbanner { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; padding: 12px 16px; border-radius: 16px; text-decoration: none; color: var(--text);
       background: linear-gradient(100deg, #17284a, #0f1a30); border: 1px solid #2b3f66; }
     .xbanner[hidden] { display: none; }
@@ -346,6 +363,12 @@ function buildPage(cfg, { artifact = false } = {}) {
   </style>
   
   <div class="wrap" lang="ru">
+  <nav class="topbar" aria-label="Разделы">
+    <a class="tb-brand" href="${artifact ? AFISHA.artifactUrl + '" target="_blank" rel="noopener' : AFISHA.path}"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg><span>${esc(SITE_NAME)}</span></a>
+    <div class="tabs">${PAGES.map((p) => p === cfg
+      ? `<a href="#" aria-current="page" data-kind="${p === XMAS ? 'christmas-lights' : ''}">${svg(p.tabIcon)}${esc(p.tab)}</a>`
+      : `<a href="${artifact ? p.artifactUrl + '" target="_blank" rel="noopener' : p.path}" data-kind="${p === XMAS ? 'christmas-lights' : ''}">${svg(p.tabIcon)}${esc(p.tab)}</a>`).join('')}</div>
+  </nav>
   ${cfg.garland ? GARLAND : '  <div class="top"></div>\n'}  <header>
       <p class="kicker">${cfg.kicker}</p>
       <h1>${cfg.h1}</h1>
@@ -414,7 +437,11 @@ function buildPage(cfg, { artifact = false } = {}) {
         return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end), now: true };
       };
   
-      // Прошедшее убираем; баннер Рождества — до конца сезона.
+      // Полоса с разделами получает нижнюю линию, когда страницу прокрутили.
+    var bar = document.querySelector('.topbar');
+    if (bar) { var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 4); }; window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
+    all('.tabs a[aria-current]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); });
+    // Прошедшее убираем; баннер Рождества — до конца сезона.
       all('.xbanner').forEach(function (b) { if (b.dataset.until < today) b.hidden = true; });
       all('#evs > li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
       var items = all('#evs > li'), list = el('evs');

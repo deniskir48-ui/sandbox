@@ -52,7 +52,24 @@
        фестивали — жёлтый, спорт и прогулки — зелёный, остальное — серо-голубой. */
     [data-kind="g-music"] { --c: #8fd0f5; } [data-kind="g-stage"] { --c: #ffa463; } [data-kind="g-kids"] { --c: #ff9ec4; }
     [data-kind="g-learn"] { --c: #c4b0ff; } [data-kind="g-fest"] { --c: #ffd166; } [data-kind="g-active"] { --c: #6fe3a5; } [data-kind="g-other"] { --c: #a9b8cc; }
-    .top { height: 26px; }
+    .top { height: 14px; }
+    /* Верхняя полоса с разделами: всегда под рукой, при прокрутке остаётся сверху. */
+    .topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding-block: 10px; background: var(--night); border-bottom: 1px solid transparent; }
+    .topbar.stuck { border-bottom-color: var(--line); }
+    .tb-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text); text-decoration: none; font-family: var(--display); font-weight: 600; font-size: .86rem; white-space: nowrap; }
+    @media (min-width: 640px) { .tb-brand { font-size: .95rem; } }
+    .tb-brand svg { flex: none; }
+    @media (max-width: 379px) { .tb-brand span { display: none; } }
+    .tabs { display: flex; gap: 3px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
+    .tabs a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
+    @media (min-width: 640px) { .tabs a { padding: 7px 13px; font-size: .9rem; } }
+    .tabs a .ic { width: 16px; height: 16px; color: var(--c, var(--sky)); }
+    @media (max-width: 419px) { .tabs a .ic { display: none; } }  /* на узком телефоне — только слова, чтобы название не прижималось */
+    .tabs a:hover { color: var(--text); }
+    .tabs a[aria-current] { background: var(--text); color: var(--night); }
+    .tabs a[aria-current] .ic { color: inherit; }
+    .tb-brand:focus-visible, .tabs a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
     .xbanner { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; padding: 12px 16px; border-radius: 16px; text-decoration: none; color: var(--text);
       background: linear-gradient(100deg, #17284a, #0f1a30); border: 1px solid #2b3f66; }
     .xbanner[hidden] { display: none; }
@@ -148,6 +165,10 @@
 <body>
   
   <div class="wrap" lang="ru">
+  <nav class="topbar" aria-label="Разделы">
+    <a class="tb-brand" href="/cyprus/afisha/"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#9fd5f2"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#0e1116"/><circle cx="16" cy="13" r="5.8" fill="#fff"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#f26b21"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#0e1116"/></svg><span>City Compas</span></a>
+    <div class="tabs"><a href="#" aria-current="page" data-kind=""><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="17.5" r="3"/><path d="M10.5 17.5V4l7.5 3.5"/></svg>Афиша</a><a href="/cyprus/christmas/" data-kind="christmas-lights"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Рождество</a></div>
+  </nav>
     <div class="top"></div>
   <header>
       <p class="kicker">Что происходит</p>
@@ -1978,7 +1999,11 @@
         return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end), now: true };
       };
   
-      // Прошедшее убираем; баннер Рождества — до конца сезона.
+      // Полоса с разделами получает нижнюю линию, когда страницу прокрутили.
+    var bar = document.querySelector('.topbar');
+    if (bar) { var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 4); }; window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
+    all('.tabs a[aria-current]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); });
+    // Прошедшее убираем; баннер Рождества — до конца сезона.
       all('.xbanner').forEach(function (b) { if (b.dataset.until < today) b.hidden = true; });
       all('#evs > li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
       var items = all('#evs > li'), list = el('evs');
