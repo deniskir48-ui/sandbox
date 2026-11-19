@@ -82,6 +82,8 @@ def kind_of(title, what):
         return "christmas-villages", "festival"
     if re.search(r"ярмарк|маркет|market|bazaar|базар", t):
         return "christmas-markets", "festival"
+    if re.search(r"фестивал|festival", t):  # фестиваль с зажжением огней — всё равно фестиваль, а не «зажжение огней»
+        return "christmas-other", "festival"
     if re.search(r"зажжен|огн|ёлк|елк|lighting", t + " " + w):
         return "christmas-lights", "festival"
     if re.search(r"концерт", t):

@@ -29,7 +29,7 @@ const WD_FULL = ['воскресенье', 'понедельник', 'вторн
 const KINDS = [
   ['christmas-parks', 'Парки', 'Парк', 'Рождественский парк'],
   ['christmas-villages', 'Деревни', 'Деревня', 'Рождественская деревня'],
-  ['christmas-lights', 'Ёлки и огни', 'Ёлка и огни', 'Ёлка и огни'],
+  ['christmas-lights', 'Зажжение огней', 'Зажжение огней', 'Зажжение огней'],
   ['christmas-markets', 'Ярмарки', 'Ярмарка', 'Ярмарка'],
   ['christmas-other', 'Мастер-классы и другое', 'Праздник', 'Праздник'],
 ];
@@ -164,7 +164,7 @@ const html = `<title>Рождество на Кипре</title>
   h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 7.5vw, 3.4rem); line-height: 1.06; margin: 10px 0 0; text-wrap: balance; }
   h1 em { font-style: normal; color: var(--warm); }
 
-  /* У каждого вида свой цвет: парки — оранжевый, деревни — голубой, ёлки — зелёный, ярмарки — жёлтый, остальное — сиреневый. */
+  /* У каждого вида свой цвет: парки — оранжевый, деревни — голубой, зажжение огней — зелёный, ярмарки — жёлтый, остальное — сиреневый. */
   [data-kind="christmas-parks"] { --c: #ffa463; } [data-kind="christmas-villages"] { --c: #8fd0f5; } [data-kind="christmas-lights"] { --c: #6fe3a5; }
   [data-kind="christmas-markets"] { --c: #ffd166; } [data-kind="christmas-other"] { --c: #c4b0ff; }
 
