@@ -10,7 +10,8 @@
  *  - один общий список без заголовков: сначала ближайшее; то, что уже идёт (парки, выставки), стоит как «сегодня»;
  *    при выборе дня — однодневные события этого дня и всё долгое, что в этот день открыто;
  *  - видно несколько рядов, дальше — кнопка «Показать ещё N».
- * Плитки одного размера: название (short_title, если задано; полное — в карточке), тип со значком, даты, город. По нажатию — карточка события (адрес #e-<id>).
+ * Плитки одного размера: понятное название (display_title, если задано), тип со значком, даты, город.
+ * В карточке события — то же название и строкой ниже исходное (как в афише организатора). По нажатию — карточка события (адрес #e-<id>).
  * Единственная ссылка наружу — «Открыть на карте»: «место, город, Cyprus» из src/data/map-places.json.
  * Прошедшее скрывается по дате на Кипре, статус парков считается там же.
  */
@@ -114,7 +115,7 @@ const isLong = (e) => !!e.end_date && e.end_date !== e.date;
 const card = (e) => `
       <li data-kind="${kindOf(e)[0]}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}${e.open_days?.length ? ` data-days="${e.open_days.join(' ')}"` : ''}>
         <a class="ev" href="#${e.id}" data-id="${e.id}">
-          <span class="ev-title">${esc(e.short_title ?? e.title)}</span>
+          <span class="ev-title">${esc(e.display_title ?? e.title)}</span>
           <span class="ev-meta">
             <span class="ev-type">${svg(iconOf(e))}${esc(typeOf(e))}</span>
             <span class="ev-date">${esc(dateShort(e))}</span>
@@ -125,7 +126,7 @@ const card = (e) => `
 
 // Данные для карточки события — только публичные поля.
 const detail = Object.fromEntries(list.map((e) => [e.id, {
-  kind: typeOf(e, 3), icon: iconOf(e), group: kindOf(e)[0], title: e.title, when: whenFull(e), place: `${e.city}${e.venue ? ` · ${e.venue}` : ''}`,
+  kind: typeOf(e, 3), icon: iconOf(e), group: kindOf(e)[0], title: e.display_title ?? e.title, orig: e.display_title && e.display_title !== e.title ? e.title : '', when: whenFull(e), place: `${e.city}${e.venue ? ` · ${e.venue}` : ''}`,
   summary: e.summary ?? '', hours: e.hours ?? '', price: e.price ?? '', map: mapUrl(e),
   start: e.date, end: e.end_date ?? e.date, park: e.tags.includes('christmas-parks'),
 }]));
@@ -219,6 +220,7 @@ const html = `<title>Рождество на Кипре</title>
   .close { position: absolute; top: 12px; right: 12px; width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--line); background: var(--night); color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer; }
   .s-kind { display: flex; align-items: center; gap: 8px; font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--c, var(--sky)); padding-right: 44px; }
   .sheet h2 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; line-height: 1.2; margin: 0; padding-right: 36px; text-wrap: balance; }
+  .s-orig { margin: -6px 0 0; color: var(--muted); font-size: .9rem; }
   .s-status { justify-self: start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--sun) 20%, transparent); color: #ffb488; }
   .s-status.now { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
   .s-facts { margin: 0; display: grid; gap: 8px; }
@@ -267,6 +269,7 @@ const html = `<title>Рождество на Кипре</title>
     <button type="button" class="close" id="s-close" aria-label="Закрыть">×</button>
     <span class="s-kind" id="s-kind"></span>
     <h2 id="s-title"></h2>
+    <p class="s-orig" id="s-orig" hidden></p>
     <span class="s-status" id="s-status" hidden></span>
     <dl class="s-facts" id="s-facts"></dl>
     <p class="s-summary" id="s-summary"></p>
@@ -398,6 +401,7 @@ const html = `<title>Рождество на Кипре</title>
       if (!x) { shade.hidden = true; document.body.classList.remove('locked'); if (last) { last.focus(); last = null; } return; }
       el('sheet').dataset.kind = x.group; el('s-kind').innerHTML = ICONS[x.icon]; el('s-kind').appendChild(document.createTextNode(x.kind));
       el('s-title').textContent = x.title;
+      el('s-orig').textContent = x.orig; el('s-orig').hidden = !x.orig;
       var st = status(x), s = el('s-status');
       s.hidden = !st; if (st) { s.textContent = st.text; s.classList.toggle('now', st.now); }
       var f = el('s-facts'); f.innerHTML = fact('Когда', x.when) + fact('Где', x.place) + fact('Часы', x.hours) + fact('Стоимость', x.price);

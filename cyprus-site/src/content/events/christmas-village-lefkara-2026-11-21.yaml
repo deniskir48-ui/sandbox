@@ -4,6 +4,7 @@
 # (на общей странице visitcyprus «14-15/12» — опечатка: в программах Киперунды и Фикарду — сб 12 и вс 13 декабря).
 # Без пометки christmas-import — повторный импорт таблицы этот файл не перезапишет.
 title: "Christmas Village: Лефкара"
+display_title: "Рождественская деревня Лефкара"
 status: published
 type: festival
 priority: 3
