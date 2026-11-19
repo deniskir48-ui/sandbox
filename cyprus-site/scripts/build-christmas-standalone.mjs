@@ -3,10 +3,15 @@
  * Отдельная страница «Рождество на Кипре» — одним файлом, без остального сайта (DEC-W38).
  *   node scripts/build-christmas-standalone.mjs        → standalone/christmas.html
  * Данные — те же события Афиши с метками christmas-* (scripts/import-christmas.py), только status: published.
- * Список — плитки одного размера (2 в ряд на телефоне, 3–4 на компьютере): название, тип, даты, город.
- * По нажатию открывается карточка события
- * (адрес #e-<id>, его можно отправить). Единственная ссылка наружу — «Открыть на карте»: запрос по-английски
- * «место, город, Cyprus» из src/data/map-places.json, иначе Google находит одноимённые места в Испании и Греции.
+ *
+ * Устроено так, чтобы выдержать сотни событий (дальше сюда же придёт обычная афиша):
+ *  - три фильтра одной строкой каждый: «Когда» (сегодня, завтра, дни с событиями), «Где» (районы из src/data/regions.json),
+ *    «Что» (виды); на телефоне строки листаются вбок;
+ *  - всё, что идёт больше одного дня (парки, выставки, фестивали), — отдельной группой без привязки к дню;
+ *    при выборе дня в ней остаются только те, что в этот день открыты;
+ *  - однодневные события — по дням; каждая группа показывает 1–2 ряда и кнопку «Показать ещё N».
+ * Плитки одного размера: название, тип со значком, даты, город. По нажатию — карточка события (адрес #e-<id>).
+ * Единственная ссылка наружу — «Открыть на карте»: «место, город, Cyprus» из src/data/map-places.json.
  * Прошедшее скрывается по дате на Кипре, статус парков считается там же.
  */
 import fs from 'node:fs';
@@ -28,11 +33,13 @@ const KINDS = [
   ['christmas-other', 'Мастер-классы и другое', 'Праздник', 'Праздник'],
 ];
 const PLACES = JSON.parse(fs.readFileSync(path.resolve('src/data/map-places.json'), 'utf8'));
+const REG = JSON.parse(fs.readFileSync(path.resolve('src/data/regions.json'), 'utf8'));
 
 const esc = (s = '') => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const day = (iso) => new Date(iso + 'T12:00:00Z');
 const short = (iso) => `${day(iso).getUTCDate()} ${MON[day(iso).getUTCMonth()]}`;
 const full = (iso) => `${day(iso).getUTCDate()} ${MON_FULL[day(iso).getUTCMonth()]}`;
+
 // Ссылка на карту только по Кипру: известное место — «место, город, Cyprus», иначе — город или деревня.
 // Города нет в словаре (например, «Несколько городов») — кнопки нет.
 const noMap = [];
@@ -41,6 +48,21 @@ const mapUrl = (e) => {
   if (!city) { noMap.push(e.city); return null; }
   const q = [PLACES.venues[e.venue ?? ''], city, 'Cyprus'].filter(Boolean).join(', ');
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+};
+
+// Районы для фильтра «Где» — те же правила, что regionsOf() в src/data/regions.ts (деревни сводятся к районам).
+// «Несколько городов» — берём районы из поля «место» («Никосия, Лимассол, Пафос · …»).
+const regionsOf = (place) => {
+  if (!place) return [];
+  if (REG.places[place]) return [REG.places[place]];
+  const out = new Set();
+  for (const part of place.split(/\s*(?:[,;/]|\sи\s)\s*/)) if (REG.places[part] && REG.places[part] !== REG.unknown) out.add(REG.places[part]);
+  for (const [kw, r] of REG.keywords) if (place.toLowerCase().includes(kw)) out.add(r);
+  return [...out];
+};
+const regionsOfEvent = (e) => {
+  const own = regionsOf(e.city).filter((r) => r !== REG.unknown);
+  return own.length ? own : regionsOf(e.venue).filter((r) => r !== REG.unknown);
 };
 
 const events = fs.readdirSync(DIR).filter((f) => f.endsWith('.yaml'))
@@ -68,6 +90,12 @@ const iconOf = (e) => (kindOf(e)[0] === 'christmas-other' ? (ICONS[e.type] ? e.t
 const svg = (k) => `<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS[k]}</svg>`;
 const kinds = KINDS.map(([t, label]) => ({ t, label, n: list.filter((e) => kindOf(e)[0] === t).length })).filter((k) => k.n);
 
+// Районы для фильтра: где есть события, по их числу; порядок при равенстве — как в regions.json.
+const regCount = new Map();
+for (const e of list) for (const r of regionsOfEvent(e)) regCount.set(r, (regCount.get(r) ?? 0) + 1);
+const regions = [...regCount.keys()].sort((a, b) => regCount.get(b) - regCount.get(a) || REG.regions.indexOf(a) - REG.regions.indexOf(b));
+const unplaced = list.filter((e) => !regionsOfEvent(e).length).map((e) => e.city);
+
 // Даты на плитке: «сб, 21 ноя», «20–22 ноя», «20 ноя – 17 янв».
 const dateShort = (e) => {
   const end = e.end_date ?? e.date;
@@ -81,31 +109,31 @@ const whenFull = (e) => {
   return `${full(e.date)}, ${WD_FULL[day(e.date).getUTCDay()]}${e.time ? `, ${e.time}` : ''}`;
 };
 
-// Сначала всё, что идёт больше одного дня (парки, фестивали), — одной группой, без привязки к дню.
-// Дальше однодневные события по дням; скрипт на странице подпишет «сегодня» / «завтра».
+// Сначала всё, что идёт больше одного дня, — одной группой без привязки к дню; дальше однодневные по дням.
 const isLong = (e) => !!e.end_date && e.end_date !== e.date;
 const longList = list.filter(isLong);
 const dayList = list.filter((e) => !isLong(e));
 const DAY_TITLE = (iso) => { const w = WD_FULL[day(iso).getUTCDay()]; return `${w[0].toUpperCase()}${w.slice(1)}, ${full(iso)}`; };
 const days = [...new Set(dayList.map((e) => e.date))];
-const group = (iso) => `
-  <section class="day" data-date="${iso}" aria-label="${DAY_TITLE(iso)}">
-    <h2 class="day-h">${DAY_TITLE(iso)} <span class="rel" hidden></span></h2>
-    <ul class="evs">${dayList.filter((e) => e.date === iso).map(card).join('')}
-    </ul>
-  </section>`;
 
 const card = (e) => `
-    <li data-kind="${kindOf(e)[0]}" data-end="${e.end_date ?? e.date}">
-      <a class="ev" href="#${e.id}" data-id="${e.id}">
-        <span class="ev-title">${esc(e.title)}</span>
-        <span class="ev-meta">
-          <span class="ev-type">${svg(iconOf(e))}${esc(typeOf(e))}</span>
-          <span class="ev-date">${esc(dateShort(e))}</span>
-          <span class="ev-city">${esc(e.city)}</span>
-        </span>
-      </a>
-    </li>`;
+      <li data-kind="${kindOf(e)[0]}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}>
+        <a class="ev" href="#${e.id}" data-id="${e.id}">
+          <span class="ev-title">${esc(e.title)}</span>
+          <span class="ev-meta">
+            <span class="ev-type">${svg(iconOf(e))}${esc(typeOf(e))}</span>
+            <span class="ev-date">${esc(dateShort(e))}</span>
+            <span class="ev-city">${esc(e.city)}</span>
+          </span>
+        </a>
+      </li>`;
+const section = (id, title, items, attrs = '', rel = false) => `
+    <section class="sec" id="${id}"${attrs} aria-label="${esc(title)}">
+      <h2 class="sec-h">${esc(title)}${rel ? ' <span class="rel" hidden></span>' : ''}</h2>
+      <ul class="evs">${items.map(card).join('')}
+      </ul>
+      <button type="button" class="more" hidden></button>
+    </section>`;
 
 // Данные для карточки события — только публичные поля.
 const detail = Object.fromEntries(list.map((e) => [e.id, {
@@ -124,23 +152,24 @@ const html = `<title>Рождество на Кипре</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap">
 <style>
   /* Вечерний Кипр в декабре: ночное небо, гирлянда, голубой и оранжевый «Гида по Кипру». Сознательно одна тёмная тема.
-     Раскладка: заголовок → фильтр → дни с одинаковыми плитками; карточка события открывается поверх списка. */
+     Раскладка: заголовок → три строки фильтров → «Идут не один день» → дни; карточка события открывается поверх списка. */
   :root {
     color-scheme: dark;
     --night: #0a1120; --card: #111a2e; --card-hi: #16223b; --line: #22304d; --text: #eef3f9; --muted: #9fb0c8;
     --sky: #9fd5f2; --sun: #f26b21; --warm: #ffd38a; --ok: #7ee2b8;
+    --gutter: max(16px, env(safe-area-inset-left, 0px));
     --display: "Unbounded", "Onest", system-ui, sans-serif; --body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   html { background: var(--night); }
   body { background: var(--night); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5;
-    padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
+    padding-left: var(--gutter); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
   body.locked { overflow: hidden; }
   .wrap { max-width: 1040px; margin: 0 auto; }
   .garland { display: block; width: 100%; height: 50px; }
   .bulb { animation: tw 3.2s ease-in-out infinite; } .bulb:nth-child(3n) { animation-delay: .8s; } .bulb:nth-child(3n+1) { animation-delay: 1.7s; }
   @keyframes tw { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
   @media (prefers-reduced-motion: reduce) { .bulb { animation: none; } }
-  header { padding-block: 6px 22px; }
+  header { padding-block: 6px 20px; }
   .kicker { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky); margin: 0; }
   h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 7.5vw, 3.4rem); line-height: 1.06; margin: 10px 0 0; text-wrap: balance; }
   h1 em { font-style: normal; color: var(--warm); }
@@ -149,25 +178,34 @@ const html = `<title>Рождество на Кипре</title>
   [data-kind="christmas-parks"] { --c: #ffa463; } [data-kind="christmas-villages"] { --c: #8fd0f5; } [data-kind="christmas-lights"] { --c: #6fe3a5; }
   [data-kind="christmas-markets"] { --c: #ffd166; } [data-kind="christmas-other"] { --c: #c4b0ff; }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
-  .chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .9rem var(--body); color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
-  .chip em { font-style: normal; color: var(--muted); font-weight: 500; }
+  /* Фильтры: три строки — когда, где, что. На телефоне каждая строка листается вбок, на компьютере переносится. */
+  .filters { display: grid; gap: 8px; }
+  .row { display: flex; gap: 8px; overflow-x: auto; margin-inline: calc(-1 * var(--gutter)); padding: 3px var(--gutter); scrollbar-width: none; }
+  .row::-webkit-scrollbar { display: none; }
+  @media (min-width: 700px) { .row { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; } }
+  .chip { flex: none; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font: 600 .9rem var(--body); color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
+  .chip[hidden] { display: none; }
   .chip .ic { color: var(--c); }
   .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0a1120; }
   .chip[aria-pressed="true"] .ic { color: inherit; }
-  .chip[aria-pressed="true"] em { color: inherit; opacity: .7; }
 
-  .day { margin-top: 26px; }
-  .day[hidden] { display: none; }
-  .day-h { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-family: var(--display); font-weight: 700; font-size: 1.05rem; line-height: 1.25; }
-  @media (min-width: 640px) { .day-h { font-size: 1.2rem; } }
+  .sec { margin-top: 28px; }
+  .sec[hidden] { display: none; }
+  .sec-h { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-family: var(--display); font-weight: 700; font-size: 1.05rem; line-height: 1.25; }
+  @media (min-width: 640px) { .sec-h { font-size: 1.2rem; } }
   .rel { font-family: var(--body); font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--text); color: var(--night); }
+  .more { display: block; width: 100%; max-width: 340px; margin: 12px auto 0; padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--body); cursor: pointer; }
+  .more[hidden] { display: none; }
+  .more:hover { border-color: #3a4d74; background: var(--card); }
+  .empty { margin: 32px 0 0; color: var(--muted); }
+  .empty button { font: 600 1rem var(--body); color: var(--sky); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
 
   /* Плитки одного размера: название (до 3 строк), под ним тип, даты, город. 2 в ряд на телефоне, 3–4 на компьютере. */
   .evs { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; }
   @media (min-width: 640px) { .evs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; } }
   @media (min-width: 900px) { .evs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .evs > li { display: flex; }
+  .evs > li[hidden] { display: none; }
   .ev { box-sizing: border-box; flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 13px 12px 12px; background: color-mix(in srgb, var(--c) 13%, var(--night)); border: 1px solid color-mix(in srgb, var(--c) 42%, var(--night)); border-radius: 16px; color: inherit; text-decoration: none; transition: border-color .15s, background .15s; }
   @media (min-width: 640px) { .ev { padding: 15px 14px 14px; } }
   .ev:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 20%, var(--night)); }
@@ -180,7 +218,7 @@ const html = `<title>Рождество на Кипре</title>
   .ev-type .ic { width: 20px; height: 20px; }
   .ev-date { font-size: .88rem; font-weight: 600; font-variant-numeric: tabular-nums; }
   .ev-city { font-size: .86rem; color: var(--muted); }
-  .ev:focus-visible, .chip:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
+  .ev:focus-visible, .chip:focus-visible, .more:focus-visible, .empty button:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
 
   /* Карточка события */
   .shade[hidden] { display: none; }
@@ -199,7 +237,7 @@ const html = `<title>Рождество на Кипре</title>
   .s-summary { margin: 0; color: #d6e0ec; }
   .s-map { justify-self: start; display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; padding: 11px 18px; border-radius: 999px; background: var(--warm); color: #1c1300; font-weight: 700; text-decoration: none; }
 
-  footer { margin-top: 30px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
+  footer { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
   .brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 600; color: var(--text); }
 </style>
 
@@ -214,16 +252,22 @@ const html = `<title>Рождество на Кипре</title>
     <h1>Рождество <em>на&nbsp;Кипре</em></h1>
   </header>
 
-  <div class="chips" role="group" aria-label="Что показать">
-    <button type="button" class="chip" id="k-all" data-kind="" aria-pressed="true">Все <em>${list.length}</em></button>
-    ${kinds.map((k) => `<button type="button" class="chip" id="k-${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(KIND_ICON[k.t])}${k.label} <em>${k.n}</em></button>`).join('\n    ')}
+  <div class="filters">
+    <div class="row" id="f-date" role="group" aria-label="Когда">
+      <button type="button" class="chip" data-v="" aria-pressed="true">Все даты</button>
+    </div>
+    <div class="row" id="f-reg" role="group" aria-label="Где">
+      <button type="button" class="chip" data-v="" aria-pressed="true">Весь Кипр</button>
+      ${regions.map((r) => `<button type="button" class="chip" data-v="${esc(r)}" aria-pressed="false">${esc(r)}</button>`).join('\n      ')}
+    </div>
+    <div class="row" id="f-kind" role="group" aria-label="Что">
+      <button type="button" class="chip" data-v="" aria-pressed="true">Все события</button>
+      ${kinds.map((k) => `<button type="button" class="chip" data-v="${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(KIND_ICON[k.t])}${k.label}</button>`).join('\n      ')}
+    </div>
   </div>
-  <div id="list">
-  <section class="day" id="d-long" aria-label="Идут не один день">
-    <h2 class="day-h">Идут не один день</h2>
-    <ul class="evs">${longList.map(card).join('')}
-    </ul>
-  </section>${days.map(group).join('')}
+
+  <div id="list">${section('s-long', 'Идут не один день', longList, ' data-long="1"')}${days.map((iso) => section(`d-${iso}`, DAY_TITLE(iso), dayList.filter((e) => e.date === iso), ` data-date="${iso}"`, true)).join('')}
+    <p class="empty" id="empty" hidden>Ничего не нашлось. <button type="button" id="reset">Сбросить фильтры</button></p>
   </div>
 
   <footer>
@@ -247,13 +291,18 @@ const html = `<title>Рождество на Кипре</title>
 <script>
   (function () {
     var DATA = ${JSON.stringify(detail)};
-    var MON = ${JSON.stringify(MON_FULL)};
+    var MON = ${JSON.stringify(MON_FULL)}, MON_S = ${JSON.stringify(MON)}, WD = ${JSON.stringify(WD)};
     var ICONS = ${JSON.stringify(Object.fromEntries(Object.keys(ICONS).map((k) => [k, svg(k)])))};
     var DAYS = ['в воскресенье', 'в понедельник', 'во вторник', 'в среду', 'в четверг', 'в пятницу', 'в субботу'];
     var today;
     try { today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Nicosia' }).format(new Date()); } catch (e) { today = new Date().toISOString().slice(0, 10); }
     var d = function (iso) { return new Date(iso + 'T12:00:00Z'); };
+    var plus = function (iso, n) { return new Date(d(iso).getTime() + n * 86400000).toISOString().slice(0, 10); };
     var human = function (iso) { return d(iso).getUTCDate() + ' ' + MON[d(iso).getUTCMonth()]; };
+    var all = function (sel, root) { return Array.prototype.slice.call((root || document).querySelectorAll(sel)); };
+    var el = function (id) { return document.getElementById(id); };
+    var tomorrow = plus(today, 1);
+
     // Статус парка в карточке события: работает до… / откроется…
     var status = function (x) {
       if (!x.park || x.end < today) return null;
@@ -264,16 +313,41 @@ const html = `<title>Рождество на Кипре</title>
       return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end), now: true };
     };
 
-    // Список: прошедшее скрыто (пустые дни скроются ниже); у ближайших дней — «сегодня» / «завтра».
-    var all = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+    // Прошедшее убираем; у ближайших дней — «сегодня» / «завтра».
     all('#list li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
-    all('.day[data-date]').forEach(function (sec) {
-      var dt = sec.dataset.date;
-      var n = Math.round((d(dt) - d(today)) / 86400000), r = sec.querySelector('.rel');
-      if (n === 0 || n === 1) { r.textContent = n ? 'завтра' : 'сегодня'; r.hidden = false; }
+    var items = all('#list li');
+    var sections = all('.sec');
+    sections.forEach(function (sec) {
+      var r = sec.querySelector('.rel'), dt = sec.dataset.date;
+      if (r && (dt === today || dt === tomorrow)) { r.textContent = dt === today ? 'сегодня' : 'завтра'; r.hidden = false; }
     });
-    var sections = all('.day');
-    // Все плитки одной высоты во всех днях: по самой высокой видимой.
+
+    // «Когда»: сегодня, завтра и дальше дни, в которые есть однодневные события.
+    var dates = {}; dates[today] = 1; dates[tomorrow] = 1;
+    items.forEach(function (li) { if (!li.dataset.long) dates[li.dataset.start] = 1; });
+    var dateRow = el('f-date');
+    Object.keys(dates).sort().forEach(function (iso) {
+      var b = document.createElement('button');
+      b.type = 'button'; b.className = 'chip'; b.dataset.v = iso; b.setAttribute('aria-pressed', 'false');
+      b.textContent = iso === today ? 'Сегодня' : iso === tomorrow ? 'Завтра' : WD[d(iso).getUTCDay()] + ', ' + d(iso).getUTCDate() + ' ' + MON_S[d(iso).getUTCMonth()];
+      dateRow.appendChild(b);
+    });
+
+    var state = { date: '', reg: '', kind: '' }, opened = {};
+    var match = function (li, s) {
+      if (s.kind && li.dataset.kind !== s.kind) return false;
+      if (s.reg && li.dataset.reg.split('|').indexOf(s.reg) < 0) return false;
+      if (s.date) return li.dataset.long ? li.dataset.start <= s.date && s.date <= li.dataset.end : li.dataset.start === s.date;
+      return true;
+    };
+    // Районы и виды без событий (после того как прошедшее убрано) не показываем.
+    all('#f-reg .chip[data-v], #f-kind .chip[data-v]').forEach(function (c) {
+      if (!c.dataset.v) return;
+      var probe = { date: '', reg: '', kind: '' }; probe[c.parentNode.id === 'f-reg' ? 'reg' : 'kind'] = c.dataset.v;
+      c.hidden = !items.some(function (li) { return match(li, probe); });
+    });
+
+    // Все плитки одной высоты: по самой высокой видимой.
     var equalize = function () {
       var tiles = all('#list .ev');
       tiles.forEach(function (t) { t.style.minHeight = ''; });
@@ -281,29 +355,47 @@ const html = `<title>Рождество на Кипре</title>
       tiles.forEach(function (t) { if (t.offsetParent) h = Math.max(h, t.getBoundingClientRect().height); });
       if (h) tiles.forEach(function (t) { t.style.minHeight = Math.ceil(h) + 'px'; });
     };
-    var tidy = function () { sections.forEach(function (sec) { sec.hidden = !sec.querySelector('li:not([hidden])'); }); equalize(); };
-    tidy();
+    // Сколько плиток показывать в группе до «Показать ещё»: 1–2 ряда, на телефоне — 4 и 6.
+    var cols = function () { return matchMedia('(min-width: 900px)').matches ? 4 : matchMedia('(min-width: 640px)').matches ? 3 : 2; };
+    function render() {
+      var c = cols(), any = false;
+      sections.forEach(function (sec) {
+        var lis = all('li', sec), vis = lis.filter(function (li) { return match(li, state); });
+        var limit = sec.dataset.long ? (c === 2 ? 4 : c) : (c === 2 ? 6 : c * 2);
+        // Раскрыто, выбран день или под кнопкой осталось бы 1–2 плитки — показываем всё.
+        if (opened[sec.id] || (state.date && !sec.dataset.long) || vis.length - limit <= 2) limit = Infinity;
+        lis.forEach(function (li) { li.hidden = true; });
+        vis.forEach(function (li, i) { li.hidden = i >= limit; });
+        var rest = vis.length - Math.min(vis.length, limit), more = sec.querySelector('.more');
+        more.hidden = rest <= 0; if (rest > 0) more.textContent = 'Показать ещё ' + rest;
+        sec.hidden = !vis.length; if (vis.length) any = true;
+      });
+      el('empty').hidden = any;
+      equalize();
+    }
+    all('.filters .row').forEach(function (row) {
+      var keyName = { 'f-date': 'date', 'f-reg': 'reg', 'f-kind': 'kind' }[row.id];
+      row.addEventListener('click', function (e) {
+        var c = e.target.closest('.chip'); if (!c) return;
+        all('.chip', row).forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); });
+        state[keyName] = c.dataset.v; render();
+      });
+    });
+    sections.forEach(function (sec) { sec.querySelector('.more').addEventListener('click', function () { opened[sec.id] = true; render(); }); });
+    el('reset').addEventListener('click', function () {
+      state = { date: '', reg: '', kind: '' };
+      all('.filters .row').forEach(function (row) { all('.chip', row).forEach(function (x, i) { x.setAttribute('aria-pressed', String(i === 0)); }); });
+      render();
+    });
+    render();
     var raf = 0;
-    window.addEventListener('resize', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(equalize); });
+    window.addEventListener('resize', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(render); });
     // Шрифты приходят позже первого расчёта — пересчитываем, когда они загрузятся.
     if (document.fonts) { document.fonts.addEventListener('loadingdone', equalize); if (document.fonts.ready) document.fonts.ready.then(equalize); }
     window.addEventListener('load', equalize);
-    var live = all('#list li');
-    var chips = document.querySelectorAll('.chip');
-    chips.forEach(function (c) {
-      var k = c.dataset.kind;
-      var n = live.filter(function (li) { return !k || li.dataset.kind === k; }).length;
-      c.querySelector('em').textContent = n; if (k) c.hidden = !n;
-      c.addEventListener('click', function () {
-        chips.forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); });
-        live.forEach(function (li) { li.hidden = !!k && li.dataset.kind !== k; });
-        tidy();
-      });
-    });
 
     // Карточка события: открывается по адресу #e-<id>, закрывается крестиком, фоном или Esc.
-    var shade = document.getElementById('shade'), last = null;
-    var el = function (id) { return document.getElementById(id); };
+    var shade = el('shade'), last = null;
     function fact(dt, dd) { return dd ? '<div><dt>' + dt + '</dt><dd></dd></div>' : ''; }
     function show() {
       var id = location.hash.slice(1), x = DATA[id];
@@ -322,7 +414,7 @@ const html = `<title>Рождество на Кипре</title>
     function close() {
       if (history.length > 1 && last) history.back(); else { location.hash = ''; }
     }
-    document.getElementById('list').addEventListener('click', function (e) { var a = e.target.closest('.ev'); if (a) last = a; });
+    el('list').addEventListener('click', function (e) { var a = e.target.closest('.ev'); if (a) last = a; });
     el('s-close').addEventListener('click', close);
     shade.addEventListener('click', function (e) { if (e.target === shade) close(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !shade.hidden) close(); });
@@ -334,5 +426,6 @@ const html = `<title>Рождество на Кипре</title>
 
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
 fs.writeFileSync(OUT, html);
-console.log(`standalone/christmas.html: ${list.length} событий (${kinds.map((k) => `${k.label} ${k.n}`).join(', ')})`);
+console.log(`standalone/christmas.html: ${list.length} событий (${kinds.map((k) => `${k.label} ${k.n}`).join(', ')}); районы: ${regions.map((r) => `${r} ${regCount.get(r)}`).join(', ')}`);
+if (unplaced.length) console.log(`без района (места нет в regions.json): ${[...new Set(unplaced)].join(', ')}`);
 if (noMap.length) console.log(`без карты (города нет в map-places.json): ${[...new Set(noMap)].join(', ')}`);
