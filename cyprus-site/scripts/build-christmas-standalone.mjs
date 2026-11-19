@@ -81,6 +81,16 @@ const whenFull = (e) => {
   return `${full(e.date)}, ${WD_FULL[day(e.date).getUTCDay()]}${e.time ? `, ${e.time}` : ''}`;
 };
 
+// Группы по дню начала. Скрипт на странице сольёт уже начавшиеся в «Уже идут» и подпишет «сегодня» / «завтра».
+const DAY_TITLE = (iso) => { const w = WD_FULL[day(iso).getUTCDay()]; return `${w[0].toUpperCase()}${w.slice(1)}, ${full(iso)}`; };
+const days = [...new Set(list.map((e) => e.date))];
+const group = (iso) => `
+  <section class="day" data-date="${iso}" aria-label="${DAY_TITLE(iso)}">
+    <h2 class="day-h">${DAY_TITLE(iso)} <span class="rel" hidden></span></h2>
+    <ul class="evs">${list.filter((e) => e.date === iso).map(card).join('')}
+    </ul>
+  </section>`;
+
 const card = (e) => `
     <li data-kind="${kindOf(e)[0]}" data-end="${e.end_date ?? e.date}">
       <a class="ev" href="#${e.id}" data-id="${e.id}">
@@ -95,7 +105,7 @@ const card = (e) => `
 
 // Данные для карточки события — только публичные поля.
 const detail = Object.fromEntries(list.map((e) => [e.id, {
-  kind: typeOf(e, 3), icon: iconOf(e), title: e.title, when: whenFull(e), place: `${e.city}${e.venue ? ` · ${e.venue}` : ''}`,
+  kind: typeOf(e, 3), icon: iconOf(e), group: kindOf(e)[0], title: e.title, when: whenFull(e), place: `${e.city}${e.venue ? ` · ${e.venue}` : ''}`,
   summary: e.summary ?? '', hours: e.hours ?? '', price: e.price ?? '', map: mapUrl(e),
   start: e.date, end: e.end_date ?? e.date, park: e.tags.includes('christmas-parks'),
 }]));
@@ -110,7 +120,7 @@ const html = `<title>Рождество на Кипре</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap">
 <style>
   /* Вечерний Кипр в декабре: ночное небо, гирлянда, голубой и оранжевый «Гида по Кипру». Сознательно одна тёмная тема.
-     Раскладка: заголовок → фильтр → одинаковые карточки; карточка события открывается поверх списка. */
+     Раскладка: заголовок → фильтр → дни с одинаковыми плитками; карточка события открывается поверх списка. */
   :root {
     color-scheme: dark;
     --night: #0a1120; --card: #111a2e; --card-hi: #16223b; --line: #22304d; --text: #eef3f9; --muted: #9fb0c8;
@@ -131,27 +141,39 @@ const html = `<title>Рождество на Кипре</title>
   h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 7.5vw, 3.4rem); line-height: 1.06; margin: 10px 0 0; text-wrap: balance; }
   h1 em { font-style: normal; color: var(--warm); }
 
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
+  /* У каждого вида свой цвет: парки — оранжевый, деревни — голубой, ёлки — зелёный, ярмарки — жёлтый, остальное — сиреневый. */
+  [data-kind="christmas-parks"] { --c: #ffa463; } [data-kind="christmas-villages"] { --c: #8fd0f5; } [data-kind="christmas-lights"] { --c: #6fe3a5; }
+  [data-kind="christmas-markets"] { --c: #ffd166; } [data-kind="christmas-other"] { --c: #c4b0ff; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; }
   .chip { display: inline-flex; align-items: center; gap: 6px; font: 600 .9rem var(--body); color: var(--text); background: transparent; border: 1px solid var(--line); border-radius: 999px; padding: 8px 14px; cursor: pointer; }
   .chip em { font-style: normal; color: var(--muted); font-weight: 500; }
-  .chip[aria-pressed="true"] { background: var(--sky); border-color: var(--sky); color: #0a1120; }
+  .chip .ic { color: var(--c); }
+  .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0a1120; }
+  .chip[aria-pressed="true"] .ic { color: inherit; }
   .chip[aria-pressed="true"] em { color: inherit; opacity: .7; }
+
+  .day { margin-top: 26px; }
+  .day[hidden] { display: none; }
+  .day-h { display: flex; align-items: center; gap: 10px; margin: 0 0 12px; font-family: var(--display); font-weight: 700; font-size: 1.05rem; line-height: 1.25; }
+  @media (min-width: 640px) { .day-h { font-size: 1.2rem; } }
+  .rel { font-family: var(--body); font-size: .78rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: var(--text); color: var(--night); }
 
   /* Плитки одного размера: название (до 3 строк), под ним тип, даты, город. 2 в ряд на телефоне, 3–4 на компьютере. */
   .evs { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-auto-rows: 1fr; }
   @media (min-width: 640px) { .evs { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; } }
   @media (min-width: 900px) { .evs { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
   .evs > li { display: flex; }
-  .ev { flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 13px 12px 12px; background: var(--card); border: 1px solid var(--line); border-radius: 16px; color: inherit; text-decoration: none; transition: border-color .15s, background .15s; }
+  .ev { box-sizing: border-box; flex: 1; display: flex; flex-direction: column; gap: 12px; min-width: 0; padding: 13px 12px 12px; background: color-mix(in srgb, var(--c) 13%, var(--night)); border: 1px solid color-mix(in srgb, var(--c) 42%, var(--night)); border-radius: 16px; color: inherit; text-decoration: none; transition: border-color .15s, background .15s; }
   @media (min-width: 640px) { .ev { padding: 15px 14px 14px; } }
-  .ev:hover { border-color: #3a4d74; background: var(--card-hi); }
+  .ev:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 20%, var(--night)); }
   .ev-title { flex: 1; font-weight: 650; font-size: .95rem; line-height: 1.3; overflow-wrap: anywhere; hyphens: auto; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
   @media (min-width: 640px) { .ev-title { font-size: 1rem; } }
   .ev-meta { display: grid; gap: 3px; min-width: 0; }
   .ev-meta > span { overflow-wrap: anywhere; }
   .ic { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
-  .ev-type { display: flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 700; color: var(--sky); }
-  .ev-type .ic { width: 18px; height: 18px; }
+  .ev-type { display: flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700; color: var(--c); }
+  .ev-type .ic { width: 20px; height: 20px; }
   .ev-date { font-size: .88rem; font-weight: 600; font-variant-numeric: tabular-nums; }
   .ev-city { font-size: .86rem; color: var(--muted); }
   .ev:focus-visible, .chip:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
@@ -163,7 +185,7 @@ const html = `<title>Рождество на Кипре</title>
     border-radius: 22px 22px 0 0; padding: 22px max(20px, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(20px, env(safe-area-inset-left, 0px)); display: grid; gap: 12px; }
   @media (min-width: 700px) { .shade { align-items: center; } .sheet { border-radius: 22px; padding: 26px 28px; } }
   .close { position: absolute; top: 12px; right: 12px; width: 38px; height: 38px; border-radius: 999px; border: 1px solid var(--line); background: var(--night); color: var(--text); font-size: 1.3rem; line-height: 1; cursor: pointer; }
-  .s-kind { display: flex; align-items: center; gap: 8px; font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--sky); padding-right: 44px; }
+  .s-kind { display: flex; align-items: center; gap: 8px; font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--c, var(--sky)); padding-right: 44px; }
   .sheet h2 { font-family: var(--display); font-weight: 700; font-size: 1.35rem; line-height: 1.2; margin: 0; padding-right: 36px; text-wrap: balance; }
   .s-status { justify-self: start; font-size: .8rem; font-weight: 700; padding: 3px 10px; border-radius: 999px; background: color-mix(in srgb, var(--sun) 20%, transparent); color: #ffb488; }
   .s-status.now { background: color-mix(in srgb, var(--ok) 16%, transparent); color: var(--ok); }
@@ -192,8 +214,12 @@ const html = `<title>Рождество на Кипре</title>
     <button type="button" class="chip" id="k-all" data-kind="" aria-pressed="true">Все <em>${list.length}</em></button>
     ${kinds.map((k) => `<button type="button" class="chip" id="k-${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(KIND_ICON[k.t])}${k.label} <em>${k.n}</em></button>`).join('\n    ')}
   </div>
-  <ul class="evs" id="evs">${list.map(card).join('')}
-  </ul>
+  <div id="list">
+  <section class="day" id="d-now" aria-label="Уже идут" hidden>
+    <h2 class="day-h">Уже идут</h2>
+    <ul class="evs"></ul>
+  </section>${days.map(group).join('')}
+  </div>
 
   <footer>
     <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#9fd5f2"/><circle cx="23" cy="8.5" r="3.6" fill="#f26b21"/><path transform="translate(0 3)" d="${LOGO}" fill="#0e1116"/></svg>Гид по Кипру</span>
@@ -202,7 +228,7 @@ const html = `<title>Рождество на Кипре</title>
 </div>
 
 <div class="shade" id="shade" hidden>
-  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title">
+  <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="s-title">
     <button type="button" class="close" id="s-close" aria-label="Закрыть">×</button>
     <span class="s-kind" id="s-kind"></span>
     <h2 id="s-title"></h2>
@@ -233,9 +259,33 @@ const html = `<title>Рождество на Кипре</title>
       return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end), now: true };
     };
 
-    // Список: прошедшее скрыто.
-    Array.prototype.slice.call(document.querySelectorAll('#evs > li')).forEach(function (li) { if (li.dataset.end < today) li.remove(); });
-    var live = Array.prototype.slice.call(document.querySelectorAll('#evs > li'));
+    // Список: прошедшее скрыто; начавшиеся раньше сегодня — в группе «Уже идут»; у ближайших дней — «сегодня» / «завтра».
+    var all = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
+    all('#list li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
+    var nowSec = document.getElementById('d-now'), nowUl = nowSec.querySelector('.evs');
+    all('.day[data-date]').forEach(function (sec) {
+      var dt = sec.dataset.date;
+      if (dt < today) { all('.day[data-date="' + dt + '"] li').forEach(function (li) { nowUl.appendChild(li); }); sec.remove(); return; }
+      var n = Math.round((d(dt) - d(today)) / 86400000), r = sec.querySelector('.rel');
+      if (n === 0 || n === 1) { r.textContent = n ? 'завтра' : 'сегодня'; r.hidden = false; }
+    });
+    var sections = all('.day');
+    // Все плитки одной высоты во всех днях: по самой высокой видимой.
+    var equalize = function () {
+      var tiles = all('#list .ev');
+      tiles.forEach(function (t) { t.style.minHeight = ''; });
+      var h = 0;
+      tiles.forEach(function (t) { if (t.offsetParent) h = Math.max(h, t.getBoundingClientRect().height); });
+      if (h) tiles.forEach(function (t) { t.style.minHeight = Math.ceil(h) + 'px'; });
+    };
+    var tidy = function () { sections.forEach(function (sec) { sec.hidden = !sec.querySelector('li:not([hidden])'); }); equalize(); };
+    tidy();
+    var raf = 0;
+    window.addEventListener('resize', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(equalize); });
+    // Шрифты приходят позже первого расчёта — пересчитываем, когда они загрузятся.
+    if (document.fonts) { document.fonts.addEventListener('loadingdone', equalize); if (document.fonts.ready) document.fonts.ready.then(equalize); }
+    window.addEventListener('load', equalize);
+    var live = all('#list li');
     var chips = document.querySelectorAll('.chip');
     chips.forEach(function (c) {
       var k = c.dataset.kind;
@@ -244,6 +294,7 @@ const html = `<title>Рождество на Кипре</title>
       c.addEventListener('click', function () {
         chips.forEach(function (x) { x.setAttribute('aria-pressed', String(x === c)); });
         live.forEach(function (li) { li.hidden = !!k && li.dataset.kind !== k; });
+        tidy();
       });
     });
 
@@ -254,7 +305,7 @@ const html = `<title>Рождество на Кипре</title>
     function show() {
       var id = location.hash.slice(1), x = DATA[id];
       if (!x) { shade.hidden = true; document.body.classList.remove('locked'); if (last) { last.focus(); last = null; } return; }
-      el('s-kind').innerHTML = ICONS[x.icon]; el('s-kind').appendChild(document.createTextNode(x.kind));
+      el('sheet').dataset.kind = x.group; el('s-kind').innerHTML = ICONS[x.icon]; el('s-kind').appendChild(document.createTextNode(x.kind));
       el('s-title').textContent = x.title;
       var st = status(x), s = el('s-status');
       s.hidden = !st; if (st) { s.textContent = st.text; s.classList.toggle('now', st.now); }
@@ -268,7 +319,7 @@ const html = `<title>Рождество на Кипре</title>
     function close() {
       if (history.length > 1 && last) history.back(); else { location.hash = ''; }
     }
-    document.getElementById('evs').addEventListener('click', function (e) { var a = e.target.closest('.ev'); if (a) last = a; });
+    document.getElementById('list').addEventListener('click', function (e) { var a = e.target.closest('.ev'); if (a) last = a; });
     el('s-close').addEventListener('click', close);
     shade.addEventListener('click', function (e) { if (e.target === shade) close(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !shade.hidden) close(); });
