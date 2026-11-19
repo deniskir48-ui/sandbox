@@ -104,12 +104,8 @@
     <button type="button" class="chip" id="k-christmas-other" data-kind="christmas-other" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="17.5" r="3"/><path d="M8.6 15.4 17 3.5M15.4 15.4 7 3.5"/></svg>Мастер-классы и другое <em>10</em></button>
   </div>
   <div id="list">
-  <section class="day" id="d-now" aria-label="Уже идут" hidden>
-    <h2 class="day-h">Уже идут</h2>
-    <ul class="evs"></ul>
-  </section>
-  <section class="day" data-date="2026-11-13" aria-label="Пятница, 13 ноября">
-    <h2 class="day-h">Пятница, 13 ноября <span class="rel" hidden></span></h2>
+  <section class="day" id="d-long" aria-label="Идут не один день">
+    <h2 class="day-h">Идут не один день</h2>
     <ul class="evs">
     <li data-kind="christmas-parks" data-end="2027-01-10">
       <a class="ev" href="#e-nicosia-christmas-fairyland-paramythoupoli-2026-11-13" data-id="e-nicosia-christmas-fairyland-paramythoupoli-2026-11-13">
@@ -121,11 +117,6 @@
         </span>
       </a>
     </li>
-    </ul>
-  </section>
-  <section class="day" data-date="2026-11-20" aria-label="Пятница, 20 ноября">
-    <h2 class="day-h">Пятница, 20 ноября <span class="rel" hidden></span></h2>
-    <ul class="evs">
     <li data-kind="christmas-parks" data-end="2027-01-17">
       <a class="ev" href="#e-limassol-christmas-land-2026-11-20" data-id="e-limassol-christmas-land-2026-11-20">
         <span class="ev-title">Limassol Christmas Land</span>
@@ -156,6 +147,21 @@
         </span>
       </a>
     </li>
+    <li data-kind="christmas-parks" data-end="2027-01-31">
+      <a class="ev" href="#e-pinocchio-christmas-theme-park-2026-11-21" data-id="e-pinocchio-christmas-theme-park-2026-11-21">
+        <span class="ev-title">Pinocchio Christmas Theme Park</span>
+        <span class="ev-meta">
+          <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/></svg>Парк</span>
+          <span class="ev-date">21 ноя – 31 янв</span>
+          <span class="ev-city">Паралимни</span>
+        </span>
+      </a>
+    </li>
+    </ul>
+  </section>
+  <section class="day" data-date="2026-11-20" aria-label="Пятница, 20 ноября">
+    <h2 class="day-h">Пятница, 20 ноября <span class="rel" hidden></span></h2>
+    <ul class="evs">
     <li data-kind="christmas-other" data-end="2026-11-20">
       <a class="ev" href="#e-master-klass-keramicheskaya-elka-2026-11-20" data-id="e-master-klass-keramicheskaya-elka-2026-11-20">
         <span class="ev-title">Мастер-класс: керамическая ёлка</span>
@@ -208,16 +214,6 @@
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="ev-date">сб, 21 ноя</span>
           <span class="ev-city">Лефкара</span>
-        </span>
-      </a>
-    </li>
-    <li data-kind="christmas-parks" data-end="2027-01-31">
-      <a class="ev" href="#e-pinocchio-christmas-theme-park-2026-11-21" data-id="e-pinocchio-christmas-theme-park-2026-11-21">
-        <span class="ev-title">Pinocchio Christmas Theme Park</span>
-        <span class="ev-meta">
-          <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/></svg>Парк</span>
-          <span class="ev-date">21 ноя – 31 янв</span>
-          <span class="ev-city">Паралимни</span>
         </span>
       </a>
     </li>
@@ -518,13 +514,11 @@
       return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end), now: true };
     };
 
-    // Список: прошедшее скрыто; начавшиеся раньше сегодня — в группе «Уже идут»; у ближайших дней — «сегодня» / «завтра».
+    // Список: прошедшее скрыто (пустые дни скроются ниже); у ближайших дней — «сегодня» / «завтра».
     var all = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
     all('#list li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
-    var nowSec = document.getElementById('d-now'), nowUl = nowSec.querySelector('.evs');
     all('.day[data-date]').forEach(function (sec) {
       var dt = sec.dataset.date;
-      if (dt < today) { all('.day[data-date="' + dt + '"] li').forEach(function (li) { nowUl.appendChild(li); }); sec.remove(); return; }
       var n = Math.round((d(dt) - d(today)) / 86400000), r = sec.querySelector('.rel');
       if (n === 0 || n === 1) { r.textContent = n ? 'завтра' : 'сегодня'; r.hidden = false; }
     });

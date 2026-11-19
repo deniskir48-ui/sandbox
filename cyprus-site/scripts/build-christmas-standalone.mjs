@@ -81,13 +81,17 @@ const whenFull = (e) => {
   return `${full(e.date)}, ${WD_FULL[day(e.date).getUTCDay()]}${e.time ? `, ${e.time}` : ''}`;
 };
 
-// Группы по дню начала. Скрипт на странице сольёт уже начавшиеся в «Уже идут» и подпишет «сегодня» / «завтра».
+// Сначала всё, что идёт больше одного дня (парки, фестивали), — одной группой, без привязки к дню.
+// Дальше однодневные события по дням; скрипт на странице подпишет «сегодня» / «завтра».
+const isLong = (e) => !!e.end_date && e.end_date !== e.date;
+const longList = list.filter(isLong);
+const dayList = list.filter((e) => !isLong(e));
 const DAY_TITLE = (iso) => { const w = WD_FULL[day(iso).getUTCDay()]; return `${w[0].toUpperCase()}${w.slice(1)}, ${full(iso)}`; };
-const days = [...new Set(list.map((e) => e.date))];
+const days = [...new Set(dayList.map((e) => e.date))];
 const group = (iso) => `
   <section class="day" data-date="${iso}" aria-label="${DAY_TITLE(iso)}">
     <h2 class="day-h">${DAY_TITLE(iso)} <span class="rel" hidden></span></h2>
-    <ul class="evs">${list.filter((e) => e.date === iso).map(card).join('')}
+    <ul class="evs">${dayList.filter((e) => e.date === iso).map(card).join('')}
     </ul>
   </section>`;
 
@@ -215,9 +219,10 @@ const html = `<title>Рождество на Кипре</title>
     ${kinds.map((k) => `<button type="button" class="chip" id="k-${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(KIND_ICON[k.t])}${k.label} <em>${k.n}</em></button>`).join('\n    ')}
   </div>
   <div id="list">
-  <section class="day" id="d-now" aria-label="Уже идут" hidden>
-    <h2 class="day-h">Уже идут</h2>
-    <ul class="evs"></ul>
+  <section class="day" id="d-long" aria-label="Идут не один день">
+    <h2 class="day-h">Идут не один день</h2>
+    <ul class="evs">${longList.map(card).join('')}
+    </ul>
   </section>${days.map(group).join('')}
   </div>
 
@@ -259,13 +264,11 @@ const html = `<title>Рождество на Кипре</title>
       return { text: x.end === today ? 'Сегодня последний день' : 'Работает до ' + human(x.end), now: true };
     };
 
-    // Список: прошедшее скрыто; начавшиеся раньше сегодня — в группе «Уже идут»; у ближайших дней — «сегодня» / «завтра».
+    // Список: прошедшее скрыто (пустые дни скроются ниже); у ближайших дней — «сегодня» / «завтра».
     var all = function (sel) { return Array.prototype.slice.call(document.querySelectorAll(sel)); };
     all('#list li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
-    var nowSec = document.getElementById('d-now'), nowUl = nowSec.querySelector('.evs');
     all('.day[data-date]').forEach(function (sec) {
       var dt = sec.dataset.date;
-      if (dt < today) { all('.day[data-date="' + dt + '"] li').forEach(function (li) { nowUl.appendChild(li); }); sec.remove(); return; }
       var n = Math.round((d(dt) - d(today)) / 86400000), r = sec.querySelector('.rel');
       if (n === 0 || n === 1) { r.textContent = n ? 'завтра' : 'сегодня'; r.hidden = false; }
     });
