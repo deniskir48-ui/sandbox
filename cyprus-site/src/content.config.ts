@@ -63,7 +63,7 @@ const events = defineCollection({
   schema: z
     .object({
       title: z.string(),
-      short_title: z.string().max(30).optional(), // короткое название для плитки (полное — в карточке события)
+      short_title: z.string().max(40).optional(), // название для плитки без хвоста («/ второе имя», «, для кого…»); полное — в карточке события
       status: z.enum(['draft', 'published']).default('draft'),
       type: z.enum(EVENT_TYPE_SLUGS),
       // Приоритет редактора: 1 — в первую очередь, 2 — интересно, 3 — дополнительно. Определяет порядок в Афише.
