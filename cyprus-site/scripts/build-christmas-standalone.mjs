@@ -81,11 +81,9 @@ const whenFull = (e) => {
   return `${full(e.date)}, ${WD_FULL[day(e.date).getUTCDay()]}${e.time ? `, ${e.time}` : ''}`;
 };
 
-const card = (e) => {
-  const park = e.tags.includes('christmas-parks');
-  return `
+const card = (e) => `
     <li data-kind="${kindOf(e)[0]}" data-end="${e.end_date ?? e.date}">
-      <a class="ev${park ? ' is-park' : ''}" href="#${e.id}" data-id="${e.id}">
+      <a class="ev" href="#${e.id}" data-id="${e.id}">
         <span class="ev-title">${esc(e.title)}</span>
         <span class="ev-meta">
           <span class="ev-type">${svg(iconOf(e))}${esc(typeOf(e))}</span>
@@ -94,7 +92,6 @@ const card = (e) => {
         </span>
       </a>
     </li>`;
-};
 
 // Данные для карточки события — только публичные поля.
 const detail = Object.fromEntries(list.map((e) => [e.id, {
@@ -155,7 +152,6 @@ const html = `<title>Рождество на Кипре</title>
   .ic { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
   .ev-type { display: flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 700; color: var(--sky); }
   .ev-type .ic { width: 18px; height: 18px; }
-  .is-park .ev-type { color: var(--warm); }
   .ev-date { font-size: .88rem; font-weight: 600; font-variant-numeric: tabular-nums; }
   .ev-city { font-size: .86rem; color: var(--muted); }
   .ev:focus-visible, .chip:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
