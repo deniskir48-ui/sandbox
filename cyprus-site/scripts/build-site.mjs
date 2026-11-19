@@ -176,12 +176,15 @@ const AFISHA = {
   typeOf: (e, full) => (!full && TYPE_SHORT[e.type]) || EVENT_TYPES[e.type] || 'Другое',
   iconOf: (e) => groupOf(e).icon,
   // Баннер Рождества — пока идёт сезон (скрипт страницы прячет его после последнего дня).
-  banner: () => {
+  banner: (artifact) => {
     const until = XMAS.events.reduce((m, e) => ((e.end_date ?? e.date) > m ? (e.end_date ?? e.date) : m), '');
-    return until ? `  <a class="xbanner" href="${XMAS.path}" data-until="${until}">${TREE_SVG}<span><b>Рождество на Кипре</b><small>Парки, рождественские деревни, ярмарки и зажжение огней</small></span><span class="go" aria-hidden="true">→</span></a>\n` : '';
+    // В артефакте Claude ссылка ведёт на артефакт с Рождеством (относительные адреса сайта там не работают).
+    const href = artifact ? `${XMAS_ARTIFACT}" target="_blank" rel="noopener` : XMAS.path;
+    return until ? `  <a class="xbanner" href="${href}" data-until="${until}">${TREE_SVG}<span><b>Рождество на Кипре</b><small>Парки, рождественские деревни, ярмарки и зажжение огней</small></span><span class="go" aria-hidden="true">→</span></a>\n` : '';
   },
 };
 const PAGES = [AFISHA, XMAS];
+const XMAS_ARTIFACT = 'https://claude.ai/artifact/LCR4o4541mrEkLVJNQg7Gi';
 
 function buildPage(cfg, { artifact = false } = {}) {
   const list = [...cfg.events].sort((a, b) => key(a).localeCompare(key(b)));
@@ -347,7 +350,7 @@ function buildPage(cfg, { artifact = false } = {}) {
       <p class="kicker">${cfg.kicker}</p>
       <h1>${cfg.h1}</h1>
     </header>
-  ${cfg.banner ? cfg.banner(list) : ''}
+  ${cfg.banner ? cfg.banner(artifact) : ''}
     <div class="filters" role="group" aria-label="Фильтры">
       <label class="pick"><span class="pick-t">Все дни</span>${CHEV}<select id="f-date" aria-label="Когда"><option value="">Все дни</option></select></label>
       <label class="pick"><span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>
@@ -599,11 +602,13 @@ function buildPage(cfg, { artifact = false } = {}) {
   return { html, list, kinds, regions, regCount };
 }
 
-// Страница для артефакта Claude — только Рождество, без ссылок на другие разделы.
-const art = buildPage(XMAS, { artifact: true });
+// Страницы для артефактов Claude (предпросмотр) — без ссылок на разделы сайта.
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-fs.writeFileSync(OUT, art.html);
-console.log(`standalone/christmas.html: ${art.list.length} событий`);
+for (const [cfg, file] of [[XMAS, OUT], [AFISHA, path.resolve('standalone/afisha.html')]]) {
+  const art = buildPage(cfg, { artifact: true });
+  fs.writeFileSync(file, art.html);
+  console.log(`${path.relative(process.cwd(), file)}: ${art.list.length} событий`);
+}
 
 // Папка для хостинга: полноценные HTML-документы с превью для мессенджеров.
 fs.rmSync(SITE_DIR, { recursive: true, force: true });
