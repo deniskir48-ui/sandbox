@@ -116,15 +116,15 @@ def main():
                  f"# Проверка в таблице: {check}" if check else None,
                  f"# Как в таблице: {what}" if what and what != summary else None,
                  f"title: {q(title)}"]
-        if existing:
-            lines += [l for l in existing.splitlines() if l.startswith("display_title:")]
         lines += ["status: published", f"type: {etype}", "priority: 3",
                   f"date: {q(start)}", f"end_date: {q(end)}" if end and end != start else None,
                   f"time: {q(time)}" if time and not (end and end != start) else None,
                   f"city: {q(city)}",
                   f"venue: {q(venue)}" if venue and not re.search(r"уточн", venue, re.I) else None,
-                  f"summary: {q(summary[:240])}" if summary else None,
+                  f"summary: {q(summary[:200])}" if summary else None,
                   f"ticket_url: {q(url)}", "sources:", f"  - title: {q('Источник из таблицы афиши')}", f"    url: {q(url)}"]
+        if existing:
+            lines = xmas.keep_manual(lines, existing)  # display_title и подробности со страниц источников сохраняются
         stats["обновлено" if existing else "создано"] += 1
         if not dry:
             with open(path, "w", encoding="utf-8") as f:

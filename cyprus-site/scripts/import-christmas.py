@@ -118,18 +118,45 @@ def for_reader(text):
     return text if not text or text.endswith((".", "!", "?", "»", ")")) else text + "."
 
 
+# Поля, которые дописываются вручную или со страниц источников (display_title, подробности) — при повторном
+# импорте таблицы сохраняются; цена — только если таблица своей не дала. Источники, добавленные при уточнении, тоже остаются.
+KEEP = ("display_title", "description", "end_time", "address", "language", "age", "booking", "more_dates", "price")
+
+
+def keep_manual(lines, existing):
+    lines = [l for l in lines if l is not None]
+    have = {l.split(":", 1)[0] for l in lines if re.match(r"^[a-z_]+:", l)}
+    old = existing.splitlines()
+    extra = [l for l in old if re.match(r"^[a-z_]+:", l) and l.split(":", 1)[0] in KEEP and l.split(":", 1)[0] not in have]
+    i = next(i for i, l in enumerate(lines) if l.startswith("title:"))
+    lines = lines[:i + 1] + [l for l in extra if l.startswith("display_title:")] + lines[i + 1:]
+    rest = [l for l in extra if not l.startswith("display_title:")]
+    j = next((i for i, l in enumerate(lines) if l.startswith("ticket_url:")), len(lines))
+    lines = lines[:j] + rest + lines[j:]
+    # источники: добавить старые записи, которых нет в новых строках
+    new_urls = {l.split("url:", 1)[1].strip() for l in lines if l.strip().startswith("url:")}
+    old_src, k = [], 0
+    while k < len(old):
+        if old[k].startswith("  - title:") and k + 1 < len(old) and old[k + 1].strip().startswith("url:"):
+            if old[k + 1].split("url:", 1)[1].strip() not in new_urls:
+                old_src += [old[k], old[k + 1]]
+            k += 2
+        else:
+            k += 1
+    if old_src:
+        e = max(i for i, l in enumerate(lines) if l.strip().startswith("url:")) + 1
+        lines = lines[:e] + old_src + lines[e:]
+    return lines
+
+
 def write(out, slug, lines, dry, stats):
     path = os.path.join(out, f"{slug}.yaml")
     if os.path.exists(path) and MARK not in open(path, encoding="utf-8").read():
         stats["не тронуто"] += 1
         return
     stats["обновлено" if os.path.exists(path) else "создано"] += 1
-    # Понятное название (display_title) задаётся вручную — при обновлении сохраняем его.
     if os.path.exists(path):
-        keep = [l for l in open(path, encoding="utf-8").read().splitlines() if l.startswith("display_title:")]
-        if keep:
-            i = next(i for i, l in enumerate(lines) if l and l.startswith("title:"))
-            lines = lines[:i + 1] + keep + lines[i + 1:]
+        lines = keep_manual(lines, open(path, encoding="utf-8").read())
     if not dry:
         with open(path, "w", encoding="utf-8") as f:
             f.write("\n".join(l for l in lines if l is not None) + "\n")

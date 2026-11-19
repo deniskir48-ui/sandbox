@@ -11,8 +11,13 @@ time: "09:00"
 city: "Колосси"
 venue: "замок Колосси"
 summary: "Благотворительная рождественская ярмарка."
+description: "Семейное утро в замке Колосси: рождественская ярмарка с подарками и сюрпризами, приходит Санта-Клаус. Часть выручки идёт фонду Little Heroes, который помогает детям."
+end_time: "13:00"
+address: "Замок Колосси, Archbishop Makarios III Ave, Limassol 4632"
 ticket_url: "https://cypruseventsmap.com/next-week/"
 sources:
   - title: "Источник из таблицы афиши"
     url: "https://cypruseventsmap.com/next-week/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/christmas-bazaar-for-little-heroes-kolossi/"
 tags: [christmas, christmas-markets]

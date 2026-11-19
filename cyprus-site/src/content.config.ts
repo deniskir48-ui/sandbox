@@ -80,6 +80,13 @@ const events = defineCollection({
       ticket_url: z.string().url().optional(), // билеты или официальная страница
       price: z.string().optional(), // только проверенная цена, например «€25–40»
       hours: z.string().optional(), // часы работы для долгих событий (парки, ярмарки)
+      // Подробности со страниц источников (scripts/enrich: только то, что там написано). Показываются в карточке события.
+      end_time: z.string().regex(/^\d{2}:\d{2}$/, 'Формат времени: ЧЧ:ММ').optional(),
+      address: z.string().optional(),
+      language: z.string().optional(),
+      age: z.string().optional(),
+      booking: z.string().optional(), // нужна ли запись или регистрация
+      more_dates: z.string().optional(), // другие даты и сеансы
       // Дни работы долгого события, если оно открыто не каждый день (рождественские деревни: выходные + праздники).
       open_days: z.array(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).optional(),
       tags: z.array(z.string()).default([]), // тематические подборки: christmas, christmas-parks и т. д.

@@ -2,6 +2,7 @@
 # Лист «Рождество» таблицы «Афиша Кипра для Telegram · 16–22 ноября 2026».
 # Проверка в таблице: Сверить детали
 title: "Праздничная ярмарка Anthologion"
+display_title: "Праздничный день в бутике Anthologion"
 status: published
 type: festival
 priority: 3
@@ -10,8 +11,13 @@ time: "10:00"
 city: "Лимассол"
 venue: "Anthologion Floral Boutique"
 summary: "Праздничное мероприятие цветочного бутика, ярмарочный формат и угощения. Уточнить адрес, часы окончания и программу."
+description: "Праздничный день в цветочном бутике Anthologion: новая рождественская коллекция, украшения для ёлки, праздничный декор и подарки, угощение вином. Бутик открыт с 10:00 до 20:00."
+end_time: "20:00"
+address: "Theklas Ant. Lysiotou, Limassol 3030"
 ticket_url: "https://cypruseventsmap.com/limassol/christmas/"
 sources:
   - title: "Источник из таблицы афиши"
     url: "https://cypruseventsmap.com/limassol/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/festive-evening-by-anthologion-in-limassol/"
 tags: [christmas, christmas-markets]

@@ -138,8 +138,13 @@ const dateShort = (e) => {
 const whenFull = (e) => {
   const end = e.end_date ?? e.date;
   if (end !== e.date) return `${full(e.date)} — ${full(end)}`;
-  return `${full(e.date)}, ${WD_FULL[day(e.date).getUTCDay()]}${e.time ? `, ${e.time}` : ''}`;
+  return `${full(e.date)}, ${WD_FULL[day(e.date).getUTCDay()]}${e.time ? `, ${e.time}${e.end_time ? `–${e.end_time}` : ''}` : ''}`;
 };
+// Факты карточки события в порядке чтения; пустые не показываются.
+const facts = (e) => [
+  ['Когда', whenFull(e)], ['Ещё даты', e.more_dates], ['Где', `${e.city}${e.venue ? ` · ${e.venue}` : ''}`], ['Адрес', e.address],
+  ['Часы', e.hours], ['Стоимость', e.price], ['Язык', e.language], ['Возраст', e.age], ['Запись', e.booking],
+].filter(([, v]) => v);
 
 const isLong = (e) => !!e.end_date && e.end_date !== e.date;
 
@@ -216,8 +221,9 @@ function buildPage(cfg, { artifact = false } = {}) {
 
   // Данные для карточки события — только публичные поля.
   const detail = Object.fromEntries(list.map((e) => [e.id, {
-    kind: cfg.typeOf(e, true), icon: cfg.iconOf(e), group: cfg.kindOf(e), title: e.display_title ?? e.title, orig: e.display_title && e.display_title !== e.title ? e.title : '', when: whenFull(e), place: `${e.city}${e.venue ? ` · ${e.venue}` : ''}`,
-    summary: e.summary ?? '', hours: e.hours ?? '', price: e.price ?? '', map: mapUrl(e),
+    kind: cfg.typeOf(e, true), icon: cfg.iconOf(e), group: cfg.kindOf(e), title: e.display_title ?? e.title, orig: e.display_title && e.display_title !== e.title ? e.title : '', facts: facts(e),
+    // Подробное описание из источников (description), если есть; иначе — строка из таблицы.
+    summary: e.description ?? e.summary ?? '', map: mapUrl(e),
     start: e.date, end: e.end_date ?? e.date, park: (e.tags ?? []).includes('christmas-parks'),
   }]));
 
@@ -605,7 +611,6 @@ function buildPage(cfg, { artifact = false } = {}) {
   
       // Карточка события: открывается по адресу #e-<id>, закрывается крестиком, фоном или Esc.
       var shade = el('shade'), last = null;
-      function fact(dt, dd) { return dd ? '<div><dt>' + dt + '</dt><dd></dd></div>' : ''; }
       function show() {
         var id = location.hash.slice(1), x = DATA[id];
         if (!x) { shade.hidden = true; document.body.classList.remove('locked'); if (last) { last.focus(); last = null; } return; }
@@ -614,9 +619,11 @@ function buildPage(cfg, { artifact = false } = {}) {
         el('s-orig').textContent = x.orig; el('s-orig').hidden = !x.orig;
         var st = status(x), s = el('s-status');
         s.hidden = !st; if (st) { s.textContent = st.text; s.classList.toggle('now', st.now); }
-        var f = el('s-facts'); f.innerHTML = fact('Когда', x.when) + fact('Где', x.place) + fact('Часы', x.hours) + fact('Стоимость', x.price);
-        var vals = [x.when, x.place, x.hours, x.price].filter(Boolean);
-        Array.prototype.forEach.call(f.querySelectorAll('dd'), function (dd, i) { dd.textContent = vals[i]; });
+        var f = el('s-facts'); f.innerHTML = '';
+        x.facts.forEach(function (p) {
+          var row = document.createElement('div'), dt = document.createElement('dt'), dd = document.createElement('dd');
+          dt.textContent = p[0]; dd.textContent = p[1]; row.appendChild(dt); row.appendChild(dd); f.appendChild(row);
+        });
         el('s-summary').textContent = x.summary; el('s-summary').hidden = !x.summary;
         var m = el('s-map'); m.hidden = !x.map; if (x.map) m.href = x.map;
         shade.hidden = false; document.body.classList.add('locked'); el('s-close').focus();
