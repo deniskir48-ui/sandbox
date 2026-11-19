@@ -198,7 +198,7 @@ const PAGES = [AFISHA, XMAS];
 const XMAS_ARTIFACT = XMAS.artifactUrl;
 
 function buildPage(cfg, { artifact = false } = {}) {
-  const list = [...cfg.events].sort((a, b) => key(a).localeCompare(key(b)));
+  const list = [...cfg.events].sort((a, b) => (a.priority ?? 3) - (b.priority ?? 3) || key(a).localeCompare(key(b)));
   const kinds = cfg.kinds.map((k) => ({ ...k, n: list.filter((e) => cfg.kindOf(e) === k.t).length })).filter((k) => k.n);
   // Районы для фильтра: где есть события, по их числу; порядок при равенстве — как в regions.json.
   const regCount = new Map();
@@ -208,7 +208,7 @@ function buildPage(cfg, { artifact = false } = {}) {
 
 
   const card = (e) => `
-        <li data-kind="${cfg.kindOf(e)}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}${e.open_days?.length ? ` data-days="${e.open_days.join(' ')}"` : ''}>
+        <li data-kind="${cfg.kindOf(e)}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-prio="${e.priority ?? 3}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}${e.open_days?.length ? ` data-days="${e.open_days.join(' ')}"` : ''}>
           <a class="ev" href="#${e.id}" data-id="${e.id}">
             <span class="ev-title">${esc(e.display_title ?? e.title)}</span>
             <span class="ev-meta">
@@ -519,13 +519,14 @@ function buildPage(cfg, { artifact = false } = {}) {
         tiles.forEach(function (t) { if (t.offsetParent) h = Math.max(h, t.getBoundingClientRect().height); });
         if (h) tiles.forEach(function (t) { t.style.minHeight = Math.ceil(h) + 'px'; });
       };
-      // Порядок: сначала ближайшее. Уже идущее (парк открыт с 13-го) стоит как «сегодня» или как выбранный день;
+      // Порядок: сначала приоритет из рабочей таблицы недели (1 — в первую очередь, 2 — интересно, 3 — дополнительно, DEC-W45),
+      // внутри приоритета — ближайшее. Уже идущее (парк открыт с 13-го) стоит как «сегодня» или как выбранный день;
       // в один день — сначала однодневные по времени, потом долгие.
       var sortKey = function (li) {
         var from = state.days ? state.days[0] : today, eff = li.dataset.start < from ? from : li.dataset.start;
         // Открыто не каждый день — по ближайшему дню работы.
         if (li.dataset.days) eff = li.dataset.days.split(' ').filter(function (x) { return x >= from; })[0] || li.dataset.end;
-        return eff + (li.dataset.long ? '1' : '0') + (li.dataset.time || '00:00') + li.dataset.start;
+        return (li.dataset.prio || '3') + eff + (li.dataset.long ? '1' : '0') + (li.dataset.time || '00:00') + li.dataset.start;
       };
       // Сколько плиток видно до «Показать ещё»: 6 рядов на телефоне, 4 на компьютере; кнопка добавляет столько же.
       var page = function () { return matchMedia('(min-width: 900px)').matches ? 16 : 12; };
