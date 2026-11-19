@@ -10,7 +10,8 @@
  * Данные — те же события Афиши с метками christmas-* (scripts/import-christmas.py), только status: published.
  *
  * Устроено так, чтобы выдержать сотни событий (дальше сюда же придёт обычная афиша):
- *  - три компактных фильтра в одну строку — выпадающие списки «Когда» (сегодня, завтра, дни с событиями),
+ *  - три компактных фильтра в одну строку — выпадающие списки «Когда» (сегодня, завтра, эти и следующие выходные,
+ *    любая дата сезона из календаря),
  *    «Где» (районы из src/data/regions.json), «Что» (виды) и «Сбросить», когда что-то выбрано;
  *  - один общий список без заголовков: сначала ближайшее; то, что уже идёт (парки, выставки), стоит как «сегодня»;
  *    при выборе дня — однодневные события этого дня и всё долгое, что в этот день открыто;
@@ -186,7 +187,8 @@ const html = `<title>Рождество на Кипре</title>
     background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
   @media (min-width: 640px) { .pick { gap: 6px; padding: 9px 11px 9px 14px; font-size: .9rem; } }
   .pick:hover { border-color: #3a4d74; }
-  .pick select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; border: 0; appearance: none; }
+  .pick[hidden] { display: none; }
+  .pick select, .pick input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; border: 0; appearance: none; }
   .pick .chev { flex: none; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
   .pick-ic:empty { display: none; } .pick-ic { display: inline-flex; } .pick-ic .ic { width: 18px; height: 18px; }
   .pick.on { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0a1120; }
@@ -256,6 +258,7 @@ const html = `<title>Рождество на Кипре</title>
 
   <div class="filters" role="group" aria-label="Фильтры">
     <label class="pick"><span class="pick-t">Все дни</span>${CHEV}<select id="f-date" aria-label="Когда"><option value="">Все дни</option></select></label>
+    <label class="pick" id="p-day" hidden><span class="pick-t">Выберите дату</span>${CHEV}<input type="date" id="f-day" aria-label="Дата"></label>
     <label class="pick"><span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>
     <label class="pick"><span class="pick-ic"></span><span class="pick-t">Все события</span>${CHEV}<select id="f-kind" aria-label="Что"><option value="">Все события</option>${kinds.map((k) => `<option value="${k.t}">${k.label}</option>`).join('')}</select></label>
     <button type="button" class="clear" id="clear" hidden>Сбросить</button>
@@ -316,35 +319,50 @@ const html = `<title>Рождество на Кипре</title>
     all('#evs > li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
     var items = all('#evs > li'), list = el('evs');
 
-    // «Когда»: сегодня, завтра и дальше дни, в которые есть однодневные события.
-    var dates = {}; dates[today] = 1; dates[tomorrow] = 1;
-    items.forEach(function (li) { if (!li.dataset.long) dates[li.dataset.start] = 1; });
+    // «Когда»: периоды, понятные в любой день сезона — сегодня, завтра, эти и следующие выходные, любая дата из календаря.
+    var shortD = function (iso) { return d(iso).getUTCDate() + ' ' + MON_S[d(iso).getUTCMonth()]; };
+    var dayLabel = function (iso) { return WD[d(iso).getUTCDay()] + ', ' + shortD(iso); };
+    var span = function (a) {
+      var x = a[0], y = a[a.length - 1];
+      if (x === y) return dayLabel(x);
+      return d(x).getUTCMonth() === d(y).getUTCMonth() ? d(x).getUTCDate() + '–' + shortD(y) : shortD(x) + ' – ' + shortD(y);
+    };
+    // Ближайшие выходные начиная с дня iso; в воскресенье — только оно.
+    var weekend = function (iso) { var wd = d(iso).getUTCDay(); if (wd === 0) return [iso]; var sat = plus(iso, 6 - wd); return [sat, plus(sat, 1)]; };
+    var seasonEnd = items.reduce(function (m, li) { return li.dataset.end > m ? li.dataset.end : m; }, today);
+    var we1 = weekend(today), we2 = weekend(plus(we1[we1.length - 1], 1));
+    var PERIODS = { today: [today], tomorrow: [tomorrow], we1: we1, we2: we2 };
     var picks = { date: el('f-date'), reg: el('f-reg'), kind: el('f-kind') };
-    Object.keys(dates).sort().forEach(function (iso) {
-      var o = document.createElement('option'); o.value = iso;
-      o.textContent = iso === today ? 'Сегодня' : iso === tomorrow ? 'Завтра' : WD[d(iso).getUTCDay()] + ', ' + d(iso).getUTCDate() + ' ' + MON_S[d(iso).getUTCMonth()];
-      picks.date.appendChild(o);
-    });
+    var addOpt = function (v, text, short) {
+      var o = document.createElement('option'); o.value = v; o.textContent = text; if (short) o.dataset.short = short;
+      picks.date.appendChild(o); return o;
+    };
+    addOpt('today', 'Сегодня'); addOpt('tomorrow', 'Завтра');
+    if (we1[0] <= seasonEnd) addOpt('we1', 'Эти выходные · ' + span(we1), 'Выходные');
+    if (we2[0] <= seasonEnd) addOpt('we2', 'Следующие выходные · ' + span(we2), 'След. выходные');
+    var pickOpt = addOpt('pick', 'Выбрать дату…');
 
-    var state = { date: '', reg: '', kind: '' }, shown = 0;
+    var state = { date: '', days: null, reg: '', kind: '' }, shown = 0;
+    var openOn = function (li, x) { return li.dataset.days ? li.dataset.days.split(' ').indexOf(x) >= 0 : li.dataset.start <= x && x <= li.dataset.end; };
     var match = function (li, s) {
       if (s.kind && li.dataset.kind !== s.kind) return false;
       if (s.reg && li.dataset.reg.split('|').indexOf(s.reg) < 0) return false;
-      // Долгое событие — если в этот день открыто (у деревень — только дни из open_days).
-      if (s.date) return li.dataset.long ? (li.dataset.days ? li.dataset.days.split(' ').indexOf(s.date) >= 0 : li.dataset.start <= s.date && s.date <= li.dataset.end) : li.dataset.start === s.date;
+      // Однодневное — если оно в один из выбранных дней; долгое — если в один из них открыто (у деревень — дни из open_days).
+      if (s.days) return s.days.some(function (x) { return li.dataset.long ? openOn(li, x) : li.dataset.start === x; });
       return true;
     };
     // Районы и виды без событий (после того как прошедшее убрано) не показываем.
     all('#f-reg option, #f-kind option').forEach(function (o) {
       if (!o.value) return;
-      var probe = { date: '', reg: '', kind: '' }; probe[o.parentNode.id === 'f-reg' ? 'reg' : 'kind'] = o.value;
+      var probe = { date: '', days: null, reg: '', kind: '' }; probe[o.parentNode.id === 'f-reg' ? 'reg' : 'kind'] = o.value;
       if (!items.some(function (li) { return match(li, probe); })) o.remove();
     });
     // Таблетка показывает выбранное; выбранный вид — его цветом и значком.
     function sync() {
       Object.keys(picks).forEach(function (k) {
         var sel = picks[k], lab = sel.parentNode;
-        lab.querySelector('.pick-t').textContent = sel.options[sel.selectedIndex].text;
+        var opt = sel.options[sel.selectedIndex];
+        lab.querySelector('.pick-t').textContent = opt.dataset.short || opt.text;
         lab.classList.toggle('on', !!sel.value);
       });
       var kl = picks.kind.parentNode;
@@ -364,7 +382,7 @@ const html = `<title>Рождество на Кипре</title>
     // Порядок: сначала ближайшее. Уже идущее (парк открыт с 13-го) стоит как «сегодня» или как выбранный день;
     // в один день — сначала однодневные по времени, потом долгие.
     var sortKey = function (li) {
-      var from = state.date || today, eff = li.dataset.start < from ? from : li.dataset.start;
+      var from = state.days ? state.days[0] : today, eff = li.dataset.start < from ? from : li.dataset.start;
       // Открыто не каждый день — по ближайшему дню работы.
       if (li.dataset.days) eff = li.dataset.days.split(' ').filter(function (x) { return x >= from; })[0] || li.dataset.end;
       return eff + (li.dataset.long ? '1' : '0') + (li.dataset.time || '00:00') + li.dataset.start;
@@ -386,12 +404,36 @@ const html = `<title>Рождество на Кипре</title>
       equalize();
     }
     Object.keys(picks).forEach(function (k) {
-      picks[k].addEventListener('change', function () { state[k] = picks[k].value; sync(); render(); });
+      picks[k].addEventListener('change', function () {
+        var v = picks[k].value;
+        if (k === 'date' && v === 'pick') { picks.date.value = state.date; openDay(); return; }
+        state[k] = v;
+        if (k === 'date') { state.days = !v ? null : PERIODS[v] || [v.slice(2)]; el('p-day').hidden = true; }
+        sync(); render();
+      });
+    });
+    // «Выбрать дату…»: календарь телефона/браузера в пределах сезона. Если открыть его сразу нельзя
+    // (например, страница внутри чужой рамки), рядом появляется кнопка «Выберите дату».
+    var dayIn = el('f-day');
+    dayIn.min = today; dayIn.max = seasonEnd;
+    function openDay() {
+      el('p-day').hidden = false; sync();
+      try { dayIn.showPicker(); } catch (e) { dayIn.focus(); }
+    }
+    dayIn.addEventListener('change', function () {
+      var iso = dayIn.value; if (!iso) return;
+      all('#f-date option').forEach(function (o) { if (o.value.indexOf('d:') === 0) o.remove(); });
+      var v = iso === today ? 'today' : iso === tomorrow ? 'tomorrow' : 'd:' + iso;
+      if (v.indexOf('d:') === 0) { var o = document.createElement('option'); o.value = v; o.textContent = dayLabel(iso); picks.date.insertBefore(o, pickOpt); }
+      picks.date.value = v; state.date = v; state.days = [iso];
+      el('p-day').hidden = true; dayIn.value = '';
+      sync(); render();
     });
     el('more').addEventListener('click', function () { shown += page(); render(true); });
     function resetAll() {
-      state = { date: '', reg: '', kind: '' };
+      state = { date: '', days: null, reg: '', kind: '' };
       Object.keys(picks).forEach(function (k) { picks[k].value = ''; });
+      el('p-day').hidden = true;
       sync(); render();
     }
     el('reset').addEventListener('click', resetAll);
