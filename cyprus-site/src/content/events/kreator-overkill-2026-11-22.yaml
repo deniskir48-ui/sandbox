@@ -1,16 +1,18 @@
-# week-import
 # Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
 # Проверка в таблице: По источнику
 # Как в таблице: Концерт двух известных трэш-метал групп, впервые на Кипре; от €69. Двери 18:30
+# Исправлено вручную 19.11.2026: начало 18:30 (двери 18:00) — по странице Platinumlist. Без пометки импорта — таблица не перезапишет.
 title: "Kreator + Overkill"
 status: published
 type: concert
 priority: 3
 date: "2026-11-22"
-time: "19:00"
+time: "18:30"
 city: "Лимассол"
 venue: "Monte Caputo"
 summary: "Концерт двух известных трэш-метал групп, впервые на Кипре; от €69. Двери 18:30."
+description: "Концерт треш-метал групп Kreator и Overkill в рамках мирового тура Krushers of the World. По странице организатора, обе группы впервые выступают на Кипре. Двери открываются в 18:00."
+booking: "Билеты — на Platinumlist"
 ticket_url: "https://cyprus.platinumlist.net/event-tickets/109826/kreator-plus-special-guests-over-kill-in-cyprus"
 sources:
   - title: "Источник из таблицы афиши"

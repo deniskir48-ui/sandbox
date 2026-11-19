@@ -10,6 +10,8 @@ end_date: "2026-11-29"
 city: "Лимассол"
 venue: "Famagusta Nautical Club, Promachon Eleftherias 1"
 summary: "Международная парусная регата ILCA4 с 22 по 29 ноября. Участники соревнуются за кубок и стипендии. Публичное расписание стартов ещё не опубликовано."
+description: "Регата класса ILCA4 «The R.O.C.»: 40 приглашённых яхтсменов, организатор — Famagusta Nautical Club. Десять лучших получат стипендии на €33 000, три лучших тренера — призы."
+address: "Famagusta Nautical Club, Promachon Eleftherias 1, Limassol 4103"
 ticket_url: "https://www.visitcyprus.com/event/regatta-of-champions-the-r-o-c-optimist-ilca4-8-15-11-2026-22-29-11-2026/"
 sources:
   - title: "Источник из таблицы афиши"

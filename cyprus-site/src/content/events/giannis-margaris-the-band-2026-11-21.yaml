@@ -1,17 +1,22 @@
-# week-import
 # Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
 # Проверка в таблице: Сверить детали
 # Как в таблице: Греческая живая музыка. Греческий вокал · Греческий язык
+# Исправлено вручную 19.11.2026: начало 22:00 — по странице события. Без пометки импорта — таблица не перезапишет.
 title: "Giannis Margaris & the Band"
 status: published
 type: concert
 priority: 3
 date: "2026-11-21"
-time: "20:30"
+time: "22:00"
 city: "Ларнака"
 venue: "Savino Live"
 summary: "Греческая живая музыка. Греческий вокал."
+description: "Концерт Яниса Маргариса с группой The Band в клубе Savino Live."
+address: "Savino Live, Watkins 9, Larnaca 6022"
+language: "Греческий"
 ticket_url: "https://cypruseventsmap.com/next-week/"
 sources:
   - title: "Источник из таблицы афиши"
     url: "https://cypruseventsmap.com/next-week/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/giannis-margaris-the-band/"
