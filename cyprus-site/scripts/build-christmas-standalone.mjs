@@ -112,7 +112,7 @@ const whenFull = (e) => {
 const isLong = (e) => !!e.end_date && e.end_date !== e.date;
 
 const card = (e) => `
-      <li data-kind="${kindOf(e)[0]}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}>
+      <li data-kind="${kindOf(e)[0]}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}${e.open_days?.length ? ` data-days="${e.open_days.join(' ')}"` : ''}>
         <a class="ev" href="#${e.id}" data-id="${e.id}">
           <span class="ev-title">${esc(e.title)}</span>
           <span class="ev-meta">
@@ -319,7 +319,8 @@ const html = `<title>Рождество на Кипре</title>
     var match = function (li, s) {
       if (s.kind && li.dataset.kind !== s.kind) return false;
       if (s.reg && li.dataset.reg.split('|').indexOf(s.reg) < 0) return false;
-      if (s.date) return li.dataset.long ? li.dataset.start <= s.date && s.date <= li.dataset.end : li.dataset.start === s.date;
+      // Долгое событие — если в этот день открыто (у деревень — только дни из open_days).
+      if (s.date) return li.dataset.long ? (li.dataset.days ? li.dataset.days.split(' ').indexOf(s.date) >= 0 : li.dataset.start <= s.date && s.date <= li.dataset.end) : li.dataset.start === s.date;
       return true;
     };
     // Районы и виды без событий (после того как прошедшее убрано) не показываем.
@@ -341,6 +342,8 @@ const html = `<title>Рождество на Кипре</title>
     // в один день — сначала однодневные по времени, потом долгие.
     var sortKey = function (li) {
       var from = state.date || today, eff = li.dataset.start < from ? from : li.dataset.start;
+      // Открыто не каждый день — по ближайшему дню работы.
+      if (li.dataset.days) eff = li.dataset.days.split(' ').filter(function (x) { return x >= from; })[0] || li.dataset.end;
       return eff + (li.dataset.long ? '1' : '0') + (li.dataset.time || '00:00') + li.dataset.start;
     };
     // Сколько плиток видно до «Показать ещё»: 6 рядов на телефоне, 4 на компьютере; кнопка добавляет столько же.
