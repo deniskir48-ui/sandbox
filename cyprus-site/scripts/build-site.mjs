@@ -99,6 +99,7 @@ const ICONS = {
   ticket: '<path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5V10a2 2 0 0 0 0 4v2.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5V14a2 2 0 0 0 0-4z"/><path d="M14.5 6.5v2M14.5 11v2M14.5 15.5v2"/>',
   star: '<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/>',
   mountain: '<path d="M3 19.5 9.5 8.5l4 6.5 2.5-3.8 5 8.3z"/><circle cx="17" cy="5.8" r="1.8"/>',
+  calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/>',
   pin: '<path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/>',
   holiday: '<rect x="4" y="10.5" width="16" height="9.5" rx="1"/><rect x="3" y="7" width="18" height="3.5" rx="1"/><path d="M12 7v13M12 7c-1.2-3.2-5.5-3.6-4.8-.6M12 7c1.2-3.2 5.5-3.6 4.8-.6"/>',
 };
@@ -164,9 +165,14 @@ const XMAS = {
   kindOf: (e) => xmasKind(e)[0],
   typeOf: xmasType,
   iconOf: (e) => (xmasKind(e)[0] === 'christmas-other' ? (ICONS[e.type] ? e.type : 'holiday') : KIND_ICON[xmasKind(e)[0]]),
+  // С рождественской страницы (на неё ведут посты) — заметный переход ко всей афише.
+  banner: (artifact) => {
+    const href = artifact ? `${AFISHA.artifactUrl}" target="_blank" rel="noopener` : AFISHA.path;
+    return `  <a class="xbanner to-afisha" href="${href}"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true">${ICONS.calendar}</svg><span><b>Вся афиша Кипра</b><small>Концерты, спектакли, выставки и детские события на неделю</small></span><span class="go" aria-hidden="true">→</span></a>\n`;
+  },
 };
 const AFISHA = {
-  nav: 'Афиша', tab: 'Афиша', tabIcon: 'concert', artifactUrl: 'https://claude.ai/artifact/7UMwUiLpWMgKEsAppxyroe', path: '/cyprus/afisha/', og: 'standalone/og-afisha.png',
+  nav: 'Афиша', tab: 'Афиша', tabIcon: 'calendar', artifactUrl: 'https://claude.ai/artifact/7UMwUiLpWMgKEsAppxyroe', path: '/cyprus/afisha/', og: 'standalone/og-afisha.png',
   title: 'Афиша Кипра', ogTitle: 'Афиша Кипра — концерты, спектакли, фестивали',
   description: 'Концерты, спектакли, выставки, детские события и фестивали Кипра: даты, места и карта.',
   kicker: 'Что происходит', h1: 'Афиша <em>Кипра</em>', garland: false,
@@ -273,7 +279,8 @@ function buildPage(cfg, { artifact = false } = {}) {
     .xbanner { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; padding: 12px 16px; border-radius: 16px; text-decoration: none; color: var(--text);
       background: linear-gradient(100deg, #17284a, #0f1a30); border: 1px solid #2b3f66; }
     .xbanner[hidden] { display: none; }
-    .xbanner .ic { width: 28px; height: 28px; color: #6fe3a5; }
+    .xbanner .ic { flex: none; width: 28px; height: 28px; color: #6fe3a5; }
+    .xbanner.to-afisha .ic { color: var(--sky); }
     .xbanner b { display: block; font-family: var(--display); font-weight: 700; font-size: 1rem; }
     .xbanner small { display: block; color: var(--muted); font-size: .86rem; }
     .xbanner .go { margin-left: auto; color: var(--warm); font-size: 1.3rem; }
