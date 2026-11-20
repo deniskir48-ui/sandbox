@@ -1,0 +1,24 @@
+# week-import
+# Строка 111 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Triplari and the Dragon of Milia"
+status: published
+type: theatre
+priority: 2
+date: "2026-11-29"
+time: "11:00"
+city: "Никосия"
+venue: "Theatro Ena"
+summary: "Семейный спектакль AntiLogos, €10."
+description: "Семейный спектакль театра AntiLogos по народной сказке в адаптации Андри Теодоти, возобновлён к 10-летию театра."
+end_time: "12:00"
+price: "€10"
+address: "Athinas 4, Никосия"
+language: "Греческий"
+booking: "Билеты на checkincyprus.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/triplari-and-the-dragon-of-milia-return-for-the-10th/"

@@ -1,0 +1,19 @@
+# week-import
+# Строка 49 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: В программе Flash Festival
+title: "The Blue Hour — Benjamin Kahn"
+status: published
+type: theatre
+priority: 2
+date: "2026-11-27"
+time: "19:00"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Сольная танцевальная постановка французского хореографа; €10."
+description: "Сольная постановка французского хореографа Бенжамена Кана, исполняет Тео Окреман; 55 минут. Завершение трилогии портретов о переходе между ночью и днём."
+booking: "В кассе Rialto и на сайте театра"
+ticket_url: "https://www.rialto.com.cy/post/flash-festival"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.rialto.com.cy/post/flash-festival"

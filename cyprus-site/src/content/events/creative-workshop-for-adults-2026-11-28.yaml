@@ -1,0 +1,23 @@
+# week-import
+# Строка 224 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Creative Workshop for Adults"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-28"
+time: "10:00"
+city: "Никосия"
+venue: "A.G. Leventis Gallery"
+summary: "Творческое занятие для взрослых."
+description: "Творческая мастерская для взрослых от Slow Sew и галереи Левентиса: участники шьют и украшают бархатный кошелёк, новички тоже приглашаются. Ведут Джорджия Модити и Анна Апостолу."
+end_time: "13:00"
+price: "€55"
+language: "Греческий и английский"
+booking: "Запись через образовательный отдел галереи, место подтверждается после предоплаты"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/dimiourgiko-ergastiri-gia-enilikes-creative-workshop/"

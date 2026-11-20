@@ -1,0 +1,22 @@
+# week-import
+# Строка 208 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Frankenstein Diary"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-27"
+time: "20:00"
+city: "Никосия"
+venue: "Satiriko Theatre"
+summary: "«Дневник Франкенштейна», спектакль с пятью актрисами."
+description: "Пьеса Лены Кицопулу о внутренних конфликтах творчества: пять женских персонажей — разные стороны одного сознания. Адаптация и постановка Элени Анастасиу."
+address: "Vladimirou Kafkaridi 11–15, Никосия"
+language: "Греческий"
+booking: "Билеты на rsrvin.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/frankenstein-diary/"

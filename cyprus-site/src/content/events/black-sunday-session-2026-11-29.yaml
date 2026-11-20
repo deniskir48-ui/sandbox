@@ -1,0 +1,19 @@
+# week-import
+# Строка 258 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Black Sunday Session"
+status: published
+type: party
+priority: 3
+date: "2026-11-29"
+time: "18:00"
+city: "Никосия"
+venue: "Capital Centre"
+summary: "Вечер клубной музыки, детали уточняйте у организатора."
+description: "Вечерняя сессия DEADLINE: Black Sunday Session."
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/deadline-black-sunday-session-at-capital-center/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 107 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Красная Шапочка"
+status: published
+type: kids
+priority: 2
+date: "2026-11-29"
+time: "10:30"
+city: "Никосия"
+venue: "THOC"
+summary: "Детский спектакль на греческом."
+description: "Семейный спектакль THOC по новой адаптации Андри Теодоти, постановка Фотиса Николау."
+address: "Grigori Afxentiou 9, Никосия"
+booking: "Билеты на сайте THOC"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/little-red-riding-hood-thoc-evis-gabrielides/"

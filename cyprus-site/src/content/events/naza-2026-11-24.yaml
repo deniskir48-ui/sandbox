@@ -1,0 +1,23 @@
+# week-import
+# Строка 160 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Naza"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-24"
+time: "20:30"
+city: "Никосия"
+venue: "Pantheon Theatre"
+summary: "Кинопоказ; €7."
+description: "Документальный фильм Юваля Абрахама и Рейчел Шор (80 минут): анонимные израильские разведчики и военные рассказывают о системах, которые применялись в войне в Газе."
+price: "€7"
+address: "Diagorou 29, 5 этаж, Никосия"
+language: "Субтитры на английском и греческом"
+booking: "Билеты на сайте Pantheon Theatre"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/naza-pantheon/"

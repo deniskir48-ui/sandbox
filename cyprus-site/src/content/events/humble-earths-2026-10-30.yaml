@@ -1,0 +1,21 @@
+# week-import
+# Строка 37 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Замечание редактора: Повторяющиеся даты в агрегаторе объединены; часы уточнить
+title: "Humble Earths"
+status: published
+type: exhibition
+priority: 2
+date: "2026-10-30"
+end_date: "2026-12-12"
+city: "Лимассол"
+venue: "Municipal Art Gallery"
+summary: "Выставка современного искусства в муниципальной галерее; вход бесплатный."
+description: "Выставка «Ταπεινές Γαίες»: современные художники с Кипра, из Болгарии и Великобритании показывают работы рядом с произведениями из коллекции муниципальной галереи."
+price: "Бесплатно"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/humble-lands/"

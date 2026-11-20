@@ -1,0 +1,24 @@
+# week-import
+# Строка 62 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Saturday at the Museum: Pentadaktylos"
+status: published
+type: kids
+priority: 2
+date: "2026-11-28"
+time: "11:00"
+city: "Никосия"
+venue: "CVAR"
+summary: "Познавательное занятие для детей 6–12 лет о горном хребте Пентадактилос."
+price: "€10 за ребёнка (в греческом анонсе — бесплатно)"
+description: "Дети знакомятся с горным хребтом Пентадактилос по картинам, гравюрам и книгам коллекции Severis, а потом рисуют свой вид."
+end_time: "12:30"
+address: "Ermou 285, Никосия"
+age: "6–12 лет"
+booking: "Запись по телефону музея"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/saturday-at-the-museum-the-secrets-of-pentadaktylos/"

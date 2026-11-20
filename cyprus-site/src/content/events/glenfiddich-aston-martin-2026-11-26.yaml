@@ -1,0 +1,21 @@
+# week-import
+# Строка 188 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Glenfiddich × Aston Martin"
+status: published
+type: festival
+priority: 3
+date: "2026-11-26"
+time: "19:30"
+city: "Гермасойя"
+summary: "Дегустация виски; €40."
+description: "Дегустация пяти виски: четыре классические выдержки Glenfiddich и лимитированный выпуск с командой «Формулы-1» Aston Martin. Сыр и мясная нарезка включены; можно не быть членом клуба."
+end_time: "22:00"
+price: "€40"
+booking: "Билеты на whiskysociety.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/five-whisky-tasting-glenfiddich-meets-aston-martin/"

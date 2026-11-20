@@ -1,0 +1,26 @@
+# week-import
+# Строка 174 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Сведено сюда: строки 218, 259
+title: "A Lie of the Mind"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-25"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "Theatro Dionysos"
+summary: "Театральная постановка; €12."
+open_days: ["2026-11-25", "2026-11-27", "2026-11-28", "2026-11-29"]
+sessions: "25, 27 и 28 ноября в 20:30, 29 ноября в 18:30"
+description: "Кипрская премьера пьесы Сэма Шепарда о домашнем насилии и семейной травме, постановка Эмилиоса Харалампидиса; около 110 минут."
+price: "€12"
+address: "Evagorou, Никосия"
+language: "Греческий"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/a-lie-of-the-mind-theatrical-performance/"

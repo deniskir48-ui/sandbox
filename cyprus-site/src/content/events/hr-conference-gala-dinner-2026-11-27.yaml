@@ -1,0 +1,21 @@
+# week-import
+# Строка 195 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "HR Conference & Gala Dinner"
+status: published
+type: talk
+priority: 3
+date: "2026-11-27"
+time: "09:00"
+city: "Лимассол"
+venue: "Crowne Plaza"
+summary: "Конференция HR-сообщества и награждение."
+description: "HR-конференция и церемония Island People Excellence Award: презентации финалистов, экспертные дискуссии, нетворкинг, вечером награждение и гала-ужин."
+address: "Promachon Eleftherias 2, Лимассол (Crowne Plaza)"
+booking: "Два пропуска: на конференцию и на гала-ужин"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/hr-conference-award-ceremony-gala-dinner/"

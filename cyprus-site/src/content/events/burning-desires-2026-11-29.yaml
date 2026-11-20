@@ -1,0 +1,23 @@
+# week-import
+# Строка 254 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Burning Desires"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-29"
+time: "17:30"
+city: "Никосия"
+venue: "Pantheon Theatre"
+summary: "Воскресный ретроспективный кинопоказ; €5."
+description: "Воскресные показы классического мирового кино о разрыве между реальной и желаемой жизнью."
+end_time: "19:30"
+price: "€5"
+address: "Diagorou 29, 5 этаж, Никосия"
+booking: "Билеты на cyproplan.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/burning-desires-sunday-classic-film-screenings/"

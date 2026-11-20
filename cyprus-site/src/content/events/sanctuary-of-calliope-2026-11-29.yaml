@@ -1,0 +1,22 @@
+# week-import
+# Строка 252 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Sanctuary of Calliope"
+status: published
+type: exhibition
+priority: 3
+date: "2026-11-29"
+time: "16:00"
+city: "Лимассол"
+venue: "PSI Foundation"
+summary: "Интерактивная выставка искусства; бесплатно."
+description: "Интерактивная выставка художницы Лии Хараки: посетители проходят пространство с аудио, движением и перформансом в своём темпе."
+end_time: "21:00"
+price: "Бесплатно"
+address: "Synergatismou 27, Лимассол"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/sanctuary-of-calliope-participatory-art-exhibition/"

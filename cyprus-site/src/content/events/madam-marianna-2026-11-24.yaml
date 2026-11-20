@@ -1,0 +1,22 @@
+# week-import
+# Строка 41 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Мадам Марианна"
+status: published
+type: theatre
+priority: 2
+date: "2026-11-24"
+end_date: "2026-11-25"
+city: "Ларнака"
+venue: "Municipal Theatre"
+summary: "Грекоязычная комедийная постановка; билеты €15–20."
+description: "Комедия-пародия Андреаса Аристотелуса впервые на Кипре, постановка Яниса Клейдериса: расследование убийства в пирейском борделе 1967 года."
+language: "Греческий"
+age: "15+"
+booking: "Билеты на checkincyprus.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/for-the-first-time-in-cyprus-madame-marianna-in-a-brand-new-larnaca/"

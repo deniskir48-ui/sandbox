@@ -1,0 +1,22 @@
+# week-import
+# Строка 134 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Бесплатный творческий мастер-класс"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-23"
+time: "10:00"
+city: "Никосия"
+venue: "Bank of Cyprus Cultural Foundation"
+summary: "Художественное занятие в культурном фонде; бесплатно."
+description: "Бесплатный творческий мастер-класс в Культурном фонде Банка Кипра: участники сами создают работу. Следующее занятие — 30 ноября."
+end_time: "12:00"
+price: "Бесплатно"
+address: "Faneromenis 80, Никосия"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/free-art-workshop-in-nicosia-museum-george-nefeli/"

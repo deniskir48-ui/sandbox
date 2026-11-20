@@ -1,0 +1,21 @@
+# week-import
+# Строка 235 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Movember Rock"
+status: published
+type: concert
+priority: 3
+date: "2026-11-28"
+time: "20:00"
+city: "Лимассол"
+venue: "Limassol Agora"
+summary: "Рок-концерт в PlayLounge; €20."
+description: "Рок-вечер в поддержку Movember — кампании о мужском здоровье. Еда, напитки и стрижка бороды."
+price: "€20"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/movember-rock-live-rock-night-in-limassol/"

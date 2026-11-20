@@ -1,0 +1,22 @@
+# week-import
+# Строка 60 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Сведено сюда: строки 103
+title: "Little Shops @ Yfantourgeio"
+status: published
+type: other
+priority: 2
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "Yfantourgeio"
+summary: "Небольшой маркет работ местных мастеров и продавцов."
+hours: "10:00–19:00"
+description: "Рождественский маркет независимых магазинов: одежда, украшения, искусство, товары для дома, праздничные угощения, мастер-классы и напитки."
+address: "Lefkonos 67–73, Фанеромени, Никосия"
+ticket_url: "https://cypruseventsmap.com/ru/markets/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/markets/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/little-shops-yfantourgeio-yfantourgeio-workplace/"

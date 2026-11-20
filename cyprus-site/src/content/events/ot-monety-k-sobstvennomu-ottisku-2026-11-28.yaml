@@ -1,0 +1,24 @@
+# week-import
+# Строка 227 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "От монеты к собственному оттиску"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-28"
+time: "10:30"
+city: "Никосия"
+venue: "Leventis Municipal Museum"
+summary: "Музейная творческая мастерская."
+description: "Мастерская гравюры в муниципальном музее Левентиса по мотивам выставки о монетах Греции и Кипра: участники рисуют эскиз, вырезают его на деревянном блоке и печатают оттиск."
+end_time: "12:00"
+price: "Бесплатно"
+address: "Hippocratous 15–17, Никосия"
+language: "Греческий"
+booking: "Обязательна запись через музей"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/apo-to-nomisma-sto-diko-sou-apotypoma-from-the-coin-to-your-leventis-museum/"

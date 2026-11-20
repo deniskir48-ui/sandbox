@@ -1,0 +1,21 @@
+# week-import
+# Строка 202 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "MYTHOgraphia: фотовыставка"
+status: published
+type: exhibition
+priority: 3
+date: "2026-11-27"
+end_date: "2026-12-03"
+city: "Пафос"
+summary: "Фотографический проект в Пафосе; бесплатно."
+hours: "27 ноября 18:00–19:00; 28–29 ноября 11:00–19:00; 30 ноября – 3 декабря 16:00–19:00"
+description: "Групповая фотовыставка: несколько авторов по-своему интерпретируют миф о Кинире и Мирре."
+price: "Бесплатно"
+more_dates: "28–29 ноября 11:00–19:00; 30 ноября – 3 декабря 16:00–19:00"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/mythographia-photography-exhibition/"

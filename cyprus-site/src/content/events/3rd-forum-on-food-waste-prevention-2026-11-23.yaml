@@ -1,0 +1,20 @@
+# week-import
+# Строка 133 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "3rd Forum on Food Waste Prevention"
+status: published
+type: talk
+priority: 3
+date: "2026-11-23"
+time: "09:00"
+city: "Лимассол"
+summary: "Форум о предотвращении пищевых отходов."
+description: "Третий форум о предотвращении и сокращении пищевых отходов, организатор — Торговая палата Лимассола."
+end_time: "14:30"
+booking: "Регистрация на сайте Торговой палаты Лимассола"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/3rd-forum-on-food-waste-prevention-and-reduction/"

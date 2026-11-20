@@ -1,0 +1,22 @@
+# week-import
+# Строка 116 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "How the Grinch Stole Christmas"
+status: published
+type: kids
+priority: 2
+date: "2026-11-29"
+time: "11:30"
+city: "Лимассол"
+venue: "Ypsonas Municipal Theatre"
+summary: "Семейный рождественский спектакль; цену и язык уточняйте у организатора."
+description: "Семейный спектакль «Как Гринч украл Рождество». Режиссёр Екатерина Ложкина-Белевич, художник-постановщик Наталья Бакулева."
+language: "Русский"
+booking: "Билеты на rsrvin.com"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/how-the-grinch-stole-christmas/"
+tags: [christmas, christmas-other]

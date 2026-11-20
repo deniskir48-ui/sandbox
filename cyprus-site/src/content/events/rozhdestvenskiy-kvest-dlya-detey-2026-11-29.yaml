@@ -1,0 +1,22 @@
+# week-import
+# Строка 106 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Рождественский квест для детей"
+status: published
+type: festival
+priority: 2
+date: "2026-11-29"
+time: "10:30"
+city: "Дериния"
+venue: "библиотека «Адам Адамантос»"
+summary: "A Christmas Mystery Awaits Little Explorers: семейный квест."
+description: "Сова Клу ищет потерянный рождественский свет: интерактивная история, загадки, поиск сокровищ и изготовление украшений."
+end_time: "12:30"
+age: "6–9 лет"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/a-christmas-mystery-awaits-little-explorers-in-deryneia/"
+tags: [christmas, christmas-other]

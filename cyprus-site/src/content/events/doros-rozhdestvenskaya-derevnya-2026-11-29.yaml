@@ -1,0 +1,22 @@
+# week-import
+# Строка 119 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Не путать с 9 официальными рождественскими деревнями
+title: "Дорос: рождественская деревня"
+status: published
+type: festival
+priority: 2
+date: "2026-11-29"
+time: "14:00"
+city: "Лимассол"
+venue: "Дорос"
+summary: "Местные рождественские активности с бесплатным входом."
+description: "Рождественская деревня в старой мастерской Дороса: еда, горячие напитки и сладости для всех возрастов."
+price: "Бесплатно"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/doros-sets-up-his-own-christmas-village-with-free-entrance/"
+tags: [christmas, christmas-villages]

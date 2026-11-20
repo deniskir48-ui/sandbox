@@ -1,0 +1,23 @@
+# week-import
+# Строка 199 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+# Сведено сюда: строки 250
+title: "Mindset Talks Vol. 9"
+status: published
+type: talk
+priority: 3
+date: "2026-11-27"
+end_date: "2026-11-29"
+city: "Пафос"
+venue: "Aliathon Resort"
+summary: "Лекции о мышлении, саморазвитии и бизнесе."
+hours: "с 14:00"
+description: "Трёхдневная конференция о личностном и бизнес-развитии, больше 40 спикеров с Кипра и из других стран."
+address: "Poseidonos 3, Героскипу"
+booking: "На сайте Growth Hacking Cyprus"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/mindset-talks-vol-9/"

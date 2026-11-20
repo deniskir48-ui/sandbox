@@ -1,0 +1,23 @@
+# week-import
+# Строка 45 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Замечание редактора: Eventbrite указывает 15:00; другой источник 10:00
+title: "Cyprus Property Week"
+status: published
+type: other
+priority: 2
+date: "2026-11-26"
+time: "10:00"
+city: "Лимассол"
+venue: "клуб Tzar"
+summary: "Мероприятие по недвижимости и деловым контактам."
+end_time: "19:00"
+description: "Деловое мероприятие для специалистов по недвижимости: нетворкинг, обзор рынка и инвестиционные возможности."
+address: "Kolonakiou 29, Лимассол (клуб Tzar)"
+booking: "Регистрация на cypruspropertyweek.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/cyprus-property-week-limassol-tzar-nightclub/"

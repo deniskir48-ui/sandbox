@@ -1,0 +1,21 @@
+# week-import
+# Строка 248 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "From Employment to Enterprise"
+status: published
+type: talk
+priority: 3
+date: "2026-11-29"
+time: "12:00"
+city: "Лимассол"
+venue: "Elevation Church"
+summary: "Публичная встреча о создании нескольких источников дохода."
+description: "Практическая встреча о запуске бизнеса и нескольких источниках дохода: выступления экспертов, нетворкинг, вопросы и ответы и бесплатная бизнес-выставка."
+end_time: "14:30"
+address: "Jean Sibelius 11, Лимассол"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/from-employment-to-enterprise-building-multiple-streams/"

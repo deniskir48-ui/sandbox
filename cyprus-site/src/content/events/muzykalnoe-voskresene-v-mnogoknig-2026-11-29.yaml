@@ -1,0 +1,22 @@
+# week-import
+# Строка 114 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Музыкальное воскресенье в «Многокниг»"
+status: published
+type: kids
+priority: 2
+date: "2026-11-29"
+time: "11:00"
+city: "Гермасойя"
+venue: "Mnogoknig"
+summary: "Русскоязычное семейное музыкальное мероприятие."
+description: "Бесплатные детские музыкальные занятия музыкальной школы LYRA в книжном магазине «Многокниг»: духовые инструменты, оркестр Орфа, изготовление маракасов, вокальный ансамбль."
+end_time: "13:00"
+price: "Бесплатно"
+address: "Spyrou Kyprianou 79, Потамос Гермасойя"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/muzykalnye-voskresenya-v-mnogoknig/"

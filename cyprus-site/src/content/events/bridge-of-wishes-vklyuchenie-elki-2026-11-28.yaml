@@ -1,0 +1,21 @@
+# week-import
+# Строка 69 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Точная площадь уточняется
+title: "Bridge of Wishes: включение ёлки"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "17:00"
+city: "Лимассол"
+venue: "Гераса"
+summary: "Открытие праздничной иллюминации деревни."
+description: "Зажжение ёлки у «Моста желаний» в Герасе; Санта-Клаус раздаёт детям подарки. Организаторы — общинный совет и ассоциация друзей Герасы."
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/gerasa-lights-its-christmas-tree-at-the-bridge-of-wishes/"
+tags: [christmas, christmas-lights]

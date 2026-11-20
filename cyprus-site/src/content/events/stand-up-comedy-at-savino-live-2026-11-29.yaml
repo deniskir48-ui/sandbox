@@ -1,0 +1,22 @@
+# week-import
+# Строка 130 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Stand-Up Comedy at Savino Live"
+status: published
+type: standup
+priority: 2
+date: "2026-11-29"
+time: "19:00"
+city: "Ларнака"
+venue: "Savino Rock Bar"
+summary: "Вечер стендапа; язык и билеты уточняйте у организатора."
+description: "Вечер стендапа: выступает Йоргос «Киприот» Кириаку, разогрев — Mr. Ji."
+price: "Бесплатно"
+address: "Watkins 9, Ларнака"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/savino-live-stand-up-comedy-evening-in-larnaca/"

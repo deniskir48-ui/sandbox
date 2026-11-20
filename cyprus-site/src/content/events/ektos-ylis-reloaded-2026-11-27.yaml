@@ -1,0 +1,23 @@
+# week-import
+# Строка 53 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Ektos Ylis Reloaded"
+status: published
+type: theatre
+priority: 2
+date: "2026-11-27"
+time: "21:00"
+city: "Лимассол"
+venue: "Pattihio Theatre"
+summary: "Грекоязычная театральная постановка; €15–30."
+description: "Сатирическая комедия Костаса Леймониса о политике, который говорит откровенно; режиссёр Константина Николаиди, в главной роли Герасимос Скиадаресис."
+end_time: "22:10"
+address: "Agias Zonis 4, Лимассол"
+language: "Греческий"
+booking: "Билеты на SoldOut"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/ektos-ylis-reloaded/"

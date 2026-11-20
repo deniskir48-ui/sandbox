@@ -1,0 +1,24 @@
+# week-import
+# Строка 238 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Сведено сюда: строки 255
+title: "Murder on the Orient Express"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "THOC"
+summary: "Театральная версия «Убийства в Восточном экспрессе»."
+open_days: ["2026-11-28", "2026-11-29"]
+sessions: "28 ноября в 20:00, 29 ноября в 18:00"
+description: "Сценическая версия детектива Агаты Кристи: Пуаро, поезд, метель и убийство. Спектакль THOC вернулся на основную сцену второй сезон."
+address: "Grigori Afxentiou 9, Никосия"
+booking: "Билеты на сайте THOC"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/murder-on-the-orient-express-thoc-evis-gabrielides/"

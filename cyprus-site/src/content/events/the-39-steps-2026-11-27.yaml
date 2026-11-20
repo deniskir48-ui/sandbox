@@ -1,0 +1,26 @@
+# week-import
+# Строка 220 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+# Замечание редактора: Несколько сеансов, один спектакль
+title: "The 39 Steps"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-27"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "Theatro Dentro"
+summary: "Комедийная театральная постановка по мотивам «39 ступеней»."
+open_days: ["2026-11-27", "2026-11-28", "2026-11-29"]
+sessions: "27 и 28 ноября в 20:00, 29 ноября в 18:30"
+description: "Комедийный детектив Патрика Барлоу по роману Джона Бьюкена и фильму Хичкока: четыре актёра играют больше 100 ролей. Театр «Лексис», режиссёр Марина Вронти; около 1 часа 25 минут."
+price: "€22"
+address: "Enotitos, Никосия"
+language: "Греческий"
+booking: "Билеты на rsrvin.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-39-steps-dentro/"

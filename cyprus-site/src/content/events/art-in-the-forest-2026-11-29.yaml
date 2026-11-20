@@ -1,0 +1,23 @@
+# week-import
+# Строка 123 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Art in the Forest"
+status: published
+type: other
+priority: 2
+date: "2026-11-29"
+time: "15:30"
+city: "Авгору"
+venue: "ботанический парк CyHerbia"
+summary: "Творческое занятие в ботаническом парке."
+description: "Творческая встреча в роще ботанического парка CyHerbia: прогулка по лесу, движение и рисование экологичными красками, опыт не нужен. В стоимость входят вход в парк и травяной чай."
+end_time: "17:00"
+price: "€20"
+address: "CyHerbia, Авгору"
+booking: "Регистрация на сайте CyHerbia"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/art-in-the-forest-at-cyherbia-botanical-park/"

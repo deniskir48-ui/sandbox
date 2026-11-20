@@ -1,0 +1,23 @@
+# week-import
+# Строка 131 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Andreas Polyzogopoulos & Marios Takoushis"
+status: published
+type: concert
+priority: 2
+date: "2026-11-29"
+time: "20:00"
+city: "Никосия"
+venue: "Ella Jazz Bar"
+summary: "Джазовый концерт; €15."
+description: "Дуэт трубача Андреаса Полизогопулоса и пианиста Мариоса Такуши, часть серии Windcraft Back к 10-летию Windcraft Loud."
+end_time: "22:00"
+price: "€15"
+address: "Faneromenis, Никосия"
+booking: "Билет на more.com, затем бронь места по телефону"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/andreas-polyzogopoulos-marios-takoushis/"

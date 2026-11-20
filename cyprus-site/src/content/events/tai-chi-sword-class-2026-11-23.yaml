@@ -1,0 +1,22 @@
+# week-import
+# Строка 136 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Tai Chi Sword Class"
+status: published
+type: sport
+priority: 3
+date: "2026-11-23"
+time: "18:30"
+city: "Никосия"
+venue: "Home of Cooperation"
+summary: "Занятие тайцзи с мечом; в афише €12."
+description: "Еженедельное занятие тайцзи с мечом по понедельникам."
+end_time: "19:30"
+price: "€12"
+address: "Markou Drakou 28, Никосия"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/tai-chi-sword-class/"

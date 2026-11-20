@@ -1,0 +1,21 @@
+# week-import
+# Строка 113 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "The Magic Lamp of Christmas"
+status: published
+type: festival
+priority: 2
+date: "2026-11-29"
+time: "11:00"
+city: "Сотира"
+venue: "Municipal Theatre"
+summary: "Рождественская сказка для детей, €14."
+description: "Новая рождественская пьеса труппы THEATRIX о любви, единстве и сотрудничестве для детей и взрослых. Двери открываются в 10:30."
+booking: "Билеты на rsrvin.com"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-magic-lamp-of-christmas-pantheon/"
+tags: [christmas, christmas-other]

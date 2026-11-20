@@ -1,0 +1,24 @@
+# week-import
+# Строка 59 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Организатор PASYKAF
+title: "Рождественская ярмарка PASYKAF"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "10:00"
+city: "Никосия"
+venue: "Pavilion"
+summary: "Благотворительная семейная ярмарка; €5."
+description: "Благотворительная ярмарка PASYKAF: подарки ручной работы и праздничные угощения, днём приходит Санта. Часть средств идёт на поддержку людей с онкологическими заболеваниями."
+end_time: "18:00"
+price: "€5"
+address: "Avraam Antoniou 2, Лакатамия"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/pasykaf-christmas-charity-fair/"
+tags: [christmas, christmas-markets]

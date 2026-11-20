@@ -1,0 +1,23 @@
+# week-import
+# Строка 6 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+title: "Cyprus Symphony Orchestra: Violin Trio"
+status: published
+type: concert
+priority: 1
+date: "2026-11-25"
+time: "20:00"
+city: "Пафос"
+venue: "Markideio Theatre"
+summary: "Камерный концерт музыкантов Кипрского симфонического оркестра; €7–12."
+description: "Три скрипача Кипрского симфонического оркестра играют произведения Германа, Шписа и Микули."
+end_time: "21:00"
+price: "€12, льготный €7"
+address: "Andrea Geroudi 18, Пафос"
+booking: "Онлайн на сайте оркестра или в кассе театра"
+ticket_url: "https://www.visitcyprus.com/events/list/?tribe-bar-date=2026-11-23"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.visitcyprus.com/events/list/?tribe-bar-date=2026-11-23"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/cyprus-symphony-orchestra-chamber-music-1-violin-trio-markideio/"

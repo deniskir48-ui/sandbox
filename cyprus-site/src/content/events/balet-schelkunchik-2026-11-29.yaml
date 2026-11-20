@@ -1,0 +1,24 @@
+# week-import
+# Строка 29 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: Сеанс 15:00 указан в афише
+title: "Балет «Щелкунчик»"
+status: published
+type: festival
+priority: 1
+date: "2026-11-29"
+time: "15:00"
+city: "Никосия"
+venue: "Municipal Theatre"
+summary: "Классический рождественский балет; билеты от €49."
+description: "«Щелкунчик» Чайковского в хореографии Сергея Боброва, Grand International Classical Ballet; два акта в неоклассическом стиле."
+price: "€49–169"
+address: "Mouseiou 4, Никосия"
+booking: "Билеты на сайте Atria Music"
+ticket_url: "https://tickets.atriamusic.com/en"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tickets.atriamusic.com/en"
+  - title: "Страница события"
+    url: "https://www.atriamusic.com/nutcracker-ballet-2026"
+tags: [christmas, christmas-lights]

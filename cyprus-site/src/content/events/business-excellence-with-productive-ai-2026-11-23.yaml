@@ -1,0 +1,20 @@
+# week-import
+# Строка 35 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Business Excellence with Productive AI"
+status: published
+type: talk
+priority: 2
+date: "2026-11-23"
+city: "Пафос"
+venue: "Торгово-промышленная палата"
+summary: "Деловая встреча о применении ИИ в бизнесе и стратегиях."
+description: "Деловая встреча Торгово-промышленной палаты Пафоса о практическом применении ИИ в бизнесе."
+address: "Учебный центр Торговой палаты Пафоса, зал А"
+booking: "На сайте Торговой палаты Пафоса"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/business-excellence-with-productive-ai-from-strategy/"

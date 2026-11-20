@@ -1,0 +1,21 @@
+# week-import
+# Строка 157 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Кинопоказ в Attikon"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-24"
+time: "19:30"
+city: "Пафос"
+venue: "Attikon"
+summary: "Публичный сеанс; название фильма уточняйте у организатора."
+description: "Вечерний киносеанс Кипрской синематеки и муниципалитета Пафоса. Название фильма не объявлено."
+price: "Бесплатно"
+address: "Evagora Pallikaridi, Пафос"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/film-screening/"

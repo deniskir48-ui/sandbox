@@ -1,0 +1,21 @@
+# week-import
+# Строка 129 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Mythes en Musique / Myths in Music"
+status: published
+type: concert
+priority: 2
+date: "2026-11-29"
+time: "19:00"
+city: "Пафос"
+venue: "Markideio Theatre"
+summary: "Вечер музыки для скрипки и фортепиано с произведениями Брамса и Шимановского; бесплатно."
+description: "Скрипачка Теодора Папаникулу и пианистка Эллада-Анджелина Павлу играют Брамса и Шимановского."
+price: "Бесплатно"
+address: "Andrea Geroudi 18, Пафос"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/myths-in-music/"

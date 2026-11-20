@@ -1,0 +1,21 @@
+# week-import
+# Строка 79 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Зажжение ёлки Друсии"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "19:00"
+city: "Пафос"
+venue: "Друсия"
+summary: "Рождественские огни и торговые палатки."
+description: "Зажжение ёлки у деревенской церкви Друсии с праздничными палатками. Организаторы — англо-кипрский комитет и молодёжный центр Друсии."
+end_time: "21:00"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/ru/events/drouseia-lights-its-christmas-tree-and-sets-up-festive/"
+tags: [christmas, christmas-lights]

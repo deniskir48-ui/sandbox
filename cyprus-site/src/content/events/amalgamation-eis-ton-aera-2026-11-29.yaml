@@ -1,0 +1,20 @@
+# week-import
+# Строка 124 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Amalgamation: Eis ton Aera"
+status: published
+type: concert
+priority: 2
+date: "2026-11-29"
+time: "16:30"
+city: "Лимассол"
+venue: "Vinegar Factory"
+summary: "Концерт женского акапельного хора."
+description: "Женский хор a cappella Amalgamation с программой «Eis ton Aera» («В воздух») по мотивам устной традиции Кипра, только голоса без инструментов."
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/eis-ton-aera-the-female-acapella-choir-amalgamation/"

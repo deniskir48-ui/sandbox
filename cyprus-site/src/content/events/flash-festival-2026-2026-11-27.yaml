@@ -1,0 +1,19 @@
+# week-import
+# Строка 13 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+title: "Flash Festival 2026"
+status: published
+type: cinema
+priority: 1
+date: "2026-11-27"
+end_date: "2026-11-29"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Три дня современного театра, танца, музыки, перформанса и кино; общий билет €30."
+description: "Второй фестиваль современного искусства Flash Festival в театре Rialto: танец, музыка, театр, перформанс и кино за три дня."
+price: "Фестивальный пасс €30"
+booking: "В кассе Rialto и на сайте театра"
+ticket_url: "https://www.rialto.com.cy/post/flash-festival"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.rialto.com.cy/post/flash-festival"

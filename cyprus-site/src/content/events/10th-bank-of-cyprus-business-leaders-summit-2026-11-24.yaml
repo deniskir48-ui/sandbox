@@ -1,0 +1,22 @@
+# week-import
+# Строка 40 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "10th Bank of Cyprus Business Leaders’ Summit"
+status: published
+type: talk
+priority: 2
+date: "2026-11-24"
+time: "15:45"
+city: "Никосия"
+venue: "Hilton Nicosia"
+summary: "Деловой саммит руководителей компаний."
+description: "Десятый деловой саммит Банка Кипра: дискуссии о перспективах экономики Кипра и ведении бизнеса."
+end_time: "20:00"
+address: "Achaion 1, Никосия"
+booking: "Регистрация на imhbusiness.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/10th-bank-of-cyprus-business-leaders-summit/"

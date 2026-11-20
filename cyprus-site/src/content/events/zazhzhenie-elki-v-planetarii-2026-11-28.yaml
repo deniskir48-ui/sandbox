@@ -1,0 +1,22 @@
+# week-import
+# Строка 73 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+# Замечание редактора: Часть планетарной праздничной программы
+title: "Зажжение ёлки в Планетарии"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "18:00"
+city: "Никосия"
+venue: "Cyprus Planetarium"
+summary: "Рождественский праздник с семейными развлечениями."
+description: "Семейное зажжение ёлки у купола Кипрского планетария с обратным отсчётом под звёздами."
+end_time: "20:00"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/planetarium-christmas-tree-lighting/"
+tags: [christmas, christmas-lights]

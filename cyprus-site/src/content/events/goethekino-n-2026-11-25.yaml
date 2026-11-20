@@ -1,0 +1,23 @@
+# week-import
+# Строка 170 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "GoetheKino: NÖ"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-25"
+time: "19:00"
+city: "Никосия"
+venue: "Goethe-Institut Zypern"
+summary: "Показ фильма NÖ и обсуждение; бесплатно."
+description: "Финал цикла GoetheKino «Вопросы того, что остаётся»: фильм Дитриха Брюггемана «Nö» и обсуждение о мужественности с киноведом Ольгой Курелу и социологом Андрией Христофиду."
+end_time: "21:00"
+price: "Бесплатно"
+address: "Markou Drakou 21, Никосия"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/no-goethekino-questions-of-what-remains-goethe-institut-cyprus/"

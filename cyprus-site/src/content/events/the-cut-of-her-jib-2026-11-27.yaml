@@ -1,0 +1,23 @@
+# week-import
+# Строка 205 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "The Cut of Her Jib"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-27"
+time: "19:30"
+city: "Лимассол"
+venue: "Vinegar Factory / Xydadiko"
+summary: "Театральная комедия; €22."
+description: "Чёрная комедия Кэтлин Радди: жена и её уборщица разбираются с исчезновением мужа после 30 лет брака. 70 минут, Rubber Ear Productions, спектакль шёл на Эдинбургском фестивале."
+price: "€22"
+address: "Genethliou Mitella, Лимассол"
+language: "Английский"
+booking: "Билеты на SoldOut"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-cut-of-her-jib/"

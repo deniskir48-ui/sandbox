@@ -1,0 +1,23 @@
+# week-import
+# Строка 105 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Kids Un-Philharmonic"
+status: published
+type: kids
+priority: 2
+date: "2026-11-29"
+time: "10:00"
+city: "Лимассол"
+venue: "Synerjoy"
+summary: "Музыкальное выступление для детей; €15."
+description: "Детская опера с живыми струнными и фортепиано: герои поют вместо диалогов, есть интерактив. Два сеанса для разных возрастов."
+end_time: "12:00"
+price: "От €15"
+address: "Aisopou 2, Лимассол"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/synerjoy-kids-un-philharmonic-opera-for-children-in-limassol/"

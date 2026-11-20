@@ -1,0 +1,21 @@
+# week-import
+# Строка 234 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Charity Gala Dinner"
+status: published
+type: other
+priority: 3
+date: "2026-11-28"
+time: "19:30"
+city: "Лимассол"
+venue: "Parklane"
+summary: "Благотворительный ужин; €100."
+description: "Благотворительный ужин в пользу Центра превентивной педиатрии: живая музыка Papiyion Band, ведущий Тасос Трифонос."
+price: "От €100"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/gala-dinner-charity-dinner-in-limassol/"

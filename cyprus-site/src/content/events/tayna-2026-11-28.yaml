@@ -1,0 +1,23 @@
+# week-import
+# Строка 239 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "TAYNA"
+status: published
+type: party
+priority: 3
+date: "2026-11-28"
+time: "21:00"
+city: "Лимассол"
+venue: "The One Club"
+summary: "Ночная клубная программа; €15."
+description: "Вечер русских хитов, которые поют всем залом. Рекомендован нарядный дресс-код."
+price: "€15"
+address: "Amathountos 5, Муттагиака"
+language: "Русский"
+booking: "Билеты на rsrvin.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/tayna-the-one-club/"

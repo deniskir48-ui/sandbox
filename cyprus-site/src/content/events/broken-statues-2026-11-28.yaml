@@ -1,0 +1,22 @@
+# week-import
+# Строка 77 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Broken Statues"
+status: published
+type: theatre
+priority: 2
+date: "2026-11-28"
+time: "18:30"
+city: "Ларнака"
+venue: "Municipal Theatre"
+summary: "Танцевальная постановка; €15."
+description: "Танцевально-музыкальный спектакль школы Mambo Dancing; идея и постановка Марии Затариу Карапитты, около часа."
+end_time: "19:30"
+price: "€15"
+booking: "Билеты на ticketmaster.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/broken-statues-dance-performance-in-larnaca/"

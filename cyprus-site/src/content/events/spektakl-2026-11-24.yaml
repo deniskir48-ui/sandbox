@@ -1,0 +1,22 @@
+# week-import
+# Строка 159 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Спектакль «Η Παγίδα»"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-24"
+time: "20:00"
+city: "Ларнака"
+venue: "Livadia Events Hall"
+summary: "Грекоязычный театральный спектакль «Ловушка»; бесплатно."
+description: "Любительская труппа спортклуба «Кимон» из Ксилотимбу играет пьесу Робера Тома «Ловушка» в адаптации Кириакоса Кириаку. Часть 13-го фестиваля любительского театра."
+end_time: "22:00"
+price: "Бесплатно"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/i-pagida/"

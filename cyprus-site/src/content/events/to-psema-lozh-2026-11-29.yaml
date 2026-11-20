@@ -1,0 +1,24 @@
+# week-import
+# Строка 237 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Сведено сюда: строки 260
+title: "То Псема / «Ложь»"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-29"
+time: "18:30"
+city: "Никосия"
+venue: "Satiriko Theatre"
+summary: "Грекоязычная комедия; €13–16."
+description: "Комедия «Το Ψέμα» в театре Satiriko."
+price: "€13–16"
+address: "Vladimirou Kafkaridi 11–15, Никосия"
+language: "Греческий"
+booking: "Билеты на сайте театра Satiriko"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/to-psema-satiriko/"

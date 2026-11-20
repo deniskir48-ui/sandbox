@@ -1,0 +1,22 @@
+# week-import
+# Строка 212 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Leave the Wave x Uncle Philth"
+status: published
+type: concert
+priority: 3
+date: "2026-11-27"
+time: "21:00"
+city: "Ларнака"
+venue: "Savino Rock Bar"
+summary: "Концерт альтернативной музыки."
+description: "Концерт кипрских рок- и метал-групп Leave the Wave и Uncle Philth. Двери открываются в 21:00."
+price: "€10 заранее, €12 на входе"
+address: "Watkins 9, Ларнака"
+booking: "Билеты на rsrvin.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/leave-the-wave-x-uncle-philth-in-larnaca/"

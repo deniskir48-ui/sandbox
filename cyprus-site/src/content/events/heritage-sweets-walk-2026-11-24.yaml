@@ -1,0 +1,21 @@
+# week-import
+# Строка 149 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Heritage & Sweets Walk"
+status: published
+type: tour
+priority: 3
+date: "2026-11-24"
+time: "09:30"
+city: "Героскипу"
+venue: "центральная площадь"
+summary: "Бесплатная прогулка по Героскипу с местными сладостями."
+description: "Бесплатная прогулка с гидом по Героскипу: пятикупольная византийская церковь, ремёсла, предания об Афродите и местный лукум."
+end_time: "12:30"
+price: "Бесплатно"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/heritage-sweets-walk-geroskipou-square/"

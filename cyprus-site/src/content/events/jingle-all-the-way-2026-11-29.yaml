@@ -1,0 +1,23 @@
+# week-import
+# Строка 102 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Название в афише; детали уточнить
+title: "Jingle All the Way"
+display_title: "Jingle All the Way: показ коллекции одежды"
+status: published
+type: other
+priority: 2
+date: "2026-11-29"
+time: "10:00"
+city: "Лимассол"
+venue: "Makariou III Avenue 284"
+summary: "Показ коллекции осень–зима 2026/27 в преддверии Рождества."
+description: "Показ коллекции осень–зима 2026/27 в преддверии Рождества."
+address: "Makariou III 284, Лимассол"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/jingle-all-the-way/"
+tags: [christmas, christmas-other]

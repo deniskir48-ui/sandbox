@@ -1,0 +1,20 @@
+# week-import
+# Строка 169 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Международная конференция о фотографии"
+status: published
+type: talk
+priority: 3
+date: "2026-11-25"
+time: "18:30"
+city: "Никосия"
+venue: "NiMAC"
+summary: "Дискуссия об искусстве фотографии."
+description: "Международная конференция о фотографии и теории: выступления и дискуссия о фотографии среди других художественных практик и о «пост-медиальном» состоянии."
+address: "NiMAC, Old Electric, Никосия"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/international-conference-on-photography-and-theory/"

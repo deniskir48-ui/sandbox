@@ -1,0 +1,25 @@
+# week-import
+# Строка 175 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Сведено сюда: строки 219, 261
+title: "Hedda Gabler"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-25"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "Theatro Ena"
+summary: "Театральная постановка пьесы Ибсена."
+open_days: ["2026-11-25", "2026-11-27", "2026-11-28", "2026-11-29"]
+sessions: "25, 27 и 28 ноября в 20:30, 29 ноября в 19:00"
+description: "Постановка «Гедды Габлер» Генрика Ибсена в театре Ena."
+address: "Athinas 4, Никосия"
+language: "Греческий"
+booking: "Билеты на ticketmaster.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/hedda-gabler/"

@@ -1,0 +1,19 @@
+# week-import
+# Строка 82 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: В программе Flash Festival
+title: "TRACKS: From Stone to Concrete"
+status: published
+type: concert
+priority: 2
+date: "2026-11-28"
+time: "21:30"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Рэп, музыка и визуальный перформанс x.ypno о Никосии и Лимассоле; €8."
+description: "Перформанс x.ypno, 50 минут: путь от каменных кварталов Никосии к бетонному Лимассолу. Разговорный жанр, рэп, живая музыка и видео."
+booking: "В кассе Rialto и на сайте театра"
+ticket_url: "https://www.rialto.com.cy/post/flash-festival"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.rialto.com.cy/post/flash-festival"

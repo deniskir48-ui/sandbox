@@ -1,0 +1,18 @@
+# week-import
+# Строка 33 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный сайт группы
+# Замечание редактора: 29 ноября, Notes Live, 20:00
+title: "Kasta Group"
+status: published
+type: concert
+priority: 1
+date: "2026-11-29"
+time: "20:00"
+city: "Лимассол"
+venue: "Notes Live"
+summary: "Концерт Касты: Влади, Шым, Хамиль и Змей, программа Greatest Hits. В афише билеты от €60."
+description: "Группа «Каста» — Влади, Шым, Хамиль и Змей — с программой Greatest Hits."
+ticket_url: "https://kasta.world/tour/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://kasta.world/tour/"

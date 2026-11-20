@@ -1,0 +1,22 @@
+# week-import
+# Строка 66 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Площадка уточняется
+title: "Включение новогодних огней Лация–Гери"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "15:00"
+city: "Никосия"
+venue: "Лация–Гери"
+summary: "Муниципальное открытие рождественского сезона."
+description: "Праздник во дворе муниципалитета Лация–Гери: с 15:00 музыка, танцы и игры, в 16:45 включают огни по всему муниципалитету, в 17:15 выступление снеговиков."
+end_time: "17:30"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/municipality-of-latsion-geriou-lights-the-christmas-lights/"
+tags: [christmas, christmas-lights]

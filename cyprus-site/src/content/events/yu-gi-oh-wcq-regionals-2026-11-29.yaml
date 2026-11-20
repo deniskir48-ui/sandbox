@@ -1,0 +1,21 @@
+# week-import
+# Строка 249 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Yu-Gi-Oh! WCQ Regionals"
+status: published
+type: other
+priority: 3
+date: "2026-11-29"
+time: "13:00"
+city: "Лимассол"
+venue: "Yonkai Games"
+summary: "Региональные карточные соревнования."
+description: "Региональный турнир Yu-Gi-Oh! WCQ: призы и места в отборе на чемпионат Европы 2027. Каждый участник получает пять бустеров на выбор; регистрация с 12:00 до 12:45."
+price: "Взнос €20"
+address: "Pafou 50, Лимассол"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/yu-gi-oh-wcq-regionals-yonkai/"

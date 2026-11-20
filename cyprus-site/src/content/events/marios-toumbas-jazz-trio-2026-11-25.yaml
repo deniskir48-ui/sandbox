@@ -1,0 +1,23 @@
+# week-import
+# Строка 177 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Marios Toumbas Jazz Trio"
+status: published
+type: concert
+priority: 3
+date: "2026-11-25"
+time: "21:00"
+city: "Никосия"
+venue: "Sarah's Jazz Club"
+summary: "Живой джаз, в афише €13–15."
+description: "Трио пианиста Мариоса Тумбаса — с Иренеосом Кулурасом (контрабас) и Яннисом Вафеасом (ударные) — играет джазовые стандарты и свои композиции."
+end_time: "23:30"
+price: "€13–15"
+address: "Faneromenis 63, Никосия"
+booking: "Билеты на letsculture.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-marios-toumbas-jazz-trio-live-at-sarah-s-jazz-club/"

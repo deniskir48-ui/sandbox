@@ -1,0 +1,21 @@
+# week-import
+# Строка 80 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Карточка с билетами
+# Замечание редактора: Шоу 90 минут
+title: "Константин Широков: стендап «Серьёзный разговор»"
+status: published
+type: standup
+priority: 2
+date: "2026-11-28"
+time: "19:00"
+city: "Лимассол"
+venue: "Shakespeare Gastropub"
+summary: "Импровизационный русскоязычный стендап с участием зрителей. 18+, €20, вход с 18:30."
+description: "Импровизационный стендап Константина Широкова: комик выходит без заготовок и разговаривает с залом. 1 час 30 минут, вход с 18:30."
+address: "Georgiou A 93, Гермасойя"
+age: "18+"
+booking: "Билеты на eventhero.cy"
+ticket_url: "https://kind.events/ru/events/konstantin-shirokov-seryoznyj-razgovor-v-limassole"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://kind.events/ru/events/konstantin-shirokov-seryoznyj-razgovor-v-limassole"

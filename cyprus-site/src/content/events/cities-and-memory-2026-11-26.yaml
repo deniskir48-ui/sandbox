@@ -1,0 +1,23 @@
+# week-import
+# Строка 183 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Cities and Memory"
+status: published
+type: talk
+priority: 3
+date: "2026-11-26"
+time: "17:00"
+city: "Никосия"
+venue: "CVAR"
+summary: "Творческий семинар об искусстве и памяти города; бесплатно."
+description: "Семинар художницы и арт-терапевта Аслы Болайыр: участники делятся воспоминаниями о местах и обсуждают, что остаётся, когда город меняется."
+end_time: "18:30"
+price: "Бесплатно"
+address: "Ermou 285, Никосия"
+language: "Английский"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/cities-and-memory-an-expressive-arts-seminar/"

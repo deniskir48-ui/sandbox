@@ -1,0 +1,20 @@
+# week-import
+# Строка 200 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Japanese Beauty & Wellness Day"
+status: published
+type: other
+priority: 3
+date: "2026-11-27"
+time: "15:00"
+city: "Ларнака"
+venue: "Nudeless Lounge Wellness & Spa"
+summary: "День японской косметики и оздоровления."
+description: "День японской косметики: продажа косметики, запись на спа-процедуры, игры и розыгрыши, бесплатный кофе и закуски."
+address: "D.N. Dimitriou 20, Ларнака"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/japanese-beauty-wellness-day/"

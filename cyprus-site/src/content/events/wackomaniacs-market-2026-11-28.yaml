@@ -1,0 +1,21 @@
+# week-import
+# Строка 67 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Wackomaniacs Market"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "15:00"
+city: "Лимассол"
+venue: "Xydadiko"
+summary: "Арт-рынок Wackomaniacs."
+end_time: "21:30"
+description: "Арт-рынок Wackomaniacs в Ксидадико: местные мастера, вещи ручной работы и необычные находки."
+address: "Genethliou Mitella, Ксидадико, Лимассол"
+ticket_url: "https://cypruseventsmap.com/ru/markets/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/markets/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/wackomaniacs-market-xidadiko-in-limassol-xydadiko-i-vinegar/"

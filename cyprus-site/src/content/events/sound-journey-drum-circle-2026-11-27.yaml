@@ -1,0 +1,20 @@
+# week-import
+# Строка 201 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Sound Journey & Drum Circle"
+status: published
+type: concert
+priority: 3
+date: "2026-11-27"
+time: "17:30"
+city: "Лимассол"
+venue: "Mesa Geitonia"
+summary: "Звуковая практика и музыкальный круг барабанов."
+description: "Барабанный круг, звуковое путешествие и медитация при свечах."
+price: "€20, аренда барабана €5"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/sound-journey-drum-circle/"

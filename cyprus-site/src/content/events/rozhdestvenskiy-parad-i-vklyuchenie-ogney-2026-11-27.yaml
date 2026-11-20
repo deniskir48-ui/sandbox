@@ -1,0 +1,22 @@
+# week-import
+# Строка 9 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Праздничная афиша
+# Замечание редактора: Точное время 19:30 отмечено источником как вторичное
+# Сведено сюда: строки 50
+title: "Рождественский парад и включение огней"
+status: published
+type: festival
+priority: 1
+date: "2026-11-27"
+time: "18:30"
+city: "Пафос"
+venue: "Griva Digeni Avenue / Kennedy Square"
+summary: "Городской парад к площади Кеннеди, зажжение огней около 19:30, потом концерт Papazó Balcony и диджей; бесплатно."
+description: "Городской рождественский парад стартует на улице Грива Дигениса и идёт к площади Кеннеди, где включают ёлку. В параде классические автомобили, персонажи, музыка и танцы. После зажжения огней — концерт Papazó Balcony (Василис Папазотос и Акилас) и диджей-вечеринка."
+price: "Бесплатно"
+address: "Старт: улица Georgiou Griva Digeni; огни — площадь Кеннеди"
+ticket_url: "https://kids.cy/en/journal/christmas-tree-lightings-cyprus-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://kids.cy/en/journal/christmas-tree-lightings-cyprus-2026"
+tags: [christmas, christmas-lights]

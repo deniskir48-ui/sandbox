@@ -1,0 +1,26 @@
+# week-import
+# Строка 147 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Сведено сюда: строки 207
+title: "Frost/Nixon"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-25"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "THOC"
+summary: "Спектакль THOC на греческом о знаменитом интервью Фроста и Никсона; €6."
+open_days: ["2026-11-25", "2026-11-27", "2026-11-28", "2026-11-29"]
+sessions: "25, 27 и 28 ноября в 20:00, 29 ноября в 18:00"
+description: "Пьеса Питера Моргана о телеинтервью 1977 года Дэвида Фроста с Ричардом Никсоном; перевод и постановка Андреаса Араузоса."
+price: "€6"
+address: "Grigori Afxentiou 9, Никосия (Новая сцена THOC)"
+language: "Греческий"
+booking: "Билеты на сайте THOC"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/frost-nixon-an-interview-that-made-history-becomes-cyprus/"

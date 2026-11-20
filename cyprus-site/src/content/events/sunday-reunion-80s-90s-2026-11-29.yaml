@@ -1,0 +1,21 @@
+# week-import
+# Строка 264 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Sunday Reunion 80s & 90s"
+status: published
+type: party
+priority: 3
+date: "2026-11-29"
+time: "20:00"
+city: "Никосия"
+venue: "AntiPina"
+summary: "Вечеринка с хитами 1980–1990-х."
+description: "Вечеринка с хитами 80-х и 90-х, за пультом диджей Michael K."
+price: "Бесплатно"
+address: "Neas Egkomis 26, Энгоми"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/80s-90s-party-sunday-reunion-in-nicosia/"

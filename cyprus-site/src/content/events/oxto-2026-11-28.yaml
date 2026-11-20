@@ -1,0 +1,22 @@
+# week-import
+# Строка 241 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Oxto"
+status: published
+type: party
+priority: 3
+date: "2026-11-28"
+time: "23:00"
+city: "Лимассол"
+venue: "Maze"
+summary: "Ночной сет электронной музыки; €10."
+description: "Ночная вечеринка Oxto в клубе Maze."
+price: "€10"
+address: "Kanari 22, Лимассол"
+booking: "Билеты на ra.co"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/oxto/"

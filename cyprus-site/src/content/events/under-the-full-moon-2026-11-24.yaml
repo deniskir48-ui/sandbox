@@ -1,0 +1,24 @@
+# week-import
+# Строка 161 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Under the Full Moon"
+status: published
+type: talk
+priority: 3
+date: "2026-11-24"
+time: "20:30"
+city: "Пафос"
+venue: "Potima Beach"
+summary: "Вечер встречи и общения под полной луной; подробности уточняйте у организатора."
+description: "Вечер знакомств и общения под полной луной на пляже Потима. Места ограничены, нужна регистрация."
+end_time: "21:30"
+price: "€6"
+address: "Пляж Потима (у Sense on the Beach), Киссонерга"
+language: "Греческий, английский, русский"
+booking: "Обязательна регистрация"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/under-the-full-moon-a-connection-evening/"

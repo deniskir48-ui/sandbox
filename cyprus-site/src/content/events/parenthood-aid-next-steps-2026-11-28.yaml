@@ -1,0 +1,21 @@
+# week-import
+# Строка 223 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Parenthood Aid: Next Steps"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-28"
+time: "09:30"
+city: "Лимассол"
+summary: "Бесплатная встреча/мастер-класс для родителей."
+description: "Бесплатный семинар для родителей, одно из четырёх занятий серии «Parenthood Aid: The Next Steps» при поддержке муниципалитета Лимассола."
+end_time: "12:00"
+price: "Бесплатно"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/ergastirio-goneikotitas-parenthood-aid-the-next-steps-28/"

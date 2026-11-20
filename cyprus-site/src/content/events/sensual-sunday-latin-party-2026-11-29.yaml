@@ -1,0 +1,21 @@
+# week-import
+# Строка 257 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Sensual Sunday Latin Party"
+status: published
+type: party
+priority: 3
+date: "2026-11-29"
+time: "18:00"
+city: "Строволос"
+venue: "Bailemos Dance School"
+summary: "Латиноамериканская танцевальная вечеринка."
+description: "Латиноамериканская танцевальная вечеринка в школе танцев Bailemos."
+end_time: "23:00"
+address: "Vathylaka 1, Строволос"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/sensual-sunday-latin-party-bailemos-dance-school/"

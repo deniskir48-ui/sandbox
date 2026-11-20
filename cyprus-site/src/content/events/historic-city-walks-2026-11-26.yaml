@@ -1,0 +1,23 @@
+# week-import
+# Строка 182 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Historic City Walks"
+status: published
+type: tour
+priority: 3
+date: "2026-11-26"
+time: "10:00"
+city: "Лимассол"
+venue: "Old Port"
+summary: "Бесплатная историческая экскурсия по Лимассолу."
+description: "Бесплатная экскурсия от Старого порта: парк скульптур на набережной, порт и соседние исторические улицы."
+end_time: "12:30"
+price: "Бесплатно"
+address: "Spyrou Araouzou 21, Лимассол"
+booking: "Бронь места по телефону"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/historic-city-walks/"

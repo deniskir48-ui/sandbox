@@ -1,0 +1,21 @@
+# week-import
+# Строка 30 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Подтверждено 10.11
+# Замечание редактора: 18:30, начало концерта; бесплатный вход
+# Сведено сюда: строки 31
+title: "Рождественское открытие Никосии"
+status: published
+type: festival
+priority: 1
+date: "2026-11-29"
+time: "18:30"
+city: "Никосия"
+venue: "Eleftheria Square"
+summary: "Бесплатный концерт Петроса Иаковидиса на площади Элефтерия в рамках городского праздничного открытия."
+description: "Бесплатный концерт греческого певца Петроса Иаковидиса на площади Элефтерия открывает рождественский период в Никосии."
+price: "Бесплатно"
+ticket_url: "https://www.checkincyprus.com/article/90364/e-leukosia-anabei-ta-phota-ton-giorton-me-mia-megale-dorean-sunaulia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90364/e-leukosia-anabei-ta-phota-ton-giorton-me-mia-megale-dorean-sunaulia/"
+tags: [christmas, christmas-other]

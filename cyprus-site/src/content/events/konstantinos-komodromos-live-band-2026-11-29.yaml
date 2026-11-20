@@ -1,0 +1,22 @@
+# week-import
+# Строка 127 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Konstantinos Komodromos Live Band"
+status: published
+type: concert
+priority: 2
+date: "2026-11-29"
+time: "18:30"
+city: "Лимассол"
+venue: "Kiklos Mousiki"
+summary: "Концерт кипрского исполнителя с группой."
+description: "Константинос Комодромос, победитель греческого The Voice, с бывшими участниками группы Onirama: живая музыка от 80-х до наших дней."
+address: "Irinis 90, Лимассол"
+language: "Греческий"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/konstantinos-komodromos-live-band-in-limassol/"

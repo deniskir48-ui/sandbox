@@ -1,0 +1,21 @@
+# week-import
+# Строка 58 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Часы в источнике не уточнены
+title: "Рождественский базар St Barnabas"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+city: "Лимассол"
+venue: "St Barnabas Anglican Church"
+summary: "Благотворительная праздничная ярмарка."
+description: "Рождественский базар в англиканской церкви Святого Варнавы."
+address: "Leontiou A 153A, Лимассол (напротив старой больницы)"
+ticket_url: "https://cypruseventsmap.com/ru/markets/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/markets/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/st-barnabas-anglican-church-christmas-bazaar/"
+tags: [christmas, christmas-markets]

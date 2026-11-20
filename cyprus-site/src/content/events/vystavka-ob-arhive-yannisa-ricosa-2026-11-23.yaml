@@ -1,0 +1,20 @@
+# week-import
+# Строка 36 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Выставка об архиве Янниса Рицоса"
+status: published
+type: exhibition
+priority: 2
+date: "2026-11-23"
+end_date: "2026-11-25"
+city: "Лимассол"
+venue: "Municipal University Library"
+summary: "Выставка материалов об архиве Элли и Паникоса Пайонидиса."
+description: "Выставка о поэте Яннисе Рицосе по архиву Элли и Паникоса Пайонидиса: книги с дарственными надписями, письма и фотографии."
+address: "Agiou Andreou 269, Лимассол"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/exhibition-at-the-tepak-library-yiannis-ritsos-through/"

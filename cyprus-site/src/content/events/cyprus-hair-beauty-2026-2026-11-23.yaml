@@ -1,0 +1,19 @@
+# week-import
+# Строка 132 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Замечание редактора: Указана как Lefkosia; уточнить точную дату
+title: "Cyprus Hair & Beauty 2026"
+status: published
+type: exhibition
+priority: 3
+date: "2026-11-23"
+city: "Никосия"
+summary: "Выставка индустрии красоты; адрес/условия уточняйте у организатора."
+description: "Выставка парикмахерского искусства, барберинга и бьюти-индустрии: обучение, конкурсы и профессиональная продукция."
+address: "Выставочный центр Cyprus State Fairs, Никосия"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/cyprus-hair-beauty-in-lefkosia-nicosia/"

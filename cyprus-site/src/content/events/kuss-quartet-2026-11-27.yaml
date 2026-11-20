@@ -1,0 +1,23 @@
+# week-import
+# Строка 51 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+# Замечание редактора: Проверить цену и билеты
+title: "Kuss Quartet"
+status: published
+type: concert
+priority: 2
+date: "2026-11-27"
+time: "20:30"
+city: "Никосия"
+venue: "The Shoe Factory"
+summary: "Концерт струнного квартета."
+description: "Берлинский струнный квартет Kuss Quartet: Гайдн (соч. 77 № 1), Первый квартет Яначека «Крейцерова соната» и Пятнадцатый квартет Шуберта. Организатор — Pharos Arts Foundation."
+end_time: "22:30"
+address: "Ermou 304, Никосия"
+booking: "Билеты на SoldOut"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/kuss-quartet/"

@@ -1,0 +1,19 @@
+# week-import
+# Строка 141 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Кипр в III тысячелетии до н. э."
+status: published
+type: talk
+priority: 3
+date: "2026-11-23"
+time: "19:30"
+city: "Никосия"
+summary: "Лекция Рафаэля Лаутари о связях Кипра в позднем III тысячелетии до н. Э."
+description: "Лекция Рафаэля Лаутари о месте Кипра в обменах Восточного Средиземноморья во второй половине III тысячелетия до н. э.: товары и культурные практики."
+address: "Leoforos Kallipoleos, Никосия"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/rafael-laoutari-silent-connectivities-cyprus-during/"

@@ -1,0 +1,23 @@
+# week-import
+# Строка 100 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Kionia Hiking"
+status: published
+type: tour
+priority: 2
+date: "2026-11-29"
+time: "09:00"
+city: "Никосия"
+venue: "Kionia / Kakokefalos View Point"
+summary: "Групповой горный поход, €3."
+description: "Девятый этап серии Machairas Trail от Vounisious Adventure Club: кольцевой маршрут 14 км по лесу Махерас и тропе Киония, около 5,5 часа. Для подготовленных; сбор в 08:45."
+end_time: "16:00"
+price: "€3"
+address: "Смотровая площадка Какокефалос, Лазаниас"
+booking: "Обязательна регистрация на rsrvin.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/machairas-trail-series-vol-9-kionia-hiking-in-nicosia/"

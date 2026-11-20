@@ -1,0 +1,24 @@
+# week-import
+# Строка 233 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Una: Soul & Motown Night"
+status: published
+type: concert
+priority: 3
+date: "2026-11-28"
+time: "19:00"
+city: "Пафос"
+venue: "Colosseum Restaurant"
+summary: "Концерт соул и музыки Motown."
+description: "Уна Петтифорд поёт хиты Motown, соула и диско. Можно поужинать или взять только напитки."
+end_time: "23:30"
+price: "Ужин из трёх блюд €25"
+address: "Danais Avenue, Пафос"
+language: "Английский"
+booking: "Бронь столика в ресторане"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/one-night-of-soul-and-motown-with-una/"

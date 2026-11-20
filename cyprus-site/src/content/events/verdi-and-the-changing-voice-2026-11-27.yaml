@@ -1,0 +1,23 @@
+# week-import
+# Строка 211 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Verdi and the Changing Voice"
+status: published
+type: concert
+priority: 3
+date: "2026-11-27"
+time: "20:30"
+city: "Никосия"
+venue: "Pallas Theatre"
+summary: "Оперные сцены и арии — от Верди к Пуччини и новой итальянской опере."
+description: "Оперные сцены и арии — от Верди к Пуччини и новому поколению итальянской оперы. Поют кипрские солисты и молодёжный вокальный ансамбль."
+end_time: "22:00"
+price: "€15, пенсионеры €12, студенты €8, до 16 лет бесплатно, на входе €20"
+address: "Rigenis 24, Никосия"
+booking: "Билеты на letsculture.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/verdi-and-the-changing-voice/"

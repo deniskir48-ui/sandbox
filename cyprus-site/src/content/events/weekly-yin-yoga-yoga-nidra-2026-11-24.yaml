@@ -1,0 +1,21 @@
+# week-import
+# Строка 155 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Weekly Yin Yoga / Yoga Nidra"
+status: published
+type: other
+priority: 3
+date: "2026-11-24"
+time: "18:30"
+city: "Ларнака"
+venue: "Tree of Life Centre"
+summary: "Занятие йогой и расслаблением."
+description: "Еженедельное занятие инь-йогой и йога-нидрой по вторникам."
+end_time: "19:30"
+address: "Markou Drakou 9, Ларнака"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/weekly-yin-yoga/"

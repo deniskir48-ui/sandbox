@@ -87,6 +87,7 @@ const events = defineCollection({
       age: z.string().optional(),
       booking: z.string().optional(), // нужна ли запись или регистрация
       more_dates: z.string().optional(), // другие даты и сеансы
+      sessions: z.string().optional(), // когда идёт событие, если дней или показов несколько («25 и 27 ноября в 20:30…»)
       // Дни работы долгого события, если оно открыто не каждый день (рождественские деревни: выходные + праздники).
       open_days: z.array(z.string().regex(/^\d{4}-\d{2}-\d{2}$/)).optional(),
       tags: z.array(z.string()).default([]), // тематические подборки: christmas, christmas-parks и т. д.

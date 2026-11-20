@@ -1,0 +1,23 @@
+# week-import
+# Строка 165 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Обсуждение благоустройства центра Лимассола"
+status: published
+type: other
+priority: 3
+date: "2026-11-25"
+time: "16:00"
+city: "Лимассол"
+venue: "Panos Solomonides Cultural Centre"
+summary: "Презентация о соединении общественных пространств у городского сада и GSО; бесплатно."
+description: "Открытая презентация муниципалитета Лимассола: генплан объединения общественных пространств вокруг Городского сада, стадиона ГСО, судов и муниципальной галереи. Можно ознакомиться с проектами и высказать замечания."
+end_time: "18:00"
+price: "Бесплатно"
+address: "Panou Solomonidi 8, Лимассол"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/dimosia-parousiasi-gia-tin-enopoiisi-dimosion-choron-stin/"

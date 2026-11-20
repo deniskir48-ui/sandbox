@@ -1,0 +1,23 @@
+# week-import
+# Строка 83 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Проверить место и стоимость входа
+title: "Elves Come to Engomi"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Энгоми"
+venue: "парк Павлоса Иисуса"
+summary: "Двухдневная семейная рождественская программа с эльфами; €3."
+description: "Семейный рождественский праздник в парке: ярмарка свечей, украшений, вещей ручной работы и детских книг, поделки для детей с подарком и аквагрим."
+price: "Вход в парк бесплатный, поделки €5"
+address: "Парк Павлоса Иисуса, Энгоми"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/elves-come-to-engomi-for-a-christmas-two-day-event/"
+tags: [christmas, christmas-other]

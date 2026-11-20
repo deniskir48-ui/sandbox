@@ -1,0 +1,23 @@
+# week-import
+# Строка 253 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Specialty Coffee Cupping"
+status: published
+type: other
+priority: 3
+date: "2026-11-29"
+time: "16:00"
+city: "Лимассол"
+venue: "Wagmi Coffee"
+summary: "Каппинг кофе и кипрские сладости; в афише €100."
+description: "Каппинг шести сортов спешелти-кофе с кипрскими сладостями, подходит для новичков."
+end_time: "18:00"
+price: "€100"
+address: "Agiou Andreou 139, Лимассол"
+booking: "Через Airbnb Experiences"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/specialty-coffee-cupping-with-cypriot-sweets/"

@@ -1,0 +1,24 @@
+# week-import
+# Строка 151 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Русскоязычный книжный клуб 7–9 лет"
+status: published
+type: kids
+priority: 3
+date: "2026-11-24"
+time: "15:00"
+city: "Пафос"
+venue: "Bookberry"
+summary: "Детский книжный клуб на русском; €10."
+description: "Книжный клуб на русском для детей из греко- и англоязычных школ: любовь к чтению и поддержка русского языка. Встречи по вторникам, час."
+end_time: "16:00"
+price: "€10"
+language: "Русский"
+age: "7–9 лет"
+booking: "Запись через Telegram магазина"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/book-club-for-children-7-9-y-o-in-russian-bookberry/"

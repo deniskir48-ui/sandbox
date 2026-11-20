@@ -1,0 +1,23 @@
+# week-import
+# Строка 68 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Swing Workshop with William Scott"
+status: published
+type: workshop
+priority: 2
+date: "2026-11-28"
+time: "15:00"
+city: "Никосия"
+venue: "Windcraft Music Centre"
+summary: "Мастер-класс по свинговому танцу; €10."
+description: "Мастер-класс по свингу с саксофонистом и кларнетистом Уильямом Скоттом, для духовых и ритм-секции любого уровня. Часть серии Windcraft Back."
+end_time: "17:00"
+price: "€10, для членов Windcraft Loud бесплатно"
+address: "Xanthis Xenierou 27, Никосия"
+booking: "Регистрация на сайте Windcraft"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/windcraft-back-ergastiri-swing-me-ton-william-scott/"

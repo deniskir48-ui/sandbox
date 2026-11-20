@@ -1,0 +1,22 @@
+# week-import
+# Строка 137 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "The Lunar Release"
+status: published
+type: other
+priority: 3
+date: "2026-11-23"
+time: "18:50"
+city: "Ларнака"
+venue: "Tree of Life Centre"
+summary: "Инь-йога и звуковая терапия."
+description: "Вечер полнолуния от Thalassa Yoga Cyprus: инь-йога, записи в дневник, звуковая терапия на ханге, эфирные масла и аюрведический молочный напиток."
+end_time: "20:00"
+price: "€20"
+address: "Markou Drakou 9, Ларнака"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-lunar-release-yin-yoga-live-sound-therapy-during/"

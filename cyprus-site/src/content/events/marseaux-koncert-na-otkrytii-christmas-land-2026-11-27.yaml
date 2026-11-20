@@ -1,0 +1,19 @@
+# week-import
+# Строка 12 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Анонс с точной программой
+# Замечание редактора: Не путать с отдельным муниципальным зажжением огней
+title: "Marseaux: концерт на открытии Christmas Land"
+status: published
+type: festival
+priority: 1
+date: "2026-11-27"
+time: "20:00"
+city: "Лимассол"
+venue: "Christmas Land, старый порт"
+summary: "В 20:00 зажжение ёлки на площади Какоянни, в 20:30 концерт греческой певицы Marseaux на площади Старого порта."
+description: "27 ноября в рамках Limassol Christmas Land в 20:00 на площади Какоянни зажигают рождественскую ёлку. В 20:30 на площади Старого порта выступит греческая певица Marseaux с живым концертом."
+ticket_url: "https://www.checkincyprus.com/article/90463/e-kallitekhnida-pou-tha-tragoudesei-ste-photagogese-tou-limassol-christmas-land/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90463/e-kallitekhnida-pou-tha-tragoudesei-ste-photagogese-tou-limassol-christmas-land/"
+tags: [christmas, christmas-lights]

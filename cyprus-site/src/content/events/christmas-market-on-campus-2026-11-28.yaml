@@ -1,0 +1,20 @@
+# week-import
+# Строка 108 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Вероятно часть UNIC Christmas Spirit; проверить на дубликат
+title: "Christmas Market on Campus"
+display_title: "UNIC Christmas Spirit: рождественская деревня"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "University of Nicosia"
+summary: "Рождественская деревня на кампусе Университета Никосии: ярмарка, выступления, мастер-класс по украшению пряников; бесплатно."
+hours: "11:00–18:00"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+tags: [christmas, christmas-markets]

@@ -1,0 +1,22 @@
+# week-import
+# Строка 154 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Japanese New Year and the Magic of Wishes"
+status: published
+type: talk
+priority: 3
+date: "2026-11-24"
+time: "18:30"
+city: "Лимассол"
+venue: "Baloo Restaurant"
+summary: "Тематическая творческая встреча; бесплатно."
+description: "Знакомство с японскими новогодними традициями: участники делают куклу-талисман дарума, украшение для двери и бумажное предсказание."
+end_time: "21:30"
+price: "Бесплатно"
+address: "Amathountos 108, Агиос Тихонас"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/japanese-new-year-and-the-magic-of-wishes/"

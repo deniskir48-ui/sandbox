@@ -1,0 +1,22 @@
+# week-import
+# Строка 232 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Growing Up in Cyprus Recent Music Scenes"
+status: published
+type: concert
+priority: 3
+date: "2026-11-28"
+time: "18:30"
+city: "Пила"
+venue: "UNFICYP Intercommunal Space"
+summary: "Разговор о современных музыкальных сценах Кипра; бесплатно."
+description: "Выставка и беседа о том, как музыканты пришли на кипрскую сцену и помогли её сформировать."
+end_time: "23:00"
+price: "Бесплатно"
+address: "University Ave 14, Пила"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/growing-up-in-cyprus-recent-music-scenes-unficyp-intercommunal-space/"

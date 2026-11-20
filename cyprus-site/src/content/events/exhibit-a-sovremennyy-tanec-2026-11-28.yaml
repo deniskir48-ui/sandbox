@@ -1,0 +1,21 @@
+# week-import
+# Строка 72 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Exhibit-A: современный танец"
+status: published
+type: theatre
+priority: 2
+date: "2026-11-28"
+time: "17:30"
+city: "Пафос"
+venue: "Attikon"
+summary: "Иммерсивная танцевальная постановка, €12."
+description: "Экспериментальный спектакль современного танца: зрители сидят рядом с действием и наблюдают «эксперимент» по созданию идеальной роли."
+address: "Evagora Pallikaridi, Пафос"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/exhibit-a-contemporary-dance-performance-in-paphos/"

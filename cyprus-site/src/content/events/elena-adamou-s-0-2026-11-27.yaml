@@ -1,0 +1,20 @@
+# week-import
+# Строка 203 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Elena Adamou: ΔS ≥ 0"
+status: published
+type: exhibition
+priority: 3
+date: "2026-11-27"
+time: "18:30"
+city: "Лимассол"
+venue: "Agias Zonis 1"
+summary: "Открытие персональной выставки Елены Адаму."
+description: "Открытие персональной выставки Елены Адаму в галерее The Edit: вышивка и объекты о том, как мы ощущаем время через ритмы тела и повседневные движения."
+address: "Agias Zonis 1, Лимассол"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/opening-elena-adamou/"

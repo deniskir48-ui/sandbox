@@ -141,7 +141,8 @@ python3 scripts/import-research.py import/catalog.xlsx             # запис�
 
 ```bash
 python3 scripts/import-christmas.py import/afisha-tg.xlsx   # листы «Рождество» и «Рождественские парки · Telegram»
-python3 scripts/import-week.py import/afisha-tg.xlsx       # лист «Все мероприятия» — вся афиша недели
+python3 scripts/import-digest.py import/afisha-digest.xlsx scripts/week-fixes/<понедельник>.json  # неделя из полного отбора (DEC-W46): события, приоритеты, Рождество; правки по проверке страниц
+python3 scripts/import-week.py import/afisha-tg.xlsx       # (до 23.11.2026) лист «Все мероприятия» Telegram-версии
 python3 scripts/import-priorities.py import/afisha-digest.xlsx  # приоритеты из «… полный отбор для воскресного дайджеста» (после импортов)
 python3 scripts/enrich-apply.py results.json                # подробности со страниц событий (DEC-W44)
 node scripts/build-site.mjs                                  # → папка standalone/site/ (афиша и Рождество) и standalone/christmas.html

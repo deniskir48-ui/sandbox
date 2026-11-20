@@ -1,0 +1,21 @@
+# week-import
+# Строка 222 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Polis & Akamas Exploration"
+status: published
+type: tour
+priority: 3
+date: "2026-11-28"
+time: "09:15"
+city: "Пафос"
+venue: "Archaeological Park Entrance"
+summary: "Однодневная поездка на полуостров Акамас."
+description: "Экскурсия на целый день из Пафоса в Полис-Хрисохус и на полуостров Акамас: геология и палеонтология Акамаса. Сбор у входа в Археологический парк в Като Пафосе, возвращение в 16:30."
+end_time: "16:30"
+booking: "На сайте visitpafos.org.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/full-day-of-exploration-polis-chrysochous-akamas-peninsula/"

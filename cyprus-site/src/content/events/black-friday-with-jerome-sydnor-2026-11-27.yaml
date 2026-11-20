@@ -1,0 +1,22 @@
+# week-import
+# Строка 215 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Black Friday with JEROME SYDNOR"
+status: published
+type: party
+priority: 3
+date: "2026-11-27"
+time: "22:00"
+city: "Лимассол"
+venue: "TZAR Nightclub"
+summary: "Вечеринка Black Friday, €20."
+description: "Клубная ночь с диджеем и продюсером Джеромом Сиднором: афро-хаус, мелодичный хаус и хаус-хиты."
+price: "€20"
+address: "Kolonakiou 29, Лимассол"
+booking: "Билеты на ra.co"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/black-friday-with-jerome-sydnor/"

@@ -1,0 +1,22 @@
+# week-import
+# Строка 99 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "RunIdalion 2026"
+status: published
+type: sport
+priority: 2
+date: "2026-11-29"
+time: "09:00"
+city: "Дали"
+venue: "пешеходный мост"
+summary: "Забег и семейный fun run в Дали; участие €10."
+description: "Забег и фан-ран в Дали."
+end_time: "13:00"
+price: "€10"
+booking: "Регистрация на in.events-runningincyprus.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/runidalion/"

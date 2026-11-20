@@ -1,0 +1,21 @@
+# week-import
+# Строка 181 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Free Walking Tour of Paphos"
+status: published
+type: tour
+priority: 3
+date: "2026-11-26"
+time: "09:30"
+city: "Пафос"
+venue: "Old Town"
+summary: "Бесплатная историческая прогулка по старому Пафосу."
+description: "Бесплатная прогулка по старому Пафосу с рассказом об истории города; сбор у остановки Market на площади Кеннеди. Нужны удобная обувь и вода."
+end_time: "12:00"
+price: "Бесплатно"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/free-walking-tour-of-paphos-s-old-town/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 101 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Christmas Open Studio"
+display_title: "Рождественская открытая мастерская художника"
+status: published
+type: exhibition
+priority: 2
+date: "2026-11-29"
+time: "10:00"
+city: "Ларнака"
+venue: "Skala"
+summary: "Художник открывает свою мастерскую для гостей; на работы рождественская скидка."
+description: "Художник открывает свою мастерскую для гостей; на все работы действует рождественская скидка."
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/christmas-open-studio/"
+tags: [christmas, christmas-other]

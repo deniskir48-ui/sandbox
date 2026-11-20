@@ -1,0 +1,18 @@
+# week-import
+# Строка 214 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+title: "Flash Festival: Opening Party"
+status: published
+type: festival
+priority: 3
+date: "2026-11-27"
+time: "22:00"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Открытие фестиваля с Penny K; бесплатный вход."
+description: "Вечеринка открытия Flash Festival с диджеем Penny K."
+price: "Вход свободный"
+ticket_url: "https://www.rialto.com.cy/post/flash-festival"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.rialto.com.cy/post/flash-festival"

@@ -1,0 +1,22 @@
+# week-import
+# Строка 4 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Замечание редактора: Концерт 22 ноября проходит отдельно в Лимассоле
+title: "200 гитар и Георгис Перрис"
+status: published
+type: concert
+priority: 1
+date: "2026-11-23"
+time: "20:30"
+city: "Строволос"
+venue: "Municipal Theatre"
+summary: "Global Echoes: Music of the World — Кипрский гитарный оркестр (200 гитар) и певец Георгос Перрис."
+description: "Кипрский гитарный оркестр и франко-греческий певец Георгос Перрис с программой «Глобальные отзвуки: музыка мира»: испанская, средиземноморская, латиноамериканская и греческая музыка. Дирижёр Антонис Митакидис."
+price: "€25–30, дети до 12 лет €15"
+booking: "Билеты на сайте муниципалитета Строволоса"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/global-echoes-music-of-the-world-200-guitars-with-giorgos-town/"

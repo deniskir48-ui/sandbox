@@ -1,0 +1,20 @@
+# week-import
+# Строка 56 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "4th Cyprus Swing Festival"
+status: published
+type: festival
+priority: 2
+date: "2026-11-27"
+time: "14:00"
+city: "Троодос"
+venue: "Jubilee Hotel, Пано Платрес"
+summary: "Фестиваль свинга и танцевальные встречи в Троодосе."
+description: "Четвёртый фестиваль свинга: танцы и музыка в отеле Jubilee в Троодосе."
+address: "Jubilee Hotel, Пано Платрес"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/4th-cyprus-swing-festival/"

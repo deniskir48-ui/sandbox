@@ -1,0 +1,20 @@
+# week-import
+# Строка 20 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Подробная афиша площадки
+title: "Jay-Jay Johanson"
+status: published
+type: concert
+priority: 1
+date: "2026-11-28"
+time: "20:00"
+city: "Лимассол"
+venue: "Music Hall"
+summary: "Концерт шведского певца, трип-хоп и джаз; билеты от €40."
+description: "Шведский певец Jay-Jay Johanson: джазовый вокал и трип-хоп. Концерт около двух часов."
+address: "Georgiou A 89A, Потамос Гермасойя"
+age: "6+"
+booking: "Билеты на SoldOut"
+ticket_url: "https://wgolimassol.com/en/event/jay-jay-johanson-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://wgolimassol.com/en/event/jay-jay-johanson-2026"

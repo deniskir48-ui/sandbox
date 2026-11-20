@@ -1,0 +1,21 @@
+# week-import
+# Строка 185 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "ClickHouse Cyprus Meetup"
+status: published
+type: talk
+priority: 3
+date: "2026-11-26"
+time: "18:30"
+city: "Лимассол"
+venue: "The Warehouse by IT Quarter"
+summary: "Встреча технического сообщества о масштабировании систем данных."
+description: "Митап кипрского сообщества ClickHouse о масштабировании систем данных."
+end_time: "21:00"
+booking: "Регистрация на luma.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/scaling-data-systems-with-clickhouse-cyprus-meetup-warehouse/"

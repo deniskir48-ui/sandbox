@@ -1,0 +1,24 @@
+# week-import
+# Строка 153 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Традиционные танцы и песни"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-24"
+time: "18:15"
+city: "Никосия"
+venue: "Политистико Эргастири"
+summary: "Мастерская традиционного танца и пения; €10–110 (варианты)."
+description: "Еженедельные занятия традиционными кипрскими танцами и хор традиционной песни. По вторникам в 18:15 занимается детская группа."
+end_time: "19:15"
+price: "От €10 до €110 в зависимости от программы"
+address: "Anchialou 1, Никосия"
+language: "Греческий"
+booking: "Запись через онлайн-форму мастерской"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/ergastiria-paradosiakou-chorou-chorodia-paradosiakou/"

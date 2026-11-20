@@ -1,0 +1,22 @@
+# week-import
+# Строка 54 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Программа фестиваля 11.11
+# Замечание редактора: Бесплатно, но нужен билет; 3, 5 и 18 декабря продолжение
+title: "OnTour 4YOU(th) Music Festival"
+display_title: "4YOU(th) Music Festival: OnTour"
+status: published
+type: festival
+priority: 2
+date: "2026-11-27"
+city: "Никосия"
+venue: "DownTown Live"
+summary: "Старт бесплатного 4YOU(th) Music Festival: 27.11 выступает OnTour. Бесплатный билет требуется оформить на More.com, для 18+."
+description: "Кипрская молодёжная организация проводит 4YOU(th) Music Festival в DownTown Live: четыре вечера с 27 ноября по 18 декабря. Первым 27 ноября выступает OnTour."
+price: "Бесплатно"
+address: "Emmanouil Roidi 2, Строволос (бывшая «Αυλαία»)"
+age: "18+"
+booking: "Бесплатный пропуск на more.com"
+ticket_url: "https://www.checkincyprus.com/article/90378/4youth-music-festival-tesseris-bradies-tesseris-sunaulies-kai-tessera-diaphoretika-mousika-eide/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90378/4youth-music-festival-tesseris-bradies-tesseris-sunaulies-kai-tessera-diaphoretika-mousika-eide/"

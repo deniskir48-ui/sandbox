@@ -1,0 +1,23 @@
+# week-import
+# Строка 225 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "New European Bauhaus"
+status: published
+type: talk
+priority: 3
+date: "2026-11-28"
+time: "10:00"
+city: "Лимассол"
+venue: "Panos Solomonides Centre"
+summary: "Городская конференция о дизайне, общественной среде и устойчивости."
+description: "Открытая конференция муниципалитета Лимассола о программе New European Bauhaus: как перейти от идей к практическим действиям."
+end_time: "13:30"
+price: "Бесплатно"
+address: "Panou Solomonidi 8, Лимассол"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/prosklisi-stin-imerida-gnorizontas-to-new-european-bauhaus/"

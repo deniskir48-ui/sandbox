@@ -1,0 +1,23 @@
+# week-import
+# Строка 228 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Blunchers: Expat Lunch"
+status: published
+type: talk
+priority: 3
+date: "2026-11-28"
+time: "11:00"
+city: "Пафос"
+venue: "Meraki Market Cafe"
+summary: "Неформальная встреча жителей и экспатов, бесплатно."
+description: "Еженедельный неформальный обед для экспатов, цифровых кочевников и предпринимателей; можно прийти в любое время с 11:00 до 14:00. Общение на английском, участникам скидка 10%."
+end_time: "14:00"
+price: "Бесплатно, еда и напитки за свой счёт"
+address: "Griva Digeni 57, Хлоракас"
+language: "Английский"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/blunchers-paphos-saturday-expat-lunch/"

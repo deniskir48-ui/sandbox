@@ -1,0 +1,18 @@
+# week-import
+# Строка 34 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Семейный календарь
+# Замечание редактора: Важна погодная зависимость
+title: "Шоу дронов в рождественской Какопетрии"
+status: published
+type: festival
+priority: 1
+date: "2026-11-29"
+city: "Никосия"
+venue: "Какопетрия"
+summary: "Праздничный полёт дронов; точное время ещё не объявлено."
+description: "Световое шоу дронов в рождественской Какопетрии. Время пока не объявлено; шоу зависит от погоды, перед поездкой проверяйте обновления."
+ticket_url: "https://kids.cy/en/journal/christmas-village-events-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://kids.cy/en/journal/christmas-village-events-2026"
+tags: [christmas, christmas-other]

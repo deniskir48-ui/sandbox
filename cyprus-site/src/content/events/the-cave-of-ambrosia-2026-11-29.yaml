@@ -1,0 +1,24 @@
+# week-import
+# Строка 117 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "The Cave of Ambrosia"
+status: published
+type: kids
+priority: 2
+date: "2026-11-29"
+time: "11:30"
+city: "Агиос Дометиос"
+venue: "Town Hall"
+summary: "Детский спектакль; €12."
+description: "Кукольный спектакль Кипрской академии кукольного искусства (CAPA) с антивоенным и экологическим посылом, 55 минут. Идёт по воскресеньям до 20 декабря."
+price: "€12"
+address: "Зал Костаса Монтиса (старая ратуша Агиос Дометиос)"
+language: "Греческий"
+age: "5–12 лет"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-cave-of-ambrosia-in-nicosia-old-town-agios/"

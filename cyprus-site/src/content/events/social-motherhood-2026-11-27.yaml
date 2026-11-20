@@ -1,0 +1,20 @@
+# week-import
+# Строка 196 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Social Motherhood"
+status: published
+type: kids
+priority: 3
+date: "2026-11-27"
+time: "09:30"
+city: "Никосия"
+venue: "Kaimakli"
+summary: "Публичное семейное/социальное мероприятие."
+description: "Утренняя неформальная встреча для молодых мам с малышами: кофе, общение, обмен опытом и поддержка."
+address: "Makariou III 62, Каймакли"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/social-motherhood/"

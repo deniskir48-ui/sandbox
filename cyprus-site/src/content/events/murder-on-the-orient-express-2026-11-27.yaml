@@ -1,0 +1,22 @@
+# week-import
+# Строка 210 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Murder on the Orient Express"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-27"
+time: "20:30"
+city: "Пафос"
+venue: "Markideio Theatre"
+summary: "Театральная постановка по Агате Кристи."
+description: "Гастроли спектакля THOC по детективу Агаты Кристи в адаптации Кена Людвига."
+address: "Andrea Geroudi 18, Пафос"
+language: "Греческий"
+booking: "Билеты через THOC"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/crime-on-the-orient-express-markideio/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 22 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Карточка с источниками и ценой
+title: "Mother of Millions: альбом T"
+status: published
+type: concert
+priority: 1
+date: "2026-11-28"
+time: "21:00"
+city: "Ларнака"
+venue: "Savino Live"
+summary: "Греческая прог-метал-группа, презентация нового альбома; €20, 17+."
+description: "Греческая прог-метал-группа Mother of Millions представляет новый альбом «T»"
+end_time: "23:59"
+address: "Watkins 9, Ларнака"
+age: "17+"
+booking: "Билеты на ticketbox.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/mother-of-millions-album-presentation-t/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/mother-of-millions-album-presentation-t/"

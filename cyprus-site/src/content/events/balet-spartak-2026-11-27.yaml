@@ -1,0 +1,21 @@
+# week-import
+# Строка 10 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: Официальная страница содержит противоречивое слово Monday у даты 28.11; дата 27 для Никосии подтверждена
+title: "Балет «Спартак»"
+status: published
+type: theatre
+priority: 1
+date: "2026-11-27"
+time: "19:30"
+city: "Никосия"
+venue: "Municipal Theatre"
+summary: "Grand International Classic Ballet: спектакль на музыку Хачатуряна, 18+; €49–159."
+description: "Балет Арама Хачатуряна в хореографии Сергея Боброва, Grand International Classic Ballet; впервые на Кипре. Два акта о гладиаторе Спартаке и его любви."
+address: "Mouseiou 4, Никосия"
+age: "18+"
+booking: "Билеты на сайте Atria Music и SoldOut"
+ticket_url: "https://www.atriamusic.com/spartacus"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.atriamusic.com/spartacus"

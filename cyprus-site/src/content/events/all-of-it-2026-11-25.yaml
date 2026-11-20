@@ -1,0 +1,23 @@
+# week-import
+# Строка 173 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "ALL OF IT"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-25"
+time: "20:00"
+city: "Никосия"
+venue: "KTIRION 53"
+summary: "Театральная постановка; €15."
+description: "Монолог Алистера Макдауэлла впервые на Кипре: Антония Хараламбус играет женщину от рождения до последнего прощания. Режиссёр Мария Иоли Каролиду."
+price: "€15"
+address: "Athinas 25–27, Никосия"
+language: "Греческий"
+booking: "Билеты на more.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/all-of-it/"

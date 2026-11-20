@@ -1,0 +1,23 @@
+# week-import
+# Строка 191 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Stand-Up Comedy Night"
+status: published
+type: standup
+priority: 3
+date: "2026-11-26"
+time: "20:00"
+city: "Лимассол"
+venue: "Xouzouri"
+summary: "Вечер стендапа, €7; язык уточняйте у организатора."
+description: "Вечер стендапа: три комика из Португалии, России и Кипра — João, Дарья Макарская и Джордж Феллас."
+price: "От €7"
+address: "Zik Zak, Лимассол"
+language: "Английский"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/stand-up-comedy-night-in-limassol/"

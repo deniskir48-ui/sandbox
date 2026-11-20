@@ -1,0 +1,19 @@
+# week-import
+# Строка 24 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Детальная программа 20.11
+# Замечание редактора: Начало мероприятия 17:30; точное время концерта отдельно не указано
+title: "Костис Маравеяс + шоу дронов: открытие Рождества"
+status: published
+type: festival
+priority: 1
+date: "2026-11-28"
+time: "17:30"
+city: "Ларнака"
+venue: "Europe Square"
+summary: "Городское зажжение ёлки: выступления музыкальных и танцевальных коллективов, Drone Light Show и большой концерт Костиса Маравеяса."
+description: "На площади Европы в Ларнаке зажгут городскую рождественскую ёлку и праздничное убранство. Выступят Муниципальная молодёжная филармония, детский хор, вокальный ансамбль и танцевальные школы; вечер завершат шоу дронов и концерт Костиса Маравеяса."
+ticket_url: "https://www.checkincyprus.com/article/90552/e-larnaka-anabei-ta-phota-ton-khristougennon-me-marabegia-kai-drone-light-show/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90552/e-larnaka-anabei-ta-phota-ton-khristougennon-me-marabegia-kai-drone-light-show/"
+tags: [christmas, christmas-lights]

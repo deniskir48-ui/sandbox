@@ -1,0 +1,22 @@
+# week-import
+# Строка 163 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "25th Leadership & HR Management Conference"
+status: published
+type: talk
+priority: 3
+date: "2026-11-25"
+time: "08:30"
+city: "Никосия"
+venue: "Hilton"
+summary: "Конференция по лидерству и HR."
+description: "25-я конференция по лидерству и управлению персоналом."
+end_time: "14:30"
+address: "Achaion 1, Никосия"
+booking: "Регистрация на imhbusiness.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/25th-leadership-and-hr-management-conference/"

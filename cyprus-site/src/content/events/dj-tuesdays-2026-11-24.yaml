@@ -1,0 +1,20 @@
+# week-import
+# Строка 146 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "DJ Tuesdays"
+status: published
+type: concert
+priority: 3
+date: "2026-11-24"
+city: "Никосия"
+venue: "Sarah's Jazz & Blues Club"
+summary: "Вечер диджея Old Town Radio; бесплатно."
+description: "Диджей-вечер Old Town Radio в цикле DJ Tuesdays."
+price: "Бесплатно"
+address: "Faneromenis 63, Никосия"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/old-town-radio-and-sarah-s-jazz-club-present-dj-tuesdays/"

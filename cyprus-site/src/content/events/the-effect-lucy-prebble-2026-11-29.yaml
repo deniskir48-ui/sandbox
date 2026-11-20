@@ -1,0 +1,21 @@
+# week-import
+# Строка 128 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: В программе Flash Festival
+title: "The Effect — Lucy Prebble"
+status: published
+type: theatre
+priority: 2
+date: "2026-11-29"
+time: "19:00"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Постановка о любви участников клинического исследования; на греческом с английскими титрами, 16+, €13."
+description: "Пьеса Люси Пребл в постановке Эвиты Иоанну, впервые на Кипре, театр Satiriko; 90 минут. Двое участников клинического испытания антидепрессанта влюбляются — и не понимают, настоящие ли их чувства."
+language: "С английскими субтитрами"
+age: "16+"
+booking: "В кассе Rialto и на сайте театра"
+ticket_url: "https://www.rialto.com.cy/post/flash-festival"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.rialto.com.cy/post/flash-festival"

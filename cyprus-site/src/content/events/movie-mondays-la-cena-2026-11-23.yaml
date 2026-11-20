@@ -1,0 +1,19 @@
+# week-import
+# Строка 143 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Movie Mondays: La Cena"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-23"
+time: "20:00"
+city: "Ларнака"
+venue: "Municipal Theatre"
+summary: "Кинопоказ в городском театре Ларнаки; фильм La Cena."
+description: "Политическая сатира с чёрным юмором «Ужин» (La Cena) в цикле Movie Mondays; по данным страницы, фильм получил премию «Гойя» за адаптированный сценарий."
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/movie-mondays-to-deipno-tou-franko-the-dinner/"

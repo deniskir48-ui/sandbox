@@ -1,0 +1,21 @@
+# week-import
+# Строка 81 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: В программе Flash Festival
+title: "Acts We Perform: короткометражное кино Queer Wave"
+status: published
+type: cinema
+priority: 2
+date: "2026-11-28"
+time: "20:00"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Пять короткометражных фильмов с английскими субтитрами, 15+; €8."
+description: "Пять короткометражных фильмов из программы 7-го фестиваля Queer Wave, 70 минут: о гендере, самовыражении и принадлежности. Показ с английскими субтитрами."
+language: "Английские субтитры"
+age: "15+"
+booking: "В кассе Rialto и на сайте театра"
+ticket_url: "https://www.rialto.com.cy/post/flash-festival"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.rialto.com.cy/post/flash-festival"

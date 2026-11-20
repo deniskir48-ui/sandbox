@@ -1,0 +1,23 @@
+# week-import
+# Строка 115 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Каталог: нужна прямая карточка
+# Замечание редактора: Детали, билеты и тематику перепроверить у организатора
+title: "Sneaker Event Cyprus: GTA Version"
+status: published
+type: sport
+priority: 2
+date: "2026-11-29"
+time: "11:00"
+city: "Никосия"
+venue: "Pavilion Hall"
+summary: "Большой фестиваль кроссовок и уличной культуры в Pavilion Hall; по агрегатору вход от €10."
+description: "Крытый фестиваль кроссовок, уличной моды, искусства, музыки и гейминга. В программе продавцы кроссовок и одежды, художники, диджеи, игровая зона GTA, выставка автомобилей, барберы и розыгрыши."
+end_time: "19:00"
+price: "От €10"
+booking: "Билеты на сайте организатора sneakereventcy.com"
+ticket_url: "https://cyprus.bz/ru/events/nicosia/markets"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprus.bz/ru/events/nicosia/markets"
+  - title: "Страница события"
+    url: "https://cyprus.bz/ru/event/3ab9/sneaker-event-cyprus-gta-version-in-nicosia-2026"

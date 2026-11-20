@@ -1,0 +1,19 @@
+# week-import
+# Строка 78 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: В программе Flash Festival
+title: "21S: живой аудиовизуальный перформанс"
+status: published
+type: concert
+priority: 2
+date: "2026-11-28"
+time: "19:00"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Emiddio Vasquez, Stelios Antoniou и Elvin Brandhi: музыка и визуальные эксперименты; €8."
+description: "Импровизированный аудиовизуальный перформанс Эмиддио Васкеса со Стелиосом Антониу и Elvin Brandhi о психогеографии Айя-Напы, 40 минут. Брейкбиты, экспериментальный звук, полевые записи и визуалы."
+booking: "В кассе Rialto и на сайте театра"
+ticket_url: "https://www.rialto.com.cy/post/flash-festival"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.rialto.com.cy/post/flash-festival"

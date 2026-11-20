@@ -1,0 +1,22 @@
+# week-import
+# Строка 7 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Сакис Рувас: благотворительный вечер"
+status: published
+type: concert
+priority: 1
+date: "2026-11-25"
+time: "20:30"
+city: "Никосия"
+venue: "Pavilion"
+summary: "Музыкальный благотворительный вечер с греческим певцом."
+description: "Благотворительный вечер с Сакисом Рувасом; организатор — никосийское отделение Кипрского Красного Креста, все сборы идут Красному Кресту."
+address: "Avraam Antoniou 2, Лакатамия"
+language: "Греческий"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/music-evening-with-sakis-rouvas-in-lefkosia/"

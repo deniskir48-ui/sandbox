@@ -1,0 +1,20 @@
+# week-import
+# Строка 167 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Travel Explorations & Writing Adventures"
+status: published
+type: talk
+priority: 3
+date: "2026-11-25"
+time: "17:30"
+city: "Лимассол"
+venue: "Ibsen Coffee Shop"
+summary: "Встреча о путешествиях и писательстве."
+description: "Беседа о путешествиях, писательстве и книгоиздании с писательницей Элизабет Вилигер Туфексис, бывшим гидом из Швейцарии."
+address: "Chrysanthou Mylona 16, Лимассол"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/travel-explorations-writing-adventures-ibsen-cafe/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 21 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+title: "Candlelight: Coldplay vs Imagine Dragons"
+status: published
+type: concert
+priority: 1
+date: "2026-11-28"
+time: "20:30"
+city: "Никосия"
+venue: "Pallas Theatre"
+summary: "Струнный квартет при свечах, программа песен Coldplay и Imagine Dragons; от €20,50."
+description: "Концерт при свечах: квартет Fusionia играет хиты Coldplay и Imagine Dragons, 60 минут. Трибьют, не связанный с самими группами."
+price: "От €20,50"
+address: "Rigenis 24, Никосия"
+age: "8+, до 16 лет со взрослым"
+booking: "Билеты в приложении и на сайте Fever, на входе не продаются"
+ticket_url: "https://feverup.com/m/687569/en"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://feverup.com/m/687569/en"

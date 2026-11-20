@@ -1,0 +1,21 @@
+# week-import
+# Строка 46 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: Несколько дистанций в разные дни, одно событие
+title: "Leptos Cyprus International 4-Day Challenge"
+status: published
+type: sport
+priority: 2
+date: "2026-11-26"
+end_date: "2026-11-29"
+city: "Пафос"
+venue: "Coral Bay и окрестности"
+summary: "Четырёхдневный забег с разными дистанциями, включая горный трейл и городскую гонку; вход для участников от €10."
+description: "Четыре этапа за четыре дня: гонка на время 6 км на пляже Coral Beach, трейл 11 км, полумарафон по пересечённой местности в Акамасе и 10 км по Пафосу."
+address: "Coral Beach Hotel, Пейя"
+ticket_url: "https://www.visitcyprus.com/events/list/?tribe-bar-date=2026-11-23"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.visitcyprus.com/events/list/?tribe-bar-date=2026-11-23"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/leptos-cyprus-international-4-day-challenge/"

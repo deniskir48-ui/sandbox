@@ -1,0 +1,25 @@
+# week-import
+# Строка 150 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Сведено сюда: строки 197
+title: "Free Guided City Walks"
+status: published
+type: tour
+priority: 3
+date: "2026-11-24"
+end_date: "2026-11-27"
+city: "Никосия"
+venue: "Eleftheria Square"
+summary: "Бесплатная обзорная прогулка по Никосии."
+open_days: ["2026-11-24", "2026-11-26", "2026-11-27"]
+sessions: "24 и 27 ноября в 10:30, 26 ноября в 17:30"
+description: "Бесплатные тематические экскурсии по Никосии от площади Элефтерия: старый город, музеи, византийское наследие, литература. Маршрут и язык выбираются при бронировании."
+price: "Бесплатно"
+language: "Английский, иногда греческий"
+booking: "Место нужно забронировать заранее"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/free-guided-city-walks-nicosia/"

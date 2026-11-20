@@ -1,0 +1,22 @@
+# week-import
+# Строка 138 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Lazy Training Run: Лимассол"
+status: published
+type: sport
+priority: 3
+date: "2026-11-23"
+time: "19:00"
+city: "Лимассол"
+venue: "Yellow Cafe"
+summary: "Совместная беговая тренировка."
+description: "Бесплатная беговая тренировка в лёгком темпе для всех от сообщества Lazy Trail Run, которое бегает по горам Кипра с 2022 года."
+end_time: "20:00"
+price: "Бесплатно"
+address: "Yellow Cafe, Молос"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/lazy-training-run-limassol/"

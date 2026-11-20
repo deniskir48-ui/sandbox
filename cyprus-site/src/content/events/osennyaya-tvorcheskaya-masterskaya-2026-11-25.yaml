@@ -1,0 +1,22 @@
+# week-import
+# Строка 166 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Осенняя творческая мастерская"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-25"
+time: "17:00"
+city: "Пафос"
+venue: "Karpennisiou 7"
+summary: "Художественный мастер-класс."
+description: "Осенняя мастерская для детей в центре логопедии Марии Пентары: поделки, игры о природе, сенсорные и творческие задания."
+end_time: "19:00"
+address: "Karpennisiou 7, Пафос"
+booking: "Нужна регистрация через центр"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/autumn-workshop/"

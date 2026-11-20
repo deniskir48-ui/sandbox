@@ -1,0 +1,21 @@
+# week-import
+# Строка 164 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Old Town & Craftsmen Walk"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-25"
+time: "10:00"
+city: "Ларнака"
+venue: "туристический информационный центр"
+summary: "Обзорная прогулка по старому городу и ремесленным мастерским; бесплатно."
+description: "Бесплатная прогулка с гидом по старому городу: от туристического центра к ремесленному кварталу, церкви Святого Лазаря и муниципальному рынку."
+end_time: "13:00"
+price: "Бесплатно"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/old-town-craftsmen-walk/"

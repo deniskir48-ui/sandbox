@@ -1,0 +1,23 @@
+# week-import
+# Строка 247 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "EcoForward Cyprus"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-29"
+time: "12:00"
+city: "Лимассол"
+venue: "St Raphael Resort"
+summary: "Экологическая выставка и мастер-классы; бесплатно."
+description: "Семейное мероприятие об устойчивом образе жизни: выставка кипрских брендов, короткие выступления экспертов и детская зона. С 11:00 до 14:00 — ярмарка детских книг «Вестника Кипра»"
+end_time: "19:00"
+price: "Бесплатно"
+address: "Amathountos 502, Пиргос"
+booking: "Регистрация на сайте EcoForward"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/ecoforward-cyprus/"

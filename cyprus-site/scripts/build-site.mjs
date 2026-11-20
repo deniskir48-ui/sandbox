@@ -142,7 +142,7 @@ const whenFull = (e) => {
 };
 // Факты карточки события в порядке чтения; пустые не показываются.
 const facts = (e) => [
-  ['Когда', whenFull(e)], ['Ещё даты', e.more_dates], ['Где', `${e.city}${e.venue ? ` · ${e.venue}` : ''}`], ['Адрес', e.address],
+  ['Когда', whenFull(e)], ['Сеансы', e.sessions], ['Ещё даты', e.more_dates], ['Где', `${e.city}${e.venue ? ` · ${e.venue}` : ''}`], ['Адрес', e.address],
   ['Часы', e.hours], ['Стоимость', e.price], ['Язык', e.language], ['Возраст', e.age], ['Запись', e.booking],
 ].filter(([, v]) => v);
 

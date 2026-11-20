@@ -1,0 +1,23 @@
+# week-import
+# Строка 26 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: 28–29 ноября, 10:00
+title: "Christmas Street Festival: 8-я ярмарка"
+status: published
+type: festival
+priority: 1
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Лимассол"
+venue: "Holy Cathedral of Virgin Mary Pantanassis"
+summary: "Двухдневная рождественская улица с ремёслами и торговыми палатками, вход бесплатный."
+description: "Восьмая рождественская улица у собора Панагии Пантанассы: базар, музыка, искусство и развлечения для семей."
+price: "Бесплатно"
+address: "Ellados, у собора Панагии Пантанассы"
+ticket_url: "https://cypruseventsmap.com/ru/markets/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/markets/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/christmas-street-festival-8th-annual-market-arts-in-limassol-holy-cathedral-virgin/"
+tags: [christmas, christmas-markets]

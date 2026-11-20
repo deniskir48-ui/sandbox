@@ -1,0 +1,24 @@
+# week-import
+# Строка 187 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Black Box Quiz"
+status: published
+type: talk
+priority: 3
+date: "2026-11-26"
+time: "19:30"
+city: "Лимассол"
+venue: "Shakespeare Gastropub"
+summary: "Квиз-вечер; €15."
+description: "Квиз Black Box на русском языке."
+end_time: "21:30"
+price: "€15"
+address: "Georgiou A 93, Гермасойя"
+language: "Русский"
+booking: "Билеты на blackboxquiz.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/black-box-quiz/"

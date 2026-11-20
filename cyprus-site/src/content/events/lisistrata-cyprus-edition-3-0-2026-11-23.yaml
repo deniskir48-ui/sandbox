@@ -1,0 +1,24 @@
+# week-import
+# Строка 142 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "«Лисистрата: Cyprus Edition 3.0»"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-23"
+time: "19:30"
+city: "Никосия"
+venue: "Flea Theatre"
+summary: "Комедия для взрослых на греческом; €10."
+description: "Кипрская версия «Лисистраты» Аристофана: действие в постапокалиптическом Кипре 2066 года. Труппа En LefkoSia, участник 39-го Всекипрского фестиваля любительского театра."
+end_time: "21:00"
+price: "€10"
+address: "Gianni Koromia, Каймакли"
+language: "Греческий"
+age: "18+"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/lysistrati-the-cyprus-edition-3-0/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 74 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Зажжение ёлки в Полисе"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "18:00"
+city: "Пафос"
+venue: "Полис-Хрисохус"
+summary: "Семейный праздник с детскими песнями."
+description: "Зажжение ёлки на центральной площади Полиса; рождественские песни поёт хор начальной школы."
+end_time: "20:00"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/poli-chrysochous-lights-its-christmas-tree-with-children-s/"
+tags: [christmas, christmas-lights]

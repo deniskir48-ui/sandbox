@@ -1,0 +1,22 @@
+# week-import
+# Строка 256 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Memory Workshop"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-29"
+time: "18:00"
+city: "Маллия"
+venue: "Community Council"
+summary: "Театральная мастерская/представление; бесплатно."
+description: "Театральная мастерская: жители Маллии через игры и импровизацию превращают истории своей деревни в сценки и показывают их публике. Особенно приглашают участников старше 60 лет."
+end_time: "20:00"
+price: "Бесплатно"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/memory-workshop-koinotiko-symvoulio/"

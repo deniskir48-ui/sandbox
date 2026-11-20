@@ -1,0 +1,22 @@
+# week-import
+# Строка 70 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: В источнике город Ayia Napa как административный район
+title: "Включение огней Ахны"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "17:00"
+city: "Ахна"
+summary: "Рождественский праздник муниципального района."
+description: "Праздничное шествие к площади Ахны и включение рождественских огней: выступления мэра, рождественские песни, развлечения для детей и благотворительный базар с едой."
+end_time: "20:00"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/ru/events/lighting-of-municipal-district-achna/"
+tags: [christmas, christmas-lights]

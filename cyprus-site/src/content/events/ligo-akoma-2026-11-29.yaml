@@ -1,0 +1,24 @@
+# week-import
+# Строка 110 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Ligo Akoma"
+status: published
+type: kids
+priority: 2
+date: "2026-11-29"
+time: "11:00"
+city: "Латсия"
+venue: "Maskarini Theatre"
+summary: "Детский спектакль о мечтах и усилиях; €10."
+description: "Детский спектакль театра Maskarini о мальчике Фивосе, который с помощью дедушки справляется со страхами и сомнениями."
+end_time: "12:00"
+price: "€10"
+address: "Athalassis 4, Лация"
+language: "Греческий"
+booking: "Билеты на сайте театра или more.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/children-s-performance-ligo-akoma/"

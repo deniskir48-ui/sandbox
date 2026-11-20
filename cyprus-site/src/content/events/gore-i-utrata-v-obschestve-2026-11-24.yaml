@@ -1,0 +1,21 @@
+# week-import
+# Строка 148 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "«Горе и утрата в обществе»"
+status: published
+type: talk
+priority: 3
+date: "2026-11-24"
+city: "Никосия"
+venue: "ARTos House"
+summary: "Открытая беседа/лекция на греческом."
+description: "Встреча о горе и разных формах утраты, о которых трудно говорить, — попытка открыть такой разговор вместе."
+end_time: "21:00"
+address: "Agion Omologiton 64, Никосия"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/penthos-kai-apoleia-stin-koinotita/"

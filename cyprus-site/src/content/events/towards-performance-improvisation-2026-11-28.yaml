@@ -1,0 +1,21 @@
+# week-import
+# Строка 244 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Towards Performance: improvisation"
+status: published
+type: other
+priority: 3
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "Dance House"
+summary: "Двухдневный танцевальный воркшоп."
+description: "Двухдневный семинар по импровизации и композиции с танцовщиком и хореографом Алексисом Цямоглу — для исполнителей, танцоров, студентов и всех, кому интересно. Места ограничены."
+price: "От €130"
+booking: "Билеты на rsrvin.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/towards-performance-dance-and-improvisation-workshop/"

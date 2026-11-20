@@ -1,0 +1,23 @@
+# week-import
+# Строка 63 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Часть Engomi Christmas Street Fest
+title: "3rd Santa Walk"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+time: "11:30"
+city: "Никосия"
+venue: "Энгоми"
+summary: "Третий праздничный забег/шествие Санта-Клаусов, бесплатно."
+description: "Третье шествие Санта-Клаусов: от парковки Офиса гражданина у Государственной выставки до The Mall of Engomi."
+end_time: "13:30"
+price: "Бесплатно"
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/engomi-fills-with-santa-clauses-for-the-3rd-santa-walk/"
+tags: [christmas, christmas-other]

@@ -1,0 +1,21 @@
+# week-import
+# Строка 251 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Filipino Siopao Workshop"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-29"
+time: "15:00"
+city: "Строволос"
+summary: "Кулинарный мастер-класс по филиппинским паровым булочкам; €45."
+description: "Мастер-класс по филиппинским паровым булочкам сиопао: участники учатся их лепить и пробуют прямо из пароварки."
+end_time: "17:00"
+price: "€45"
+booking: "Билеты на cyproplan.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/filipino-siopao-workshop-with-lucy/"

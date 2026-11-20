@@ -1,0 +1,23 @@
+# week-import
+# Строка 19 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Официальный источник
+# Замечание редактора: В других афишах ошибочно встречается 30.11; билеты Atria на 28.11
+title: "Балет «Спартак»"
+status: published
+type: theatre
+priority: 1
+date: "2026-11-28"
+time: "20:00"
+city: "Лимассол"
+venue: "Pattihio Theatre"
+summary: "Grand International Classic Ballet: спектакль на музыку Хачатуряна, 18+; €49–159."
+description: "Балет Арама Хачатуряна в хореографии Сергея Боброва, Grand International Classic Ballet. Два акта о гладиаторе Спартаке и его любви."
+address: "Agias Zonis 4, Лимассол"
+age: "18+"
+booking: "Билеты на сайте Atria Music и SoldOut"
+ticket_url: "https://tickets.atriamusic.com/en"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tickets.atriamusic.com/en"
+  - title: "Страница события"
+    url: "https://www.atriamusic.com/spartacus"

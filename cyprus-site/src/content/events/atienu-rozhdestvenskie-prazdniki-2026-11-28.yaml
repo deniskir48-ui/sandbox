@@ -1,0 +1,21 @@
+# week-import
+# Строка 84 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+# Замечание редактора: Уточнить программу по дням
+title: "Атиену: рождественские праздники"
+status: published
+type: festival
+priority: 2
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Атиену"
+summary: "Два мероприятия муниципалитета в период 28–29 ноября."
+sessions: "28 ноября в 19:30 — Авделлеро, площадь Манаса; 29 ноября в 19:00 — Атиену, зал Каллиникио"
+description: "Муниципалитет Атиену проводит два рождественских вечера: 28 ноября в 19:30 зажжение ёлки на площади Манаса в Авделлеро, 29 ноября с 19:00 до 21:00 праздник в зале Каллиникио в Атиену. Колядки, музыка, детские активности и угощения."
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/municipality-of-athienou-lights-its-festive-lights-with-two/"
+tags: [christmas, christmas-other]

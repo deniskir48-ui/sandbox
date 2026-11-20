@@ -1,0 +1,21 @@
+# week-import
+# Строка 28 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Подробный анонс 16.11
+# Замечание редактора: Посещение нескольких виноделен — отдельные бронирования
+title: "The Grape Escape 2026: открытые винодельни"
+status: published
+type: tour
+priority: 1
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Винодельни Кипра"
+venue: "Zambartas, Vlassides, Kyperounda, Argyrides, Tsiakkas"
+summary: "Гастрономический винный уикенд: дегустации и экскурсии по пяти винодельням, €10 за винодельню, сеанс 90 минут, бронирование напрямую."
+sessions: "28 и 29 ноября в 11:00, 13:00 и 15:00"
+description: "Пять кипрских виноделен — Zambartas, Vlassides, Kyperounda, Argyrides и Tsiakkas — открывают двери для дегустаций. Слоты в 11:00, 13:00 и 15:00, сессия длится полтора часа; по ходу маршрута гости заполняют квиз."
+price: "€10 с человека за каждую винодельню"
+booking: "Напрямую в выбранной винодельне, лучше заранее"
+ticket_url: "https://www.checkincyprus.com/article/90471/5-apo-ta-pio-xekhorista-kupriaka-oinopoieia-anoigoun-tis-portes-tous/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90471/5-apo-ta-pio-xekhorista-kupriaka-oinopoieia-anoigoun-tis-portes-tous/"

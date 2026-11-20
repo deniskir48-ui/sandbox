@@ -1,0 +1,20 @@
+# week-import
+# Строка 55 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Анонс постановки
+# Замечание редактора: Спектакль на греческом; время сверить по билету
+title: "«Μια νύκτα στον παράδεισο»: премьера гастролей Лориса Лоизидиса"
+status: published
+type: theatre
+priority: 2
+date: "2026-11-27"
+city: "Никосия"
+venue: "Latsia Municipal Theatre"
+summary: "Зимняя премьера популярной кипрской комедии с Лорисом Лоизидисом, Софоклисом Каскауниасом и Михаэлисом Софоклеусом. Билеты SoldOut."
+description: "Премьера зимних гастролей кипрской комедии «Μια νύκτα στον παράδεισο» по тексту и в постановке Лориса Лоизидиса. В спектакле заняты Лорис Лоизидис, Софоклис Каскауниас, Михалис Софоклеус и другие."
+address: "Giannou Kranidioti 57, Лация"
+language: "Греческий"
+booking: "Билеты на SoldOut и в магазинах Stephanis"
+ticket_url: "https://www.checkincyprus.com/article/89524/mia-nukta-ston-paradeiso-o-lores-loizides-kai-e-parea-tou-epistrephoun/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/89524/mia-nukta-ston-paradeiso-o-lores-loizides-kai-e-parea-tou-epistrephoun/"

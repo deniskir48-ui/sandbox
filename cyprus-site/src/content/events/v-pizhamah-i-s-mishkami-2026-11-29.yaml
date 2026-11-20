@@ -1,0 +1,23 @@
+# week-import
+# Строка 104 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "В пижамах и с мишками"
+status: published
+type: kids
+priority: 2
+date: "2026-11-29"
+time: "10:00"
+city: "Лимассол"
+venue: "Cyprus Theatre Museum"
+summary: "Детская программа в театральном музее, €10."
+description: "Программа к Международному дню пижам: интерактивные истории с Афанасией Дафиоти и театральные игры. Дети приходят в пижамах и с любимым мишкой."
+end_time: "11:30"
+price: "€10"
+age: "4–11 лет"
+booking: "Билеты на checkincyprus.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/in-pajamas-and-with-teddy-bears-at-the-cyprus-theatre-museum/"

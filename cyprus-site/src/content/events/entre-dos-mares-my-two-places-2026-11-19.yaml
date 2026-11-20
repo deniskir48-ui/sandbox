@@ -1,23 +1,29 @@
 # week-import
-# Лист «Все мероприятия» таблицы «АФИША КИПРА · 16–22 НОЯБРЯ 2026».
-# Проверка в таблице: Сверить детали
+# Строка 42 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Замечание редактора: В агрегаторе указаны 24–26 ноября, продолжение уточнить
 title: "Entre dos mares / My Two Places"
 status: published
 type: exhibition
 priority: 2
 date: "2026-11-19"
-time: "18:30"
+end_date: "2026-11-29"
 city: "Никосия"
-venue: "CVAR Museum"
-summary: "Фотовыставка, свободный вход."
+venue: "CVAR / Severis Foundation"
+summary: "Фотовыставка; вход бесплатный."
+hours: "Вт–вс 09:30–17:00"
 description: "Фотовыставка Аслы Болаир о Никосии и Барселоне: старые снимки, память и море — открытки со старых фотографий и изображения, созданные солнечным светом и морской водой. При поддержке посольства Испании."
 end_time: "20:30"
 price: "Бесплатно"
 address: "CVAR, Ermou 285, Nicosia 1017"
 more_dates: "20–22 и 24–26 ноября, 09:30–17:00"
-ticket_url: "https://cypruseventsmap.com/next-week/"
+ticket_url: "https://cypruseventsmap.com/events/november/"
 sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
   - title: "Источник из таблицы афиши"
     url: "https://cypruseventsmap.com/next-week/"
   - title: "Страница события"
     url: "https://cypruseventsmap.com/events/visual-arts-exhibition-entre-dos-mares-my-two-places/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/my-two-places-asli-bolayir-photographs-the-memory/"

@@ -1,0 +1,22 @@
+# week-import
+# Строка 226 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Morning Coffee Rave"
+status: published
+type: party
+priority: 3
+date: "2026-11-28"
+time: "10:00"
+city: "Пафос"
+venue: "RPM Coffee"
+summary: "Утренняя вечеринка в кофейне."
+description: "Утренняя танцевальная вечеринка в кофейне RPM: диджей играет хаус и афро-хаус."
+price: "Бесплатно, нужен билет"
+address: "Anexartisias 6, Пафос"
+booking: "Бесплатный билет, бронировать заранее на ra.co"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/morning-coffee-rave-rpm-coffee/"

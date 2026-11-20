@@ -1,0 +1,20 @@
+# week-import
+# Строка 122 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Paschalis на рождественском празднике"
+status: published
+type: festival
+priority: 2
+date: "2026-11-29"
+time: "15:30"
+city: "Никосия"
+venue: "South Lefkosia–Idaliou"
+summary: "Концерт греческого певца при зажжении огней муниципалитета."
+description: "Рождественский праздник муниципалитета Южная Никосия–Идалион на улице Элефтериас: с 15:30 детские активности, с 16:00 хоры и танцевальные коллективы, в 18:30 концерт Пасхалиса со Стелиосом Маком, в 20:00 зажжение огней. Работают праздничные палатки."
+ticket_url: "https://cypruseventsmap.com/ru/christmas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/ru/christmas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/paschalis-at-the-christmas-lighting-of-the-municipality/"
+tags: [christmas, christmas-lights]

@@ -1,0 +1,23 @@
+# week-import
+# Строка 213 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: перепроверить детали
+title: "Eleonora Roussou: Beats 'n' Pieces"
+status: published
+type: concert
+priority: 3
+date: "2026-11-27"
+time: "21:30"
+city: "Никосия"
+venue: "Sarah's Jazz & Blues Club"
+summary: "Джазовая программа, €13."
+description: "Элеонора Руссу и группа Beats 'n' Pieces отмечают восемь лет вместе: латина, свинг, соул и поп."
+end_time: "23:30"
+price: "€13"
+address: "Faneromenis 63, Никосия"
+booking: "Билеты на more.com"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/eleonora-roussou-beats-n-pieces/"

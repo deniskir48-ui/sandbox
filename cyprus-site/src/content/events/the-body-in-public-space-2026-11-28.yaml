@@ -1,0 +1,20 @@
+# week-import
+# Строка 245 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "The Body in Public Space"
+status: published
+type: workshop
+priority: 3
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "Municipal Theatre"
+summary: "Танцевальный перформанс/мастерская."
+description: "Танцевальный перформанс в Муниципальном театре Никосии."
+address: "Mouseiou 6, Никосия"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-body-in-public-space/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 230 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Как кино управляет эмоциями"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-28"
+time: "17:30"
+city: "Никосия"
+venue: "Diagorou 29"
+summary: "Детский мастер-класс об эмоциональных приёмах кино."
+description: "Дети смотрят фрагменты фильмов, обсуждают их и выполняют задания про звук, цвет, ракурсы и монтаж. Вторая встреча цикла First Encounters."
+address: "Diagorou 29, Никосия"
+language: "Греческий и английский"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/children-s-workshop-how-do-films-guide-emotion-children-s/"

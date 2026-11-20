@@ -1,0 +1,22 @@
+# week-import
+# Строка 263 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "«Μπαμ»"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-29"
+time: "20:00"
+city: "Ларнака"
+venue: "Livadia Events Hall"
+summary: "Грекоязычный спектакль; бесплатно."
+description: "Любительская труппа «Парабаси» играет пьесу Георгоса Неофиту в постановке Мариоса Какуллиса. Часть 13-го фестиваля любительского театра."
+end_time: "22:00"
+price: "Бесплатно"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/mpam/"

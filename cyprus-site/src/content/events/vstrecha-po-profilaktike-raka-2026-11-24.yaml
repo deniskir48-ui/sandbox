@@ -1,0 +1,23 @@
+# week-import
+# Строка 156 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "Встреча по профилактике рака"
+status: published
+type: talk
+priority: 3
+date: "2026-11-24"
+time: "19:00"
+city: "Сотира"
+venue: "культурный центр «Аммохостос»"
+summary: "Лекция об осведомлённости о раке молочной железы и простаты; бесплатно."
+description: "Бесплатная лекция о профилактике рака молочной и предстательной железы и современных методах лечения; выступают врачи Николаос Замбулу и Иосиф Струтос."
+end_time: "20:00"
+price: "Бесплатно"
+address: "Makariou III, Сотира"
+language: "Греческий"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/mazi-gia-tin-prolipsi-karkinos-tou-mastou-tou-prostati/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 47 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+# Сведено сюда: строки 57
+title: "Light and Shadow: фестиваль историй"
+status: published
+type: festival
+priority: 2
+date: "2026-11-26"
+end_date: "2026-11-29"
+city: "Лимассол"
+venue: "Technodromio"
+summary: "13-й фестиваль сторителлинга и сказок, тема — Италия."
+description: "13-й фестиваль сказок и устного рассказа «Свет и тень», почётная страна этого года — Италия. Четыре дня, в программе марафон рассказчиков."
+address: "Technodromio, Лимассол"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/light-and-shadow-13th-storytelling-and-fairy-tale-festival/"

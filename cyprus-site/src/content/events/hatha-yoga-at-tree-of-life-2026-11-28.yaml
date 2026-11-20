@@ -1,0 +1,22 @@
+# week-import
+# Строка 221 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Hatha Yoga at Tree of Life"
+status: published
+type: other
+priority: 3
+date: "2026-11-28"
+time: "09:00"
+city: "Ларнака"
+venue: "Tree of Life Centre"
+summary: "Групповое занятие йогой."
+description: "Еженедельное занятие хатха-йогой от YogaNecta в Tree of Life Centre, подходит и новичкам, и опытным. Асаны, дыхание и паузы для расслабления."
+end_time: "10:00"
+price: "€15 разовое занятие, €50 месячный абонемент"
+address: "Markou Drakou 9, Ларнака"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/hatha-yoga-at-the-tree-of-life-larnaca/"

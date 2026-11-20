@@ -1,0 +1,21 @@
+# week-import
+# Строка 246 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Rock Climbing: Women-Only"
+status: published
+type: other
+priority: 3
+date: "2026-11-29"
+time: "10:00"
+city: "Пафос"
+venue: "Kourtellorotsos"
+summary: "Скалолазание на открытом воздухе для женщин."
+description: "Бесплатное скалолазание только для женщин в рамках проекта GreenClimb. Мест мало, нужна запись."
+price: "Бесплатно"
+booking: "Обязательна запись через eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/rock-climbing-women-only-outdoor-experience-in-paphos/"

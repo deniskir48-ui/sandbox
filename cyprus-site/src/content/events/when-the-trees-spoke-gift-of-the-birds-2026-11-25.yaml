@@ -1,0 +1,22 @@
+# week-import
+# Строка 168 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Агрегатор: проверить у организатора
+title: "When the Trees Spoke: Gift of the Birds"
+status: published
+type: theatre
+priority: 3
+date: "2026-11-25"
+time: "17:30"
+city: "Никосия"
+venue: "Home of Cooperation"
+summary: "Тематический вечер/постановка; в афише €15."
+description: "Двухобщинный спектакль-рассказ о природе в Доме сотрудничества в буферной зоне: греки-киприоты и турки-киприоты вместе рассказывают истории для семей."
+end_time: "20:00"
+price: "€15"
+address: "Markou Drakou 28, Никосия"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/when-the-trees-spoke-the-gift-of-the-birds/"

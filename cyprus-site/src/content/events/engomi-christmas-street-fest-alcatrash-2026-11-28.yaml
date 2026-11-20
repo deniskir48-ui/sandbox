@@ -1,0 +1,21 @@
+# week-import
+# Строка 27 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Подробная программа опубликована
+# Замечание редактора: Alcatrash 28.11 в 18:30; семейная программа два дня
+title: "Engomi Christmas Street Fest + Alcatrash"
+status: published
+type: festival
+priority: 1
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Никосия"
+venue: "возле Mall of Engomi, 28 Oktovriou Avenue"
+summary: "28–29 ноября, 10:30–20:30: уличная ярмарка, мастер-классы, детская программа. Alcatrash выступят в субботу 28 ноября в 18:30; ёлку зажгут в воскресенье в 19:00."
+description: "Рождественский уличный фестиваль на проспекте 28 Октября перед Mall of Engomi, вместе с муниципалитетом Никосии. Ярмарка, выступления школ и коллективов, фокусники, театр и кукольный театр, мастер-классы; в субботу в 18:30 концерт Alcatrash, в воскресенье в 19:00 зажжение ёлки."
+hours: "10:30–20:30"
+address: "Проспект 28 Октября, перед Mall of Engomi, Энгоми"
+ticket_url: "https://www.checkincyprus.com/article/90469/oi-alcatrash-erkhontai-sto-engomi-christmas-street-fest-gia-ena-giortino-diemero/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90469/oi-alcatrash-erkhontai-sto-engomi-christmas-street-fest-gia-ena-giortino-diemero/"
+tags: [christmas, christmas-lights]

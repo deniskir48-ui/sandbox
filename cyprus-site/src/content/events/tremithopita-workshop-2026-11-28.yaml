@@ -1,0 +1,20 @@
+# week-import
+# Строка 61 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Tremithopita Workshop"
+status: published
+type: workshop
+priority: 2
+date: "2026-11-28"
+time: "10:30"
+city: "Кипр"
+summary: "Мастер-класс по выпечке традиционного кипрского пирога с терпентиновым деревом, бесплатно."
+description: "Мастер-класс по выпечке тремифопиты — традиционного кипрского пирога с плодами терпентинного дерева — для взрослых и детей."
+end_time: "12:30"
+price: "Бесплатно"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/tremithopita-workshop-bake-a-cypriot-terebinth-pie/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 126 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "KipriaCosFest: Anime & Game Music"
+status: published
+type: festival
+priority: 2
+date: "2026-11-29"
+time: "18:00"
+city: "Гермасойя"
+summary: "Концерт музыки из аниме и видеоигр; €20."
+description: "Вечер KipriaCosFest: живая музыка из аниме и видеоигр, диджей-сеты и конкурс косплея."
+end_time: "23:00"
+price: "€20"
+booking: "Билеты на сайте Cyprus Comic Con"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/kipriacosfest-anime-and-game-music-live/"

@@ -1,0 +1,25 @@
+# week-import
+# Строка 14 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ✓ Подробная карточка
+title: "«Приезжайте в гости!» — Театр Сна"
+status: published
+type: kids
+priority: 1
+date: "2026-11-28"
+end_date: "2026-11-29"
+city: "Лимассол"
+venue: "Sinergio Theatre"
+summary: "Интерактивный русскоязычный спектакль для детей 2–7 лет; билеты €20 взрослый / €25 ребёнок."
+open_days: ["2026-11-28", "2026-11-29"]
+sessions: "28 ноября в 10:00 и 12:00, 29 ноября в 14:30 и 16:30"
+description: "Интерактивный спектакль «Театра Сна» для малышей на русском языке; в зале не больше 25 детей с их взрослыми."
+price: "€20 взрослый, €25 детский"
+address: "Eleftherias 91, Лимассол"
+language: "Русский"
+age: "2–7 лет"
+booking: "По телефону, в WhatsApp или Telegram театра"
+ticket_url: "https://kids.cy/ru/events/come-visit-us-teatr-sna-interactive-show-for-little-ones-in--2026-11-28"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://kids.cy/ru/events/come-visit-us-teatr-sna-interactive-show-for-little-ones-in--2026-11-28"
+tags: [christmas, christmas-other]

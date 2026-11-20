@@ -1,0 +1,24 @@
+# week-import
+# Строка 231 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Diversion"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-28"
+time: "18:00"
+city: "Никосия"
+venue: "Pantheon Theatre"
+summary: "Кинопоказ; €7."
+description: "Кипрский социальный триллер Мариноса Картиккиса (96 минут): полицейский Костас крадёт украшения у умерших, и всё усложняется, когда партнёрша находит краденое."
+price: "€7"
+address: "Diagorou 29, 5 этаж, Никосия"
+language: "Греческий, английские субтитры"
+booking: "Билеты на сайте Pantheon Theatre"
+more_dates: "Ещё сеанс в 20:30"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/diversion/"

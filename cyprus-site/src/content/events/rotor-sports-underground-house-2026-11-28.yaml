@@ -1,0 +1,23 @@
+# week-import
+# Строка 240 листа «Все события» таблицы «АФИША КИПРА · 23–29 НОЯБРЯ 2026».
+# Проверка в таблице: ◒ Общая афиша: сверить с организатором
+title: "Rotor Sports Underground House"
+status: published
+type: other
+priority: 3
+date: "2026-11-28"
+time: "22:30"
+city: "Никосия"
+venue: "Picnic Nicosia"
+summary: "Ночной хаус-сет, 18+, €20."
+description: "Первая вечеринка новой ежемесячной серии Rotor Sports; гость — хаус-диджей Морис Фултон из Балтимора."
+price: "€20"
+address: "Asklipiou 36, Никосия"
+age: "18+"
+booking: "Билеты на eventor.com.cy"
+ticket_url: "https://cypruseventsmap.com/events/november/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/november/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/rotor-sports-underground-house-night-in-nicosia/"
