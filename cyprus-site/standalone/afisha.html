@@ -4389,23 +4389,6 @@
         if (navigator.share) navigator.share({ title: title, url: url }).catch(function (e) { if (!e || e.name !== 'AbortError') copy(); });
         else copy();
       });
-      // «В календарь»: файл .ics — его открывают календари iPhone, Android и Outlook.
-      var pad = function (n) { return (n < 10 ? '0' : '') + n; };
-      var icsEsc = function (t) { return String(t).replace(/\\/g, '\\\\').replace(/[,;]/g, function (c) { return '\\' + c; }).replace(/\n/g, '\\n'); };
-      if (el('s-cal')) el('s-cal').addEventListener('click', function () {
-        if (!cur) return;
-        var x = DATA[cur], ymd = function (iso) { return iso.replace(/-/g, ''); }, lines;
-        if (x.time && x.start === x.end) {
-          var t = x.time.split(':'), e2 = x.endTime ? x.endTime.split(':') : [String((+t[0] + 2) % 24), t[1]];
-          var endDay = x.endTime || +t[0] < 22 ? x.start : plus(x.start, 1);
-          lines = ['DTSTART;TZID=Europe/Nicosia:' + ymd(x.start) + 'T' + pad(+t[0]) + t[1] + '00', 'DTEND;TZID=Europe/Nicosia:' + ymd(endDay) + 'T' + pad(+e2[0]) + e2[1] + '00'];
-        } else lines = ['DTSTART;VALUE=DATE:' + ymd(x.start), 'DTEND;VALUE=DATE:' + ymd(plus(x.end, 1))];
-        var now = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
-        var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//City Compas//RU', 'BEGIN:VEVENT', 'UID:' + cur + '@citycompas.com', 'DTSTAMP:' + now].concat(lines,
-          ['SUMMARY:' + icsEsc(x.title), 'LOCATION:' + icsEsc(x.place + ', Cyprus'), 'DESCRIPTION:' + icsEsc(x.summary.slice(0, 500) + '\n\n' + SHARE + '#' + cur), 'URL:' + SHARE + '#' + cur, 'END:VEVENT', 'END:VCALENDAR']).join('\r\n');
-        var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' })); a.download = cur + '.ics';
-        document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
-      });
       function close() {
         if (history.length > 1 && last) history.back(); else { location.hash = ''; }
       }

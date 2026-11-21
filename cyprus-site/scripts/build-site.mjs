@@ -834,7 +834,7 @@ function buildPage(cfg, { artifact = false } = {}) {
         if (navigator.share) navigator.share({ title: title, url: url }).catch(function (e) { if (!e || e.name !== 'AbortError') copy(); });
         else copy();
       });
-      // «В календарь»: файл .ics — его открывают календари iPhone, Android и Outlook.
+${artifact ? '' : `      // «В календарь»: файл .ics — его открывают календари iPhone, Android и Outlook.
       var pad = function (n) { return (n < 10 ? '0' : '') + n; };
       var icsEsc = function (t) { return String(t).replace(/\\\\/g, '\\\\\\\\').replace(/[,;]/g, function (c) { return '\\\\' + c; }).replace(/\\n/g, '\\\\n'); };
       if (el('s-cal')) el('s-cal').addEventListener('click', function () {
@@ -851,7 +851,7 @@ function buildPage(cfg, { artifact = false } = {}) {
         var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' })); a.download = cur + '.ics';
         document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
       });
-      function close() {
+`}      function close() {
         if (history.length > 1 && last) history.back(); else { location.hash = ''; }
       }
       document.addEventListener('click', function (e) { var a = e.target.closest('.ev, .pc'); if (a) last = a; });
