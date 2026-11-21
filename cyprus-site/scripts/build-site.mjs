@@ -222,9 +222,104 @@ const AFISHA = {
   },
 };
 const PAGES = [AFISHA, XMAS];
+// Прототип облика «Медь и афишная тумба» (DEC-W51): поверх основных стилей, только для артефакта-прототипа.
+const PROTO_CSS = `
+    /* ПРОТОТИП «Медь и афишная тумба» (DEC-W51, предложение).
+       Кипр назван по меди: акцент — медь и её патина. Светлый «известняковый» фон и тёмно-синие чернила — днём на солнце читается лучше.
+       Раскладка — расписание: слева крупно день и число (это единственный смелый элемент), справа узким «плакатным» шрифтом название,
+       под ним вид, время и место. Без заглавных подписей, стрелок и выделенного слова в заголовке. */
+    :root {
+      color-scheme: light;
+      --night: #F3F5F4; --card: #FFFFFF; --card-hi: #E8EEEB; --line: #D4DDD9; --text: #13263B; --muted: #566675;
+      --sky: #1B6E62; --sun: #A24F22; --warm: #A24F22; --ok: #1B6E62;
+      --copper: #A24F22; --patina: #1B6E62;
+      --display: "Fira Sans Extra Condensed", "Onest", system-ui, sans-serif;
+    }
+    [data-kind="g-music"], [data-kind="christmas-villages"] { --c: #1F5FA3; } [data-kind="g-stage"] { --c: #A8432A; } [data-kind="g-kids"] { --c: #AD2E68; }
+    [data-kind="g-learn"], [data-kind="christmas-other"] { --c: #6345A8; } [data-kind="g-fest"], [data-kind="christmas-markets"] { --c: #8A5B00; }
+    [data-kind="g-active"], [data-kind="christmas-lights"] { --c: #28744A; } [data-kind="g-other"] { --c: #566675; } [data-kind="christmas-parks"] { --c: #A24F22; }
+    .garland path { stroke: #9aa9b5; }
+
+    /* Верх: знак, вкладки, заголовок — спокойно. */
+    .topbar { background: var(--night); }
+    .tabs { background: var(--card); }
+    .tabs a[aria-current] { background: var(--text); color: #fff; }
+    h1 { font-weight: 700; font-size: clamp(1.9rem, 6.4vw, 2.7rem); letter-spacing: -.005em; line-height: 1; }
+    .tb-brand { font-family: "Onest", system-ui, sans-serif; font-weight: 700; }
+
+    /* Фильтры: белые таблетки, выбранное — чернилами; вид — своим цветом. */
+    .chip, .pick { background: var(--card); }
+    .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #fff; }
+    .chip.tg[aria-pressed="true"] { --c: var(--patina); }
+    .pick.on { background: var(--text); border-color: var(--text); color: #fff; }
+    .chip.x { background: transparent; }
+    .fbar.stuck { box-shadow: 0 10px 16px -14px rgba(19, 38, 59, .45); }
+    .tb-search .ic, .cal-b .ic { color: var(--text); }
+    .tb-search[aria-expanded="true"] .ic { color: #fff; }
+    .cal { box-shadow: 0 14px 34px rgba(19, 38, 59, .18); }
+    .cal-g button:disabled { color: #b5c0c8; }
+    .cal-g button.has::after { background: var(--copper); }
+    .search input:focus, .chip:focus-visible, .pick:focus-within { outline-color: var(--copper); }
+
+    /* Заголовки разделов — плакатным шрифтом, без подписей капсом. */
+    .lhead h2 { font-size: 1.45rem; font-weight: 700; }
+
+    /* «Главное»: белые листы с медной кромкой сверху, без градиентов. */
+    .pc { background: var(--card); border: 1px solid var(--line); border-top: 3px solid var(--copper); border-radius: 6px; gap: 8px; }
+    .pc:hover { border-color: var(--line); border-top-color: var(--copper); box-shadow: 0 6px 18px rgba(19, 38, 59, .08); }
+    .pc-title { font-size: 1.45rem; font-weight: 700; line-height: 1.05; }
+    .pc-why { color: var(--muted); }
+    .pc .ev-type { font-weight: 600; }
+
+    /* Список — расписание. Строки без карточек: крупная дата слева, текст справа, тонкая линия между строками. */
+    .evs { grid-template-columns: minmax(0, 1fr); gap: 0; grid-auto-rows: auto; border-top: 1px solid var(--line); }
+    @media (min-width: 640px) { .evs { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 32px; } }
+    @media (min-width: 900px) { .evs { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    .ev { min-height: 0 !important; display: grid; grid-template-columns: 58px minmax(0, 1fr); gap: 0 14px; align-items: start; padding: 14px 4px 15px 0;
+      background: transparent; border: 0; border-bottom: 1px solid var(--line); border-radius: 0; transition: background .15s; }
+    .ev:hover { background: var(--card); border-color: var(--line); }
+    .ev-day { grid-row: 1 / span 2; display: grid; justify-items: start; line-height: 1; font-family: var(--display); color: var(--text); }
+    .ev-day small { font-family: "Onest", system-ui, sans-serif; font-size: .74rem; font-weight: 600; color: var(--muted); }
+    .ev-day small.we { color: var(--copper); }
+    .ev-day b { font-size: 2.6rem; font-weight: 700; letter-spacing: -.02em; font-variant-numeric: tabular-nums; margin: 1px 0 2px; }
+    .ev-day.long b { font-size: 2rem; }
+    .ev-title { grid-column: 2; font-family: var(--display); font-weight: 600; font-size: 1.32rem; line-height: 1.08; -webkit-line-clamp: 2; hyphens: manual; overflow-wrap: break-word; }
+    .ev .ev-meta { grid-column: 2; display: flex; flex-wrap: wrap; align-items: center; gap: 2px 12px; margin-top: 6px; }
+    .ev-type { font-size: .84rem; font-weight: 600; }
+    .ev-type .ic { width: 17px; height: 17px; }
+    .ev .ev-date { display: none; }
+    .pc .ev-date { font-weight: 700; }
+    .ev-time { display: inline; font-size: .88rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+    .ev-time:empty { display: none; }
+    .ev-city { font-size: .88rem; }
+    .ev-tags { margin-top: 0; }
+    .tag { background: transparent; border: 1px solid currentColor; padding: 0 6px; }
+    .tag.free { color: var(--patina); } .tag.ru { color: #1F5FA3; }
+    .more { background: var(--card); }
+
+    /* Ссылка на Рождество — строкой, без плашки и стрелки. */
+    .xbanner { background: transparent; border: 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); border-radius: 0; padding: 14px 0; }
+    .xbanner:hover { border-color: var(--line); } .xbanner:hover b { text-decoration: underline; text-underline-offset: 4px; }
+    .xbanner b { font-family: var(--display); font-size: 1.3rem; font-weight: 700; }
+    .xbanner .ic { color: #28744A; }
+
+    /* Карточка события — белый лист. */
+    .shade { background: rgba(19, 38, 59, .42); }
+    .sheet { background: var(--card); border-color: var(--line); }
+    .close { background: var(--card); }
+    .s-kind { text-transform: none; letter-spacing: 0; font-size: .9rem; }
+    .sheet h2 { font-size: 2rem; font-weight: 700; line-height: 1.02; }
+    .s-summary { color: #2b3d50; }
+    .s-map { background: var(--copper); color: #fff; }
+    .s-rel h3 { text-transform: none; letter-spacing: 0; font-size: .9rem; color: var(--muted); }
+    .s-status { background: color-mix(in srgb, var(--copper) 12%, transparent); color: var(--copper); }
+    .s-status.now { background: color-mix(in srgb, var(--patina) 12%, transparent); color: var(--patina); }
+    .toast { color: #fff; box-shadow: 0 10px 30px rgba(19, 38, 59, .25); }
+    footer { border-top-color: var(--line); }
+`;
 const XMAS_ARTIFACT = XMAS.artifactUrl;
 
-function buildPage(cfg, { artifact = false } = {}) {
+function buildPage(cfg, { artifact = false, proto = false } = {}) {
   const list = [...cfg.events].sort((a, b) => (a.priority ?? 3) - (b.priority ?? 3) || key(a).localeCompare(key(b)));
   const kinds = cfg.kinds.map((k) => ({ ...k, n: list.filter((e) => cfg.kindOf(e) === k.t).length })).filter((k) => k.n);
   // Районы для фильтра: где есть события, по их числу; порядок при равенстве — как в regions.json.
@@ -240,10 +335,12 @@ function buildPage(cfg, { artifact = false } = {}) {
   const card = (e) => `
         <li ${attrs(e)}>
           <a class="ev" href="#${e.id}" data-id="${e.id}">
+            <span class="ev-day" aria-hidden="true"></span>
             <span class="ev-title">${esc(e.display_title ?? e.title)}</span>
             <span class="ev-meta">
               <span class="ev-type">${svg(cfg.iconOf(e))}${esc(cfg.typeOf(e, false))}</span>
               <span class="ev-date">${esc(dateShort(e))}</span>
+              <span class="ev-time">${isLong(e) ? '' : esc(e.time ?? '')}</span>
               <span class="ev-city">${esc(e.city)}</span>${tagsOf(e)}
             </span>
           </a>
@@ -268,12 +365,12 @@ function buildPage(cfg, { artifact = false } = {}) {
     time: e.time ?? '', endTime: e.end_time ?? '', place: `${e.venue ? `${e.venue}, ` : ''}${e.address && !e.venue ? `${e.address}, ` : ''}${e.city}`,
   }]));
 
-  const html = `<title>${esc(cfg.title)}</title>
+  const html = `<title>${proto ? 'Медная афиша Кипра' : esc(cfg.title)}</title>
   <meta name="claude:viewport-fit-sides" content="cover">
   <meta name="description" content="${esc(cfg.description)}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@600;700;800&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Unbounded:wght@600;700;800${proto ? '&family=Fira+Sans+Extra+Condensed:wght@600;700' : ''}&display=swap">
   <style>
     /* Вечерний Кипр в декабре: ночное небо, гирлянда, голубой и оранжевый «Гида по Кипру». Сознательно одна тёмная тема.
        Раскладка: заголовок → строка фильтров → один список плиток; карточка события открывается поверх списка. */
@@ -451,6 +548,7 @@ function buildPage(cfg, { artifact = false } = {}) {
     .ic { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
     .ev-type { display: flex; align-items: center; gap: 6px; font-size: .82rem; font-weight: 700; color: var(--c); }
     .ev-type .ic { width: 20px; height: 20px; }
+    .ev-day, .ev-time { display: none; }
     .ev-date { font-size: .88rem; font-weight: 600; font-variant-numeric: tabular-nums; }
     .ev-city { font-size: .86rem; color: var(--muted); }
     .xbanner:focus-visible, .fnav a:focus-visible, .ev:focus-visible, .pc:focus-visible, .s-rel a:focus-visible, .clear:focus-visible, .more:focus-visible, .empty button:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
@@ -491,7 +589,7 @@ function buildPage(cfg, { artifact = false } = {}) {
   
     footer { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
     .brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 600; color: var(--text); }
-  </style>
+${proto ? PROTO_CSS : ''}  </style>
   
   <div class="wrap" lang="ru">
   <nav class="topbar" aria-label="Разделы">
@@ -502,7 +600,7 @@ function buildPage(cfg, { artifact = false } = {}) {
   </nav>
   <main>
   ${cfg.garland ? GARLAND : ''}  <header>
-      <h1>${cfg.h1}</h1>
+      <h1>${proto ? cfg.h1.replace(/<\/?em>/g, '') : cfg.h1}</h1>
     </header>
     <!-- Фильтры: две строки, прилипают под верхней полосой. Дни; район, «Бесплатно», «На русском» и виды. Поиск — по значку лупы. -->
     <div class="fbar" id="fbar" role="group" aria-label="Фильтры">
@@ -527,7 +625,7 @@ function buildPage(cfg, { artifact = false } = {}) {
       </div>
     </section>
 
-  ${cfg.banner ? cfg.banner(artifact) : ''}
+  ${cfg.banner ? (proto ? cfg.banner(artifact).replace('<span class="go" aria-hidden="true">→</span>', '') : cfg.banner(artifact)) : ''}
     <div class="lhead"><h2 id="list-h">Все события</h2><span id="count" aria-live="polite"></span></div>
     <div id="list">
       <ul class="evs" id="evs">${list.map(card).join('')}
@@ -690,7 +788,18 @@ function buildPage(cfg, { artifact = false } = {}) {
         if (state.v === 'we') return 'на выходные';
         return state.days[0] === today ? 'на сегодня' : state.days[0] === tomorrow ? 'на завтра' : 'на ' + dayLabel(state.days[0]);
       };
+      // Колонка даты (видна в облике-прототипе): день недели, число, месяц; у уже идущего долгого — «до» и дата конца.
+      var dayCol = function (n) {
+        var box = n.querySelector('.ev-day'); if (!box) return;
+        var x = n.dataset, iso = x.long && x.start <= today && !state.days ? x.end : effDay(n), pre;
+        if (x.long && x.start <= today && !state.days) pre = 'до';
+        else pre = iso === today ? 'сегодня' : iso === tomorrow ? 'завтра' : WD[d(iso).getUTCDay()];
+        var we = !x.long && [0, 6].indexOf(d(iso).getUTCDay()) >= 0;
+        box.className = 'ev-day' + (x.long ? ' long' : '');
+        box.innerHTML = '<small' + (we ? ' class="we"' : '') + '>' + pre + '</small><b>' + d(iso).getUTCDate() + '</b><small>' + MON_S[d(iso).getUTCMonth()] + '</small>';
+      };
       function render(keep) {
+        items.forEach(dayCol);
         items.sort(function (a, b) { var x = sortKey(a), y = sortKey(b); return x < y ? -1 : x > y ? 1 : 0; });
         items.forEach(function (li) { list.appendChild(li); });
         var vis = items.filter(function (li) { return match(li, state); });
@@ -896,8 +1005,8 @@ ${artifact ? '' : `      // «В календарь»: файл .ics — его 
 
 // Страницы для артефактов Claude (предпросмотр) — без ссылок на разделы сайта.
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-for (const [cfg, file] of [[XMAS, OUT], [AFISHA, path.resolve('standalone/afisha.html')]]) {
-  const art = buildPage(cfg, { artifact: true });
+for (const [cfg, file, proto] of [[XMAS, OUT], [AFISHA, path.resolve('standalone/afisha.html')], [AFISHA, path.resolve('standalone/afisha-proto.html'), true]]) {
+  const art = buildPage(cfg, { artifact: true, proto });
   fs.writeFileSync(file, art.html);
   console.log(`${path.relative(process.cwd(), file)}: ${art.list.length} событий`);
 }
