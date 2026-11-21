@@ -101,6 +101,9 @@ const ICONS = {
   mountain: '<path d="M3 19.5 9.5 8.5l4 6.5 2.5-3.8 5 8.3z"/><circle cx="17" cy="5.8" r="1.8"/>',
   calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/>',
   pin: '<path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/>',
+  search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/>',
+  share: '<path d="M12 3.5v12M7.5 8 12 3.5 16.5 8M5 12.5v6A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-6"/>',
+  plus: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 12.5v5M9.5 15h5"/>',
   holiday: '<rect x="4" y="10.5" width="16" height="9.5" rx="1"/><rect x="3" y="7" width="18" height="3.5" rx="1"/><path d="M12 7v13M12 7c-1.2-3.2-5.5-3.6-4.8-.6M12 7c1.2-3.2 5.5-3.6 4.8-.6"/>',
 };
 const KIND_ICON = { 'christmas-parks': 'park', 'christmas-villages': 'village', 'christmas-lights': 'tree', 'christmas-markets': 'market', 'christmas-other': 'workshop' };
@@ -147,6 +150,24 @@ const facts = (e) => [
 ].filter(([, v]) => v);
 
 const isLong = (e) => !!e.end_date && e.end_date !== e.date;
+// Метки на плитке (как «бесплатно» и «сегодня» на больших афишах): только когда это прямо сказано в данных события.
+const isFree = (e) => (e.price ? /бесплатн|свободн|free/i.test(e.price) && !/\d/.test(e.price)
+  : /бесплатн|вход свободный|free entry/i.test(e.summary ?? '') && !/€/.test(e.summary ?? ''));
+const isRu = (e) => /русск/i.test(e.language ?? '') || /русскоязычн|на русском/i.test(`${e.title} ${e.display_title ?? ''} ${e.summary ?? ''} ${e.description ?? ''}`);
+// Текст для поиска: название, оригинальное название, место, город (строчными, ё → е).
+const searchText = (e, cfg) => `${e.display_title ?? ''} ${e.title} ${e.venue ?? ''} ${e.city} ${cfg.typeOf(e, true)}`.toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+// Разметка schema.org Event для поисковиков (страница сайта; в артефакте не нужна).
+const jsonLd = (list, cfg) => JSON.stringify(list.map((e) => {
+  const t = (iso, hm) => (hm ? `${iso}T${hm}:00+02:00` : iso);
+  return {
+    '@context': 'https://schema.org', '@type': 'Event', name: e.display_title ?? e.title,
+    startDate: t(e.date, isLong(e) ? null : e.time), endDate: isLong(e) ? e.end_date : t(e.date, e.end_time ?? null),
+    eventStatus: 'https://schema.org/EventScheduled', eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+    location: { '@type': 'Place', name: e.venue ?? e.city, address: { '@type': 'PostalAddress', streetAddress: e.address, addressLocality: e.city, addressCountry: 'CY' } },
+    description: (e.description ?? e.summary ?? '').slice(0, 300), url: `${SITE_URL}${cfg.path}#${e.id}`,
+    ...(isFree(e) ? { isAccessibleForFree: true, offers: { '@type': 'Offer', price: 0, priceCurrency: 'EUR' } } : {}),
+  };
+})).replace(/</g, '\\u003c');
 
 const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
 // Знак City Compas: метка на карте со стрелкой компаса (DEC-W41).
@@ -207,17 +228,29 @@ function buildPage(cfg, { artifact = false } = {}) {
   for (const e of list) if (!regionsOfEvent(e).length) unplaced.add(e.city);
 
 
+  // Атрибуты для фильтров — одни и те же у плитки списка и у карточки «Главного».
+  const attrs = (e) => `data-id="${e.id}" data-kind="${cfg.kindOf(e)}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-prio="${e.priority ?? 3}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}${e.open_days?.length ? ` data-days="${e.open_days.join(' ')}"` : ''}${isFree(e) ? ' data-free="1"' : ''}${isRu(e) ? ' data-ru="1"' : ''} data-q="${esc(searchText(e, cfg))}"`;
+  const tagsOf = (e) => (isFree(e) || isRu(e) ? `<span class="ev-tags">${isFree(e) ? '<span class="tag free">Бесплатно</span>' : ''}${isRu(e) ? '<span class="tag ru">На русском</span>' : ''}</span>` : '');
   const card = (e) => `
-        <li data-kind="${cfg.kindOf(e)}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-prio="${e.priority ?? 3}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}${e.open_days?.length ? ` data-days="${e.open_days.join(' ')}"` : ''}>
+        <li ${attrs(e)}>
           <a class="ev" href="#${e.id}" data-id="${e.id}">
             <span class="ev-title">${esc(e.display_title ?? e.title)}</span>
             <span class="ev-meta">
               <span class="ev-type">${svg(cfg.iconOf(e))}${esc(cfg.typeOf(e, false))}</span>
               <span class="ev-date">${esc(dateShort(e))}</span>
-              <span class="ev-city">${esc(e.city)}</span>
+              <span class="ev-city">${esc(e.city)}</span>${tagsOf(e)}
             </span>
           </a>
         </li>`;
+  // «Главное» — события первого приоритета из таблицы недели: крупнее, с одной строкой о том, что будет.
+  const pickCard = (e) => `
+        <a class="pc" href="#${e.id}" ${attrs(e)} hidden>
+          <span class="ev-type">${svg(cfg.iconOf(e))}${esc(cfg.typeOf(e, false))}</span>
+          <span class="pc-title">${esc(e.display_title ?? e.title)}</span>
+          ${e.summary ? `<span class="pc-why">${esc(e.summary)}</span>` : ''}
+          <span class="pc-foot"><span class="ev-date">${esc(dateShort(e))}</span><span class="ev-city">${esc(e.city)}</span>${tagsOf(e)}</span>
+        </a>`;
+  const toggles = { free: list.some(isFree), ru: list.some(isRu) };
 
   // Данные для карточки события — только публичные поля.
   const detail = Object.fromEntries(list.map((e) => [e.id, {
@@ -225,6 +258,8 @@ function buildPage(cfg, { artifact = false } = {}) {
     // Подробное описание из источников (description), если есть; иначе — строка из таблицы.
     summary: e.description ?? e.summary ?? '', map: mapUrl(e),
     start: e.date, end: e.end_date ?? e.date, park: (e.tags ?? []).includes('christmas-parks'),
+    // Для «В календарь»: время, место одной строкой.
+    time: e.time ?? '', endTime: e.end_time ?? '', place: `${e.venue ? `${e.venue}, ` : ''}${e.address && !e.venue ? `${e.address}, ` : ''}${e.city}`,
   }]));
 
   const html = `<title>${esc(cfg.title)}</title>
@@ -289,23 +324,54 @@ function buildPage(cfg, { artifact = false } = {}) {
     .xbanner.to-afisha .ic { color: var(--sky); }
     .xbanner b { display: block; font-family: var(--display); font-weight: 700; font-size: 1rem; }
     .xbanner small { display: block; color: var(--muted); font-size: .86rem; }
+    @media (max-width: 479px) { .xbanner { padding: 10px 14px; margin-bottom: 16px; } .xbanner small { display: none; } .xbanner .ic { width: 24px; height: 24px; } }
     .xbanner .go { margin-left: auto; color: var(--warm); font-size: 1.3rem; }
     .xbanner:hover { border-color: #3d5689; }
     .fnav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; }
     .fnav a { color: var(--sky); text-underline-offset: 3px; } .fnav span { color: var(--text); }
   
-    /* Фильтры: три выпадающих списка в одну строку. Видна кнопка-«таблетка» с выбранным значением,
-       поверх неё — прозрачный <select>, поэтому на телефоне открывается родной выбор. */
-    .filters { position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-    @media (min-width: 640px) { .filters { gap: 8px; } }
-    .pick { position: relative; display: inline-flex; align-items: center; gap: 3px; padding: 8px 8px 8px 11px; border: 1px solid var(--line); border-radius: 999px;
+    /* Фильтры — как на больших афишах: поиск, лента дней на две недели, ряд видов кнопками, район и переключатели.
+       Всё видно сразу; выпадающий список остался только у района — районов мало, и его меняют реже всего. */
+    .filters { position: relative; display: grid; gap: 10px; }
+    .search { position: relative; display: flex; align-items: center; }
+    .search .ic { position: absolute; left: 14px; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
+    .search input { width: 100%; box-sizing: border-box; min-height: 44px; padding: 10px 44px 10px 42px; border-radius: 999px; border: 1px solid var(--line);
+      background: var(--card); color: var(--text); font: 500 16px var(--body); -webkit-appearance: none; appearance: none; }
+    .search input::placeholder { color: var(--muted); }
+    .search input:focus { outline: 2px solid var(--warm); outline-offset: 1px; }
+    .search input::-webkit-search-cancel-button { display: none; }
+    .q-clear { position: absolute; right: 6px; width: 34px; height: 34px; border-radius: 999px; border: 0; background: transparent; color: var(--muted); font-size: 1.3rem; line-height: 1; cursor: pointer; }
+    .q-clear[hidden] { display: none; }
+    /* Ленты на телефоне прокручиваются вбок и уходят под край экрана — так видно, что дальше есть ещё. */
+    .strip { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
+    .strip::-webkit-scrollbar { display: none; }
+    @media (min-width: 1072px) { .strip { margin-inline: 0; padding-inline: 0; } }
+    /* На компьютере прокрутка вбок неудобна — дни и виды переносятся на следующую строку. */
+    @media (min-width: 900px) { .filters .strip { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; } }
+    .chip { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; box-sizing: border-box; padding: 7px 13px;
+      border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
+    .chip:hover { border-color: #3a4d74; }
+    .chip .ic { width: 17px; height: 17px; color: var(--c, var(--sky)); }
+    .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: var(--night); }
+    .chip[aria-pressed="true"] .ic { color: inherit; }
+    .chip:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
+    /* День в ленте: подпись («сегодня», «пн») над числом; выходные подписаны тёплым. */
+    .day { flex-direction: column; gap: 0; min-width: 54px; padding: 5px 10px; border-radius: 14px; line-height: 1.15; }
+    .day small { font-size: .72rem; font-weight: 600; color: var(--muted); }
+    .day b { font-size: 1rem; font-variant-numeric: tabular-nums; }
+    .day.we small { color: var(--warm); }
+    @media (min-width: 900px) { .day.far { display: none; } }  /* на компьютере 10 дней в одну строку, дальше — «Другая дата» */
+    .day[aria-pressed="true"] small { color: inherit; }
+    .chip.tg[aria-pressed="true"] { --c: var(--ok); }
+    .chip.tg.ru[aria-pressed="true"] { --c: var(--sky); }
+    .row2 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+    .pick { position: relative; display: inline-flex; align-items: center; gap: 4px; min-height: 40px; box-sizing: border-box; padding: 7px 9px 7px 13px; border: 1px solid var(--line); border-radius: 999px;
       background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
-    @media (min-width: 640px) { .pick { gap: 6px; padding: 9px 11px 9px 14px; font-size: .9rem; } }
     .pick:hover { border-color: #3a4d74; }
     .pick select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; border: 0; appearance: none; }
     .pick .chev { flex: none; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
-    .pick-ic:empty { display: none; } .pick-ic { display: inline-flex; } .pick-ic .ic { width: 18px; height: 18px; }
-    .pick.on { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: #0a1120; }
+    .pick .ic { width: 17px; height: 17px; color: var(--sky); }
+    .pick.on { background: var(--text); border-color: var(--text); color: var(--night); } .pick.on .ic { color: inherit; }
     .pick:focus-within { outline: 2px solid var(--warm); outline-offset: 2px; }
     .clear { font: 600 .9rem var(--body); color: var(--sky); background: none; border: 0; padding: 8px 4px; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
     .clear[hidden] { display: none; }
@@ -326,7 +392,27 @@ function buildPage(cfg, { artifact = false } = {}) {
     .cal-g button.sel { background: var(--text); color: var(--night); }
     .cal-nav:focus-visible, .cal-g button:focus-visible { outline: 2px solid var(--warm); outline-offset: 1px; }
   
-    #list { margin-top: 20px; }
+    /* Заголовок над списком: что показано и сколько. */
+    .lhead { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 26px 0 12px; }
+    .lhead h2 { font-family: var(--display); font-weight: 700; font-size: 1.12rem; line-height: 1.2; margin: 0; }
+    .lhead span { flex: none; color: var(--muted); font-size: .88rem; font-variant-numeric: tabular-nums; }
+    /* «Главное» — первый приоритет из таблицы недели: крупные карточки лентой (на компьютере — сеткой по три). */
+    .picks[hidden] { display: none; }
+    .picks .strip { gap: 10px; padding-bottom: 2px; scroll-snap-type: x mandatory; }
+    .pc { flex: none; width: min(80vw, 300px); scroll-snap-align: start; box-sizing: border-box; display: flex; flex-direction: column; gap: 9px; padding: 16px 16px 15px;
+      border-radius: 18px; color: inherit; text-decoration: none;
+      background: linear-gradient(165deg, color-mix(in srgb, var(--c) 28%, var(--night)), color-mix(in srgb, var(--c) 9%, var(--night)) 72%);
+      border: 1px solid color-mix(in srgb, var(--c) 52%, var(--night)); transition: border-color .15s; }
+    .pc[hidden] { display: none; }
+    .pc:hover { border-color: var(--c); }
+    .pc-title { font-family: var(--display); font-weight: 700; font-size: 1.04rem; line-height: 1.28; text-wrap: balance; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .pc-why { color: #cfdae7; font-size: .88rem; line-height: 1.42; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .pc-foot { margin-top: auto; display: grid; gap: 2px; padding-top: 4px; }
+    @media (min-width: 900px) { .picks .strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; margin-inline: 0; padding-inline: 0; } .pc { width: auto; } }
+    .ev-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 3px; }
+    .tag { font-size: .72rem; font-weight: 700; line-height: 1.5; padding: 1px 7px; border-radius: 999px; background: color-mix(in srgb, var(--ok) 15%, transparent); color: var(--ok); }
+    .tag.ru { background: color-mix(in srgb, var(--sky) 15%, transparent); color: var(--sky); }
+    #list { margin-top: 0; }
     .more { display: block; width: 100%; max-width: 340px; margin: 14px auto 0; padding: 11px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--body); cursor: pointer; }
     .more[hidden] { display: none; }
     .more:hover { border-color: #3a4d74; background: var(--card); }
@@ -343,7 +429,8 @@ function buildPage(cfg, { artifact = false } = {}) {
     @media (min-width: 640px) { .ev { padding: 15px 14px 14px; } }
     .ev:hover { border-color: var(--c); background: color-mix(in srgb, var(--c) 20%, var(--night)); }
     .ev-title { flex: 1; font-weight: 650; font-size: .95rem; line-height: 1.3; overflow-wrap: anywhere; hyphens: auto; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-    @media (min-width: 640px) { .ev-title { font-size: 1rem; } }
+    /* Переносы с дефисом нужны только в узкой колонке телефона; на компьютере слова целиком. */
+    @media (min-width: 640px) { .ev-title { font-size: 1rem; hyphens: manual; overflow-wrap: break-word; } }
     .ev-meta { display: grid; gap: 3px; min-width: 0; }
     .ev-meta > span { overflow-wrap: anywhere; }
     .ic { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
@@ -351,7 +438,7 @@ function buildPage(cfg, { artifact = false } = {}) {
     .ev-type .ic { width: 20px; height: 20px; }
     .ev-date { font-size: .88rem; font-weight: 600; font-variant-numeric: tabular-nums; }
     .ev-city { font-size: .86rem; color: var(--muted); }
-    .xbanner:focus-visible, .fnav a:focus-visible, .ev:focus-visible, .clear:focus-visible, .more:focus-visible, .empty button:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
+    .xbanner:focus-visible, .fnav a:focus-visible, .ev:focus-visible, .pc:focus-visible, .s-rel a:focus-visible, .clear:focus-visible, .more:focus-visible, .empty button:focus-visible, .sheet button:focus-visible, .sheet a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
   
     /* Карточка события */
     .shade[hidden] { display: none; }
@@ -369,7 +456,23 @@ function buildPage(cfg, { artifact = false } = {}) {
     .s-facts div { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 10px; }
     .s-facts dt { color: var(--muted); font-size: .9rem; } .s-facts dd { margin: 0; }
     .s-summary { margin: 0; color: #d6e0ec; }
-    .s-map { justify-self: start; display: inline-flex; align-items: center; gap: 8px; margin-top: 4px; padding: 11px 18px; border-radius: 999px; background: var(--warm); color: #1c1300; font-weight: 700; text-decoration: none; }
+    .s-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+    .s-map { display: inline-flex; align-items: center; gap: 8px; padding: 11px 18px; border-radius: 999px; background: var(--warm); color: #1c1300; font-weight: 700; text-decoration: none; }
+    .s-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--line); background: transparent; color: var(--text); font: 600 .92rem var(--body); cursor: pointer; }
+    .s-btn:hover { border-color: #3a4d74; background: var(--card-hi); }
+    .s-btn .ic { width: 18px; height: 18px; }
+    .s-btn[hidden], .s-map[hidden] { display: none; }
+    /* «В эти дни рядом» — чтобы из карточки можно было перейти к соседнему событию, не возвращаясь к списку. */
+    .s-rel { display: grid; gap: 2px; margin-top: 6px; padding-top: 14px; border-top: 1px solid var(--line); }
+    .s-rel[hidden] { display: none; }
+    .s-rel h3 { margin: 0 0 6px; font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .s-rel a { display: grid; grid-template-columns: 22px minmax(0, 1fr); gap: 2px 10px; align-items: start; padding: 8px 0; color: var(--text); text-decoration: none; }
+    .s-rel a .ic { width: 20px; height: 20px; color: var(--c); margin-top: 1px; }
+    .s-rel a b { font-weight: 600; } .s-rel a small { grid-column: 2; color: var(--muted); font-size: .86rem; }
+    .s-rel a:hover b { text-decoration: underline; text-underline-offset: 3px; }
+    .toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); z-index: 30; padding: 10px 18px; border-radius: 999px;
+      background: var(--text); color: var(--night); font-weight: 600; box-shadow: 0 10px 30px rgba(0, 0, 0, .45); }
+    .toast[hidden] { display: none; }
   
     footer { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
     .brand { display: inline-flex; align-items: center; gap: 8px; font-family: var(--display); font-weight: 600; color: var(--text); }
@@ -388,23 +491,38 @@ function buildPage(cfg, { artifact = false } = {}) {
     </header>
   ${cfg.banner ? cfg.banner(artifact) : ''}
     <div class="filters" role="group" aria-label="Фильтры">
-      <label class="pick"><span class="pick-t">Все дни</span>${CHEV}<select id="f-date" aria-label="Когда"><option value="">Все дни</option></select></label>
-      <label class="pick"><span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>
-      <label class="pick"><span class="pick-ic"></span><span class="pick-t">Все события</span>${CHEV}<select id="f-kind" aria-label="Что"><option value="">Все события</option>${kinds.map((k) => `<option value="${k.t}">${k.label}</option>`).join('')}</select></label>
-      <button type="button" class="clear" id="clear" hidden>Сбросить</button>
+      <div class="search">${svg('search')}<input id="f-q" type="search" placeholder="Название, место или город" autocomplete="off" enterkeyhint="search" aria-label="Поиск по афише"><button type="button" class="q-clear" id="q-clear" aria-label="Очистить поиск" hidden>×</button></div>
+      <div class="strip" id="days" role="group" aria-label="Когда"></div>
+      <div class="strip" id="kinds" role="group" aria-label="Что">
+        <button type="button" class="chip" data-k="" aria-pressed="true">Все</button>${kinds.map((k) => `
+        <button type="button" class="chip" data-k="${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(k.icon)}${esc(k.label)}</button>`).join('')}
+      </div>
+      <div class="row2">
+        <label class="pick">${svg('pin')}<span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>${toggles.free ? `
+        <button type="button" class="chip tg" id="f-free" aria-pressed="false">Бесплатно</button>` : ''}${toggles.ru ? `
+        <button type="button" class="chip tg ru" id="f-ru" aria-pressed="false">На русском</button>` : ''}
+        <button type="button" class="clear" id="clear" hidden>Сбросить</button>
+      </div>
       <div class="cal" id="cal" role="dialog" aria-label="Выберите дату" hidden>
         <div class="cal-h"><button type="button" class="cal-nav" id="cal-prev" aria-label="Предыдущий месяц">‹</button><b id="cal-m"></b><button type="button" class="cal-nav" id="cal-next" aria-label="Следующий месяц">›</button></div>
         <div class="cal-g" id="cal-g"></div>
       </div>
     </div>
-  
+
+    <section class="picks" id="picks" aria-labelledby="picks-h" hidden>
+      <div class="lhead"><h2 id="picks-h">Главное</h2><span id="picks-when"></span></div>
+      <div class="strip" id="pcs">${list.filter((e) => (e.priority ?? 3) === 1).map(pickCard).join('')}
+      </div>
+    </section>
+
+    <div class="lhead"><h2 id="list-h">Все события</h2><span id="count" aria-live="polite"></span></div>
     <div id="list">
       <ul class="evs" id="evs">${list.map(card).join('')}
       </ul>
       <button type="button" class="more" id="more" hidden></button>
       <p class="empty" id="empty" hidden>Ничего не нашлось. <button type="button" id="reset">Сбросить фильтры</button></p>
     </div>
-  
+
     <footer>
       <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg>${esc(SITE_NAME)}</span>
       <span>${esc(SITE_NAME)} — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>${artifact ? '' : `
@@ -421,15 +539,23 @@ function buildPage(cfg, { artifact = false } = {}) {
       <span class="s-status" id="s-status" hidden></span>
       <dl class="s-facts" id="s-facts"></dl>
       <p class="s-summary" id="s-summary"></p>
-      <a class="s-map" id="s-map" href="#" target="_blank" rel="noopener">Открыть на карте ↗</a>
+      <div class="s-actions">
+        <a class="s-map" id="s-map" href="#" target="_blank" rel="noopener">Открыть на карте ↗</a>
+        <button type="button" class="s-btn" id="s-share">${svg('share')}Поделиться</button>${artifact ? '' : `
+        <button type="button" class="s-btn" id="s-cal">${svg('plus')}В календарь</button>`}
+      </div>
+      <div class="s-rel" id="s-rel" hidden></div>
     </div>
   </div>
+  <div class="toast" id="toast" role="status" hidden></div>${artifact ? '' : `
+  <script type="application/ld+json">${jsonLd(list, cfg)}</script>`}
   
   <script>
     (function () {
       var DATA = ${JSON.stringify(detail)};
       var MON = ${JSON.stringify(MON_FULL)}, MON_S = ${JSON.stringify(MON)}, WD = ${JSON.stringify(WD)};
       var ICONS = ${JSON.stringify(Object.fromEntries(Object.keys(ICONS).map((k) => [k, svg(k)])))}, KIND_ICON = ${JSON.stringify(Object.fromEntries(cfg.kinds.map((k) => [k.t, k.icon])))};
+      var SHARE = ${JSON.stringify(SITE_URL + cfg.path)};
       var DAYS = ['в воскресенье', 'в понедельник', 'во вторник', 'в среду', 'в четверг', 'в пятницу', 'в субботу'];
       var today;
       try { today = new Intl.DateTimeFormat('en-CA', { timeZone: 'Europe/Nicosia' }).format(new Date()); } catch (e) { today = new Date().toISOString().slice(0, 10); }
@@ -451,15 +577,15 @@ function buildPage(cfg, { artifact = false } = {}) {
       };
   
       // Полоса с разделами получает нижнюю линию, когда страницу прокрутили.
-    var bar = document.querySelector('.topbar');
-    if (bar) { var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 4); }; window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
-    all('.tabs a[aria-current]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); });
-    // Прошедшее убираем; баннер Рождества — до конца сезона.
+      var bar = document.querySelector('.topbar');
+      if (bar) { var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 4); }; window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
+      all('.tabs a[aria-current]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); });
+      // Прошедшее убираем; баннер Рождества — до конца сезона.
       all('.xbanner').forEach(function (b) { if (b.dataset.until < today) b.hidden = true; });
-      all('#evs > li').forEach(function (li) { if (li.dataset.end < today) li.remove(); });
-      var items = all('#evs > li'), list = el('evs');
-  
-      // «Когда»: периоды, понятные в любой день сезона — сегодня, завтра, эти и следующие выходные, любая дата из календаря.
+      all('#evs > li, .pc').forEach(function (n) { if (n.dataset.end < today) n.remove(); });
+      var items = all('#evs > li'), list = el('evs'), pcs = all('.pc'), byId = {};
+      items.forEach(function (li) { byId[li.dataset.id] = li; });
+
       var shortD = function (iso) { return d(iso).getUTCDate() + ' ' + MON_S[d(iso).getUTCMonth()]; };
       var dayLabel = function (iso) { return WD[d(iso).getUTCDay()] + ', ' + shortD(iso); };
       var span = function (a) {
@@ -467,50 +593,64 @@ function buildPage(cfg, { artifact = false } = {}) {
         if (x === y) return dayLabel(x);
         return d(x).getUTCMonth() === d(y).getUTCMonth() ? d(x).getUTCDate() + '–' + shortD(y) : shortD(x) + ' – ' + shortD(y);
       };
+      var plural = function (n, one, few, many) { var a = n % 10, b = n % 100; return a === 1 && b !== 11 ? one : a >= 2 && a <= 4 && (b < 12 || b > 14) ? few : many; };
       // Ближайшие выходные начиная с дня iso; в воскресенье — только оно.
       var weekend = function (iso) { var wd = d(iso).getUTCDay(); if (wd === 0) return [iso]; var sat = plus(iso, 6 - wd); return [sat, plus(sat, 1)]; };
       var seasonEnd = items.reduce(function (m, li) { return li.dataset.end > m ? li.dataset.end : m; }, today);
-      var we1 = weekend(today), we2 = weekend(plus(we1[we1.length - 1], 1));
-      var PERIODS = { today: [today], tomorrow: [tomorrow], we1: we1, we2: we2 };
-      var picks = { date: el('f-date'), reg: el('f-reg'), kind: el('f-kind') };
-      var addOpt = function (v, text, short) {
-        var o = document.createElement('option'); o.value = v; o.textContent = text; if (short) o.dataset.short = short;
-        picks.date.appendChild(o); return o;
+      var we1 = weekend(today);
+
+      // Даты на плитках словами, как на больших афишах: «Сегодня, 20:00», «Завтра», «сб, 28 ноя, 19:30»;
+      // у долгого события, которое уже идёт, — «до 17 янв».
+      var whenLabel = function (x) {
+        if (x.long) return x.start > today ? null : x.end === today ? 'Последний день' : 'до ' + shortD(x.end);
+        return (x.start === today ? 'Сегодня' : x.start === tomorrow ? 'Завтра' : dayLabel(x.start)) + (x.time ? ', ' + x.time : '');
       };
-      addOpt('today', 'Сегодня'); addOpt('tomorrow', 'Завтра');
-      if (we1[0] <= seasonEnd) addOpt('we1', 'Эти выходные · ' + span(we1), 'Выходные');
-      if (we2[0] <= seasonEnd) addOpt('we2', 'Следующие выходные · ' + span(we2), 'След. выходные');
-      var pickOpt = addOpt('pick', 'Выбрать дату…');
-  
-      var state = { date: '', days: null, reg: '', kind: '' }, shown = 0;
-      var openOn = function (li, x) { return li.dataset.days ? li.dataset.days.split(' ').indexOf(x) >= 0 : li.dataset.start <= x && x <= li.dataset.end; };
-      var match = function (li, s) {
-        if (s.kind && li.dataset.kind !== s.kind) return false;
-        if (s.reg && li.dataset.reg.split('|').indexOf(s.reg) < 0) return false;
+      items.concat(pcs).forEach(function (n) { var w = whenLabel(n.dataset), t = n.querySelector('.ev-date'); if (w && t) t.textContent = w; });
+
+      // «Когда» — лента дней на две недели вперёд (как у Яндекс Афиши): все дни, выходные, каждый день, другая дата из календаря.
+      var daysEl = el('days'), MONTH0 = today.slice(5, 7);
+      var chip = function (v, html, cls, label) {
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (cls ? ' ' + cls : ''); b.dataset.v = v;
+        b.setAttribute('aria-pressed', 'false'); b.innerHTML = html; if (label) b.setAttribute('aria-label', label); daysEl.appendChild(b); return b;
+      };
+      chip('', 'Все дни');
+      if (we1[0] <= seasonEnd) chip('we', 'Выходные', '', 'Выходные, ' + span(we1));
+      var PERIODS = { we: we1 };
+      for (var i = 0; i < 14; i++) {
+        var iso = plus(today, i); if (iso > seasonEnd) break;
+        var wd = d(iso).getUTCDay(), num = d(iso).getUTCDate() + (iso.slice(5, 7) !== MONTH0 && (d(iso).getUTCDate() === 1 || i === 0) ? ' ' + MON_S[d(iso).getUTCMonth()] : '');
+        var top = i === 0 ? 'сегодня' : i === 1 ? 'завтра' : WD[wd];
+        chip('d:' + iso, '<small>' + top + '</small><b>' + num + '</b>', 'day' + (wd === 0 || wd === 6 ? ' we' : '') + (i >= 10 ? ' far' : ''), dayLabel(iso));
+        PERIODS['d:' + iso] = [iso];
+      }
+      var other = chip('pick', ICONS.calendar + '<span>Другая дата</span>');
+
+      var state = { v: '', days: null, reg: '', kind: '', q: '', free: false, ru: false }, shown = 0;
+      var openOn = function (n, x) { return n.dataset.days ? n.dataset.days.split(' ').indexOf(x) >= 0 : n.dataset.start <= x && x <= n.dataset.end; };
+      var match = function (n, s) {
+        if (s.kind && n.dataset.kind !== s.kind) return false;
+        if (s.reg && n.dataset.reg.split('|').indexOf(s.reg) < 0) return false;
+        if (s.free && !n.dataset.free) return false;
+        if (s.ru && !n.dataset.ru) return false;
+        if (s.q && !s.q.split(' ').every(function (w) { return n.dataset.q.indexOf(w) >= 0; })) return false;
         // Однодневное — если оно в один из выбранных дней; долгое — если в один из них открыто (у деревень — дни из open_days).
-        if (s.days) return s.days.some(function (x) { return li.dataset.long ? openOn(li, x) : li.dataset.start === x; });
+        if (s.days) return s.days.some(function (x) { return n.dataset.long ? openOn(n, x) : n.dataset.start === x; });
         return true;
       };
-      // Районы и виды без событий (после того как прошедшее убрано) не показываем.
-      all('#f-reg option, #f-kind option').forEach(function (o) {
-        if (!o.value) return;
-        var probe = { date: '', days: null, reg: '', kind: '' }; probe[o.parentNode.id === 'f-reg' ? 'reg' : 'kind'] = o.value;
-        if (!items.some(function (li) { return match(li, probe); })) o.remove();
-      });
-      // Таблетка показывает выбранное; выбранный вид — его цветом и значком.
+      var regSel = el('f-reg');
+      // Районы без событий (после того как прошедшее убрано) не показываем.
+      all('#f-reg option').forEach(function (o) { if (o.value && !items.some(function (li) { return li.dataset.reg.split('|').indexOf(o.value) >= 0; })) o.remove(); });
+      var any = function () { return !!(state.v || state.reg || state.kind || state.q || state.free || state.ru); };
       function sync() {
-        Object.keys(picks).forEach(function (k) {
-          var sel = picks[k], lab = sel.parentNode;
-          var opt = sel.options[sel.selectedIndex];
-          lab.querySelector('.pick-t').textContent = opt.dataset.short || opt.text;
-          lab.classList.toggle('on', !!sel.value);
-        });
-        var kl = picks.kind.parentNode;
-        if (state.kind) { kl.dataset.kind = state.kind; kl.querySelector('.pick-ic').innerHTML = ICONS[KIND_ICON[state.kind]]; }
-        else { delete kl.dataset.kind; kl.querySelector('.pick-ic').innerHTML = ''; }
-        el('clear').hidden = !(state.date || state.reg || state.kind);
+        all('#days .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === state.v || (b === other && state.v.indexOf('x:') === 0))); });
+        all('#kinds .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.k === state.kind)); });
+        var pl = regSel.parentNode; pl.querySelector('.pick-t').textContent = regSel.value || 'Весь Кипр'; pl.classList.toggle('on', !!regSel.value);
+        if (el('f-free')) el('f-free').setAttribute('aria-pressed', String(state.free));
+        if (el('f-ru')) el('f-ru').setAttribute('aria-pressed', String(state.ru));
+        el('q-clear').hidden = !el('f-q').value;
+        el('clear').hidden = !any();
       }
-  
+
       // Все плитки одной высоты: по самой высокой видимой.
       var equalize = function () {
         var tiles = all('#list .ev');
@@ -520,16 +660,23 @@ function buildPage(cfg, { artifact = false } = {}) {
         if (h) tiles.forEach(function (t) { t.style.minHeight = Math.ceil(h) + 'px'; });
       };
       // Порядок: сначала приоритет из рабочей таблицы недели (1 — в первую очередь, 2 — интересно, 3 — дополнительно, DEC-W45),
-      // внутри приоритета — ближайшее. Уже идущее (парк открыт с 13-го) стоит как «сегодня» или как выбранный день;
+      // внутри приоритета — ближайшее. Уже идущее стоит как «сегодня» или как выбранный день;
       // в один день — сначала однодневные по времени, потом долгие.
-      var sortKey = function (li) {
-        var from = state.days ? state.days[0] : today, eff = li.dataset.start < from ? from : li.dataset.start;
-        // Открыто не каждый день — по ближайшему дню работы.
-        if (li.dataset.days) eff = li.dataset.days.split(' ').filter(function (x) { return x >= from; })[0] || li.dataset.end;
-        return (li.dataset.prio || '3') + eff + (li.dataset.long ? '1' : '0') + (li.dataset.time || '00:00') + li.dataset.start;
+      var effDay = function (n) {
+        var from = state.days ? state.days[0] : today, eff = n.dataset.start < from ? from : n.dataset.start;
+        if (n.dataset.days) eff = n.dataset.days.split(' ').filter(function (x) { return x >= from; })[0] || n.dataset.end;
+        return eff;
       };
+      var dateKey = function (n) { return effDay(n) + (n.dataset.long ? '1' : '0') + (n.dataset.time || '00:00') + n.dataset.start; };
+      var sortKey = function (n) { return (n.dataset.prio || '3') + dateKey(n); };
+      var wide = function () { return matchMedia('(min-width: 900px)').matches; };
       // Сколько плиток видно до «Показать ещё»: 6 рядов на телефоне, 4 на компьютере; кнопка добавляет столько же.
-      var page = function () { return matchMedia('(min-width: 900px)').matches ? 16 : 12; };
+      var page = function () { return wide() ? 16 : 12; };
+      var periodText = function () {
+        if (!state.days) return 'на ближайшую неделю';
+        if (state.v === 'we') return 'на выходные';
+        return state.days[0] === today ? 'на сегодня' : state.days[0] === tomorrow ? 'на завтра' : 'на ' + dayLabel(state.days[0]);
+      };
       function render(keep) {
         items.sort(function (a, b) { var x = sortKey(a), y = sortKey(b); return x < y ? -1 : x > y ? 1 : 0; });
         items.forEach(function (li) { list.appendChild(li); });
@@ -542,18 +689,44 @@ function buildPage(cfg, { artifact = false } = {}) {
         var rest = vis.length - limit, more = el('more');
         more.hidden = rest <= 0; if (rest > 0) more.textContent = 'Показать ещё ' + Math.min(rest, page());
         el('empty').hidden = vis.length > 0;
+        el('list-h').textContent = any() ? 'Нашлось' : 'Все события';
+        el('count').textContent = vis.length + ' ' + plural(vis.length, 'событие', 'события', 'событий');
+        // «Главное»: первый приоритет по тем же фильтрам, ближайшее первым; без выбранного дня — на неделю вперёд.
+        // Если событий и так мало, подборка только повторила бы список — тогда её нет.
+        if (!keep) {
+          var horizon = plus(today, 7);
+          var top = pcs.filter(function (n) { return match(n, state) && (state.days || effDay(n) <= horizon); })
+            .sort(function (a, b) { var x = dateKey(a), y = dateKey(b); return x < y ? -1 : x > y ? 1 : 0; });
+          var cap = wide() ? 6 : 10, showPicks = vis.length > 12 && top.length >= 3 && !state.q;
+          pcs.forEach(function (n) { n.hidden = true; });
+          top.forEach(function (n, i) { n.hidden = i >= cap; el('pcs').appendChild(n); });
+          el('picks').hidden = !showPicks;
+          el('picks-when').textContent = periodText();
+          el('pcs').scrollLeft = 0;
+        }
         equalize();
       }
-      Object.keys(picks).forEach(function (k) {
-        picks[k].addEventListener('change', function () {
-          var v = picks[k].value;
-          if (k === 'date' && v === 'pick') { picks.date.value = state.date; openCal(); return; }
-          state[k] = v;
-          if (k === 'date') { state.days = !v ? null : PERIODS[v] || [v.slice(2)]; closeCal(); }
-          sync(); render();
-        });
+      var setDays = function (v, days) { state.v = v; state.days = days; closeCal(); sync(); render(); };
+      daysEl.addEventListener('click', function (e) {
+        var b = e.target.closest('.chip'); if (!b) return;
+        if (b === other) { if (cal.hidden) openCal(); else closeCal(); return; }
+        setDays(b.dataset.v, b.dataset.v ? PERIODS[b.dataset.v] : null);
       });
-      // «Выбрать дату…»: свой календарь в пределах сезона (с сегодняшнего дня до конца последнего события).
+      el('kinds').addEventListener('click', function (e) {
+        var b = e.target.closest('.chip'); if (!b) return;
+        state.kind = b.dataset.k === state.kind ? '' : b.dataset.k; sync(); render();
+      });
+      regSel.addEventListener('change', function () { state.reg = regSel.value; sync(); render(); });
+      ['free', 'ru'].forEach(function (k) {
+        var b = el('f-' + k); if (b) b.addEventListener('click', function () { state[k] = !state[k]; sync(); render(); });
+      });
+      var qIn = el('f-q'), qT = 0;
+      var norm = function (v) { return v.toLowerCase().replace(/ё/g, 'е').replace(/\\s+/g, ' ').trim(); };
+      qIn.addEventListener('input', function () { clearTimeout(qT); qT = setTimeout(function () { state.q = norm(qIn.value); sync(); render(); }, 120); });
+      qIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') qIn.blur(); });
+      el('q-clear').addEventListener('click', function () { qIn.value = ''; state.q = ''; sync(); render(); qIn.focus(); });
+
+      // «Другая дата»: свой календарь в пределах сезона (с сегодняшнего дня до конца последнего события).
       // Точкой отмечены дни, на которые есть однодневные события.
       var MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
       var eventDays = {}; items.forEach(function (li) { if (!li.dataset.long) eventDays[li.dataset.start] = 1; });
@@ -585,21 +758,19 @@ function buildPage(cfg, { artifact = false } = {}) {
       el('cal-next').addEventListener('click', function () { calYM = ym(calYM, 1); drawCal(); });
       el('cal-g').addEventListener('click', function (e) {
         var b = e.target.closest('button[data-d]'); if (!b || b.disabled) return;
-        var iso = b.dataset.d;
-        all('#f-date option').forEach(function (o) { if (o.value.indexOf('d:') === 0) o.remove(); });
-        var v = iso === today ? 'today' : iso === tomorrow ? 'tomorrow' : 'd:' + iso;
-        if (v.indexOf('d:') === 0) { var o = document.createElement('option'); o.value = v; o.textContent = dayLabel(iso); picks.date.insertBefore(o, pickOpt); }
-        picks.date.value = v; state.date = v; state.days = [iso];
-        closeCal(); sync(); render(); picks.date.focus();
+        var iso = b.dataset.d, inStrip = PERIODS['d:' + iso];
+        // День из ленты — нажимаем его; дальше двух недель — подпись «Другой даты» меняется на выбранный день.
+        other.querySelector('span').textContent = inStrip ? 'Другая дата' : dayLabel(iso);
+        setDays(inStrip ? 'd:' + iso : 'x:' + iso, [iso]);
+        var on = daysEl.querySelector('[aria-pressed="true"]'); if (on) { on.focus(); on.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
       });
-      document.addEventListener('click', function (e) { if (!cal.hidden && !cal.contains(e.target) && e.target !== picks.date) closeCal(); });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !cal.hidden) { closeCal(); picks.date.focus(); } });
+      document.addEventListener('click', function (e) { if (!cal.hidden && !cal.contains(e.target) && !other.contains(e.target)) closeCal(); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !cal.hidden) { closeCal(); other.focus(); } });
       el('more').addEventListener('click', function () { shown += page(); render(true); });
       function resetAll() {
-        state = { date: '', days: null, reg: '', kind: '' };
-        Object.keys(picks).forEach(function (k) { picks[k].value = ''; });
-        closeCal();
-        sync(); render();
+        state = { v: '', days: null, reg: '', kind: '', q: '', free: false, ru: false };
+        regSel.value = ''; qIn.value = ''; other.querySelector('span').textContent = 'Другая дата';
+        closeCal(); sync(); render();
       }
       el('reset').addEventListener('click', resetAll);
       el('clear').addEventListener('click', resetAll);
@@ -609,12 +780,24 @@ function buildPage(cfg, { artifact = false } = {}) {
       // Шрифты приходят позже первого расчёта — пересчитываем, когда они загрузятся.
       if (document.fonts) { document.fonts.addEventListener('loadingdone', equalize); if (document.fonts.ready) document.fonts.ready.then(equalize); }
       window.addEventListener('load', equalize);
-  
+
       // Карточка события: открывается по адресу #e-<id>, закрывается крестиком, фоном или Esc.
-      var shade = el('shade'), last = null;
+      var shade = el('shade'), last = null, cur = null;
+      var toastT = 0;
+      var toast = function (t) { var x = el('toast'); x.textContent = t; x.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { x.hidden = true; }, 2200); };
+      // «В эти дни рядом»: до четырёх событий в том же районе в тот же день (у долгого — сегодня или выбранный день).
+      function related(id) {
+        var me = byId[id]; if (!me) return [];
+        var reg = me.dataset.reg.split('|')[0], x = DATA[id];
+        var dayOf = me.dataset.long ? (state.days ? state.days[0] : (x.start > today ? x.start : today)) : x.start;
+        return items.filter(function (n) {
+          return n !== me && reg && n.dataset.reg.split('|').indexOf(reg) >= 0 && (n.dataset.long ? openOn(n, dayOf) : n.dataset.start === dayOf);
+        }).sort(function (a, b) { var p = sortKey(a), q = sortKey(b); return p < q ? -1 : p > q ? 1 : 0; }).slice(0, 4).map(function (n) { return { id: n.dataset.id, day: dayOf, reg: reg }; });
+      }
       function show() {
         var id = location.hash.slice(1), x = DATA[id];
-        if (!x) { shade.hidden = true; document.body.classList.remove('locked'); if (last) { last.focus(); last = null; } return; }
+        if (!x) { cur = null; shade.hidden = true; document.body.classList.remove('locked'); if (last) { last.focus(); last = null; } return; }
+        cur = id;
         el('sheet').dataset.kind = x.group; el('s-kind').innerHTML = ICONS[x.icon]; el('s-kind').appendChild(document.createTextNode(x.kind));
         el('s-title').textContent = x.title;
         el('s-orig').textContent = x.orig; el('s-orig').hidden = !x.orig;
@@ -627,12 +810,51 @@ function buildPage(cfg, { artifact = false } = {}) {
         });
         el('s-summary').textContent = x.summary; el('s-summary').hidden = !x.summary;
         var m = el('s-map'); m.hidden = !x.map; if (x.map) m.href = x.map;
-        shade.hidden = false; document.body.classList.add('locked'); el('s-close').focus();
+        var rel = related(id), r = el('s-rel');
+        r.innerHTML = ''; r.hidden = !rel.length;
+        if (rel.length) {
+          var h = document.createElement('h3'); h.textContent = 'Ещё ' + (rel[0].day === today ? 'сегодня' : rel[0].day === tomorrow ? 'завтра' : dayLabel(rel[0].day)) + ' · ' + rel[0].reg; r.appendChild(h);
+          rel.forEach(function (o) {
+            var y = DATA[o.id], a = document.createElement('a'); a.href = '#' + o.id; a.dataset.kind = y.group;
+            a.innerHTML = ICONS[y.icon]; var b = document.createElement('b'); b.textContent = y.title; a.appendChild(b);
+            var sm = document.createElement('small'); sm.textContent = y.kind + (y.time && y.start === y.end ? ' · ' + y.time : ''); a.appendChild(sm);
+            r.appendChild(a);
+          });
+        }
+        shade.hidden = false; el('sheet').scrollTop = 0; document.body.classList.add('locked'); el('s-close').focus();
       }
+      // «Поделиться»: системное меню, где оно есть; иначе ссылка копируется. Ссылка всегда на страницу сайта.
+      el('s-share').addEventListener('click', function () {
+        if (!cur) return;
+        var url = SHARE + '#' + cur, title = DATA[cur].title;
+        var copy = function () {
+          if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { toast('Ссылка скопирована'); }, function () { toast(url); });
+          else toast(url);
+        };
+        if (navigator.share) navigator.share({ title: title, url: url }).catch(function (e) { if (!e || e.name !== 'AbortError') copy(); });
+        else copy();
+      });
+      // «В календарь»: файл .ics — его открывают календари iPhone, Android и Outlook.
+      var pad = function (n) { return (n < 10 ? '0' : '') + n; };
+      var icsEsc = function (t) { return String(t).replace(/\\\\/g, '\\\\\\\\').replace(/[,;]/g, function (c) { return '\\\\' + c; }).replace(/\\n/g, '\\\\n'); };
+      if (el('s-cal')) el('s-cal').addEventListener('click', function () {
+        if (!cur) return;
+        var x = DATA[cur], ymd = function (iso) { return iso.replace(/-/g, ''); }, lines;
+        if (x.time && x.start === x.end) {
+          var t = x.time.split(':'), e2 = x.endTime ? x.endTime.split(':') : [String((+t[0] + 2) % 24), t[1]];
+          var endDay = x.endTime || +t[0] < 22 ? x.start : plus(x.start, 1);
+          lines = ['DTSTART;TZID=Europe/Nicosia:' + ymd(x.start) + 'T' + pad(+t[0]) + t[1] + '00', 'DTEND;TZID=Europe/Nicosia:' + ymd(endDay) + 'T' + pad(+e2[0]) + e2[1] + '00'];
+        } else lines = ['DTSTART;VALUE=DATE:' + ymd(x.start), 'DTEND;VALUE=DATE:' + ymd(plus(x.end, 1))];
+        var now = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + 'Z';
+        var ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//City Compas//RU', 'BEGIN:VEVENT', 'UID:' + cur + '@citycompas.com', 'DTSTAMP:' + now].concat(lines,
+          ['SUMMARY:' + icsEsc(x.title), 'LOCATION:' + icsEsc(x.place + ', Cyprus'), 'DESCRIPTION:' + icsEsc(x.summary.slice(0, 500) + '\\n\\n' + SHARE + '#' + cur), 'URL:' + SHARE + '#' + cur, 'END:VEVENT', 'END:VCALENDAR']).join('\\r\\n');
+        var a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar;charset=utf-8' })); a.download = cur + '.ics';
+        document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+      });
       function close() {
         if (history.length > 1 && last) history.back(); else { location.hash = ''; }
       }
-      el('list').addEventListener('click', function (e) { var a = e.target.closest('.ev'); if (a) last = a; });
+      document.addEventListener('click', function (e) { var a = e.target.closest('.ev, .pc'); if (a) last = a; });
       el('s-close').addEventListener('click', close);
       shade.addEventListener('click', function (e) { if (e.target === shade) close(); });
       document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !shade.hidden) close(); });
