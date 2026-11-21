@@ -176,8 +176,8 @@ const jsonLd = (list, cfg) => JSON.stringify(list.map((e) => {
 })).replace(/</g, '\\u003c');
 
 const CHEV = '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>';
-// Знак City Compas: метка на карте со стрелкой компаса (DEC-W41).
-const MARK = '<rect width="32" height="32" rx="9" fill="#9fd5f2"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#0e1116"/><circle cx="16" cy="13" r="5.8" fill="#fff"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#f26b21"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#0e1116"/>';
+// Знак City Compas: метка на карте со стрелкой компаса (DEC-W41), в меди нового облика (DEC-W53).
+const MARK = '<rect width="32" height="32" rx="9" fill="#A24F22"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#F3F5F4"/><circle cx="16" cy="13" r="5.8" fill="#A24F22"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#13263B"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#F3F5F4"/>';
 
 const BULBS = [[40, 19, '#ffd38a'], [95, 28, '#9fd5f2'], [150, 26, '#f26b21'], [205, 15, '#ffd38a'], [260, 21, '#7ee2b8'], [315, 28, '#9fd5f2'], [365, 21, '#f26b21'], [415, 14, '#ffd38a'], [470, 22, '#9fd5f2'], [520, 28, '#7ee2b8'], [570, 21, '#f26b21'], [620, 14, '#ffd38a'], [675, 22, '#9fd5f2'], [725, 27, '#f26b21'], [775, 15, '#ffd38a']];
 const GARLAND = `  <svg class="garland" viewBox="0 0 800 50" preserveAspectRatio="none" aria-hidden="true">
