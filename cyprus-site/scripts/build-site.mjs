@@ -222,9 +222,9 @@ const AFISHA = {
   },
 };
 const PAGES = [AFISHA, XMAS];
-// Прототип облика «Медь и афишная тумба» (DEC-W51): поверх основных стилей, только для артефакта-прототипа.
+// Облик «Медь и афишная тумба» (DEC-W51): поверх основных стилей; proto: false в buildPage вернёт прежний тёмный облик.
 const PROTO_CSS = `
-    /* ПРОТОТИП «Медь и афишная тумба» (DEC-W51, предложение).
+    /* Облик «Медь и афишная тумба» (DEC-W51).
        Кипр назван по меди: акцент — медь и её патина. Светлый «известняковый» фон и тёмно-синие чернила — днём на солнце читается лучше.
        Раскладка — расписание: слева крупно день и число (это единственный смелый элемент), справа узким «плакатным» шрифтом название,
        под ним вид, время и место. Без заглавных подписей, стрелок и выделенного слова в заголовке. */
@@ -319,7 +319,7 @@ const PROTO_CSS = `
 `;
 const XMAS_ARTIFACT = XMAS.artifactUrl;
 
-function buildPage(cfg, { artifact = false, proto = false } = {}) {
+function buildPage(cfg, { artifact = false, proto = true } = {}) {
   const list = [...cfg.events].sort((a, b) => (a.priority ?? 3) - (b.priority ?? 3) || key(a).localeCompare(key(b)));
   const kinds = cfg.kinds.map((k) => ({ ...k, n: list.filter((e) => cfg.kindOf(e) === k.t).length })).filter((k) => k.n);
   // Районы для фильтра: где есть события, по их числу; порядок при равенстве — как в regions.json.
@@ -365,7 +365,7 @@ function buildPage(cfg, { artifact = false, proto = false } = {}) {
     time: e.time ?? '', endTime: e.end_time ?? '', place: `${e.venue ? `${e.venue}, ` : ''}${e.address && !e.venue ? `${e.address}, ` : ''}${e.city}`,
   }]));
 
-  const html = `<title>${proto ? 'Медная афиша Кипра' : esc(cfg.title)}</title>
+  const html = `<title>${esc(cfg.title)}</title>
   <meta name="claude:viewport-fit-sides" content="cover">
   <meta name="description" content="${esc(cfg.description)}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1005,8 +1005,8 @@ ${artifact ? '' : `      // «В календарь»: файл .ics — его 
 
 // Страницы для артефактов Claude (предпросмотр) — без ссылок на разделы сайта.
 fs.mkdirSync(path.dirname(OUT), { recursive: true });
-for (const [cfg, file, proto] of [[XMAS, OUT], [AFISHA, path.resolve('standalone/afisha.html')], [AFISHA, path.resolve('standalone/afisha-proto.html'), true]]) {
-  const art = buildPage(cfg, { artifact: true, proto });
+for (const [cfg, file] of [[XMAS, OUT], [AFISHA, path.resolve('standalone/afisha.html')]]) {
+  const art = buildPage(cfg, { artifact: true });
   fs.writeFileSync(file, art.html);
   console.log(`${path.relative(process.cwd(), file)}: ${art.list.length} событий`);
 }
@@ -1023,7 +1023,7 @@ for (const cfg of PAGES) {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#0a1120">
+<meta name="theme-color" content="#F3F5F4">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ru_RU">
 <meta property="og:site_name" content="${esc(SITE_NAME)}">
@@ -1054,7 +1054,7 @@ fs.writeFileSync(path.join(SITE_DIR, '_redirects'), [
 fs.writeFileSync(path.join(SITE_DIR, '404.html'), `<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Страница не найдена</title><link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a1120;color:#eef3f9;font:16px/1.5 system-ui,sans-serif;padding:16px}a{color:#ffd38a}</style>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#F3F5F4;color:#13263B;font:16px/1.5 system-ui,sans-serif;padding:16px}a{color:#A24F22}</style>
 </head><body><p>Такой страницы нет. <a href="${AFISHA.path}">Афиша Кипра</a> · <a href="${XMAS.path}">Рождество на Кипре</a></p></body></html>
 `);
 console.log(`standalone/site/ — для ${SITE_URL}`);
