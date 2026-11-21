@@ -44,7 +44,8 @@
     .tb-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text); text-decoration: none; font-family: var(--display); font-weight: 600; font-size: .86rem; white-space: nowrap; }
     @media (min-width: 640px) { .tb-brand { font-size: .95rem; } }
     .tb-brand svg { flex: none; }
-    .tb-search { width: 36px; padding: 0; }
+    .tb-search { width: 34px; padding: 0; }
+    .cal-b { min-width: 34px; padding-inline: 8px; } .cal-b span:empty { display: none; } .cal-b .ic { color: var(--text); }
     .tb-search .ic { width: 18px; height: 18px; color: var(--text); }
     .tb-search[aria-expanded="true"] { background: var(--text); border-color: var(--text); } .tb-search[aria-expanded="true"] .ic { color: var(--night); }
     @media (max-width: 379px) { .tb-brand span { display: none; } }
@@ -75,7 +76,7 @@
     .fbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--tbh, 60px)); z-index: 11; display: grid; gap: 8px; padding-block: 10px; background: var(--night);
       margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); border-bottom: 1px solid transparent; }
     .fbar.stuck { border-bottom-color: var(--line); box-shadow: 0 10px 18px -14px rgba(0, 0, 0, .8); }
-    .fbar .strip { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+    .fbar .strip { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); gap: 5px; }
     .sep { flex: none; width: 1px; align-self: stretch; margin: 6px 2px; background: var(--line); }
     .search { position: relative; display: flex; align-items: center; }
     .search[hidden] { display: none; }
@@ -93,7 +94,7 @@
     @media (min-width: 1272px) { .strip { margin-inline: 0; padding-inline: 0; } }
     /* На компьютере прокрутка вбок неудобна — дни и виды переносятся на следующую строку. */
     @media (min-width: 900px) { .fbar .strip { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; gap: 5px; } .chip { padding-inline: 9px; } .tb-search { padding: 0; } .sep { margin-inline: 1px; } }
-    .chip { flex: none; position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; box-sizing: border-box; padding: 6px 12px;
+    .chip { flex: none; position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; box-sizing: border-box; padding: 6px 10px;
       border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 600 .86rem var(--body); white-space: nowrap; cursor: pointer; }
     .chip.x { color: var(--sky); background: transparent; }
     .chip.x[hidden] { display: none; }
@@ -106,7 +107,6 @@
     .day { font-variant-numeric: tabular-nums; }
     .day small { font-weight: 500; color: var(--muted); margin-right: 1px; }
     .day.we small { color: var(--warm); }
-    @media (min-width: 900px) { .day.far { display: none; } }  /* на компьютере 9 дней в одну строку, дальше — «Другая дата» */
     .day[aria-pressed="true"] small { color: inherit; }
     .chip.tg[aria-pressed="true"] { --c: var(--ok); }
     .chip.tg.ru[aria-pressed="true"] { --c: var(--sky); }
@@ -4179,17 +4179,14 @@
         var b = document.createElement('button'); b.type = 'button'; b.className = 'chip' + (cls ? ' ' + cls : ''); b.dataset.v = v;
         b.setAttribute('aria-pressed', 'false'); b.innerHTML = html; if (label) b.setAttribute('aria-label', label); daysEl.appendChild(b); return b;
       };
-      chip('', 'Все дни');
-      if (we1[0] <= seasonEnd) chip('we', 'Выходные', '', 'Выходные, ' + span(we1));
-      var PERIODS = { we: we1 };
-      for (var i = 0; i < 14; i++) {
-        var iso = plus(today, i); if (iso > seasonEnd) break;
-        var wd = d(iso).getUTCDay(), num = d(iso).getUTCDate() + (iso.slice(5, 7) !== MONTH0 && (d(iso).getUTCDate() === 1 || i === 0) ? ' ' + MON_S[d(iso).getUTCMonth()] : '');
-        var lab = i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : '<small>' + WD[wd] + '</small> ' + num;
-        chip('d:' + iso, lab, 'day' + (wd === 0 || wd === 6 ? ' we' : '') + (i >= 9 ? ' far' : ''), dayLabel(iso));
-        PERIODS['d:' + iso] = [iso];
-      }
-      var other = chip('pick', ICONS.calendar + '<span>Другая дата</span>');
+      // Четыре кнопки, как на обычных афишах: «Сегодня», «Завтра», «Выходные», «Дата» (любой день — в календаре).
+      // Повторное нажатие снимает выбор — это и есть «все дни».
+      var PERIODS = {};
+      PERIODS['d:' + today] = [today]; chip('d:' + today, 'Сегодня', '', 'Сегодня, ' + dayLabel(today));
+      if (tomorrow <= seasonEnd) { PERIODS['d:' + tomorrow] = [tomorrow]; chip('d:' + tomorrow, 'Завтра', '', 'Завтра, ' + dayLabel(tomorrow)); }
+      if (we1[0] <= seasonEnd && d(today).getUTCDay() !== 0) { PERIODS.we = we1; chip('we', 'Выходные', '', 'Выходные, ' + span(we1)); }
+      // Календарь — значком, как поиск; когда выбран день — на кнопке его дата.
+      var other = chip('pick', ICONS.calendar + '<span></span>', 'cal-b', 'Выбрать дату');
 
       var state = { v: '', days: null, reg: '', kind: '', q: '', free: false, ru: false }, shown = 0;
       var openOn = function (n, x) { return n.dataset.days ? n.dataset.days.split(' ').indexOf(x) >= 0 : n.dataset.start <= x && x <= n.dataset.end; };
@@ -4279,11 +4276,11 @@
         if (y < fb || y > innerHeight * 0.62) window.scrollTo({ top: window.scrollY + y - fb - 8, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
       };
       var apply = function () { sync(); render(); reveal(); };
-      var setDays = function (v, days) { state.v = v; state.days = days; closeCal(); apply(); };
+      var setDays = function (v, days) { state.v = v; state.days = days; if (v.indexOf('x:') !== 0) other.querySelector('span').textContent = ''; closeCal(); apply(); };
       daysEl.addEventListener('click', function (e) {
         var b = e.target.closest('.chip'); if (!b || b.id === 'tb-search') return;
         if (b === other) { if (cal.hidden) openCal(); else closeCal(); return; }
-        setDays(b.dataset.v, b.dataset.v ? PERIODS[b.dataset.v] : null);
+        if (b.dataset.v === state.v) setDays('', null); else setDays(b.dataset.v, PERIODS[b.dataset.v]);
       });
       el('opts').addEventListener('click', function (e) {
         var b = e.target.closest('.chip[data-k]'); if (!b) return;
@@ -4306,7 +4303,7 @@
         if (open) qIn.focus();  // строка поиска внутри прилипшей полосы — видна при любой прокрутке
       });
 
-      // «Другая дата»: свой календарь в пределах сезона (с сегодняшнего дня до конца последнего события).
+      // «Дата»: свой календарь в пределах сезона (с сегодняшнего дня до конца последнего события).
       // Точкой отмечены дни, на которые есть однодневные события.
       var MONTHS = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
       var eventDays = {}; items.forEach(function (li) { if (!li.dataset.long) eventDays[li.dataset.start] = 1; });
@@ -4340,7 +4337,7 @@
         var b = e.target.closest('button[data-d]'); if (!b || b.disabled) return;
         var iso = b.dataset.d, inStrip = PERIODS['d:' + iso];
         // День из ленты — нажимаем его; дальше двух недель — подпись «Другой даты» меняется на выбранный день.
-        other.querySelector('span').textContent = inStrip ? 'Другая дата' : dayLabel(iso);
+        other.querySelector('span').textContent = inStrip ? '' : dayLabel(iso);
         setDays(inStrip ? 'd:' + iso : 'x:' + iso, [iso]);
         var on = daysEl.querySelector('[aria-pressed="true"]'); if (on) { on.focus(); on.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
       });
@@ -4349,7 +4346,7 @@
       el('more').addEventListener('click', function () { shown += page(); render(true); });
       function resetAll() {
         state = { v: '', days: null, reg: '', kind: '', q: '', free: false, ru: false };
-        regSel.value = ''; qIn.value = ''; other.querySelector('span').textContent = 'Другая дата'; sRow.hidden = true; tbS.setAttribute('aria-expanded', 'false');
+        regSel.value = ''; qIn.value = ''; other.querySelector('span').textContent = ''; sRow.hidden = true; tbS.setAttribute('aria-expanded', 'false');
         closeCal(); sync(); render();
       }
       el('reset').addEventListener('click', resetAll);
