@@ -511,8 +511,7 @@ function buildPage(cfg, { artifact = false } = {}) {
       <div class="strip" id="opts" role="group" aria-label="Где и что">
         <button type="button" class="chip x" id="clear" aria-label="Сбросить фильтры" hidden>× Сбросить</button>
         <label class="chip pick">${svg('pin')}<span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>${toggles.free ? `
-        <button type="button" class="chip tg" id="f-free" aria-pressed="false">Бесплатно</button>` : ''}${toggles.ru ? `
-        <button type="button" class="chip tg ru" id="f-ru" aria-pressed="false">На русском</button>` : ''}
+        <button type="button" class="chip tg" id="f-free" aria-pressed="false">Бесплатно</button>` : ''}
         <span class="sep" aria-hidden="true"></span>${kinds.map((k) => `
         <button type="button" class="chip" data-k="${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(k.icon)}${esc(k.label)}</button>`).join('')}
       </div>
@@ -661,7 +660,6 @@ function buildPage(cfg, { artifact = false } = {}) {
         all('#opts .chip[data-k]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.k === state.kind)); });
         var pl = regSel.parentNode; pl.querySelector('.pick-t').textContent = regSel.value || 'Весь Кипр'; pl.classList.toggle('on', !!regSel.value);
         if (el('f-free')) el('f-free').setAttribute('aria-pressed', String(state.free));
-        if (el('f-ru')) el('f-ru').setAttribute('aria-pressed', String(state.ru));
         el('q-clear').hidden = !el('f-q').value;
         el('clear').hidden = !any();
       }
@@ -739,7 +737,7 @@ function buildPage(cfg, { artifact = false } = {}) {
         state.kind = b.dataset.k === state.kind ? '' : b.dataset.k; apply();
       });
       regSel.addEventListener('change', function () { state.reg = regSel.value; apply(); });
-      ['free', 'ru'].forEach(function (k) {
+      ['free'].forEach(function (k) {
         var b = el('f-' + k); if (b) b.addEventListener('click', function () { state[k] = !state[k]; apply(); });
       });
       var qIn = el('f-q'), qT = 0;

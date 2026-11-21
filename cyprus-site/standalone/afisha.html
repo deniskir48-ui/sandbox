@@ -240,7 +240,6 @@
         <button type="button" class="chip x" id="clear" aria-label="Сбросить фильтры" hidden>× Сбросить</button>
         <label class="chip pick"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/></svg><span class="pick-t">Весь Кипр</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option><option value="Никосия">Никосия</option><option value="Лимассол">Лимассол</option><option value="Пафос">Пафос</option><option value="Ларнака">Ларнака</option><option value="Айя-Напа и Протарас">Айя-Напа и Протарас</option><option value="Троодос">Троодос</option></select></label>
         <button type="button" class="chip tg" id="f-free" aria-pressed="false">Бесплатно</button>
-        <button type="button" class="chip tg ru" id="f-ru" aria-pressed="false">На русском</button>
         <span class="sep" aria-hidden="true"></span>
         <button type="button" class="chip" data-k="g-kids" data-kind="g-kids" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16c-3.5 0-6-3.4-6-7a6 6 0 0 1 12 0c0 3.6-2.5 7-6 7zM11 17.5h2L12 16zM12 17.5c-1.5 1.5 1.5 2.5 0 4.5"/></svg>Детям</button>
         <button type="button" class="chip" data-k="g-music" data-kind="g-music" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="7.5" cy="17.5" r="3"/><path d="M10.5 17.5V4l7.5 3.5"/></svg>Музыка</button>
@@ -4209,7 +4208,6 @@
         all('#opts .chip[data-k]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.k === state.kind)); });
         var pl = regSel.parentNode; pl.querySelector('.pick-t').textContent = regSel.value || 'Весь Кипр'; pl.classList.toggle('on', !!regSel.value);
         if (el('f-free')) el('f-free').setAttribute('aria-pressed', String(state.free));
-        if (el('f-ru')) el('f-ru').setAttribute('aria-pressed', String(state.ru));
         el('q-clear').hidden = !el('f-q').value;
         el('clear').hidden = !any();
       }
@@ -4287,7 +4285,7 @@
         state.kind = b.dataset.k === state.kind ? '' : b.dataset.k; apply();
       });
       regSel.addEventListener('change', function () { state.reg = regSel.value; apply(); });
-      ['free', 'ru'].forEach(function (k) {
+      ['free'].forEach(function (k) {
         var b = el('f-' + k); if (b) b.addEventListener('click', function () { state[k] = !state[k]; apply(); });
       });
       var qIn = el('f-q'), qT = 0;
