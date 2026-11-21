@@ -41,7 +41,7 @@ const KINDS = [
   ['christmas-villages', 'Деревни', 'Деревня', 'Рождественская деревня'],
   ['christmas-lights', 'Зажжение огней', 'Зажжение огней', 'Зажжение огней'],
   ['christmas-markets', 'Ярмарки', 'Ярмарка', 'Ярмарка'],
-  ['christmas-other', 'Мастер-классы и другое', 'Праздник', 'Праздник'],
+  ['christmas-other', 'Другое', 'Праздник', 'Праздник'],
 ];
 const PLACES = JSON.parse(fs.readFileSync(path.resolve('src/data/map-places.json'), 'utf8'));
 const REG = JSON.parse(fs.readFileSync(path.resolve('src/data/regions.json'), 'utf8'));
@@ -119,12 +119,12 @@ const xmasType = (e, full) => (xmasKind(e)[0] === 'christmas-other' ? OTHER_TYPE
 const EVENT_TYPES = { concert: 'Концерт', theatre: 'Театр и шоу', standup: 'Стендап', festival: 'Фестиваль', exhibition: 'Выставка', cinema: 'Кино',
   kids: 'Детям', sport: 'Спорт', party: 'Вечеринка', tour: 'Экскурсия и прогулка', workshop: 'Мастер-класс', talk: 'Лекция и встреча', other: 'Другое' };
 const GROUPS = [
-  { t: 'g-music', label: 'Музыка и вечеринки', icon: 'concert', types: ['concert', 'party'] },
-  { t: 'g-stage', label: 'Театр, стендап, кино', icon: 'ticket', types: ['theatre', 'standup', 'cinema'] },
   { t: 'g-kids', label: 'Детям', icon: 'kids', types: ['kids'] },
-  { t: 'g-learn', label: 'Мастер-классы и лекции', icon: 'workshop', types: ['workshop', 'talk'] },
-  { t: 'g-fest', label: 'Фестивали и выставки', icon: 'star', types: ['festival', 'exhibition'] },
-  { t: 'g-active', label: 'Спорт и прогулки', icon: 'mountain', types: ['sport', 'tour'] },
+  { t: 'g-music', label: 'Музыка', icon: 'concert', types: ['concert', 'party'] },
+  { t: 'g-stage', label: 'Театр и кино', icon: 'ticket', types: ['theatre', 'standup', 'cinema'] },
+  { t: 'g-fest', label: 'Фестивали', icon: 'star', types: ['festival', 'exhibition'] },
+  { t: 'g-learn', label: 'Мастер-классы', icon: 'workshop', types: ['workshop', 'talk'] },
+  { t: 'g-active', label: 'Спорт и туры', icon: 'mountain', types: ['sport', 'tour'] },
   { t: 'g-other', label: 'Другое', icon: 'pin', types: ['other'] },
 ];
 // На плитке — коротко, чтобы помещалось в строку; полностью — в карточке события.
@@ -155,7 +155,13 @@ const isFree = (e) => (e.price ? /бесплатн|свободн|free/i.test(e.
   : /бесплатн|вход свободный|free entry/i.test(e.summary ?? '') && !/€/.test(e.summary ?? ''));
 const isRu = (e) => /русск/i.test(e.language ?? '') || /русскоязычн|на русском/i.test(`${e.title} ${e.display_title ?? ''} ${e.summary ?? ''} ${e.description ?? ''}`);
 // Текст для поиска: название, оригинальное название, место, город (строчными, ё → е).
-const searchText = (e, cfg) => `${e.display_title ?? ''} ${e.title} ${e.venue ?? ''} ${e.city} ${cfg.typeOf(e, true)}`.toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim();
+// Латинские названия ищутся и русскими буквами: «каста» находит Kasta, «кевин» — Kevin de Vries (грубая транслитерация).
+const LAT = [['sch', 'щ'], ['sh', 'ш'], ['ch', 'ч'], ['zh', 'ж'], ['kh', 'х'], ['ts', 'ц'], ['ya', 'я'], ['yu', 'ю'], ['yo', 'ё'], ['th', 'т'], ['ph', 'ф'], ['ck', 'к'], ['ou', 'у'], ['oo', 'у'], ['ee', 'и'],
+  ['a', 'а'], ['b', 'б'], ['c', 'к'], ['d', 'д'], ['e', 'е'], ['f', 'ф'], ['g', 'г'], ['h', 'х'], ['i', 'и'], ['j', 'дж'], ['k', 'к'], ['l', 'л'], ['m', 'м'], ['n', 'н'], ['o', 'о'], ['p', 'п'], ['q', 'к'], ['r', 'р'], ['s', 'с'], ['t', 'т'], ['u', 'у'], ['v', 'в'], ['w', 'в'], ['x', 'кс'], ['y', 'и'], ['z', 'з']];
+const translit = (t) => { let r = t.toLowerCase(); for (const [a, b] of LAT) r = r.split(a).join(b); return r; };
+const searchText = (e, cfg) => { const base = `${e.display_title ?? ''} ${e.title} ${e.venue ?? ''} ${e.city} ${cfg.typeOf(e, true)}`.toLowerCase();
+  const lat = base.match(/[a-z][a-z' -]+/g)?.join(' ') ?? '';
+  return `${base} ${translit(lat)}`.replace(/ё/g, 'е').replace(/\s+/g, ' ').trim(); };
 // Разметка schema.org Event для поисковиков (страница сайта; в артефакте не нужна).
 const jsonLd = (list, cfg) => JSON.stringify(list.map((e) => {
   const t = (iso, hm) => (hm ? `${iso}T${hm}:00+02:00` : iso);
@@ -282,14 +288,15 @@ function buildPage(cfg, { artifact = false } = {}) {
     body { margin: 0; background: var(--night); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5;
       padding-left: var(--gutter); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
     body.locked { overflow: hidden; }
-    .wrap { max-width: 1040px; margin: 0 auto; }
-    .garland { display: block; width: 100%; height: 50px; }
+    .wrap { max-width: 1240px; margin: 0 auto; }
+    .garland { display: block; width: 100%; height: 26px; margin-top: 2px; }
     .bulb { animation: tw 3.2s ease-in-out infinite; } .bulb:nth-child(3n) { animation-delay: .8s; } .bulb:nth-child(3n+1) { animation-delay: 1.7s; }
     @keyframes tw { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
     @media (prefers-reduced-motion: reduce) { .bulb { animation: none; } }
-    header { padding-block: 6px 20px; }
+    header { padding-block: 10px 6px; }
     .kicker { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky); margin: 0; }
-    h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 7.5vw, 3.4rem); line-height: 1.06; margin: 10px 0 0; text-wrap: balance; }
+    /* Заголовок скромный: экран телефона — для событий, а не для шапки. */
+    h1 { font-family: var(--display); font-weight: 800; font-size: clamp(1.5rem, 5vw, 2.1rem); line-height: 1.1; margin: 0; text-wrap: balance; }
     h1 em { font-style: normal; color: var(--warm); }
   
     /* У каждого вида свой цвет: парки — оранжевый, деревни — голубой, зажжение огней — зелёный, ярмарки — жёлтый, остальное — сиреневый. */
@@ -307,9 +314,12 @@ function buildPage(cfg, { artifact = false } = {}) {
     .tb-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text); text-decoration: none; font-family: var(--display); font-weight: 600; font-size: .86rem; white-space: nowrap; }
     @media (min-width: 640px) { .tb-brand { font-size: .95rem; } }
     .tb-brand svg { flex: none; }
+    .tb-search { width: 36px; padding: 0; }
+    .tb-search .ic { width: 18px; height: 18px; color: var(--text); }
+    .tb-search[aria-expanded="true"] { background: var(--text); border-color: var(--text); } .tb-search[aria-expanded="true"] .ic { color: var(--night); }
     @media (max-width: 379px) { .tb-brand span { display: none; } }
     .tabs { display: flex; gap: 3px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
-    .tabs a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
+    .tabs a { display: inline-flex; align-items: center; gap: 5px; min-height: 34px; box-sizing: border-box; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
     @media (min-width: 640px) { .tabs a { padding: 7px 13px; font-size: .9rem; } }
     .tabs a .ic { width: 16px; height: 16px; color: var(--c, var(--sky)); }
     @media (max-width: 419px) { .tabs a .ic { display: none; } }  /* на узком телефоне — только слова, чтобы название не прижималось */
@@ -317,14 +327,14 @@ function buildPage(cfg, { artifact = false } = {}) {
     .tabs a[aria-current] { background: var(--text); color: var(--night); }
     .tabs a[aria-current] .ic { color: inherit; }
     .tb-brand:focus-visible, .tabs a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
-    .xbanner { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; padding: 12px 16px; border-radius: 16px; text-decoration: none; color: var(--text);
+    .xbanner { display: flex; align-items: center; gap: 12px; margin: 26px 0 0; padding: 12px 16px; border-radius: 16px; text-decoration: none; color: var(--text);
       background: linear-gradient(100deg, #17284a, #0f1a30); border: 1px solid #2b3f66; }
     .xbanner[hidden] { display: none; }
     .xbanner .ic { flex: none; width: 28px; height: 28px; color: #6fe3a5; }
     .xbanner.to-afisha .ic { color: var(--sky); }
     .xbanner b { display: block; font-family: var(--display); font-weight: 700; font-size: 1rem; }
     .xbanner small { display: block; color: var(--muted); font-size: .86rem; }
-    @media (max-width: 479px) { .xbanner { padding: 10px 14px; margin-bottom: 16px; } .xbanner small { display: none; } .xbanner .ic { width: 24px; height: 24px; } }
+    @media (max-width: 479px) { .xbanner { padding: 10px 14px; } .xbanner small { display: none; } .xbanner .ic { width: 24px; height: 24px; } }
     .xbanner .go { margin-left: auto; color: var(--warm); font-size: 1.3rem; }
     .xbanner:hover { border-color: #3d5689; }
     .fnav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; }
@@ -332,8 +342,13 @@ function buildPage(cfg, { artifact = false } = {}) {
   
     /* Фильтры — как на больших афишах: поиск, лента дней на две недели, ряд видов кнопками, район и переключатели.
        Всё видно сразу; выпадающий список остался только у района — районов мало, и его меняют реже всего. */
-    .filters { position: relative; display: grid; gap: 10px; }
+    .fbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--tbh, 60px)); z-index: 11; display: grid; gap: 8px; padding-block: 10px; background: var(--night);
+      margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); border-bottom: 1px solid transparent; }
+    .fbar.stuck { border-bottom-color: var(--line); box-shadow: 0 10px 18px -14px rgba(0, 0, 0, .8); }
+    .fbar .strip { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+    .sep { flex: none; width: 1px; align-self: stretch; margin: 6px 2px; background: var(--line); }
     .search { position: relative; display: flex; align-items: center; }
+    .search[hidden] { display: none; }
     .search .ic { position: absolute; left: 14px; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
     .search input { width: 100%; box-sizing: border-box; min-height: 44px; padding: 10px 44px 10px 42px; border-radius: 999px; border: 1px solid var(--line);
       background: var(--card); color: var(--text); font: 500 16px var(--body); -webkit-appearance: none; appearance: none; }
@@ -345,28 +360,28 @@ function buildPage(cfg, { artifact = false } = {}) {
     /* Ленты на телефоне прокручиваются вбок и уходят под край экрана — так видно, что дальше есть ещё. */
     .strip { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
     .strip::-webkit-scrollbar { display: none; }
-    @media (min-width: 1072px) { .strip { margin-inline: 0; padding-inline: 0; } }
+    @media (min-width: 1272px) { .strip { margin-inline: 0; padding-inline: 0; } }
     /* На компьютере прокрутка вбок неудобна — дни и виды переносятся на следующую строку. */
-    @media (min-width: 900px) { .filters .strip { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; } }
-    .chip { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; box-sizing: border-box; padding: 7px 13px;
-      border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
+    @media (min-width: 900px) { .fbar .strip { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; gap: 5px; } .chip { padding-inline: 9px; } .tb-search { padding: 0; } .sep { margin-inline: 1px; } }
+    .chip { flex: none; position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; box-sizing: border-box; padding: 6px 12px;
+      border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 600 .86rem var(--body); white-space: nowrap; cursor: pointer; }
+    .chip.x { color: var(--sky); background: transparent; }
+    .chip.x[hidden] { display: none; }
     .chip:hover { border-color: #3a4d74; }
     .chip .ic { width: 17px; height: 17px; color: var(--c, var(--sky)); }
     .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: var(--night); }
     .chip[aria-pressed="true"] .ic { color: inherit; }
     .chip:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
-    /* День в ленте: подпись («сегодня», «пн») над числом; выходные подписаны тёплым. */
-    .day { flex-direction: column; gap: 0; min-width: 54px; padding: 5px 10px; border-radius: 14px; line-height: 1.15; }
-    .day small { font-size: .72rem; font-weight: 600; color: var(--muted); }
-    .day b { font-size: 1rem; font-variant-numeric: tabular-nums; }
+    /* День в ленте одной строкой: «Сегодня», «Завтра», «пн 23»; выходные — тёплым. */
+    .day { font-variant-numeric: tabular-nums; }
+    .day small { font-weight: 500; color: var(--muted); margin-right: 1px; }
     .day.we small { color: var(--warm); }
-    @media (min-width: 900px) { .day.far { display: none; } }  /* на компьютере 10 дней в одну строку, дальше — «Другая дата» */
+    @media (min-width: 900px) { .day.far { display: none; } }  /* на компьютере 9 дней в одну строку, дальше — «Другая дата» */
     .day[aria-pressed="true"] small { color: inherit; }
     .chip.tg[aria-pressed="true"] { --c: var(--ok); }
     .chip.tg.ru[aria-pressed="true"] { --c: var(--sky); }
     .row2 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-    .pick { position: relative; display: inline-flex; align-items: center; gap: 4px; min-height: 40px; box-sizing: border-box; padding: 7px 9px 7px 13px; border: 1px solid var(--line); border-radius: 999px;
-      background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
+    .pick { gap: 4px; padding-right: 9px; }
     .pick:hover { border-color: #3a4d74; }
     .pick select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; border: 0; appearance: none; }
     .pick .chev { flex: none; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
@@ -485,23 +500,21 @@ function buildPage(cfg, { artifact = false } = {}) {
       ? `<a href="#" aria-current="page" data-kind="${p === XMAS ? 'christmas-lights' : ''}">${svg(p.tabIcon)}${esc(p.tab)}</a>`
       : `<a href="${artifact ? p.artifactUrl + '" target="_blank" rel="noopener' : p.path}" data-kind="${p === XMAS ? 'christmas-lights' : ''}">${svg(p.tabIcon)}${esc(p.tab)}</a>`).join('')}</div>
   </nav>
-  ${cfg.garland ? GARLAND : '  <div class="top"></div>\n'}  <header>
-      <p class="kicker">${cfg.kicker}</p>
+  <main>
+  ${cfg.garland ? GARLAND : ''}  <header>
       <h1>${cfg.h1}</h1>
     </header>
-  ${cfg.banner ? cfg.banner(artifact) : ''}
-    <div class="filters" role="group" aria-label="Фильтры">
-      <div class="search">${svg('search')}<input id="f-q" type="search" placeholder="Название, место или город" autocomplete="off" enterkeyhint="search" aria-label="Поиск по афише"><button type="button" class="q-clear" id="q-clear" aria-label="Очистить поиск" hidden>×</button></div>
-      <div class="strip" id="days" role="group" aria-label="Когда"></div>
-      <div class="strip" id="kinds" role="group" aria-label="Что">
-        <button type="button" class="chip" data-k="" aria-pressed="true">Все</button>${kinds.map((k) => `
-        <button type="button" class="chip" data-k="${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(k.icon)}${esc(k.label)}</button>`).join('')}
-      </div>
-      <div class="row2">
-        <label class="pick">${svg('pin')}<span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>${toggles.free ? `
+    <!-- Фильтры: две строки, прилипают под верхней полосой. Дни; район, «Бесплатно», «На русском» и виды. Поиск — по значку лупы. -->
+    <div class="fbar" id="fbar" role="group" aria-label="Фильтры">
+      <div class="search" id="searchrow" hidden>${svg('search')}<input id="f-q" type="search" placeholder="Название, место или город" autocomplete="off" enterkeyhint="search" aria-label="Поиск по афише"><button type="button" class="q-clear" id="q-clear" aria-label="Очистить поиск" hidden>×</button></div>
+      <div class="strip" id="days" role="group" aria-label="Когда"><button type="button" class="chip tb-search" id="tb-search" aria-label="Поиск" aria-expanded="false" aria-controls="searchrow">${svg('search')}</button></div>
+      <div class="strip" id="opts" role="group" aria-label="Где и что">
+        <button type="button" class="chip x" id="clear" aria-label="Сбросить фильтры" hidden>× Сбросить</button>
+        <label class="chip pick">${svg('pin')}<span class="pick-t">Весь Кипр</span>${CHEV}<select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option>${regions.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join('')}</select></label>${toggles.free ? `
         <button type="button" class="chip tg" id="f-free" aria-pressed="false">Бесплатно</button>` : ''}${toggles.ru ? `
         <button type="button" class="chip tg ru" id="f-ru" aria-pressed="false">На русском</button>` : ''}
-        <button type="button" class="clear" id="clear" hidden>Сбросить</button>
+        <span class="sep" aria-hidden="true"></span>${kinds.map((k) => `
+        <button type="button" class="chip" data-k="${k.t}" data-kind="${k.t}" aria-pressed="false">${svg(k.icon)}${esc(k.label)}</button>`).join('')}
       </div>
       <div class="cal" id="cal" role="dialog" aria-label="Выберите дату" hidden>
         <div class="cal-h"><button type="button" class="cal-nav" id="cal-prev" aria-label="Предыдущий месяц">‹</button><b id="cal-m"></b><button type="button" class="cal-nav" id="cal-next" aria-label="Следующий месяц">›</button></div>
@@ -515,6 +528,7 @@ function buildPage(cfg, { artifact = false } = {}) {
       </div>
     </section>
 
+  ${cfg.banner ? cfg.banner(artifact) : ''}
     <div class="lhead"><h2 id="list-h">Все события</h2><span id="count" aria-live="polite"></span></div>
     <div id="list">
       <ul class="evs" id="evs">${list.map(card).join('')}
@@ -523,10 +537,11 @@ function buildPage(cfg, { artifact = false } = {}) {
       <p class="empty" id="empty" hidden>Ничего не нашлось. <button type="button" id="reset">Сбросить фильтры</button></p>
     </div>
 
+  </main>
     <footer>
       <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg>${esc(SITE_NAME)}</span>
       <span>${esc(SITE_NAME)} — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>${artifact ? '' : `
-      <nav class="fnav" aria-label="Разделы">${PAGES.map((p) => p === cfg ? `<span>${esc(p.nav)}</span>` : `<a href="${p.path}">${esc(p.nav)}</a>`).join('')}</nav>`}
+      <nav class="fnav" aria-label="Разделы сайта">${PAGES.map((p) => p === cfg ? `<span>${esc(p.nav)}</span>` : `<a href="${p.path}">${esc(p.nav)}</a>`).join('')}</nav>`}
     </footer>
   </div>
   
@@ -578,7 +593,10 @@ function buildPage(cfg, { artifact = false } = {}) {
   
       // Полоса с разделами получает нижнюю линию, когда страницу прокрутили.
       var bar = document.querySelector('.topbar');
-      if (bar) { var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 4); }; window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
+      var fbar = el('fbar');
+      var setTb = function () { if (bar) document.documentElement.style.setProperty('--tbh', bar.offsetHeight + 'px'); };
+      setTb(); window.addEventListener('resize', setTb);
+      if (bar) { var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 4); if (fbar) fbar.classList.toggle('stuck', fbar.getBoundingClientRect().top <= bar.offsetHeight + 1 && window.scrollY > 4); }; window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
       all('.tabs a[aria-current]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); });
       // Прошедшее убираем; баннер Рождества — до конца сезона.
       all('.xbanner').forEach(function (b) { if (b.dataset.until < today) b.hidden = true; });
@@ -619,8 +637,8 @@ function buildPage(cfg, { artifact = false } = {}) {
       for (var i = 0; i < 14; i++) {
         var iso = plus(today, i); if (iso > seasonEnd) break;
         var wd = d(iso).getUTCDay(), num = d(iso).getUTCDate() + (iso.slice(5, 7) !== MONTH0 && (d(iso).getUTCDate() === 1 || i === 0) ? ' ' + MON_S[d(iso).getUTCMonth()] : '');
-        var top = i === 0 ? 'сегодня' : i === 1 ? 'завтра' : WD[wd];
-        chip('d:' + iso, '<small>' + top + '</small><b>' + num + '</b>', 'day' + (wd === 0 || wd === 6 ? ' we' : '') + (i >= 10 ? ' far' : ''), dayLabel(iso));
+        var lab = i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : '<small>' + WD[wd] + '</small> ' + num;
+        chip('d:' + iso, lab, 'day' + (wd === 0 || wd === 6 ? ' we' : '') + (i >= 9 ? ' far' : ''), dayLabel(iso));
         PERIODS['d:' + iso] = [iso];
       }
       var other = chip('pick', ICONS.calendar + '<span>Другая дата</span>');
@@ -642,8 +660,8 @@ function buildPage(cfg, { artifact = false } = {}) {
       all('#f-reg option').forEach(function (o) { if (o.value && !items.some(function (li) { return li.dataset.reg.split('|').indexOf(o.value) >= 0; })) o.remove(); });
       var any = function () { return !!(state.v || state.reg || state.kind || state.q || state.free || state.ru); };
       function sync() {
-        all('#days .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === state.v || (b === other && state.v.indexOf('x:') === 0))); });
-        all('#kinds .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.k === state.kind)); });
+        all('#days .chip[data-v]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === state.v || (b === other && state.v.indexOf('x:') === 0))); });
+        all('#opts .chip[data-k]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.k === state.kind)); });
         var pl = regSel.parentNode; pl.querySelector('.pick-t').textContent = regSel.value || 'Весь Кипр'; pl.classList.toggle('on', !!regSel.value);
         if (el('f-free')) el('f-free').setAttribute('aria-pressed', String(state.free));
         if (el('f-ru')) el('f-ru').setAttribute('aria-pressed', String(state.ru));
@@ -706,25 +724,39 @@ function buildPage(cfg, { artifact = false } = {}) {
         }
         equalize();
       }
-      var setDays = function (v, days) { state.v = v; state.days = days; closeCal(); sync(); render(); };
+      // После смены фильтра результат должен быть виден: если начало результатов выше полосы фильтров или далеко внизу — прокручиваем к нему.
+      var reveal = function () {
+        var fb = el('fbar').getBoundingClientRect().bottom, tgt = el('picks').hidden ? el('list-h').parentNode : el('picks');
+        var y = tgt.getBoundingClientRect().top;
+        if (y < fb || y > innerHeight * 0.62) window.scrollTo({ top: window.scrollY + y - fb - 8, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      };
+      var apply = function () { sync(); render(); reveal(); };
+      var setDays = function (v, days) { state.v = v; state.days = days; closeCal(); apply(); };
       daysEl.addEventListener('click', function (e) {
-        var b = e.target.closest('.chip'); if (!b) return;
+        var b = e.target.closest('.chip'); if (!b || b.id === 'tb-search') return;
         if (b === other) { if (cal.hidden) openCal(); else closeCal(); return; }
         setDays(b.dataset.v, b.dataset.v ? PERIODS[b.dataset.v] : null);
       });
-      el('kinds').addEventListener('click', function (e) {
-        var b = e.target.closest('.chip'); if (!b) return;
-        state.kind = b.dataset.k === state.kind ? '' : b.dataset.k; sync(); render();
+      el('opts').addEventListener('click', function (e) {
+        var b = e.target.closest('.chip[data-k]'); if (!b) return;
+        state.kind = b.dataset.k === state.kind ? '' : b.dataset.k; apply();
       });
-      regSel.addEventListener('change', function () { state.reg = regSel.value; sync(); render(); });
+      regSel.addEventListener('change', function () { state.reg = regSel.value; apply(); });
       ['free', 'ru'].forEach(function (k) {
-        var b = el('f-' + k); if (b) b.addEventListener('click', function () { state[k] = !state[k]; sync(); render(); });
+        var b = el('f-' + k); if (b) b.addEventListener('click', function () { state[k] = !state[k]; apply(); });
       });
       var qIn = el('f-q'), qT = 0;
       var norm = function (v) { return v.toLowerCase().replace(/ё/g, 'е').replace(/\\s+/g, ' ').trim(); };
       qIn.addEventListener('input', function () { clearTimeout(qT); qT = setTimeout(function () { state.q = norm(qIn.value); sync(); render(); }, 120); });
       qIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') qIn.blur(); });
       el('q-clear').addEventListener('click', function () { qIn.value = ''; state.q = ''; sync(); render(); qIn.focus(); });
+      var tbS = el('tb-search'), sRow = el('searchrow');
+      tbS.addEventListener('click', function () {
+        var open = sRow.hidden;
+        if (!open && qIn.value) { qIn.focus(); return; }  // со словом в поиске строка остаётся, значок просто ставит курсор
+        sRow.hidden = !open; tbS.setAttribute('aria-expanded', String(open));
+        if (open) qIn.focus();  // строка поиска внутри прилипшей полосы — видна при любой прокрутке
+      });
 
       // «Другая дата»: свой календарь в пределах сезона (с сегодняшнего дня до конца последнего события).
       // Точкой отмечены дни, на которые есть однодневные события.
@@ -769,7 +801,7 @@ function buildPage(cfg, { artifact = false } = {}) {
       el('more').addEventListener('click', function () { shown += page(); render(true); });
       function resetAll() {
         state = { v: '', days: null, reg: '', kind: '', q: '', free: false, ru: false };
-        regSel.value = ''; qIn.value = ''; other.querySelector('span').textContent = 'Другая дата';
+        regSel.value = ''; qIn.value = ''; other.querySelector('span').textContent = 'Другая дата'; sRow.hidden = true; tbS.setAttribute('aria-expanded', 'false');
         closeCal(); sync(); render();
       }
       el('reset').addEventListener('click', resetAll);
@@ -782,7 +814,7 @@ function buildPage(cfg, { artifact = false } = {}) {
       window.addEventListener('load', equalize);
 
       // Карточка события: открывается по адресу #e-<id>, закрывается крестиком, фоном или Esc.
-      var shade = el('shade'), last = null, cur = null;
+      var shade = el('shade'), last = null, cur = null, keepY = null;
       var toastT = 0;
       var toast = function (t) { var x = el('toast'); x.textContent = t; x.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { x.hidden = true; }, 2200); };
       // «В эти дни рядом»: до четырёх событий в том же районе в тот же день (у долгого — сегодня или выбранный день).
@@ -796,7 +828,8 @@ function buildPage(cfg, { artifact = false } = {}) {
       }
       function show() {
         var id = location.hash.slice(1), x = DATA[id];
-        if (!x) { cur = null; shade.hidden = true; document.body.classList.remove('locked'); if (last) { last.focus(); last = null; } return; }
+        if (!x) { cur = null; shade.hidden = true; document.body.classList.remove('locked'); if (keepY !== null) { window.scrollTo(0, keepY); keepY = null; } if (last) { last.focus({ preventScroll: true }); last = null; } return; }
+        if (shade.hidden) keepY = window.scrollY;
         cur = id;
         el('sheet').dataset.kind = x.group; el('s-kind').innerHTML = ICONS[x.icon]; el('s-kind').appendChild(document.createTextNode(x.kind));
         el('s-title').textContent = x.title;

@@ -35,14 +35,15 @@
     body { margin: 0; background: var(--night); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5;
       padding-left: var(--gutter); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
     body.locked { overflow: hidden; }
-    .wrap { max-width: 1040px; margin: 0 auto; }
-    .garland { display: block; width: 100%; height: 50px; }
+    .wrap { max-width: 1240px; margin: 0 auto; }
+    .garland { display: block; width: 100%; height: 26px; margin-top: 2px; }
     .bulb { animation: tw 3.2s ease-in-out infinite; } .bulb:nth-child(3n) { animation-delay: .8s; } .bulb:nth-child(3n+1) { animation-delay: 1.7s; }
     @keyframes tw { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
     @media (prefers-reduced-motion: reduce) { .bulb { animation: none; } }
-    header { padding-block: 6px 20px; }
+    header { padding-block: 10px 6px; }
     .kicker { font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--sky); margin: 0; }
-    h1 { font-family: var(--display); font-weight: 800; font-size: clamp(2rem, 7.5vw, 3.4rem); line-height: 1.06; margin: 10px 0 0; text-wrap: balance; }
+    /* Заголовок скромный: экран телефона — для событий, а не для шапки. */
+    h1 { font-family: var(--display); font-weight: 800; font-size: clamp(1.5rem, 5vw, 2.1rem); line-height: 1.1; margin: 0; text-wrap: balance; }
     h1 em { font-style: normal; color: var(--warm); }
   
     /* У каждого вида свой цвет: парки — оранжевый, деревни — голубой, зажжение огней — зелёный, ярмарки — жёлтый, остальное — сиреневый. */
@@ -60,9 +61,12 @@
     .tb-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text); text-decoration: none; font-family: var(--display); font-weight: 600; font-size: .86rem; white-space: nowrap; }
     @media (min-width: 640px) { .tb-brand { font-size: .95rem; } }
     .tb-brand svg { flex: none; }
+    .tb-search { width: 36px; padding: 0; }
+    .tb-search .ic { width: 18px; height: 18px; color: var(--text); }
+    .tb-search[aria-expanded="true"] { background: var(--text); border-color: var(--text); } .tb-search[aria-expanded="true"] .ic { color: var(--night); }
     @media (max-width: 379px) { .tb-brand span { display: none; } }
     .tabs { display: flex; gap: 3px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
-    .tabs a { display: inline-flex; align-items: center; gap: 5px; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
+    .tabs a { display: inline-flex; align-items: center; gap: 5px; min-height: 34px; box-sizing: border-box; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
     @media (min-width: 640px) { .tabs a { padding: 7px 13px; font-size: .9rem; } }
     .tabs a .ic { width: 16px; height: 16px; color: var(--c, var(--sky)); }
     @media (max-width: 419px) { .tabs a .ic { display: none; } }  /* на узком телефоне — только слова, чтобы название не прижималось */
@@ -70,14 +74,14 @@
     .tabs a[aria-current] { background: var(--text); color: var(--night); }
     .tabs a[aria-current] .ic { color: inherit; }
     .tb-brand:focus-visible, .tabs a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
-    .xbanner { display: flex; align-items: center; gap: 12px; margin: 0 0 18px; padding: 12px 16px; border-radius: 16px; text-decoration: none; color: var(--text);
+    .xbanner { display: flex; align-items: center; gap: 12px; margin: 26px 0 0; padding: 12px 16px; border-radius: 16px; text-decoration: none; color: var(--text);
       background: linear-gradient(100deg, #17284a, #0f1a30); border: 1px solid #2b3f66; }
     .xbanner[hidden] { display: none; }
     .xbanner .ic { flex: none; width: 28px; height: 28px; color: #6fe3a5; }
     .xbanner.to-afisha .ic { color: var(--sky); }
     .xbanner b { display: block; font-family: var(--display); font-weight: 700; font-size: 1rem; }
     .xbanner small { display: block; color: var(--muted); font-size: .86rem; }
-    @media (max-width: 479px) { .xbanner { padding: 10px 14px; margin-bottom: 16px; } .xbanner small { display: none; } .xbanner .ic { width: 24px; height: 24px; } }
+    @media (max-width: 479px) { .xbanner { padding: 10px 14px; } .xbanner small { display: none; } .xbanner .ic { width: 24px; height: 24px; } }
     .xbanner .go { margin-left: auto; color: var(--warm); font-size: 1.3rem; }
     .xbanner:hover { border-color: #3d5689; }
     .fnav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; }
@@ -85,8 +89,13 @@
   
     /* Фильтры — как на больших афишах: поиск, лента дней на две недели, ряд видов кнопками, район и переключатели.
        Всё видно сразу; выпадающий список остался только у района — районов мало, и его меняют реже всего. */
-    .filters { position: relative; display: grid; gap: 10px; }
+    .fbar { position: sticky; top: calc(env(safe-area-inset-top, 0px) + var(--tbh, 60px)); z-index: 11; display: grid; gap: 8px; padding-block: 10px; background: var(--night);
+      margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); border-bottom: 1px solid transparent; }
+    .fbar.stuck { border-bottom-color: var(--line); box-shadow: 0 10px 18px -14px rgba(0, 0, 0, .8); }
+    .fbar .strip { margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); }
+    .sep { flex: none; width: 1px; align-self: stretch; margin: 6px 2px; background: var(--line); }
     .search { position: relative; display: flex; align-items: center; }
+    .search[hidden] { display: none; }
     .search .ic { position: absolute; left: 14px; width: 18px; height: 18px; color: var(--muted); pointer-events: none; }
     .search input { width: 100%; box-sizing: border-box; min-height: 44px; padding: 10px 44px 10px 42px; border-radius: 999px; border: 1px solid var(--line);
       background: var(--card); color: var(--text); font: 500 16px var(--body); -webkit-appearance: none; appearance: none; }
@@ -98,28 +107,28 @@
     /* Ленты на телефоне прокручиваются вбок и уходят под край экрана — так видно, что дальше есть ещё. */
     .strip { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin-inline: calc(-1 * var(--gutter)); padding-inline: var(--gutter); scroll-padding-inline: var(--gutter); }
     .strip::-webkit-scrollbar { display: none; }
-    @media (min-width: 1072px) { .strip { margin-inline: 0; padding-inline: 0; } }
+    @media (min-width: 1272px) { .strip { margin-inline: 0; padding-inline: 0; } }
     /* На компьютере прокрутка вбок неудобна — дни и виды переносятся на следующую строку. */
-    @media (min-width: 900px) { .filters .strip { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; } }
-    .chip { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px; box-sizing: border-box; padding: 7px 13px;
-      border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
+    @media (min-width: 900px) { .fbar .strip { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; gap: 5px; } .chip { padding-inline: 9px; } .tb-search { padding: 0; } .sep { margin-inline: 1px; } }
+    .chip { flex: none; position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; box-sizing: border-box; padding: 6px 12px;
+      border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 600 .86rem var(--body); white-space: nowrap; cursor: pointer; }
+    .chip.x { color: var(--sky); background: transparent; }
+    .chip.x[hidden] { display: none; }
     .chip:hover { border-color: #3a4d74; }
     .chip .ic { width: 17px; height: 17px; color: var(--c, var(--sky)); }
     .chip[aria-pressed="true"] { background: var(--c, var(--text)); border-color: var(--c, var(--text)); color: var(--night); }
     .chip[aria-pressed="true"] .ic { color: inherit; }
     .chip:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
-    /* День в ленте: подпись («сегодня», «пн») над числом; выходные подписаны тёплым. */
-    .day { flex-direction: column; gap: 0; min-width: 54px; padding: 5px 10px; border-radius: 14px; line-height: 1.15; }
-    .day small { font-size: .72rem; font-weight: 600; color: var(--muted); }
-    .day b { font-size: 1rem; font-variant-numeric: tabular-nums; }
+    /* День в ленте одной строкой: «Сегодня», «Завтра», «пн 23»; выходные — тёплым. */
+    .day { font-variant-numeric: tabular-nums; }
+    .day small { font-weight: 500; color: var(--muted); margin-right: 1px; }
     .day.we small { color: var(--warm); }
-    @media (min-width: 900px) { .day.far { display: none; } }  /* на компьютере 10 дней в одну строку, дальше — «Другая дата» */
+    @media (min-width: 900px) { .day.far { display: none; } }  /* на компьютере 9 дней в одну строку, дальше — «Другая дата» */
     .day[aria-pressed="true"] small { color: inherit; }
     .chip.tg[aria-pressed="true"] { --c: var(--ok); }
     .chip.tg.ru[aria-pressed="true"] { --c: var(--sky); }
     .row2 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
-    .pick { position: relative; display: inline-flex; align-items: center; gap: 4px; min-height: 40px; box-sizing: border-box; padding: 7px 9px 7px 13px; border: 1px solid var(--line); border-radius: 999px;
-      background: var(--card); color: var(--text); font: 600 .88rem var(--body); white-space: nowrap; cursor: pointer; }
+    .pick { gap: 4px; padding-right: 9px; }
     .pick:hover { border-color: #3a4d74; }
     .pick select { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; font-size: 16px; border: 0; appearance: none; }
     .pick .chev { flex: none; width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; opacity: .7; }
@@ -238,32 +247,29 @@
     <a class="tb-brand" href="/cyprus/afisha/"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#9fd5f2"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#0e1116"/><circle cx="16" cy="13" r="5.8" fill="#fff"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#f26b21"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#0e1116"/></svg><span>City Compas</span></a>
     <div class="tabs"><a href="/cyprus/afisha/" data-kind=""><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/></svg>Афиша</a><a href="#" aria-current="page" data-kind="christmas-lights"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Рождество</a></div>
   </nav>
+  <main>
     <svg class="garland" viewBox="0 0 800 50" preserveAspectRatio="none" aria-hidden="true">
     <path d="M0 8 Q100 42 200 14 T400 14 T600 14 T800 8" fill="none" stroke="#2a3a5c" stroke-width="2"/>
     <circle class="bulb" cx="40" cy="19" r="4.5" fill="#ffd38a"/><circle class="bulb" cx="95" cy="28" r="4.5" fill="#9fd5f2"/><circle class="bulb" cx="150" cy="26" r="4.5" fill="#f26b21"/><circle class="bulb" cx="205" cy="15" r="4.5" fill="#ffd38a"/><circle class="bulb" cx="260" cy="21" r="4.5" fill="#7ee2b8"/><circle class="bulb" cx="315" cy="28" r="4.5" fill="#9fd5f2"/><circle class="bulb" cx="365" cy="21" r="4.5" fill="#f26b21"/><circle class="bulb" cx="415" cy="14" r="4.5" fill="#ffd38a"/><circle class="bulb" cx="470" cy="22" r="4.5" fill="#9fd5f2"/><circle class="bulb" cx="520" cy="28" r="4.5" fill="#7ee2b8"/><circle class="bulb" cx="570" cy="21" r="4.5" fill="#f26b21"/><circle class="bulb" cx="620" cy="14" r="4.5" fill="#ffd38a"/><circle class="bulb" cx="675" cy="22" r="4.5" fill="#9fd5f2"/><circle class="bulb" cx="725" cy="27" r="4.5" fill="#f26b21"/><circle class="bulb" cx="775" cy="15" r="4.5" fill="#ffd38a"/>
   </svg>
   <header>
-      <p class="kicker">Сезон 2026–2027</p>
       <h1>Рождество <em>на&nbsp;Кипре</em></h1>
     </header>
-    <a class="xbanner to-afisha" href="/cyprus/afisha/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/></svg><span><b>Вся афиша Кипра</b><small>Концерты, спектакли, выставки и детские события на неделю</small></span><span class="go" aria-hidden="true">→</span></a>
-
-    <div class="filters" role="group" aria-label="Фильтры">
-      <div class="search"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input id="f-q" type="search" placeholder="Название, место или город" autocomplete="off" enterkeyhint="search" aria-label="Поиск по афише"><button type="button" class="q-clear" id="q-clear" aria-label="Очистить поиск" hidden>×</button></div>
-      <div class="strip" id="days" role="group" aria-label="Когда"></div>
-      <div class="strip" id="kinds" role="group" aria-label="Что">
-        <button type="button" class="chip" data-k="" aria-pressed="true">Все</button>
+    <!-- Фильтры: две строки, прилипают под верхней полосой. Дни; район, «Бесплатно», «На русском» и виды. Поиск — по значку лупы. -->
+    <div class="fbar" id="fbar" role="group" aria-label="Фильтры">
+      <div class="search" id="searchrow" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg><input id="f-q" type="search" placeholder="Название, место или город" autocomplete="off" enterkeyhint="search" aria-label="Поиск по афише"><button type="button" class="q-clear" id="q-clear" aria-label="Очистить поиск" hidden>×</button></div>
+      <div class="strip" id="days" role="group" aria-label="Когда"><button type="button" class="chip tb-search" id="tb-search" aria-label="Поиск" aria-expanded="false" aria-controls="searchrow"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/></svg></button></div>
+      <div class="strip" id="opts" role="group" aria-label="Где и что">
+        <button type="button" class="chip x" id="clear" aria-label="Сбросить фильтры" hidden>× Сбросить</button>
+        <label class="chip pick"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/></svg><span class="pick-t">Весь Кипр</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option><option value="Никосия">Никосия</option><option value="Лимассол">Лимассол</option><option value="Айя-Напа и Протарас">Айя-Напа и Протарас</option><option value="Пафос">Пафос</option><option value="Ларнака">Ларнака</option><option value="Троодос">Троодос</option></select></label>
+        <button type="button" class="chip tg" id="f-free" aria-pressed="false">Бесплатно</button>
+        <button type="button" class="chip tg ru" id="f-ru" aria-pressed="false">На русском</button>
+        <span class="sep" aria-hidden="true"></span>
         <button type="button" class="chip" data-k="christmas-parks" data-kind="christmas-parks" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/></svg>Парки</button>
         <button type="button" class="chip" data-k="christmas-villages" data-kind="christmas-villages" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревни</button>
         <button type="button" class="chip" data-k="christmas-lights" data-kind="christmas-lights" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</button>
         <button type="button" class="chip" data-k="christmas-markets" data-kind="christmas-markets" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/></svg>Ярмарки</button>
-        <button type="button" class="chip" data-k="christmas-other" data-kind="christmas-other" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="17.5" r="3"/><path d="M8.6 15.4 17 3.5M15.4 15.4 7 3.5"/></svg>Мастер-классы и другое</button>
-      </div>
-      <div class="row2">
-        <label class="pick"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/></svg><span class="pick-t">Весь Кипр</span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg><select id="f-reg" aria-label="Где"><option value="">Весь Кипр</option><option value="Никосия">Никосия</option><option value="Лимассол">Лимассол</option><option value="Айя-Напа и Протарас">Айя-Напа и Протарас</option><option value="Пафос">Пафос</option><option value="Ларнака">Ларнака</option><option value="Троодос">Троодос</option></select></label>
-        <button type="button" class="chip tg" id="f-free" aria-pressed="false">Бесплатно</button>
-        <button type="button" class="chip tg ru" id="f-ru" aria-pressed="false">На русском</button>
-        <button type="button" class="clear" id="clear" hidden>Сбросить</button>
+        <button type="button" class="chip" data-k="christmas-other" data-kind="christmas-other" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6.5" cy="17.5" r="3"/><circle cx="17.5" cy="17.5" r="3"/><path d="M8.6 15.4 17 3.5M15.4 15.4 7 3.5"/></svg>Другое</button>
       </div>
       <div class="cal" id="cal" role="dialog" aria-label="Выберите дату" hidden>
         <div class="cal-h"><button type="button" class="cal-nav" id="cal-prev" aria-label="Предыдущий месяц">‹</button><b id="cal-m"></b><button type="button" class="cal-nav" id="cal-next" aria-label="Следующий месяц">›</button></div>
@@ -274,97 +280,97 @@
     <section class="picks" id="picks" aria-labelledby="picks-h" hidden>
       <div class="lhead"><h2 id="picks-h">Главное</h2><span id="picks-when"></span></div>
       <div class="strip" id="pcs">
-        <a class="pc" href="#e-limassol-christmas-land-2026-11-20" data-id="e-limassol-christmas-land-2026-11-20" data-kind="christmas-parks" data-start="2026-11-20" data-end="2027-01-17" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-q="limassol christmas land старый порт и площадь какоянни лимассол рождественский парк" hidden>
+        <a class="pc" href="#e-limassol-christmas-land-2026-11-20" data-id="e-limassol-christmas-land-2026-11-20" data-kind="christmas-parks" data-start="2026-11-20" data-end="2027-01-17" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-q="limassol christmas land старый порт и площадь какоянни лимассол рождественский парк лимассол чристмас ланд" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/></svg>Парк</span>
           <span class="pc-title">Limassol Christmas Land</span>
           <span class="pc-why">Аттракционы, карусели, праздничные угощения.</span>
           <span class="pc-foot"><span class="ev-date">20 ноя – 17 янв</span><span class="ev-city">Лимассол</span></span>
         </a>
-        <a class="pc" href="#e-santa-park-fest-2026-11-20" data-id="e-santa-park-fest-2026-11-20" data-kind="christmas-parks" data-start="2026-11-20" data-end="2026-11-22" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-free="1" data-q="santa park fest kolossi park колосси (лимассол) рождественский парк" hidden>
+        <a class="pc" href="#e-santa-park-fest-2026-11-20" data-id="e-santa-park-fest-2026-11-20" data-kind="christmas-parks" data-start="2026-11-20" data-end="2026-11-22" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-free="1" data-q="santa park fest kolossi park колосси (лимассол) рождественский парк санта парк фест колосси парк" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/></svg>Парк</span>
           <span class="pc-title">Santa Park Fest</span>
           <span class="pc-why">Ярмарка, луна-парк, детские активности, уличная еда, выступления.</span>
           <span class="pc-foot"><span class="ev-date">20–22 ноя</span><span class="ev-city">Колосси (Лимассол)</span><span class="ev-tags"><span class="tag free">Бесплатно</span></span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-agros-2026-11-21" data-id="e-christmas-village-agros-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня агрос christmas village: агрос площадь каурас агрос рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-agros-2026-11-21" data-id="e-christmas-village-agros-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня агрос christmas village: агрос площадь каурас агрос рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Агрос</span>
           <span class="pc-why">Открытие 21 ноября: в 16:30 аквагрим и ростовые персонажи; в 17:30 зажжение огней и живая джазовая музыка. Местные часы и программа уточняются.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Агрос</span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-deriniya-2026-11-21" data-id="e-christmas-village-deriniya-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Айя-Напа и Протарас" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня дериния christmas village: дериния площадь панагии дериния рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-deriniya-2026-11-21" data-id="e-christmas-village-deriniya-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Айя-Напа и Протарас" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня дериния christmas village: дериния площадь панагии дериния рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Дериния</span>
           <span class="pc-why">Открытие 21 ноября, с 14:30: огни ёлки в 19:00, шоу дронов в 19:15, затем концерт · Проверяйте расписание дрон-шоу непосредственно перед посещением.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Дериния</span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-fikardu-2026-11-21" data-id="e-christmas-village-fikardu-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Никосия" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня фикарду christmas village: фикарду рождественская деревня фикарду рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-fikardu-2026-11-21" data-id="e-christmas-village-fikardu-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Никосия" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня фикарду christmas village: фикарду рождественская деревня фикарду рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Фикарду</span>
           <span class="pc-why">Открытие 21 ноября: праздничное оформление и события в исторической деревне.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Фикарду</span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-kakopetriya-2026-11-21" data-id="e-christmas-village-kakopetriya-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня какопетрия christmas village: какопетрия рождественская деревня какопетрия рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-kakopetriya-2026-11-21" data-id="e-christmas-village-kakopetriya-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня какопетрия christmas village: какопетрия рождественская деревня какопетрия рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Какопетрия</span>
           <span class="pc-why">Открытие 21 ноября: праздничная площадка в горной деревне.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Какопетрия</span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-kalopanayotis-2026-11-21" data-id="e-christmas-village-kalopanayotis-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня калопанайотис christmas village: калопанайотис рождественская деревня калопанайотис рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-kalopanayotis-2026-11-21" data-id="e-christmas-village-kalopanayotis-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня калопанайотис christmas village: калопанайотис рождественская деревня калопанайотис рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Калопанайотис</span>
           <span class="pc-why">Открытие 21 ноября: сезонные ярмарки и семейные активности.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Калопанайотис</span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-kiperunda-2026-11-21" data-id="e-christmas-village-kiperunda-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня киперунда christmas village: киперунда рождественская деревня киперунда рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-kiperunda-2026-11-21" data-id="e-christmas-village-kiperunda-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня киперунда christmas village: киперунда рождественская деревня киперунда рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Киперунда</span>
           <span class="pc-why">Открытие 21 ноября, с 10:30: кинозона, квест-комната, мастер-классы, парад эльфов, включение огней в 18:00.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Киперунда</span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-lefkara-2026-11-21" data-id="e-christmas-village-lefkara-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Ларнака" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня лефкара christmas village: лефкара рождественская деревня лефкара рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-lefkara-2026-11-21" data-id="e-christmas-village-lefkara-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Ларнака" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня лефкара christmas village: лефкара рождественская деревня лефкара рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Лефкара</span>
           <span class="pc-why">Открытие 21 ноября: рождественский сезон в деревне ремесленников.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Лефкара</span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-lofu-2026-11-21" data-id="e-christmas-village-lofu-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня лофу christmas village: лофу начальная школа лофу рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-lofu-2026-11-21" data-id="e-christmas-village-lofu-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня лофу christmas village: лофу начальная школа лофу рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Лофу</span>
           <span class="pc-why">Открытие 21 ноября, с 11:00: первое участие Лофу в официальной программе; открытие и огни ёлки в 17:00. Точное время зажжения ёлки уточняйте у организатора.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Лофу</span></span>
         </a>
-        <a class="pc" href="#e-christmas-village-statos-ayos-fotios-2026-11-21" data-id="e-christmas-village-statos-ayos-fotios-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Пафос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня статос–айос-фотиос christmas village: статос–айос-фотиос рождественская деревня статос–айос-фотиос рождественская деревня" hidden>
+        <a class="pc" href="#e-christmas-village-statos-ayos-fotios-2026-11-21" data-id="e-christmas-village-statos-ayos-fotios-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Пафос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня статос–айос-фотиос christmas village: статос–айос-фотиос рождественская деревня статос–айос-фотиос рождественская деревня чристмас виллаге" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 11 12 4l8.5 7M5.5 9.5V20h13V9.5M10 20v-5h4v5M15.5 6.9V4.5H18V9"/></svg>Деревня</span>
           <span class="pc-title">Рождественская деревня Статос–Айос-Фотиос</span>
           <span class="pc-why">Открытие 21 ноября, с 11:30: мастер-классы, 16:30 танцы, 17:00–18:00 зажжение огней и 18:30–20:00 концерт.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 6 янв</span><span class="ev-city">Статос–Айос-Фотиос</span></span>
         </a>
-        <a class="pc" href="#e-pinocchio-christmas-theme-park-2026-11-21" data-id="e-pinocchio-christmas-theme-park-2026-11-21" data-kind="christmas-parks" data-start="2026-11-21" data-end="2027-01-31" data-time="" data-prio="1" data-reg="Айя-Напа и Протарас" data-long="1" data-q="pinocchio christmas theme park паралимни рождественский парк" hidden>
+        <a class="pc" href="#e-pinocchio-christmas-theme-park-2026-11-21" data-id="e-pinocchio-christmas-theme-park-2026-11-21" data-kind="christmas-parks" data-start="2026-11-21" data-end="2027-01-31" data-time="" data-prio="1" data-reg="Айя-Напа и Протарас" data-long="1" data-q="pinocchio christmas theme park паралимни рождественский парк пинокчио чристмас теме парк" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9.5" r="6.5"/><circle cx="12" cy="9.5" r="1.2"/><path d="M12 3v5.3M12 10.7V16M5.5 9.5h5.3M13.2 9.5h5.3M10.8 15.9 8.5 21M13.2 15.9l2.3 5.1M6.5 21h11"/></svg>Парк</span>
           <span class="pc-title">Pinocchio Christmas Theme Park</span>
           <span class="pc-why">Тематический семейный парк по истории Пиноккио; отдельная программа праздничных мероприятий.</span>
           <span class="pc-foot"><span class="ev-date">21 ноя – 31 янв</span><span class="ev-city">Паралимни</span></span>
         </a>
-        <a class="pc" href="#e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21" data-id="e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="15:00" data-prio="1" data-reg="Никосия|Лимассол|Пафос" data-free="1" data-q="alphamega: рождественские праздники alphamega: рождественские праздники сразу в четырех городских точках никосия, лимассол, пафос · 4 магазина alphamega несколько городов зажжение огней" hidden>
+        <a class="pc" href="#e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21" data-id="e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="15:00" data-prio="1" data-reg="Никосия|Лимассол|Пафос" data-free="1" data-q="alphamega: рождественские праздники alphamega: рождественские праздники сразу в четырех городских точках никосия, лимассол, пафос · 4 магазина alphamega несколько городов зажжение огней алфамега алфамега алфамега" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Alphamega: рождественские праздники</span>
           <span class="pc-why">Ёлки загораются одновременно в 17:30; Санта, музыка, конкурсы. Engomi — открытый показ «Клаус» в 18:30. Engomi, Kapsalos (Лимассол), Astromeritis и Paphos Aphrodite. Бесплатно.</span>
           <span class="pc-foot"><span class="ev-date">сб, 21 ноя</span><span class="ev-city">Несколько городов</span><span class="ev-tags"><span class="tag free">Бесплатно</span></span></span>
         </a>
-        <a class="pc" href="#e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21" data-id="e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-prio="1" data-reg="Лимассол" data-free="1" data-q="зажжение елки в limassol marina christmas on the sea: зажжение елки limassol marina лимассол зажжение огней" hidden>
+        <a class="pc" href="#e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21" data-id="e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-prio="1" data-reg="Лимассол" data-free="1" data-q="зажжение елки в limassol marina christmas on the sea: зажжение елки limassol marina лимассол зажжение огней лимассол марина чристмас он те сеа лимассол марина" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Зажжение ёлки в Limassol Marina</span>
           <span class="pc-why">С 16:00 рождественская ярмарка и мастер-классы; в 17:45 зажжение огней 12-метровой ёлки, с 18:30 концерт; Санта и подарки. Бесплатное городское событие.</span>
           <span class="pc-foot"><span class="ev-date">сб, 21 ноя</span><span class="ev-city">Лимассол</span><span class="ev-tags"><span class="tag free">Бесплатно</span></span></span>
         </a>
-        <a class="pc" href="#e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22" data-id="e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22" data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="16:00" data-prio="1" data-reg="Лимассол" data-q="праздничное включение огней mymall mymall, вход b лимассол зажжение огней" hidden>
+        <a class="pc" href="#e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22" data-id="e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22" data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="16:00" data-prio="1" data-reg="Лимассол" data-q="праздничное включение огней mymall mymall, вход b лимассол зажжение огней мималл мималл б" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Праздничное включение огней MyMall</span>
           <span class="pc-why">Ёлка, Луис Патсалидес, Astero и Tefkros, Санта, конкурсы и подарки.</span>
           <span class="pc-foot"><span class="ev-date">вс, 22 ноя</span><span class="ev-city">Лимассол</span></span>
         </a>
-        <a class="pc" href="#e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22" data-id="e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22" data-kind="christmas-markets" data-start="2026-11-22" data-end="2026-11-22" data-time="17:00" data-prio="1" data-reg="Никосия" data-free="1" data-q="открытие рождественской ярмарки открытие рождественской ярмарки / marseaux mall of cyprus (парковка 1-го этажа) никосия ярмарка" hidden>
+        <a class="pc" href="#e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22" data-id="e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22" data-kind="christmas-markets" data-start="2026-11-22" data-end="2026-11-22" data-time="17:00" data-prio="1" data-reg="Никосия" data-free="1" data-q="открытие рождественской ярмарки открытие рождественской ярмарки / marseaux mall of cyprus (парковка 1-го этажа) никосия ярмарка марсеаукс малл оф кипрус" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/></svg>Ярмарка</span>
           <span class="pc-title">Открытие рождественской ярмарки</span>
           <span class="pc-why">Открытие рождественского рынка: Marseaux в 17:00, зажжение огней в 17:30; бесплатно, отдельные аттракционы платные.</span>
@@ -376,43 +382,43 @@
           <span class="pc-why">Танцевальные номера, хор, ёлка загорается в 19:00, затем праздничный концерт; бесплатно. Точное место и программу уточняйте у организатора.</span>
           <span class="pc-foot"><span class="ev-date">вс, 22 ноя</span><span class="ev-city">Паралимни</span><span class="ev-tags"><span class="tag free">Бесплатно</span></span></span>
         </a>
-        <a class="pc" href="#e-rozhdestvenskiy-parad-i-vklyuchenie-ogney-2026-11-27" data-id="e-rozhdestvenskiy-parad-i-vklyuchenie-ogney-2026-11-27" data-kind="christmas-lights" data-start="2026-11-27" data-end="2026-11-27" data-time="18:30" data-prio="1" data-reg="Пафос" data-free="1" data-q="рождественский парад и включение огней griva digeni avenue / kennedy square пафос зажжение огней" hidden>
+        <a class="pc" href="#e-rozhdestvenskiy-parad-i-vklyuchenie-ogney-2026-11-27" data-id="e-rozhdestvenskiy-parad-i-vklyuchenie-ogney-2026-11-27" data-kind="christmas-lights" data-start="2026-11-27" data-end="2026-11-27" data-time="18:30" data-prio="1" data-reg="Пафос" data-free="1" data-q="рождественский парад и включение огней griva digeni avenue / kennedy square пафос зажжение огней грива дигени авенуе кеннеди скуаре" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Рождественский парад и включение огней</span>
           <span class="pc-why">Городской парад к площади Кеннеди, зажжение огней около 19:30, потом концерт Papazó Balcony и диджей; бесплатно.</span>
           <span class="pc-foot"><span class="ev-date">пт, 27 ноя</span><span class="ev-city">Пафос</span><span class="ev-tags"><span class="tag free">Бесплатно</span></span></span>
         </a>
-        <a class="pc" href="#e-marseaux-koncert-na-otkrytii-christmas-land-2026-11-27" data-id="e-marseaux-koncert-na-otkrytii-christmas-land-2026-11-27" data-kind="christmas-lights" data-start="2026-11-27" data-end="2026-11-27" data-time="20:00" data-prio="1" data-reg="Лимассол" data-q="marseaux: концерт на открытии christmas land christmas land, старый порт лимассол зажжение огней" hidden>
+        <a class="pc" href="#e-marseaux-koncert-na-otkrytii-christmas-land-2026-11-27" data-id="e-marseaux-koncert-na-otkrytii-christmas-land-2026-11-27" data-kind="christmas-lights" data-start="2026-11-27" data-end="2026-11-27" data-time="20:00" data-prio="1" data-reg="Лимассол" data-q="marseaux: концерт на открытии christmas land christmas land, старый порт лимассол зажжение огней марсеаукс чристмас ланд чристмас ланд" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Marseaux: концерт на открытии Christmas Land</span>
           <span class="pc-why">В 20:00 зажжение ёлки на площади Какоянни, в 20:30 концерт греческой певицы Marseaux на площади Старого порта.</span>
           <span class="pc-foot"><span class="ev-date">пт, 27 ноя</span><span class="ev-city">Лимассол</span></span>
         </a>
-        <a class="pc" href="#e-christmas-street-festival-8-ya-yarmarka-2026-11-28" data-id="e-christmas-street-festival-8-ya-yarmarka-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-free="1" data-q="christmas street festival: 8-я ярмарка holy cathedral of virgin mary pantanassis лимассол ярмарка" hidden>
+        <a class="pc" href="#e-christmas-street-festival-8-ya-yarmarka-2026-11-28" data-id="e-christmas-street-festival-8-ya-yarmarka-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-free="1" data-q="christmas street festival: 8-я ярмарка holy cathedral of virgin mary pantanassis лимассол ярмарка чристмас стрит фестивал холи катедрал оф виргин мари пантанассис" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4.5 4h15l2 5h-19zM9.5 4 9 9M14.5 4l.5 5M5 9v11M19 9v11M3 20h18M5 14h14"/></svg>Ярмарка</span>
           <span class="pc-title">Christmas Street Festival: 8-я ярмарка</span>
           <span class="pc-why">Двухдневная рождественская улица с ремёслами и торговыми палатками, вход бесплатный.</span>
           <span class="pc-foot"><span class="ev-date">28–29 ноя</span><span class="ev-city">Лимассол</span><span class="ev-tags"><span class="tag free">Бесплатно</span></span></span>
         </a>
-        <a class="pc" href="#e-engomi-christmas-street-fest-alcatrash-2026-11-28" data-id="e-engomi-christmas-street-fest-alcatrash-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Никосия" data-long="1" data-q="engomi christmas street fest + alcatrash возле mall of engomi, 28 oktovriou avenue никосия зажжение огней" hidden>
+        <a class="pc" href="#e-engomi-christmas-street-fest-alcatrash-2026-11-28" data-id="e-engomi-christmas-street-fest-alcatrash-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Никосия" data-long="1" data-q="engomi christmas street fest + alcatrash возле mall of engomi, 28 oktovriou avenue никосия зажжение огней енгоми чристмас стрит фест алкатраш малл оф енгоми октовриу авенуе" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Engomi Christmas Street Fest + Alcatrash</span>
           <span class="pc-why">28–29 ноября, 10:30–20:30: уличная ярмарка, мастер-классы, детская программа. Alcatrash выступят в субботу 28 ноября в 18:30; ёлку зажгут в воскресенье в 19:00.</span>
           <span class="pc-foot"><span class="ev-date">28–29 ноя</span><span class="ev-city">Никосия</span></span>
         </a>
-        <a class="pc" href="#e-malysh-ded-moroz-teatr-sna-2026-11-28" data-id="e-malysh-ded-moroz-teatr-sna-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-28 2026-11-29" data-ru="1" data-q="«малыш дед мороз» — театр сна sinergio theatre лимассол детям" hidden>
+        <a class="pc" href="#e-malysh-ded-moroz-teatr-sna-2026-11-28" data-id="e-malysh-ded-moroz-teatr-sna-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-28 2026-11-29" data-ru="1" data-q="«малыш дед мороз» — театр сна sinergio theatre лимассол детям синергио театре" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16c-3.5 0-6-3.4-6-7a6 6 0 0 1 12 0c0 3.6-2.5 7-6 7zM11 17.5h2L12 16zM12 17.5c-1.5 1.5 1.5 2.5 0 4.5"/></svg>Детям</span>
           <span class="pc-title">«Малыш Дед Мороз» — Театр Сна</span>
           <span class="pc-why">Русскоязычное интерактивное представление для детей 4–10 лет, 50 минут.</span>
           <span class="pc-foot"><span class="ev-date">28–29 ноя</span><span class="ev-city">Лимассол</span><span class="ev-tags"><span class="tag ru">На русском</span></span></span>
         </a>
-        <a class="pc" href="#e-priezzhayte-v-gosti-teatr-sna-2026-11-28" data-id="e-priezzhayte-v-gosti-teatr-sna-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-28 2026-11-29" data-ru="1" data-q="«приезжайте в гости!» — театр сна sinergio theatre лимассол детям" hidden>
+        <a class="pc" href="#e-priezzhayte-v-gosti-teatr-sna-2026-11-28" data-id="e-priezzhayte-v-gosti-teatr-sna-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-28 2026-11-29" data-ru="1" data-q="«приезжайте в гости!» — театр сна sinergio theatre лимассол детям синергио театре" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16c-3.5 0-6-3.4-6-7a6 6 0 0 1 12 0c0 3.6-2.5 7-6 7zM11 17.5h2L12 16zM12 17.5c-1.5 1.5 1.5 2.5 0 4.5"/></svg>Детям</span>
           <span class="pc-title">«Приезжайте в гости!» — Театр Сна</span>
           <span class="pc-why">Интерактивный русскоязычный спектакль для детей 2–7 лет; билеты €20 взрослый / €25 ребёнок.</span>
           <span class="pc-foot"><span class="ev-date">28–29 ноя</span><span class="ev-city">Лимассол</span><span class="ev-tags"><span class="tag ru">На русском</span></span></span>
         </a>
-        <a class="pc" href="#e-balet-schelkunchik-2026-11-28" data-id="e-balet-schelkunchik-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="14:30" data-prio="1" data-reg="Лимассол" data-q="балет «щелкунчик» pattihio theatre лимассол зажжение огней" hidden>
+        <a class="pc" href="#e-balet-schelkunchik-2026-11-28" data-id="e-balet-schelkunchik-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="14:30" data-prio="1" data-reg="Лимассол" data-q="балет «щелкунчик» pattihio theatre лимассол зажжение огней паттихио театре" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Балет «Щелкунчик»</span>
           <span class="pc-why">Классический рождественский балет; билеты от €49.</span>
@@ -424,7 +430,7 @@
           <span class="pc-why">Муниципальная программа: с 16:30 молодёжный оркестр филармонии, в 17:30 — филармония с Софией Манусаки; вход бесплатный.</span>
           <span class="pc-foot"><span class="ev-date">сб, 28 ноя</span><span class="ev-city">Лимассол</span><span class="ev-tags"><span class="tag free">Бесплатно</span></span></span>
         </a>
-        <a class="pc" href="#e-kostis-maraveyas-shou-dronov-otkrytie-rozhdestva-2026-11-28" data-id="e-kostis-maraveyas-shou-dronov-otkrytie-rozhdestva-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="17:30" data-prio="1" data-reg="Ларнака" data-q="костис маравеяс + шоу дронов: открытие рождества europe square ларнака зажжение огней" hidden>
+        <a class="pc" href="#e-kostis-maraveyas-shou-dronov-otkrytie-rozhdestva-2026-11-28" data-id="e-kostis-maraveyas-shou-dronov-otkrytie-rozhdestva-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="17:30" data-prio="1" data-reg="Ларнака" data-q="костис маравеяс + шоу дронов: открытие рождества europe square ларнака зажжение огней еуропе скуаре" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Костис Маравеяс + шоу дронов: открытие Рождества</span>
           <span class="pc-why">Городское зажжение ёлки: выступления музыкальных и танцевальных коллективов, Drone Light Show и большой концерт Костиса Маравеяса.</span>
@@ -436,13 +442,13 @@
           <span class="pc-why">Праздничный полёт дронов; точное время ещё не объявлено.</span>
           <span class="pc-foot"><span class="ev-date">вс, 29 ноя</span><span class="ev-city">Никосия</span></span>
         </a>
-        <a class="pc" href="#e-balet-schelkunchik-2026-11-29" data-id="e-balet-schelkunchik-2026-11-29" data-kind="christmas-lights" data-start="2026-11-29" data-end="2026-11-29" data-time="15:00" data-prio="1" data-reg="Никосия" data-q="балет «щелкунчик» municipal theatre никосия зажжение огней" hidden>
+        <a class="pc" href="#e-balet-schelkunchik-2026-11-29" data-id="e-balet-schelkunchik-2026-11-29" data-kind="christmas-lights" data-start="2026-11-29" data-end="2026-11-29" data-time="15:00" data-prio="1" data-reg="Никосия" data-q="балет «щелкунчик» municipal theatre никосия зажжение огней муникипал театре" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Зажжение огней</span>
           <span class="pc-title">Балет «Щелкунчик»</span>
           <span class="pc-why">Классический рождественский балет; билеты от €49.</span>
           <span class="pc-foot"><span class="ev-date">вс, 29 ноя</span><span class="ev-city">Никосия</span></span>
         </a>
-        <a class="pc" href="#e-rozhdestvenskoe-otkrytie-nikosii-2026-11-29" data-id="e-rozhdestvenskoe-otkrytie-nikosii-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="18:30" data-prio="1" data-reg="Никосия" data-free="1" data-q="рождественское открытие никосии eleftheria square никосия праздник" hidden>
+        <a class="pc" href="#e-rozhdestvenskoe-otkrytie-nikosii-2026-11-29" data-id="e-rozhdestvenskoe-otkrytie-nikosii-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="18:30" data-prio="1" data-reg="Никосия" data-free="1" data-q="рождественское открытие никосии eleftheria square никосия праздник елефтериа скуаре" hidden>
           <span class="ev-type"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="10.5" width="16" height="9.5" rx="1"/><rect x="3" y="7" width="18" height="3.5" rx="1"/><path d="M12 7v13M12 7c-1.2-3.2-5.5-3.6-4.8-.6M12 7c1.2-3.2 5.5-3.6 4.8-.6"/></svg>Праздник</span>
           <span class="pc-title">Рождественское открытие Никосии</span>
           <span class="pc-why">Бесплатный концерт Петроса Иаковидиса на площади Элефтерия в рамках городского праздничного открытия.</span>
@@ -451,10 +457,12 @@
       </div>
     </section>
 
+    <a class="xbanner to-afisha" href="/cyprus/afisha/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/></svg><span><b>Вся афиша Кипра</b><small>Концерты, спектакли, выставки и детские события на неделю</small></span><span class="go" aria-hidden="true">→</span></a>
+
     <div class="lhead"><h2 id="list-h">Все события</h2><span id="count" aria-live="polite"></span></div>
     <div id="list">
       <ul class="evs" id="evs">
-        <li data-id="e-limassol-christmas-land-2026-11-20" data-kind="christmas-parks" data-start="2026-11-20" data-end="2027-01-17" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-q="limassol christmas land старый порт и площадь какоянни лимассол рождественский парк">
+        <li data-id="e-limassol-christmas-land-2026-11-20" data-kind="christmas-parks" data-start="2026-11-20" data-end="2027-01-17" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-q="limassol christmas land старый порт и площадь какоянни лимассол рождественский парк лимассол чристмас ланд">
           <a class="ev" href="#e-limassol-christmas-land-2026-11-20" data-id="e-limassol-christmas-land-2026-11-20">
             <span class="ev-title">Limassol Christmas Land</span>
             <span class="ev-meta">
@@ -464,7 +472,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-santa-park-fest-2026-11-20" data-kind="christmas-parks" data-start="2026-11-20" data-end="2026-11-22" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-free="1" data-q="santa park fest kolossi park колосси (лимассол) рождественский парк">
+        <li data-id="e-santa-park-fest-2026-11-20" data-kind="christmas-parks" data-start="2026-11-20" data-end="2026-11-22" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-free="1" data-q="santa park fest kolossi park колосси (лимассол) рождественский парк санта парк фест колосси парк">
           <a class="ev" href="#e-santa-park-fest-2026-11-20" data-id="e-santa-park-fest-2026-11-20">
             <span class="ev-title">Santa Park Fest</span>
             <span class="ev-meta">
@@ -474,7 +482,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-agros-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня агрос christmas village: агрос площадь каурас агрос рождественская деревня">
+        <li data-id="e-christmas-village-agros-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня агрос christmas village: агрос площадь каурас агрос рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-agros-2026-11-21" data-id="e-christmas-village-agros-2026-11-21">
             <span class="ev-title">Рождественская деревня Агрос</span>
             <span class="ev-meta">
@@ -484,7 +492,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-deriniya-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Айя-Напа и Протарас" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня дериния christmas village: дериния площадь панагии дериния рождественская деревня">
+        <li data-id="e-christmas-village-deriniya-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Айя-Напа и Протарас" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня дериния christmas village: дериния площадь панагии дериния рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-deriniya-2026-11-21" data-id="e-christmas-village-deriniya-2026-11-21">
             <span class="ev-title">Рождественская деревня Дериния</span>
             <span class="ev-meta">
@@ -494,7 +502,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-fikardu-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Никосия" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня фикарду christmas village: фикарду рождественская деревня фикарду рождественская деревня">
+        <li data-id="e-christmas-village-fikardu-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Никосия" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня фикарду christmas village: фикарду рождественская деревня фикарду рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-fikardu-2026-11-21" data-id="e-christmas-village-fikardu-2026-11-21">
             <span class="ev-title">Рождественская деревня Фикарду</span>
             <span class="ev-meta">
@@ -504,7 +512,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-kakopetriya-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня какопетрия christmas village: какопетрия рождественская деревня какопетрия рождественская деревня">
+        <li data-id="e-christmas-village-kakopetriya-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня какопетрия christmas village: какопетрия рождественская деревня какопетрия рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-kakopetriya-2026-11-21" data-id="e-christmas-village-kakopetriya-2026-11-21">
             <span class="ev-title">Рождественская деревня Какопетрия</span>
             <span class="ev-meta">
@@ -514,7 +522,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-kalopanayotis-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня калопанайотис christmas village: калопанайотис рождественская деревня калопанайотис рождественская деревня">
+        <li data-id="e-christmas-village-kalopanayotis-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня калопанайотис christmas village: калопанайотис рождественская деревня калопанайотис рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-kalopanayotis-2026-11-21" data-id="e-christmas-village-kalopanayotis-2026-11-21">
             <span class="ev-title">Рождественская деревня Калопанайотис</span>
             <span class="ev-meta">
@@ -524,7 +532,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-kiperunda-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня киперунда christmas village: киперунда рождественская деревня киперунда рождественская деревня">
+        <li data-id="e-christmas-village-kiperunda-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Троодос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня киперунда christmas village: киперунда рождественская деревня киперунда рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-kiperunda-2026-11-21" data-id="e-christmas-village-kiperunda-2026-11-21">
             <span class="ev-title">Рождественская деревня Киперунда</span>
             <span class="ev-meta">
@@ -534,7 +542,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-lefkara-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Ларнака" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня лефкара christmas village: лефкара рождественская деревня лефкара рождественская деревня">
+        <li data-id="e-christmas-village-lefkara-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Ларнака" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня лефкара christmas village: лефкара рождественская деревня лефкара рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-lefkara-2026-11-21" data-id="e-christmas-village-lefkara-2026-11-21">
             <span class="ev-title">Рождественская деревня Лефкара</span>
             <span class="ev-meta">
@@ -544,7 +552,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-lofu-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня лофу christmas village: лофу начальная школа лофу рождественская деревня">
+        <li data-id="e-christmas-village-lofu-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня лофу christmas village: лофу начальная школа лофу рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-lofu-2026-11-21" data-id="e-christmas-village-lofu-2026-11-21">
             <span class="ev-title">Рождественская деревня Лофу</span>
             <span class="ev-meta">
@@ -554,7 +562,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-village-statos-ayos-fotios-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Пафос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня статос–айос-фотиос christmas village: статос–айос-фотиос рождественская деревня статос–айос-фотиос рождественская деревня">
+        <li data-id="e-christmas-village-statos-ayos-fotios-2026-11-21" data-kind="christmas-villages" data-start="2026-11-21" data-end="2027-01-06" data-time="" data-prio="1" data-reg="Пафос" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-11 2026-12-12 2026-12-13 2026-12-18 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-25 2026-12-26 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31 2027-01-01 2027-01-02 2027-01-03 2027-01-04 2027-01-05 2027-01-06" data-q="рождественская деревня статос–айос-фотиос christmas village: статос–айос-фотиос рождественская деревня статос–айос-фотиос рождественская деревня чристмас виллаге">
           <a class="ev" href="#e-christmas-village-statos-ayos-fotios-2026-11-21" data-id="e-christmas-village-statos-ayos-fotios-2026-11-21">
             <span class="ev-title">Рождественская деревня Статос–Айос-Фотиос</span>
             <span class="ev-meta">
@@ -564,7 +572,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-pinocchio-christmas-theme-park-2026-11-21" data-kind="christmas-parks" data-start="2026-11-21" data-end="2027-01-31" data-time="" data-prio="1" data-reg="Айя-Напа и Протарас" data-long="1" data-q="pinocchio christmas theme park паралимни рождественский парк">
+        <li data-id="e-pinocchio-christmas-theme-park-2026-11-21" data-kind="christmas-parks" data-start="2026-11-21" data-end="2027-01-31" data-time="" data-prio="1" data-reg="Айя-Напа и Протарас" data-long="1" data-q="pinocchio christmas theme park паралимни рождественский парк пинокчио чристмас теме парк">
           <a class="ev" href="#e-pinocchio-christmas-theme-park-2026-11-21" data-id="e-pinocchio-christmas-theme-park-2026-11-21">
             <span class="ev-title">Pinocchio Christmas Theme Park</span>
             <span class="ev-meta">
@@ -574,7 +582,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="15:00" data-prio="1" data-reg="Никосия|Лимассол|Пафос" data-free="1" data-q="alphamega: рождественские праздники alphamega: рождественские праздники сразу в четырех городских точках никосия, лимассол, пафос · 4 магазина alphamega несколько городов зажжение огней">
+        <li data-id="e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="15:00" data-prio="1" data-reg="Никосия|Лимассол|Пафос" data-free="1" data-q="alphamega: рождественские праздники alphamega: рождественские праздники сразу в четырех городских точках никосия, лимассол, пафос · 4 магазина alphamega несколько городов зажжение огней алфамега алфамега алфамега">
           <a class="ev" href="#e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21" data-id="e-alphamega-rozhdestvenskie-prazdniki-srazu-v-chetyreh-gorodsk-2026-11-21">
             <span class="ev-title">Alphamega: рождественские праздники</span>
             <span class="ev-meta">
@@ -584,7 +592,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-prio="1" data-reg="Лимассол" data-free="1" data-q="зажжение елки в limassol marina christmas on the sea: зажжение елки limassol marina лимассол зажжение огней">
+        <li data-id="e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21" data-kind="christmas-lights" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-prio="1" data-reg="Лимассол" data-free="1" data-q="зажжение елки в limassol marina christmas on the sea: зажжение елки limassol marina лимассол зажжение огней лимассол марина чристмас он те сеа лимассол марина">
           <a class="ev" href="#e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21" data-id="e-christmas-on-the-sea-zazhzhenie-elki-2026-11-21">
             <span class="ev-title">Зажжение ёлки в Limassol Marina</span>
             <span class="ev-meta">
@@ -594,7 +602,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22" data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="16:00" data-prio="1" data-reg="Лимассол" data-q="праздничное включение огней mymall mymall, вход b лимассол зажжение огней">
+        <li data-id="e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22" data-kind="christmas-lights" data-start="2026-11-22" data-end="2026-11-22" data-time="16:00" data-prio="1" data-reg="Лимассол" data-q="праздничное включение огней mymall mymall, вход b лимассол зажжение огней мималл мималл б">
           <a class="ev" href="#e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22" data-id="e-prazdnichnoe-vklyuchenie-ogney-mymall-2026-11-22">
             <span class="ev-title">Праздничное включение огней MyMall</span>
             <span class="ev-meta">
@@ -604,7 +612,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22" data-kind="christmas-markets" data-start="2026-11-22" data-end="2026-11-22" data-time="17:00" data-prio="1" data-reg="Никосия" data-free="1" data-q="открытие рождественской ярмарки открытие рождественской ярмарки / marseaux mall of cyprus (парковка 1-го этажа) никосия ярмарка">
+        <li data-id="e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22" data-kind="christmas-markets" data-start="2026-11-22" data-end="2026-11-22" data-time="17:00" data-prio="1" data-reg="Никосия" data-free="1" data-q="открытие рождественской ярмарки открытие рождественской ярмарки / marseaux mall of cyprus (парковка 1-го этажа) никосия ярмарка марсеаукс малл оф кипрус">
           <a class="ev" href="#e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22" data-id="e-otkrytie-rozhdestvenskoy-yarmarki-marseaux-2026-11-22">
             <span class="ev-title">Открытие рождественской ярмарки</span>
             <span class="ev-meta">
@@ -624,7 +632,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-rozhdestvenskiy-parad-i-vklyuchenie-ogney-2026-11-27" data-kind="christmas-lights" data-start="2026-11-27" data-end="2026-11-27" data-time="18:30" data-prio="1" data-reg="Пафос" data-free="1" data-q="рождественский парад и включение огней griva digeni avenue / kennedy square пафос зажжение огней">
+        <li data-id="e-rozhdestvenskiy-parad-i-vklyuchenie-ogney-2026-11-27" data-kind="christmas-lights" data-start="2026-11-27" data-end="2026-11-27" data-time="18:30" data-prio="1" data-reg="Пафос" data-free="1" data-q="рождественский парад и включение огней griva digeni avenue / kennedy square пафос зажжение огней грива дигени авенуе кеннеди скуаре">
           <a class="ev" href="#e-rozhdestvenskiy-parad-i-vklyuchenie-ogney-2026-11-27" data-id="e-rozhdestvenskiy-parad-i-vklyuchenie-ogney-2026-11-27">
             <span class="ev-title">Рождественский парад и включение огней</span>
             <span class="ev-meta">
@@ -634,7 +642,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-marseaux-koncert-na-otkrytii-christmas-land-2026-11-27" data-kind="christmas-lights" data-start="2026-11-27" data-end="2026-11-27" data-time="20:00" data-prio="1" data-reg="Лимассол" data-q="marseaux: концерт на открытии christmas land christmas land, старый порт лимассол зажжение огней">
+        <li data-id="e-marseaux-koncert-na-otkrytii-christmas-land-2026-11-27" data-kind="christmas-lights" data-start="2026-11-27" data-end="2026-11-27" data-time="20:00" data-prio="1" data-reg="Лимассол" data-q="marseaux: концерт на открытии christmas land christmas land, старый порт лимассол зажжение огней марсеаукс чристмас ланд чристмас ланд">
           <a class="ev" href="#e-marseaux-koncert-na-otkrytii-christmas-land-2026-11-27" data-id="e-marseaux-koncert-na-otkrytii-christmas-land-2026-11-27">
             <span class="ev-title">Marseaux: концерт на открытии Christmas Land</span>
             <span class="ev-meta">
@@ -644,7 +652,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-street-festival-8-ya-yarmarka-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-free="1" data-q="christmas street festival: 8-я ярмарка holy cathedral of virgin mary pantanassis лимассол ярмарка">
+        <li data-id="e-christmas-street-festival-8-ya-yarmarka-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-free="1" data-q="christmas street festival: 8-я ярмарка holy cathedral of virgin mary pantanassis лимассол ярмарка чристмас стрит фестивал холи катедрал оф виргин мари пантанассис">
           <a class="ev" href="#e-christmas-street-festival-8-ya-yarmarka-2026-11-28" data-id="e-christmas-street-festival-8-ya-yarmarka-2026-11-28">
             <span class="ev-title">Christmas Street Festival: 8-я ярмарка</span>
             <span class="ev-meta">
@@ -654,7 +662,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-engomi-christmas-street-fest-alcatrash-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Никосия" data-long="1" data-q="engomi christmas street fest + alcatrash возле mall of engomi, 28 oktovriou avenue никосия зажжение огней">
+        <li data-id="e-engomi-christmas-street-fest-alcatrash-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Никосия" data-long="1" data-q="engomi christmas street fest + alcatrash возле mall of engomi, 28 oktovriou avenue никосия зажжение огней енгоми чристмас стрит фест алкатраш малл оф енгоми октовриу авенуе">
           <a class="ev" href="#e-engomi-christmas-street-fest-alcatrash-2026-11-28" data-id="e-engomi-christmas-street-fest-alcatrash-2026-11-28">
             <span class="ev-title">Engomi Christmas Street Fest + Alcatrash</span>
             <span class="ev-meta">
@@ -664,7 +672,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-malysh-ded-moroz-teatr-sna-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-28 2026-11-29" data-ru="1" data-q="«малыш дед мороз» — театр сна sinergio theatre лимассол детям">
+        <li data-id="e-malysh-ded-moroz-teatr-sna-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-28 2026-11-29" data-ru="1" data-q="«малыш дед мороз» — театр сна sinergio theatre лимассол детям синергио театре">
           <a class="ev" href="#e-malysh-ded-moroz-teatr-sna-2026-11-28" data-id="e-malysh-ded-moroz-teatr-sna-2026-11-28">
             <span class="ev-title">«Малыш Дед Мороз» — Театр Сна</span>
             <span class="ev-meta">
@@ -674,7 +682,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-priezzhayte-v-gosti-teatr-sna-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-28 2026-11-29" data-ru="1" data-q="«приезжайте в гости!» — театр сна sinergio theatre лимассол детям">
+        <li data-id="e-priezzhayte-v-gosti-teatr-sna-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="1" data-reg="Лимассол" data-long="1" data-days="2026-11-28 2026-11-29" data-ru="1" data-q="«приезжайте в гости!» — театр сна sinergio theatre лимассол детям синергио театре">
           <a class="ev" href="#e-priezzhayte-v-gosti-teatr-sna-2026-11-28" data-id="e-priezzhayte-v-gosti-teatr-sna-2026-11-28">
             <span class="ev-title">«Приезжайте в гости!» — Театр Сна</span>
             <span class="ev-meta">
@@ -684,7 +692,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-balet-schelkunchik-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="14:30" data-prio="1" data-reg="Лимассол" data-q="балет «щелкунчик» pattihio theatre лимассол зажжение огней">
+        <li data-id="e-balet-schelkunchik-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="14:30" data-prio="1" data-reg="Лимассол" data-q="балет «щелкунчик» pattihio theatre лимассол зажжение огней паттихио театре">
           <a class="ev" href="#e-balet-schelkunchik-2026-11-28" data-id="e-balet-schelkunchik-2026-11-28">
             <span class="ev-title">Балет «Щелкунчик»</span>
             <span class="ev-meta">
@@ -704,7 +712,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-kostis-maraveyas-shou-dronov-otkrytie-rozhdestva-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="17:30" data-prio="1" data-reg="Ларнака" data-q="костис маравеяс + шоу дронов: открытие рождества europe square ларнака зажжение огней">
+        <li data-id="e-kostis-maraveyas-shou-dronov-otkrytie-rozhdestva-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="17:30" data-prio="1" data-reg="Ларнака" data-q="костис маравеяс + шоу дронов: открытие рождества europe square ларнака зажжение огней еуропе скуаре">
           <a class="ev" href="#e-kostis-maraveyas-shou-dronov-otkrytie-rozhdestva-2026-11-28" data-id="e-kostis-maraveyas-shou-dronov-otkrytie-rozhdestva-2026-11-28">
             <span class="ev-title">Костис Маравеяс + шоу дронов: открытие Рождества</span>
             <span class="ev-meta">
@@ -724,7 +732,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-balet-schelkunchik-2026-11-29" data-kind="christmas-lights" data-start="2026-11-29" data-end="2026-11-29" data-time="15:00" data-prio="1" data-reg="Никосия" data-q="балет «щелкунчик» municipal theatre никосия зажжение огней">
+        <li data-id="e-balet-schelkunchik-2026-11-29" data-kind="christmas-lights" data-start="2026-11-29" data-end="2026-11-29" data-time="15:00" data-prio="1" data-reg="Никосия" data-q="балет «щелкунчик» municipal theatre никосия зажжение огней муникипал театре">
           <a class="ev" href="#e-balet-schelkunchik-2026-11-29" data-id="e-balet-schelkunchik-2026-11-29">
             <span class="ev-title">Балет «Щелкунчик»</span>
             <span class="ev-meta">
@@ -734,7 +742,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-rozhdestvenskoe-otkrytie-nikosii-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="18:30" data-prio="1" data-reg="Никосия" data-free="1" data-q="рождественское открытие никосии eleftheria square никосия праздник">
+        <li data-id="e-rozhdestvenskoe-otkrytie-nikosii-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="18:30" data-prio="1" data-reg="Никосия" data-free="1" data-q="рождественское открытие никосии eleftheria square никосия праздник елефтериа скуаре">
           <a class="ev" href="#e-rozhdestvenskoe-otkrytie-nikosii-2026-11-29" data-id="e-rozhdestvenskoe-otkrytie-nikosii-2026-11-29">
             <span class="ev-title">Рождественское открытие Никосии</span>
             <span class="ev-meta">
@@ -744,7 +752,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-nicosia-christmas-fairyland-paramythoupoli-2026-11-13" data-kind="christmas-parks" data-start="2026-11-13" data-end="2027-01-10" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-q="nicosia christmas fairyland nicosia christmas fairyland / paramythoupoli ров д’авила возле старого города никосия рождественский парк">
+        <li data-id="e-nicosia-christmas-fairyland-paramythoupoli-2026-11-13" data-kind="christmas-parks" data-start="2026-11-13" data-end="2027-01-10" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-q="nicosia christmas fairyland nicosia christmas fairyland / paramythoupoli ров д’авила возле старого города никосия рождественский парк никосиа чристмас фаириланд никосиа чристмас фаириланд парамитуполи">
           <a class="ev" href="#e-nicosia-christmas-fairyland-paramythoupoli-2026-11-13" data-id="e-nicosia-christmas-fairyland-paramythoupoli-2026-11-13">
             <span class="ev-title">Nicosia Christmas Fairyland</span>
             <span class="ev-meta">
@@ -754,7 +762,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-master-klass-rozhdestvenskie-noski-roditel-rebenok-2026-11-20" data-kind="christmas-other" data-start="2026-11-20" data-end="2026-11-21" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-q="мастер-класс: рождественские носки мастер-класс: рождественские носки, родитель + ребенок yfantourgeio theworkplace никосия мастер-класс">
+        <li data-id="e-master-klass-rozhdestvenskie-noski-roditel-rebenok-2026-11-20" data-kind="christmas-other" data-start="2026-11-20" data-end="2026-11-21" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-q="мастер-класс: рождественские носки мастер-класс: рождественские носки, родитель + ребенок yfantourgeio theworkplace никосия мастер-класс ифантургеио теворкплаке">
           <a class="ev" href="#e-master-klass-rozhdestvenskie-noski-roditel-rebenok-2026-11-20" data-id="e-master-klass-rozhdestvenskie-noski-roditel-rebenok-2026-11-20">
             <span class="ev-title">Мастер-класс: рождественские носки</span>
             <span class="ev-meta">
@@ -764,7 +772,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-master-klass-keramicheskaya-elka-2026-11-20" data-kind="christmas-other" data-start="2026-11-20" data-end="2026-11-20" data-time="18:00" data-prio="2" data-reg="Лимассол" data-q="мастер-класс: керамическая елка meltemi creative areas лимассол мастер-класс">
+        <li data-id="e-master-klass-keramicheskaya-elka-2026-11-20" data-kind="christmas-other" data-start="2026-11-20" data-end="2026-11-20" data-time="18:00" data-prio="2" data-reg="Лимассол" data-q="мастер-класс: керамическая елка meltemi creative areas лимассол мастер-класс мелтеми креативе ареас">
           <a class="ev" href="#e-master-klass-keramicheskaya-elka-2026-11-20" data-id="e-master-klass-keramicheskaya-elka-2026-11-20">
             <span class="ev-title">Мастер-класс: керамическая ёлка</span>
             <span class="ev-meta">
@@ -774,7 +782,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-mall-of-cyprus-prazdnichnyy-market-2026-11-21" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-12-31" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-12 2026-12-13 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31" data-free="1" data-q="mall of cyprus: праздничный маркет mall of cyprus никосия ярмарка">
+        <li data-id="e-mall-of-cyprus-prazdnichnyy-market-2026-11-21" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-12-31" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-days="2026-11-21 2026-11-22 2026-11-28 2026-11-29 2026-12-05 2026-12-06 2026-12-12 2026-12-13 2026-12-19 2026-12-20 2026-12-21 2026-12-22 2026-12-23 2026-12-24 2026-12-27 2026-12-28 2026-12-29 2026-12-30 2026-12-31" data-free="1" data-q="mall of cyprus: праздничный маркет mall of cyprus никосия ярмарка малл оф кипрус малл оф кипрус">
           <a class="ev" href="#e-mall-of-cyprus-prazdnichnyy-market-2026-11-21" data-id="e-mall-of-cyprus-prazdnichnyy-market-2026-11-21">
             <span class="ev-title">Mall of Cyprus: праздничный маркет</span>
             <span class="ev-meta">
@@ -784,7 +792,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-bazaar-for-little-heroes-2026-11-21" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="09:00" data-prio="2" data-reg="Лимассол" data-q="благотворительный базар в замке колосси christmas bazaar for little heroes замок колосси колосси ярмарка">
+        <li data-id="e-christmas-bazaar-for-little-heroes-2026-11-21" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="09:00" data-prio="2" data-reg="Лимассол" data-q="благотворительный базар в замке колосси christmas bazaar for little heroes замок колосси колосси ярмарка чристмас базаар фор литтле хероес">
           <a class="ev" href="#e-christmas-bazaar-for-little-heroes-2026-11-21" data-id="e-christmas-bazaar-for-little-heroes-2026-11-21">
             <span class="ev-title">Благотворительный базар в замке Колосси</span>
             <span class="ev-meta">
@@ -794,7 +802,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-prazdnichnaya-yarmarka-anthologion-2026-11-21" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="10:00" data-prio="2" data-reg="Лимассол" data-q="праздничный день в бутике anthologion праздничная ярмарка anthologion anthologion floral boutique лимассол ярмарка">
+        <li data-id="e-prazdnichnaya-yarmarka-anthologion-2026-11-21" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="10:00" data-prio="2" data-reg="Лимассол" data-q="праздничный день в бутике anthologion праздничная ярмарка anthologion anthologion floral boutique лимассол ярмарка антологион антологион антологион флорал бутикуе">
           <a class="ev" href="#e-prazdnichnaya-yarmarka-anthologion-2026-11-21" data-id="e-prazdnichnaya-yarmarka-anthologion-2026-11-21">
             <span class="ev-title">Праздничный день в бутике Anthologion</span>
             <span class="ev-meta">
@@ -804,7 +812,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-at-costas-argyrou-museum-2026-11-21" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="10:30" data-prio="2" data-reg="Ларнака" data-free="1" data-q="рождество в музее костаса аргиру christmas at costas argyrou museum музей костаса аргиру ларнака праздник">
+        <li data-id="e-christmas-at-costas-argyrou-museum-2026-11-21" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="10:30" data-prio="2" data-reg="Ларнака" data-free="1" data-q="рождество в музее костаса аргиру christmas at costas argyrou museum музей костаса аргиру ларнака праздник чристмас ат костас аргиру мусеум">
           <a class="ev" href="#e-christmas-at-costas-argyrou-museum-2026-11-21" data-id="e-christmas-at-costas-argyrou-museum-2026-11-21">
             <span class="ev-title">Рождество в музее Костаса Аргиру</span>
             <span class="ev-meta">
@@ -814,7 +822,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-lodka-dobra-karavi-tis-prosforas-2026-11-21" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="11:00" data-prio="2" data-reg="Айя-Напа и Протарас" data-q="благотворительный праздник «лодка добра» «лодка добра» / karavi tis prosforas муниципальный музей thalassa айя-напа праздник">
+        <li data-id="e-lodka-dobra-karavi-tis-prosforas-2026-11-21" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="11:00" data-prio="2" data-reg="Айя-Напа и Протарас" data-q="благотворительный праздник «лодка добра» «лодка добра» / karavi tis prosforas муниципальный музей thalassa айя-напа праздник карави тис просфорас таласса">
           <a class="ev" href="#e-lodka-dobra-karavi-tis-prosforas-2026-11-21" data-id="e-lodka-dobra-karavi-tis-prosforas-2026-11-21">
             <span class="ev-title">Благотворительный праздник «Лодка добра»</span>
             <span class="ev-meta">
@@ -824,7 +832,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-sense-by-the-beach-christmas-market-2026-11-21" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="11:00" data-prio="2" data-reg="Пафос" data-q="рождественский маркет sense by the beach sense by the beach christmas market sense by the beach пафос ярмарка">
+        <li data-id="e-sense-by-the-beach-christmas-market-2026-11-21" data-kind="christmas-markets" data-start="2026-11-21" data-end="2026-11-21" data-time="11:00" data-prio="2" data-reg="Пафос" data-q="рождественский маркет sense by the beach sense by the beach christmas market sense by the beach пафос ярмарка сенсе би те беач сенсе би те беач чристмас маркет сенсе би те беач">
           <a class="ev" href="#e-sense-by-the-beach-christmas-market-2026-11-21" data-id="e-sense-by-the-beach-christmas-market-2026-11-21">
             <span class="ev-title">Рождественский маркет SENSE by the Beach</span>
             <span class="ev-meta">
@@ -834,7 +842,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-tree-workshop-tekstilnaya-3d-elka-2026-11-21" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-prio="2" data-reg="Никосия" data-free="1" data-q="мастер-класс: текстильная елка christmas tree workshop: текстильная 3d-елка кампус university of cyprus никосия мастер-класс">
+        <li data-id="e-christmas-tree-workshop-tekstilnaya-3d-elka-2026-11-21" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="16:00" data-prio="2" data-reg="Никосия" data-free="1" data-q="мастер-класс: текстильная елка christmas tree workshop: текстильная 3d-елка кампус university of cyprus никосия мастер-класс чристмас три воркшоп д- университи оф кипрус">
           <a class="ev" href="#e-christmas-tree-workshop-tekstilnaya-3d-elka-2026-11-21" data-id="e-christmas-tree-workshop-tekstilnaya-3d-elka-2026-11-21">
             <span class="ev-title">Мастер-класс: текстильная ёлка</span>
             <span class="ev-meta">
@@ -854,7 +862,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-rozhdestvenskiy-blagotvoritelnyy-koncert-rotary-2026-11-21" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="19:00" data-prio="2" data-reg="Ларнака" data-q="рождественский концерт rotary рождественский благотворительный концерт rotary municipal theatre g. lykourgos ларнака концерт">
+        <li data-id="e-rozhdestvenskiy-blagotvoritelnyy-koncert-rotary-2026-11-21" data-kind="christmas-other" data-start="2026-11-21" data-end="2026-11-21" data-time="19:00" data-prio="2" data-reg="Ларнака" data-q="рождественский концерт rotary рождественский благотворительный концерт rotary municipal theatre g. lykourgos ларнака концерт ротари ротари муникипал театре г ликургос">
           <a class="ev" href="#e-rozhdestvenskiy-blagotvoritelnyy-koncert-rotary-2026-11-21" data-id="e-rozhdestvenskiy-blagotvoritelnyy-koncert-rotary-2026-11-21">
             <span class="ev-title">Рождественский концерт Rotary</span>
             <span class="ev-meta">
@@ -864,7 +872,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-volshebnaya-lampa-rozhdestva-2026-11-22" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="11:00" data-prio="2" data-reg="Пафос" data-q="спектакль «волшебная лампа рождества» «волшебная лампа рождества» markideio theatre пафос детям">
+        <li data-id="e-volshebnaya-lampa-rozhdestva-2026-11-22" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="11:00" data-prio="2" data-reg="Пафос" data-q="спектакль «волшебная лампа рождества» «волшебная лампа рождества» markideio theatre пафос детям маркидеио театре">
           <a class="ev" href="#e-volshebnaya-lampa-rozhdestva-2026-11-22" data-id="e-volshebnaya-lampa-rozhdestva-2026-11-22">
             <span class="ev-title">Спектакль «Волшебная лампа Рождества»</span>
             <span class="ev-meta">
@@ -874,7 +882,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-akaki-christmas-2026-2026-11-22" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="12:00" data-prio="2" data-reg="Никосия" data-free="1" data-q="рождественский праздник в акаки akaki christmas 2026 главная площадь акаки праздник">
+        <li data-id="e-akaki-christmas-2026-2026-11-22" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="12:00" data-prio="2" data-reg="Никосия" data-free="1" data-q="рождественский праздник в акаки akaki christmas 2026 главная площадь акаки праздник акаки чристмас">
           <a class="ev" href="#e-akaki-christmas-2026-2026-11-22" data-id="e-akaki-christmas-2026-2026-11-22">
             <span class="ev-title">Рождественский праздник в Акаки</span>
             <span class="ev-meta">
@@ -914,7 +922,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-stocking-painting-2026-11-22" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="16:30" data-prio="2" data-reg="Ларнака" data-q="мастер-класс: роспись носков christmas stocking painting old market street ларнака мастер-класс">
+        <li data-id="e-christmas-stocking-painting-2026-11-22" data-kind="christmas-other" data-start="2026-11-22" data-end="2026-11-22" data-time="16:30" data-prio="2" data-reg="Ларнака" data-q="мастер-класс: роспись носков christmas stocking painting old market street ларнака мастер-класс чристмас стокинг паинтинг олд маркет стрит">
           <a class="ev" href="#e-christmas-stocking-painting-2026-11-22" data-id="e-christmas-stocking-painting-2026-11-22">
             <span class="ev-title">Мастер-класс: роспись носков</span>
             <span class="ev-meta">
@@ -934,7 +942,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-market-on-campus-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-free="1" data-q="unic christmas spirit: рождественская деревня christmas market on campus university of nicosia никосия ярмарка">
+        <li data-id="e-christmas-market-on-campus-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-free="1" data-q="unic christmas spirit: рождественская деревня christmas market on campus university of nicosia никосия ярмарка уник чристмас спирит чристмас маркет он кампус университи оф никосиа">
           <a class="ev" href="#e-christmas-market-on-campus-2026-11-28" data-id="e-christmas-market-on-campus-2026-11-28">
             <span class="ev-title">UNIC Christmas Spirit: рождественская деревня</span>
             <span class="ev-meta">
@@ -944,7 +952,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-elves-come-to-engomi-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-q="elves come to engomi парк павлоса иисуса энгоми праздник">
+        <li data-id="e-elves-come-to-engomi-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-q="elves come to engomi парк павлоса иисуса энгоми праздник елвес коме то енгоми">
           <a class="ev" href="#e-elves-come-to-engomi-2026-11-28" data-id="e-elves-come-to-engomi-2026-11-28">
             <span class="ev-title">Elves Come to Engomi</span>
             <span class="ev-meta">
@@ -954,7 +962,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-rozhdestvenskiy-bazar-st-barnabas-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-28" data-time="" data-prio="2" data-reg="Лимассол" data-q="рождественский базар st barnabas st barnabas anglican church лимассол ярмарка">
+        <li data-id="e-rozhdestvenskiy-bazar-st-barnabas-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-28" data-time="" data-prio="2" data-reg="Лимассол" data-q="рождественский базар st barnabas st barnabas anglican church лимассол ярмарка ст барнабас ст барнабас англикан чурч">
           <a class="ev" href="#e-rozhdestvenskiy-bazar-st-barnabas-2026-11-28" data-id="e-rozhdestvenskiy-bazar-st-barnabas-2026-11-28">
             <span class="ev-title">Рождественский базар St Barnabas</span>
             <span class="ev-meta">
@@ -964,7 +972,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-science-christmas-weekend-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-q="science &amp; christmas weekend cyprus planetarium никосия праздник">
+        <li data-id="e-science-christmas-weekend-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-29" data-time="" data-prio="2" data-reg="Никосия" data-long="1" data-q="science &amp; christmas weekend cyprus planetarium никосия праздник скиенке чристмас викенд кипрус планетариум">
           <a class="ev" href="#e-science-christmas-weekend-2026-11-28" data-id="e-science-christmas-weekend-2026-11-28">
             <span class="ev-title">Science &amp; Christmas Weekend</span>
             <span class="ev-meta">
@@ -974,7 +982,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-rozhdestvenskaya-yarmarka-pasykaf-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-28" data-time="10:00" data-prio="2" data-reg="Никосия" data-q="рождественская ярмарка pasykaf pavilion никосия ярмарка">
+        <li data-id="e-rozhdestvenskaya-yarmarka-pasykaf-2026-11-28" data-kind="christmas-markets" data-start="2026-11-28" data-end="2026-11-28" data-time="10:00" data-prio="2" data-reg="Никосия" data-q="рождественская ярмарка pasykaf pavilion никосия ярмарка пасикаф павилион">
           <a class="ev" href="#e-rozhdestvenskaya-yarmarka-pasykaf-2026-11-28" data-id="e-rozhdestvenskaya-yarmarka-pasykaf-2026-11-28">
             <span class="ev-title">Рождественская ярмарка PASYKAF</span>
             <span class="ev-meta">
@@ -984,7 +992,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-3rd-santa-walk-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-28" data-time="11:30" data-prio="2" data-reg="Никосия" data-free="1" data-q="3rd santa walk энгоми никосия праздник">
+        <li data-id="e-3rd-santa-walk-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-28" data-time="11:30" data-prio="2" data-reg="Никосия" data-free="1" data-q="3rd santa walk энгоми никосия праздник рд санта валк">
           <a class="ev" href="#e-3rd-santa-walk-2026-11-28" data-id="e-3rd-santa-walk-2026-11-28">
             <span class="ev-title">3rd Santa Walk</span>
             <span class="ev-meta">
@@ -1004,7 +1012,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-bridge-of-wishes-vklyuchenie-elki-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="17:00" data-prio="2" data-reg="Лимассол" data-q="bridge of wishes: включение елки гераса лимассол зажжение огней">
+        <li data-id="e-bridge-of-wishes-vklyuchenie-elki-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="17:00" data-prio="2" data-reg="Лимассол" data-q="bridge of wishes: включение елки гераса лимассол зажжение огней бридге оф вишес">
           <a class="ev" href="#e-bridge-of-wishes-vklyuchenie-elki-2026-11-28" data-id="e-bridge-of-wishes-vklyuchenie-elki-2026-11-28">
             <span class="ev-title">Bridge of Wishes: включение ёлки</span>
             <span class="ev-meta">
@@ -1024,7 +1032,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-zazhzhenie-elki-v-planetarii-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="18:00" data-prio="2" data-reg="Никосия" data-q="зажжение елки в планетарии cyprus planetarium никосия зажжение огней">
+        <li data-id="e-zazhzhenie-elki-v-planetarii-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="18:00" data-prio="2" data-reg="Никосия" data-q="зажжение елки в планетарии cyprus planetarium никосия зажжение огней кипрус планетариум">
           <a class="ev" href="#e-zazhzhenie-elki-v-planetarii-2026-11-28" data-id="e-zazhzhenie-elki-v-planetarii-2026-11-28">
             <span class="ev-title">Зажжение ёлки в Планетарии</span>
             <span class="ev-meta">
@@ -1044,7 +1052,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-weekend-of-love-giving-rozhdestvenskie-ogni-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="18:30" data-prio="2" data-reg="Пафос" data-q="weekend of love &amp; giving: рождественские огни aphrodite hills resort куклия зажжение огней">
+        <li data-id="e-weekend-of-love-giving-rozhdestvenskie-ogni-2026-11-28" data-kind="christmas-lights" data-start="2026-11-28" data-end="2026-11-28" data-time="18:30" data-prio="2" data-reg="Пафос" data-q="weekend of love &amp; giving: рождественские огни aphrodite hills resort куклия зажжение огней викенд оф лове гивинг афродите хиллс ресорт">
           <a class="ev" href="#e-weekend-of-love-giving-rozhdestvenskie-ogni-2026-11-28" data-id="e-weekend-of-love-giving-rozhdestvenskie-ogni-2026-11-28">
             <span class="ev-title">Weekend of Love &amp; Giving: рождественские огни</span>
             <span class="ev-meta">
@@ -1064,7 +1072,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-open-studio-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="10:00" data-prio="2" data-reg="Ларнака" data-q="рождественская открытая мастерская художника christmas open studio skala ларнака праздник">
+        <li data-id="e-christmas-open-studio-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="10:00" data-prio="2" data-reg="Ларнака" data-q="рождественская открытая мастерская художника christmas open studio skala ларнака праздник чристмас опен студио скала">
           <a class="ev" href="#e-christmas-open-studio-2026-11-29" data-id="e-christmas-open-studio-2026-11-29">
             <span class="ev-title">Рождественская открытая мастерская художника</span>
             <span class="ev-meta">
@@ -1074,7 +1082,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-jingle-all-the-way-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="10:00" data-prio="2" data-reg="Лимассол" data-q="jingle all the way: показ коллекции одежды jingle all the way makariou iii avenue 284 лимассол праздник">
+        <li data-id="e-jingle-all-the-way-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="10:00" data-prio="2" data-reg="Лимассол" data-q="jingle all the way: показ коллекции одежды jingle all the way makariou iii avenue 284 лимассол праздник джингле алл те ваи джингле алл те ваи макариу иии авенуе">
           <a class="ev" href="#e-jingle-all-the-way-2026-11-29" data-id="e-jingle-all-the-way-2026-11-29">
             <span class="ev-title">Jingle All the Way: показ коллекции одежды</span>
             <span class="ev-meta">
@@ -1094,7 +1102,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-the-magic-lamp-of-christmas-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="11:00" data-prio="2" data-reg="Айя-Напа и Протарас" data-q="the magic lamp of christmas municipal theatre сотира праздник">
+        <li data-id="e-the-magic-lamp-of-christmas-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="11:00" data-prio="2" data-reg="Айя-Напа и Протарас" data-q="the magic lamp of christmas municipal theatre сотира праздник те магик ламп оф чристмас муникипал театре">
           <a class="ev" href="#e-the-magic-lamp-of-christmas-2026-11-29" data-id="e-the-magic-lamp-of-christmas-2026-11-29">
             <span class="ev-title">The Magic Lamp of Christmas</span>
             <span class="ev-meta">
@@ -1104,7 +1112,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-how-the-grinch-stole-christmas-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="11:30" data-prio="2" data-reg="Лимассол" data-ru="1" data-q="how the grinch stole christmas ypsonas municipal theatre лимассол детям">
+        <li data-id="e-how-the-grinch-stole-christmas-2026-11-29" data-kind="christmas-other" data-start="2026-11-29" data-end="2026-11-29" data-time="11:30" data-prio="2" data-reg="Лимассол" data-ru="1" data-q="how the grinch stole christmas ypsonas municipal theatre лимассол детям хов те гринч столе чристмас ипсонас муникипал театре">
           <a class="ev" href="#e-how-the-grinch-stole-christmas-2026-11-29" data-id="e-how-the-grinch-stole-christmas-2026-11-29">
             <span class="ev-title">How the Grinch Stole Christmas</span>
             <span class="ev-meta">
@@ -1134,7 +1142,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-paschalis-na-rozhdestvenskom-prazdnike-2026-11-29" data-kind="christmas-lights" data-start="2026-11-29" data-end="2026-11-29" data-time="15:30" data-prio="2" data-reg="Никосия" data-q="paschalis на рождественском празднике south lefkosia–idaliou никосия зажжение огней">
+        <li data-id="e-paschalis-na-rozhdestvenskom-prazdnike-2026-11-29" data-kind="christmas-lights" data-start="2026-11-29" data-end="2026-11-29" data-time="15:30" data-prio="2" data-reg="Никосия" data-q="paschalis на рождественском празднике south lefkosia–idaliou никосия зажжение огней пащалис сут лефкосиа идалиу">
           <a class="ev" href="#e-paschalis-na-rozhdestvenskom-prazdnike-2026-11-29" data-id="e-paschalis-na-rozhdestvenskom-prazdnike-2026-11-29">
             <span class="ev-title">Paschalis на рождественском празднике</span>
             <span class="ev-meta">
@@ -1144,7 +1152,7 @@
             </span>
           </a>
         </li>
-        <li data-id="e-christmas-wreath-workshop-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-28" data-time="17:00" data-prio="3" data-reg="Никосия" data-q="christmas wreath workshop ippokratous 42 никосия мастер-класс">
+        <li data-id="e-christmas-wreath-workshop-2026-11-28" data-kind="christmas-other" data-start="2026-11-28" data-end="2026-11-28" data-time="17:00" data-prio="3" data-reg="Никосия" data-q="christmas wreath workshop ippokratous 42 никосия мастер-класс чристмас вреат воркшоп иппократус">
           <a class="ev" href="#e-christmas-wreath-workshop-2026-11-28" data-id="e-christmas-wreath-workshop-2026-11-28">
             <span class="ev-title">Christmas Wreath Workshop</span>
             <span class="ev-meta">
@@ -1159,10 +1167,11 @@
       <p class="empty" id="empty" hidden>Ничего не нашлось. <button type="button" id="reset">Сбросить фильтры</button></p>
     </div>
 
+  </main>
     <footer>
       <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#9fd5f2"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#0e1116"/><circle cx="16" cy="13" r="5.8" fill="#fff"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#f26b21"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#0e1116"/></svg>City Compas</span>
       <span>City Compas — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>
-      <nav class="fnav" aria-label="Разделы"><a href="/cyprus/afisha/">Афиша</a><span>Рождество на Кипре</span></nav>
+      <nav class="fnav" aria-label="Разделы сайта"><a href="/cyprus/afisha/">Афиша</a><span>Рождество на Кипре</span></nav>
     </footer>
   </div>
   
@@ -1214,7 +1223,10 @@
   
       // Полоса с разделами получает нижнюю линию, когда страницу прокрутили.
       var bar = document.querySelector('.topbar');
-      if (bar) { var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 4); }; window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
+      var fbar = el('fbar');
+      var setTb = function () { if (bar) document.documentElement.style.setProperty('--tbh', bar.offsetHeight + 'px'); };
+      setTb(); window.addEventListener('resize', setTb);
+      if (bar) { var onScroll = function () { bar.classList.toggle('stuck', window.scrollY > 4); if (fbar) fbar.classList.toggle('stuck', fbar.getBoundingClientRect().top <= bar.offsetHeight + 1 && window.scrollY > 4); }; window.addEventListener('scroll', onScroll, { passive: true }); onScroll(); }
       all('.tabs a[aria-current]').forEach(function (a) { a.addEventListener('click', function (e) { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }); });
       // Прошедшее убираем; баннер Рождества — до конца сезона.
       all('.xbanner').forEach(function (b) { if (b.dataset.until < today) b.hidden = true; });
@@ -1255,8 +1267,8 @@
       for (var i = 0; i < 14; i++) {
         var iso = plus(today, i); if (iso > seasonEnd) break;
         var wd = d(iso).getUTCDay(), num = d(iso).getUTCDate() + (iso.slice(5, 7) !== MONTH0 && (d(iso).getUTCDate() === 1 || i === 0) ? ' ' + MON_S[d(iso).getUTCMonth()] : '');
-        var top = i === 0 ? 'сегодня' : i === 1 ? 'завтра' : WD[wd];
-        chip('d:' + iso, '<small>' + top + '</small><b>' + num + '</b>', 'day' + (wd === 0 || wd === 6 ? ' we' : '') + (i >= 10 ? ' far' : ''), dayLabel(iso));
+        var lab = i === 0 ? 'Сегодня' : i === 1 ? 'Завтра' : '<small>' + WD[wd] + '</small> ' + num;
+        chip('d:' + iso, lab, 'day' + (wd === 0 || wd === 6 ? ' we' : '') + (i >= 9 ? ' far' : ''), dayLabel(iso));
         PERIODS['d:' + iso] = [iso];
       }
       var other = chip('pick', ICONS.calendar + '<span>Другая дата</span>');
@@ -1278,8 +1290,8 @@
       all('#f-reg option').forEach(function (o) { if (o.value && !items.some(function (li) { return li.dataset.reg.split('|').indexOf(o.value) >= 0; })) o.remove(); });
       var any = function () { return !!(state.v || state.reg || state.kind || state.q || state.free || state.ru); };
       function sync() {
-        all('#days .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === state.v || (b === other && state.v.indexOf('x:') === 0))); });
-        all('#kinds .chip').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.k === state.kind)); });
+        all('#days .chip[data-v]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === state.v || (b === other && state.v.indexOf('x:') === 0))); });
+        all('#opts .chip[data-k]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.k === state.kind)); });
         var pl = regSel.parentNode; pl.querySelector('.pick-t').textContent = regSel.value || 'Весь Кипр'; pl.classList.toggle('on', !!regSel.value);
         if (el('f-free')) el('f-free').setAttribute('aria-pressed', String(state.free));
         if (el('f-ru')) el('f-ru').setAttribute('aria-pressed', String(state.ru));
@@ -1342,25 +1354,39 @@
         }
         equalize();
       }
-      var setDays = function (v, days) { state.v = v; state.days = days; closeCal(); sync(); render(); };
+      // После смены фильтра результат должен быть виден: если начало результатов выше полосы фильтров или далеко внизу — прокручиваем к нему.
+      var reveal = function () {
+        var fb = el('fbar').getBoundingClientRect().bottom, tgt = el('picks').hidden ? el('list-h').parentNode : el('picks');
+        var y = tgt.getBoundingClientRect().top;
+        if (y < fb || y > innerHeight * 0.62) window.scrollTo({ top: window.scrollY + y - fb - 8, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      };
+      var apply = function () { sync(); render(); reveal(); };
+      var setDays = function (v, days) { state.v = v; state.days = days; closeCal(); apply(); };
       daysEl.addEventListener('click', function (e) {
-        var b = e.target.closest('.chip'); if (!b) return;
+        var b = e.target.closest('.chip'); if (!b || b.id === 'tb-search') return;
         if (b === other) { if (cal.hidden) openCal(); else closeCal(); return; }
         setDays(b.dataset.v, b.dataset.v ? PERIODS[b.dataset.v] : null);
       });
-      el('kinds').addEventListener('click', function (e) {
-        var b = e.target.closest('.chip'); if (!b) return;
-        state.kind = b.dataset.k === state.kind ? '' : b.dataset.k; sync(); render();
+      el('opts').addEventListener('click', function (e) {
+        var b = e.target.closest('.chip[data-k]'); if (!b) return;
+        state.kind = b.dataset.k === state.kind ? '' : b.dataset.k; apply();
       });
-      regSel.addEventListener('change', function () { state.reg = regSel.value; sync(); render(); });
+      regSel.addEventListener('change', function () { state.reg = regSel.value; apply(); });
       ['free', 'ru'].forEach(function (k) {
-        var b = el('f-' + k); if (b) b.addEventListener('click', function () { state[k] = !state[k]; sync(); render(); });
+        var b = el('f-' + k); if (b) b.addEventListener('click', function () { state[k] = !state[k]; apply(); });
       });
       var qIn = el('f-q'), qT = 0;
       var norm = function (v) { return v.toLowerCase().replace(/ё/g, 'е').replace(/\s+/g, ' ').trim(); };
       qIn.addEventListener('input', function () { clearTimeout(qT); qT = setTimeout(function () { state.q = norm(qIn.value); sync(); render(); }, 120); });
       qIn.addEventListener('keydown', function (e) { if (e.key === 'Enter') qIn.blur(); });
       el('q-clear').addEventListener('click', function () { qIn.value = ''; state.q = ''; sync(); render(); qIn.focus(); });
+      var tbS = el('tb-search'), sRow = el('searchrow');
+      tbS.addEventListener('click', function () {
+        var open = sRow.hidden;
+        if (!open && qIn.value) { qIn.focus(); return; }  // со словом в поиске строка остаётся, значок просто ставит курсор
+        sRow.hidden = !open; tbS.setAttribute('aria-expanded', String(open));
+        if (open) qIn.focus();  // строка поиска внутри прилипшей полосы — видна при любой прокрутке
+      });
 
       // «Другая дата»: свой календарь в пределах сезона (с сегодняшнего дня до конца последнего события).
       // Точкой отмечены дни, на которые есть однодневные события.
@@ -1405,7 +1431,7 @@
       el('more').addEventListener('click', function () { shown += page(); render(true); });
       function resetAll() {
         state = { v: '', days: null, reg: '', kind: '', q: '', free: false, ru: false };
-        regSel.value = ''; qIn.value = ''; other.querySelector('span').textContent = 'Другая дата';
+        regSel.value = ''; qIn.value = ''; other.querySelector('span').textContent = 'Другая дата'; sRow.hidden = true; tbS.setAttribute('aria-expanded', 'false');
         closeCal(); sync(); render();
       }
       el('reset').addEventListener('click', resetAll);
@@ -1418,7 +1444,7 @@
       window.addEventListener('load', equalize);
 
       // Карточка события: открывается по адресу #e-<id>, закрывается крестиком, фоном или Esc.
-      var shade = el('shade'), last = null, cur = null;
+      var shade = el('shade'), last = null, cur = null, keepY = null;
       var toastT = 0;
       var toast = function (t) { var x = el('toast'); x.textContent = t; x.hidden = false; clearTimeout(toastT); toastT = setTimeout(function () { x.hidden = true; }, 2200); };
       // «В эти дни рядом»: до четырёх событий в том же районе в тот же день (у долгого — сегодня или выбранный день).
@@ -1432,7 +1458,8 @@
       }
       function show() {
         var id = location.hash.slice(1), x = DATA[id];
-        if (!x) { cur = null; shade.hidden = true; document.body.classList.remove('locked'); if (last) { last.focus(); last = null; } return; }
+        if (!x) { cur = null; shade.hidden = true; document.body.classList.remove('locked'); if (keepY !== null) { window.scrollTo(0, keepY); keepY = null; } if (last) { last.focus({ preventScroll: true }); last = null; } return; }
+        if (shade.hidden) keepY = window.scrollY;
         cur = id;
         el('sheet').dataset.kind = x.group; el('s-kind').innerHTML = ICONS[x.icon]; el('s-kind').appendChild(document.createTextNode(x.kind));
         el('s-title').textContent = x.title;
