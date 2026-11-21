@@ -330,7 +330,7 @@ function buildPage(cfg, { artifact = false, proto = true } = {}) {
 
 
   // Атрибуты для фильтров — одни и те же у плитки списка и у карточки «Главного».
-  const attrs = (e) => `data-id="${e.id}" data-kind="${cfg.kindOf(e)}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-prio="${e.priority ?? 3}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}${e.open_days?.length ? ` data-days="${e.open_days.join(' ')}"` : ''}${isFree(e) ? ' data-free="1"' : ''}${isRu(e) ? ' data-ru="1"' : ''} data-q="${esc(searchText(e, cfg))}"`;
+  const attrs = (e) => `data-id="${e.id}" data-kind="${cfg.kindOf(e)}" data-start="${e.date}" data-end="${e.end_date ?? e.date}" data-time="${e.time ?? ''}" data-prio="${e.priority ?? 3}" data-reg="${esc(regionsOfEvent(e).join('|'))}"${isLong(e) ? ' data-long="1"' : ''}${e.open_days?.length ? ` data-days="${e.open_days.join(' ')}"` : ''}${!isLong(e) && e.end_time ? ` data-et="${e.end_time}"` : ''}${isFree(e) ? ' data-free="1"' : ''}${isRu(e) ? ' data-ru="1"' : ''} data-q="${esc(searchText(e, cfg))}"`;
   const tagsOf = (e) => (isFree(e) || isRu(e) ? `<span class="ev-tags">${isFree(e) ? '<span class="tag free">Бесплатно</span>' : ''}${isRu(e) ? '<span class="tag ru">На русском</span>' : ''}</span>` : '');
   const card = (e) => `
         <li ${attrs(e)}>
@@ -698,6 +698,18 @@ ${proto ? PROTO_CSS : ''}  </style>
       // Прошедшее убираем; баннер Рождества — до конца сезона.
       all('.xbanner').forEach(function (b) { if (b.dataset.until < today) b.hidden = true; });
       all('#evs > li, .pc').forEach(function (n) { if (n.dataset.end < today) n.remove(); });
+      // Сегодняшнее, что уже закончилось, тоже убираем: по времени окончания, а если его нет — через 2 часа после начала.
+      // Через полночь (23:00–02:00) не убираем до конца дня.
+      var pad2 = function (n) { return (n < 10 ? '0' : '') + n; };
+      var nowHM = function () {
+        try { return new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Nicosia', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date()); }
+        catch (e) { var t = new Date(); return pad2(t.getHours()) + ':' + pad2(t.getMinutes()); }
+      };
+      var addH = function (hm, h) { var p = hm.split(':'), m = +p[0] * 60 + +p[1] + h * 60; return m >= 1440 ? '24:00' : pad2(Math.floor(m / 60)) + ':' + pad2(m % 60); };
+      var endHM = function (x) { return x.et && x.et > x.time ? x.et : x.et ? '24:00' : addH(x.time, 2); };
+      var over = function (x) { return !x.long && x.start === today && !!x.time && nowHM() >= endHM(x); };
+      var running = function (x) { return !x.long && x.start === today && !!x.time && x.time <= nowHM() && !over(x); };
+      all('#evs > li, .pc').forEach(function (n) { if (over(n.dataset)) n.remove(); });
       var items = all('#evs > li'), list = el('evs'), pcs = all('.pc'), byId = {};
       items.forEach(function (li) { byId[li.dataset.id] = li; });
 
@@ -718,9 +730,11 @@ ${proto ? PROTO_CSS : ''}  </style>
       // у долгого события, которое уже идёт, — «до 17 янв».
       var whenLabel = function (x) {
         if (x.long) return x.start > today ? null : x.end === today ? 'Последний день' : 'до ' + shortD(x.end);
+        if (running(x)) return x.et && x.et > x.time ? 'Идёт сейчас, до ' + x.et : 'Идёт сейчас, с ' + x.time;
         return (x.start === today ? 'Сегодня' : x.start === tomorrow ? 'Завтра' : dayLabel(x.start)) + (x.time ? ', ' + x.time : '');
       };
-      items.concat(pcs).forEach(function (n) { var w = whenLabel(n.dataset), t = n.querySelector('.ev-date'); if (w && t) t.textContent = w; });
+      var labels = function () { items.concat(pcs).forEach(function (n) { var w = whenLabel(n.dataset), t = n.querySelector('.ev-date'); if (w && t) t.textContent = w; }); };
+      labels();
 
       // «Когда» — лента дней на две недели вперёд (как у Яндекс Афиши): все дни, выходные, каждый день, другая дата из календаря.
       var daysEl = el('days'), MONTH0 = today.slice(5, 7);
@@ -911,6 +925,14 @@ ${proto ? PROTO_CSS : ''}  </style>
       el('reset').addEventListener('click', resetAll);
       el('clear').addEventListener('click', resetAll);
       sync(); render();
+      setInterval(function () {
+        var gone = items.concat(pcs).filter(function (n) { return over(n.dataset); });
+        labels();
+        if (!gone.length) return;
+        gone.forEach(function (n) { n.remove(); });
+        items = items.filter(function (n) { return gone.indexOf(n) < 0; }); pcs = pcs.filter(function (n) { return gone.indexOf(n) < 0; });
+        render(true);
+      }, 5 * 60 * 1000);
       var raf = 0;
       window.addEventListener('resize', function () { cancelAnimationFrame(raf); raf = requestAnimationFrame(equalize); });
       // Шрифты приходят позже первого расчёта — пересчитываем, когда они загрузятся.
