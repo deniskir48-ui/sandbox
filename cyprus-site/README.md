@@ -151,6 +151,8 @@ SITE_URL=https://другой-домен SITE_NAME="Название" node scrip
 
 `standalone/site/` — готовая папка для хостинга (например, Cloudflare Pages → Upload assets): афиша — `/cyprus/afisha/`, Рождество — `/cyprus/christmas/`;
 главная и `/afisha/` временно (302) ведут на афишу, `/christmas/` — на Рождество, есть иконка, превью для мессенджеров (`og.png`) и страница 404. Почему так — DEC-W39.
+Страницы, сделанные вручную, лежат в `static/` (например `static/cyprus/green-points/index.html`) и копируются в сайт при сборке.
+
 Картинки-превью для соцсетей: `node scripts/og-image.cjs standalone/og-afisha.png afisha` и `… standalone/og-christmas.png christmas` (потом снова build-site).
 
 Архив для загрузки: `cd standalone/site && zip -qr ../citycompas-site.zip .`

@@ -638,7 +638,7 @@ ${proto ? PROTO_CSS : ''}  </style>
     <footer>
       <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg>${esc(SITE_NAME)}</span>
       <span>${esc(SITE_NAME)} — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>${artifact ? '' : `
-      <nav class="fnav" aria-label="Разделы сайта">${PAGES.map((p) => p === cfg ? `<span>${esc(p.nav)}</span>` : `<a href="${p.path}">${esc(p.nav)}</a>`).join('')}</nav>`}
+      <nav class="fnav" aria-label="Разделы сайта">${PAGES.map((p) => p === cfg ? `<span>${esc(p.nav)}</span>` : `<a href="${p.path}">${esc(p.nav)}</a>`).join('')}<a href="/cyprus/green-points/">Green Points</a></nav>`}
     </footer>
   </div>
   
@@ -1069,9 +1069,12 @@ ${html.slice(cutAt)}</body>
 }
 fs.copyFileSync(path.resolve('public/favicon.svg'), path.join(SITE_DIR, 'favicon.svg'));
 // 302 — временно: главная потом станет главной основного сайта, а браузеры не запомнят переадресацию навсегда.
+// Страницы, сделанные вручную (static/…, например Green Points — DEC-W54), копируются в папку сайта как есть.
+fs.cpSync(path.resolve('static'), SITE_DIR, { recursive: true });
 fs.writeFileSync(path.join(SITE_DIR, '_redirects'), [
   `/ ${AFISHA.path} 302`, `/cyprus ${AFISHA.path} 302`, `/cyprus/ ${AFISHA.path} 302`, `/afisha ${AFISHA.path} 302`, `/afisha/ ${AFISHA.path} 302`,
-  `/christmas ${XMAS.path} 302`, `/christmas/ ${XMAS.path} 302`, '',
+  `/christmas ${XMAS.path} 302`, `/christmas/ ${XMAS.path} 302`,
+  '/green-points /cyprus/green-points/ 302', '/green-points/ /cyprus/green-points/ 302', '',
 ].join('\n'));
 fs.writeFileSync(path.join(SITE_DIR, '404.html'), `<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

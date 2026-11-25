@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F3F5F4">
+<title>Green Points Кипра: карта, часы работы, что принимают</title>
+<meta name="description" content="Все Green Points Кипра на одной карте: где сдать старую мебель, технику, ветки, батарейки и краску. Часы работы, телефоны и маршрут.">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:site_name" content="City Compas">
+<meta property="og:title" content="Green Points Кипра на карте">
+<meta property="og:description" content="Где бесплатно сдать мебель, технику, ветки и батарейки: все Green Points Кипра, часы работы и телефоны.">
+<meta property="og:url" content="https://citycompas.com/cyprus/green-points/">
+<meta property="og:image" content="https://citycompas.com/cyprus/green-points/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://citycompas.com/cyprus/green-points/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Fira+Sans+Extra+Condensed:wght@600;700&display=swap">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+<style>
+  /* Облик как у афиши: «Медь и афишная тумба» (светлый известняк, тёмно-синие чернила, медь и патина). */
+  :root {
+    color-scheme: light;
+    --night: #F3F5F4; --card: #FFFFFF; --card-hi: #E8EEEB; --line: #D4DDD9; --text: #13263B; --muted: #566675;
+    --sky: #1B6E62; --sun: #A24F22; --warm: #A24F22; --ok: #1B6E62; --copper: #A24F22; --patina: #1B6E62;
+    --gutter: max(16px, env(safe-area-inset-left, 0px));
+    --display: "Fira Sans Extra Condensed", "Onest", system-ui, sans-serif;
+    --body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  html { background: var(--night); }
+  body { margin: 0; background: var(--night); color: var(--text); font-family: var(--body); font-size: 16px; line-height: 1.5;
+    padding-left: var(--gutter); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
+  .wrap { max-width: 1240px; margin: 0 auto; }
+  .ic { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* Верхняя полоса: та же, что на остальных страницах сайта. */
+  .topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 1200; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding-block: 10px; background: var(--night); border-bottom: 1px solid transparent; }
+  .topbar.stuck { border-bottom-color: var(--line); }
+  .tb-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text); text-decoration: none; font-family: "Onest", system-ui, sans-serif; font-weight: 700; font-size: .86rem; white-space: nowrap; }
+  .tb-brand svg { flex: none; }
+  @media (min-width: 640px) { .tb-brand { font-size: .95rem; } }
+  @media (max-width: 379px) { .tb-brand span { display: none; } }
+  .tabs { display: flex; gap: 3px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
+  .tabs a { display: inline-flex; align-items: center; gap: 5px; min-height: 34px; box-sizing: border-box; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
+  @media (min-width: 640px) { .tabs a { padding: 7px 13px; font-size: .9rem; } }
+  .tabs a .ic { width: 16px; height: 16px; color: var(--c, var(--sky)); }
+  @media (max-width: 419px) { .tabs a .ic { display: none; } }
+  .tabs a:hover { color: var(--text); }
+  .tabs a[aria-current] { background: var(--text); color: #fff; }
+  .tabs a[aria-current] .ic { color: inherit; }
+  .tb-brand:focus-visible, .tabs a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
+
+  header { padding-block: 10px 6px; }
+  h1 { font-family: var(--display); font-weight: 700; font-size: clamp(1.9rem, 6.4vw, 2.7rem); letter-spacing: -.005em; line-height: 1; margin: 0; text-wrap: balance; }
+  .lead { margin: 10px 0 0; max-width: 62ch; color: var(--muted); text-wrap: pretty; }
+  .lead b { color: var(--text); font-weight: 600; }
+
+  /* Фильтр по району и «рядом со мной»: белые таблетки, выбранное — чернилами. */
+  .strip { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; margin: 16px calc(-1 * var(--gutter)) 0; padding-inline: var(--gutter); }
+  .strip::-webkit-scrollbar { display: none; }
+  @media (min-width: 900px) { .strip { flex-wrap: wrap; overflow: visible; margin-inline: 0; padding-inline: 0; } }
+  .chip { flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 36px; box-sizing: border-box; padding: 6px 12px;
+    border-radius: 999px; border: 1px solid var(--line); background: var(--card); color: var(--text); font: 600 .86rem var(--body); white-space: nowrap; cursor: pointer; }
+  .chip:hover { border-color: #3a4d74; }
+  .chip .n { color: var(--muted); font-weight: 500; }
+  .chip[aria-pressed="true"] { background: var(--text); border-color: var(--text); color: #fff; }
+  .chip[aria-pressed="true"] .n { color: rgba(255,255,255,.7); }
+  .chip.geo { color: var(--patina); }
+  .chip.geo .ic { width: 17px; height: 17px; }
+  .chip.geo[aria-pressed="true"] { background: var(--patina); border-color: var(--patina); color: #fff; }
+  .chip:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+
+  /* Раскладка: на телефоне карта сверху, список под ней; на компьютере список слева, карта справа и не уезжает. */
+  .gp { display: grid; gap: 14px; margin-top: 14px; }
+  #map { height: min(52vh, 440px); min-height: 300px; border-radius: 16px; border: 1px solid var(--line); background: var(--card-hi); z-index: 0; }
+  @media (min-width: 900px) {
+    .gp { grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr); align-items: start; }
+    .gp .mapcol { position: sticky; top: 70px; order: 2; }
+    #map { height: calc(100vh - 100px); max-height: 760px; }
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin-top: 8px; color: var(--muted); font-size: .82rem; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--copper); border: 2px solid #fff; box-shadow: 0 0 0 1px var(--copper); }
+  .dot.approx { background: #fff; border: 2px dashed var(--copper); box-shadow: none; width: 10px; height: 10px; }
+
+  .list { display: grid; gap: 8px; }
+  .dist { margin: 14px 0 2px; font: 700 1.15rem var(--display); letter-spacing: .01em; }
+  .dist:first-child { margin-top: 0; }
+  .pt { display: grid; gap: 4px; padding: 12px 14px; background: var(--card); border: 1px solid var(--line); border-radius: 14px; cursor: pointer; }
+  .pt:hover { border-color: #b9c6c1; }
+  .pt.on { border-color: var(--copper); box-shadow: 0 0 0 1px var(--copper); }
+  .pt:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+  .pt-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+  .pt-name { margin: 0; font: 700 1.2rem/1.1 var(--display); }
+  .pt-km { flex: none; color: var(--patina); font-weight: 600; font-size: .86rem; }
+  .pt-place { color: var(--muted); font-size: .9rem; }
+  .pt-hours { font-size: .9rem; }
+  .pt-hours .lbl { color: var(--muted); }
+  .pt-hours .closed { color: var(--copper); }
+  .pt-approx { color: var(--muted); font-size: .8rem; }
+  .pt-act { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+  .btn { display: inline-flex; align-items: center; gap: 6px; min-height: 34px; box-sizing: border-box; padding: 6px 12px; border-radius: 999px; font: 600 .84rem var(--body); text-decoration: none; border: 1px solid var(--line); color: var(--text); background: var(--night); }
+  .btn.go { background: var(--text); border-color: var(--text); color: #fff; }
+  .btn .ic { width: 15px; height: 15px; }
+  .btn:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+
+  /* Подсказка внутри карты. */
+  .leaflet-popup-content-wrapper { border-radius: 12px; font-family: var(--body); }
+  .leaflet-popup-content { margin: 12px 14px; font-size: .88rem; line-height: 1.4; }
+  .pop-name { font: 700 1.05rem/1.1 var(--display); margin-bottom: 3px; }
+  .pop-muted { color: var(--muted); }
+  .pop-a { display: inline-block; margin-top: 6px; color: var(--patina); font-weight: 600; }
+  .mk { width: 16px; height: 16px; border-radius: 50%; background: var(--copper); border: 2.5px solid #fff; box-shadow: 0 1px 4px rgba(19,38,59,.35); box-sizing: border-box; transition: transform .15s; }
+  .mk.approx { background: #fff; border: 2.5px dashed var(--copper); box-shadow: none; }
+  .mk.on { transform: scale(1.45); }
+  .mk.me { background: var(--patina); }
+
+  /* Что можно сдать. */
+  .what { margin-top: 30px; display: grid; gap: 14px; }
+  @media (min-width: 900px) { .what { grid-template-columns: 1fr 1fr; } }
+  .box { background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 16px 18px; }
+  .box h2 { margin: 0 0 8px; font: 700 1.35rem/1.1 var(--display); }
+  .box ul { margin: 0; padding-left: 1.1em; display: grid; gap: 4px; }
+  .box li::marker { color: var(--copper); }
+  .box.no li::marker { color: var(--muted); }
+  .box p { margin: 10px 0 0; color: var(--muted); font-size: .9rem; }
+  .src { margin-top: 18px; color: var(--muted); font-size: .85rem; max-width: 80ch; }
+  .src a { color: var(--sky); text-underline-offset: 3px; }
+
+  footer { margin-top: 34px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
+  footer .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--text); font-weight: 700; }
+  .fnav { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 4px; }
+  .fnav a { color: var(--sky); text-underline-offset: 3px; }
+  .fnav span { color: var(--text); }
+  .fnav a:focus-visible { outline: 2px solid var(--warm); outline-offset: 2px; }
+  @media (prefers-reduced-motion: reduce) { .mk { transition: none; } }
+</style>
+</head>
+<body>
+<div class="wrap" lang="ru">
+  <nav class="topbar" aria-label="Разделы">
+    <a class="tb-brand" href="/cyprus/afisha/"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#A24F22"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#F3F5F4"/><circle cx="16" cy="13" r="5.8" fill="#A24F22"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#13263B"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#F3F5F4"/></svg><span>City Compas</span></a>
+    <div class="tabs"><a href="/cyprus/afisha/" data-kind=""><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/></svg>Афиша</a><a href="/cyprus/christmas/" data-kind="christmas-lights"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Рождество</a></div>
+  </nav>
+
+  <main>
+    <header>
+      <h1>Green Points Кипра</h1>
+      <p class="lead">Площадки, куда <b>бесплатно</b> принимают то, что нельзя выбросить в обычный бак: мебель, технику, ветки, батарейки, краску. Только от частных лиц и только рассортированное.</p>
+    </header>
+
+    <div class="strip" id="filters" role="group" aria-label="Район">
+      <button type="button" class="chip geo" id="near" aria-pressed="false"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><circle cx="12" cy="12" r="6.5"/><circle cx="12" cy="12" r="2"/></svg>Рядом со мной</button>
+    </div>
+
+    <div class="gp">
+      <div class="mapcol">
+        <div id="map" role="region" aria-label="Карта Green Points"></div>
+        <div class="legend"><span><i class="dot"></i>точное место</span><span><i class="dot approx"></i>примерно, маршрут ведёт точно</span></div>
+      </div>
+      <div class="list" id="list" aria-live="polite"></div>
+    </div>
+
+    <section class="what" aria-label="Что принимают">
+      <div class="box">
+        <h2>Что можно сдать</h2>
+        <ul>
+          <li>мебель, матрасы, ковры</li>
+          <li>бытовую технику и электронику, только целиком</li>
+          <li>ветки, листья и другой садовый мусор</li>
+          <li>пластик, бумагу и картон, стекло, металл, дерево</li>
+          <li>одежду, текстиль и игрушки</li>
+          <li>батарейки и аккумуляторы, в том числе автомобильные</li>
+          <li>краски, клей, растительное и моторное масло, лекарства, лампы, градусники</li>
+          <li>немного строительного мусора после ремонта своими руками</li>
+        </ul>
+        <p>На крупные вещи и стройматериалы есть лимиты по объёму, в каждом районе свои. Если везёте много, лучше заранее позвонить.</p>
+      </div>
+      <div class="box no">
+        <h2>Что не примут</h2>
+        <ul>
+          <li>обычный смешанный мусор и пищевые отходы</li>
+          <li>мусор от бизнеса, магазинов и подрядчиков</li>
+          <li>технику, разобранную на детали</li>
+          <li>шины, асбест, гипсокартон</li>
+        </ul>
+        <p>Сортируйте заранее: на месте сотрудник покажет, в какой контейнер что положить.</p>
+      </div>
+    </section>
+
+    <p class="src">Адреса, часы и телефоны по данным районных организаций самоуправления (ЕОА) Лимассола и Ларнаки и операторов Green Points Никосии и Пафоса, ноябрь 2026. Часы иногда меняются, а отдельные площадки закрывают на время, поэтому перед поездкой лучше позвонить. Общая линия Green Points Никосийского района: <a href="tel:+35777111216">77 11 12 16</a>.</p>
+  </main>
+
+  <footer>
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#A24F22"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#F3F5F4"/><circle cx="16" cy="13" r="5.8" fill="#A24F22"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#13263B"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#F3F5F4"/></svg>City Compas</span>
+    <span>City Compas — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>
+    <nav class="fnav" aria-label="Разделы сайта"><a href="/cyprus/afisha/">Афиша</a><a href="/cyprus/christmas/">Рождество на Кипре</a><span>Green Points</span></nav>
+  </footer>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script>
+/* ДАННЫЕ. Чтобы поправить точку, меняйте только этот список.
+   exact: true — координаты точные (официальный сайт, OpenStreetMap или plus code из Google Maps);
+   exact: false — метка стоит примерно, в центре деревни, а кнопка «Маршрут» ведёт в Google Maps по названию.
+   hours: { w: зимнее расписание (октябрь–март), s: летнее (апрель–сентябрь) } или null, если официальных часов нет. */
+const D = { nic: "Никосийский район", lim: "Лимассольский район", lar: "Ларнакский район", paf: "Пафосский район" };
+const LIM_H = "Пн–Сб 08:00–16:00, Вс и праздники закрыто";
+const POINTS = [
+  { id: "kolossi", d: "lim", name: "Колосси", place: "у трассы Лимассол-Пафос", lat: 34.689347, lng: 32.935723, exact: true, tel: "99244578", hours: { w: LIM_H, s: LIM_H } },
+  { id: "avdimou", d: "lim", name: "Авдиму", place: "Авдиму, по дороге к Писсури", lat: 34.696843, lng: 32.770598, exact: true, tel: "99240678", hours: { w: LIM_H, s: LIM_H } },
+  { id: "fasoula", d: "lim", name: "Фасула", place: "Фасула", lat: 34.73285, lng: 33.03795, exact: true, tel: "99240687", hours: { w: LIM_H, s: LIM_H } },
+  { id: "parekklisia", d: "lim", name: "Парекклисья", place: "Парекклисья", lat: 34.758999, lng: 33.159638, exact: true, tel: "99245203", hours: { w: LIM_H, s: LIM_H } },
+
+  { id: "larnaca", d: "lar", name: "Ларнака", place: "улица Василис Михаилиди", lat: 34.89692, lng: 33.63386, exact: true, tel: "24501000",
+    hours: { w: "Вт–Сб 08:00–16:00, Вс 09:00–14:00, Пн закрыто", s: "Вт–Сб 07:00–17:00, Вс 09:00–14:00, Пн закрыто" } },
+  { id: "aradippou", d: "lar", name: "Арадиппу", place: "Арадиппу", lat: 34.94962, lng: 33.59268, exact: false, tel: "24501000",
+    hours: { w: "Пн–Пт 08:00–16:00, Сб 07:00–17:00, Вс 09:00–14:00", s: "Пн–Пт 07:00–17:00, Сб 07:00–16:00, Вс 09:00–14:00" } },
+  { id: "dromolaxia", d: "lar", name: "Дромолаксия", place: "Дромолаксия", lat: 34.87306, lng: 33.58715, exact: false, tel: "24501000",
+    hours: { w: "Пн–Пт 08:00–16:00, Сб 07:00–16:00, Вс 09:00–14:00", s: "Пн–Сб 07:00–17:00, Вс 09:00–14:00" } },
+  { id: "athienou", d: "lar", name: "Атиену", place: "Атиену", lat: 35.06186, lng: 33.5405, exact: false, tel: "24501000",
+    hours: { w: "Пн–Пт 09:00–17:00, Сб 09:00–16:00, Вс 09:00–14:00", s: "Пн–Пт 09:00–17:00, Сб 09:00–16:00, Вс 09:00–14:00" } },
+  { id: "pyrga", d: "lar", name: "Пирга", place: "Пирга", lat: 34.92617, lng: 33.43211, exact: false, tel: "24501000",
+    hours: { w: "Пн–Пт 09:00–17:00, Сб 09:00–16:00, Вс 09:00–14:00", s: "Пн–Пт 09:00–17:00, Сб 09:00–16:00, Вс 09:00–14:00" } },
+  { id: "kofinou", d: "lar", name: "Кофину", place: "Кофину", lat: 34.82459, lng: 33.39202, exact: false, tel: "24501000",
+    hours: { w: "Пн и Ср 09:00–17:00, Сб 09:00–15:00", s: "Пн 09:00–17:00, Ср и Сб 09:00–16:00" } },
+  { id: "anafotia", d: "lar", name: "Анафотия", place: "Анафотия", lat: 34.82511, lng: 33.46347, exact: false, tel: "24501000",
+    hours: { w: "Пн, Ср и Сб 09:00–15:00", s: "Пн 09:00–15:00, Ср и Сб 09:00–16:00" } },
+  { id: "troulloi", d: "lar", name: "Трулли", place: "Трулли", lat: 35.03298, lng: 33.61589, exact: false, tel: "24501000",
+    hours: { w: "Вт 09:00–15:00, Пт 09:00–16:00", s: "Вт и Пт 09:00–16:00" } },
+
+  { id: "strovolos", d: "nic", name: "Строволос", place: "улица Халкидикис, 11", lat: 35.12116, lng: 33.37382, exact: true, tel: "77111216", hours: null },
+  { id: "alampra", d: "nic", name: "Алампра", place: "у Пера Хорио", lat: 35.008488, lng: 33.409672, exact: true, tel: "99950162", hours: null },
+  { id: "ergates", d: "nic", name: "Эргатес", place: "Эргатес", lat: 35.05405, lng: 33.24302, exact: false, tel: "99950290", hours: null, g: "https://maps.google.com/?cid=6039902350799622395" },
+  { id: "malounta", d: "nic", name: "Малунта", place: "Малунта", lat: 35.03546, lng: 33.18328, exact: false, tel: "99950266", hours: null },
+  { id: "kokkinotrimithia", d: "nic", name: "Коккинотримития", place: "Коккинотримития", lat: 35.15427, lng: 33.19865, exact: false, tel: "99950163", hours: null },
+  { id: "peristerona", d: "nic", name: "Перистерона", place: "Перистерона", lat: 35.12988, lng: 33.08, exact: false, tel: "99950170", hours: null },
+  { id: "astromeritis", d: "nic", name: "Астромерити", place: "Астромерити", lat: 35.13999, lng: 33.03749, exact: false, tel: "99950277", hours: null, g: "https://maps.google.com/?cid=6203254614702628955" },
+  { id: "linou", d: "nic", name: "Лину", place: "Лину, долина Солеа", lat: 35.07333, lng: 32.89291, exact: false, tel: "99950288", hours: null },
+
+  { id: "paphos", d: "paf", name: "Пафос", place: "район Муталлос", lat: 34.78611, lng: 32.41934, exact: true, tel: "99655985", hours: null },
+  { id: "geroskipou", d: "paf", name: "Героскипу", place: "проспект Макариоса III, Колони", lat: 34.748762, lng: 32.469672, exact: true, tel: "99655985", hours: null },
+  { id: "polis", d: "paf", name: "Полис-Хрисохус", place: "дорога F753 у Хрисоху", lat: 35.00205, lng: 32.42011, exact: true, tel: "99655985", hours: null }
+];
+const QUERY = { aradippou: "Aradippou", dromolaxia: "Dromolaxia", athienou: "Athienou", pyrga: "Pyrga Larnaca", kofinou: "Kofinou", anafotia: "Anafotida", troulloi: "Troulloi",
+  malounta: "Malounta", kokkinotrimithia: "Kokkinotrimithia", peristerona: "Peristerona", linou: "Linou" };
+
+const summer = (m => m >= 3 && m <= 8)(new Date().getMonth());
+const telFmt = t => t.length === 8 ? t.slice(0, 2) + " " + t.slice(2, 5) + " " + t.slice(5) : t;
+const route = p => p.exact ? "https://www.google.com/maps/dir/?api=1&destination=" + p.lat + "," + p.lng
+  : (p.g || "https://www.google.com/maps/search/?api=1&query=" + encodeURIComponent("Green Point " + (QUERY[p.id] || p.name) + " Cyprus"));
+const hoursHTML = p => p.hours
+  ? '<span class="lbl">' + (summer ? "Летом: " : "Зимой: ") + '</span>' + (summer ? p.hours.s : p.hours.w)
+  : '<span class="lbl">Часы уточняйте по телефону</span>';
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+/* Карта. */
+const map = L.map("map", { scrollWheelZoom: false, zoomControl: true, zoomSnap: 0.25 }).setView([34.95, 33.1], 9);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", { maxZoom: 19, attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>' }).addTo(map);
+map.on("focus", () => map.scrollWheelZoom.enable());
+map.on("blur", () => map.scrollWheelZoom.disable());
+
+const icon = (p, on) => L.divIcon({ className: "", html: '<div class="mk' + (p.exact ? "" : " approx") + (on ? " on" : "") + '"></div>', iconSize: [16, 16], iconAnchor: [8, 8], popupAnchor: [0, -8] });
+const popup = p => '<div class="pop-name">Green Point ' + esc(p.name) + '</div><div class="pop-muted">' + esc(p.place) + '</div><div>' + hoursHTML(p) + '</div>' +
+  '<a class="pop-a" href="tel:+357' + p.tel + '">' + telFmt(p.tel) + '</a> &nbsp; <a class="pop-a" href="' + route(p) + '" target="_blank" rel="noopener">Маршрут</a>' +
+  (p.exact ? "" : '<div class="pop-muted" style="margin-top:4px;font-size:.8rem">Метка примерная, маршрут ведёт к точному месту</div>');
+const markers = {};
+POINTS.forEach(p => {
+  markers[p.id] = L.marker([p.lat, p.lng], { icon: icon(p, false), title: "Green Point " + p.name, keyboard: false }).bindPopup(popup(p)).addTo(map)
+    .on("click", () => select(p.id, false));
+});
+
+/* Список и фильтры. */
+let district = "", me = null, active = null;
+const list = document.getElementById("list"), filters = document.getElementById("filters"), near = document.getElementById("near");
+const km = (a, b) => { const R = 6371, r = x => x * Math.PI / 180, dLat = r(b.lat - a.lat), dLng = r(b.lng - a.lng);
+  const h = Math.sin(dLat / 2) ** 2 + Math.cos(r(a.lat)) * Math.cos(r(b.lat)) * Math.sin(dLng / 2) ** 2; return 2 * R * Math.asin(Math.sqrt(h)); };
+
+[["", "Весь Кипр"], ["lim", "Лимассол"], ["nic", "Никосия"], ["lar", "Ларнака"], ["paf", "Пафос"]].forEach(([k, t]) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "chip"; b.dataset.d = k; b.setAttribute("aria-pressed", k === "" ? "true" : "false");
+  b.innerHTML = esc(t) + ' <span class="n">' + POINTS.filter(p => !k || p.d === k).length + "</span>";
+  b.addEventListener("click", () => { district = k; filters.querySelectorAll("[data-d]").forEach(x => x.setAttribute("aria-pressed", String(x === b))); render(true); });
+  filters.insertBefore(b, near);
+});
+
+function card(p) {
+  const el = document.createElement("article");
+  el.className = "pt"; el.tabIndex = 0; el.id = "pt-" + p.id;
+  el.innerHTML = '<div class="pt-h"><h3 class="pt-name">' + esc(p.name) + '</h3>' + (me ? '<span class="pt-km">≈ ' + Math.round(km(me, p)) + ' км</span>' : "") + '</div>' +
+    '<div class="pt-place">' + esc(p.place) + '</div><div class="pt-hours">' + hoursHTML(p) + '</div>' +
+    (p.exact ? "" : '<div class="pt-approx">На карте метка примерная, маршрут ведёт к точному месту</div>') +
+    '<div class="pt-act"><a class="btn go" href="' + route(p) + '" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11 21 3l-8 18-2-8z"/></svg>Маршрут</a>' +
+    '<a class="btn" href="tel:+357' + p.tel + '"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg>' + telFmt(p.tel) + '</a></div>';
+  el.addEventListener("click", e => { if (!e.target.closest("a")) select(p.id, true); });
+  el.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); select(p.id, true); } });
+  return el;
+}
+
+function render(fit) {
+  const shown = POINTS.filter(p => !district || p.d === district);
+  list.replaceChildren();
+  if (me) {
+    shown.slice().sort((a, b) => km(me, a) - km(me, b)).forEach(p => list.append(card(p)));
+  } else {
+    ["lim", "nic", "lar", "paf"].forEach(k => {
+      const g = shown.filter(p => p.d === k); if (!g.length) return;
+      const h = document.createElement("h2"); h.className = "dist"; h.textContent = D[k]; list.append(h);
+      g.forEach(p => list.append(card(p)));
+    });
+  }
+  POINTS.forEach(p => { const m = markers[p.id], vis = !district || p.d === district; if (vis && !map.hasLayer(m)) m.addTo(map); if (!vis && map.hasLayer(m)) map.removeLayer(m); });
+  if (fit) { const pts = shown.map(p => [p.lat, p.lng]); if (me && !district) pts.push([me.lat, me.lng]); map.fitBounds(pts, { padding: [18, 18], maxZoom: 12 }); }
+  if (active) { const c = document.getElementById("pt-" + active); if (c) c.classList.add("on"); }
+}
+
+function select(id, fromList) {
+  if (active && markers[active]) markers[active].setIcon(icon(POINTS.find(p => p.id === active), false));
+  active = id;
+  const p = POINTS.find(x => x.id === id);
+  markers[id].setIcon(icon(p, true));
+  document.querySelectorAll(".pt.on").forEach(x => x.classList.remove("on"));
+  const c = document.getElementById("pt-" + id); if (c) c.classList.add("on");
+  if (fromList) {
+    map.setView([p.lat, p.lng], Math.max(map.getZoom(), 12));
+    markers[id].openPopup();
+    if (window.matchMedia("(max-width: 899px)").matches) document.getElementById("map").scrollIntoView({ behavior: "smooth", block: "center" });
+  } else if (c && window.matchMedia("(min-width: 900px)").matches) {
+    c.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+}
+
+let meMarker = null;
+near.addEventListener("click", () => {
+  if (me) { me = null; near.setAttribute("aria-pressed", "false"); if (meMarker) { map.removeLayer(meMarker); meMarker = null; } render(true); return; }
+  if (!navigator.geolocation) { near.lastChild.textContent = "Геолокация недоступна"; return; }
+  near.disabled = true;
+  navigator.geolocation.getCurrentPosition(pos => {
+    near.disabled = false;
+    me = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+    near.setAttribute("aria-pressed", "true");
+    meMarker = L.marker([me.lat, me.lng], { icon: L.divIcon({ className: "", html: '<div class="mk me"></div>', iconSize: [16, 16], iconAnchor: [8, 8] }), title: "Вы здесь", keyboard: false }).addTo(map);
+    district = ""; filters.querySelectorAll("[data-d]").forEach(x => x.setAttribute("aria-pressed", String(x.dataset.d === "")));
+    render(false);
+    const closest = POINTS.slice().sort((a, b) => km(me, a) - km(me, b)).slice(0, 3).map(p => [p.lat, p.lng]);
+    map.fitBounds(closest.concat([[me.lat, me.lng]]), { padding: [36, 36], maxZoom: 12 });
+  }, () => { near.disabled = false; near.lastChild.textContent = "Нет доступа к геолокации"; }, { enableHighAccuracy: false, timeout: 10000, maximumAge: 600000 });
+});
+
+/* Полоса сверху получает границу, когда страница прокручена. */
+const tb = document.querySelector(".topbar");
+addEventListener("scroll", () => tb.classList.toggle("stuck", scrollY > 4), { passive: true });
+
+render(true);
+</script>
+</body>
+</html>

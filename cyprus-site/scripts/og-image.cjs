@@ -1,6 +1,7 @@
 // Картинка-превью для Threads, Telegram и соцсетей (1200×630) в облике «Медь и афишная тумба» (DEC-W51).
 //   node scripts/og-image.cjs standalone/og-afisha.png afisha
 //   node scripts/og-image.cjs standalone/og-christmas.png christmas
+//   node scripts/og-image.cjs static/cyprus/green-points/og.png green-points
 // Рендер через Playwright; шрифты — Google Fonts (как на сайте).
 const { chromium } = require('playwright');
 const I = {
@@ -13,11 +14,13 @@ const I = {
   ticket: '<path d="M4 7.5A1.5 1.5 0 0 1 5.5 6h13A1.5 1.5 0 0 1 20 7.5V10a2 2 0 0 0 0 4v2.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 4 16.5V14a2 2 0 0 0 0-4z"/><path d="M14.5 6.5v2M14.5 11v2M14.5 15.5v2"/>',
   kids: '<path d="M12 16c-3.5 0-6-3.4-6-7a6 6 0 0 1 12 0c0 3.6-2.5 7-6 7zM11 17.5h2L12 16zM12 17.5c-1.5 1.5 1.5 2.5 0 4.5"/>',
   star: '<path d="M12 3.5l2.6 5.4 5.9.8-4.3 4.1 1 5.9L12 16.9l-5.2 2.8 1-5.9-4.3-4.1 5.9-.8z"/>',
+  pin: '<path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/>',
   mountain: '<path d="M3 19.5 9.5 8.5l4 6.5 2.5-3.8 5 8.3z"/><circle cx="17" cy="5.8" r="1.8"/>',
 };
 const MARK = '<rect width="32" height="32" rx="9" fill="#A24F22"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#F3F5F4"/><circle cx="16" cy="13" r="5.8" fill="#A24F22"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#13263B"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#F3F5F4"/>';
-const AF = process.argv[3] !== 'christmas';
-const chips = AF
+const GP = process.argv[3] === 'green-points';
+const AF = !GP && process.argv[3] !== 'christmas';
+const chips = GP ? [['pin', 'Лимассол', '#1B6E62'], ['pin', 'Никосия', '#1B6E62'], ['pin', 'Ларнака', '#1B6E62'], ['pin', 'Пафос', '#1B6E62']] : AF
   ? [['kids', 'Детям', '#AD2E68'], ['concert', 'Музыка', '#1F5FA3'], ['ticket', 'Театр и кино', '#A8432A'], ['star', 'Фестивали', '#8A5B00'], ['workshop', 'Мастер-классы', '#6345A8']]
   : [['park', 'Парки', '#A24F22'], ['village', 'Деревни', '#1F5FA3'], ['tree', 'Зажжение огней', '#28744A'], ['market', 'Ярмарки', '#8A5B00']];
 const bulbs = [[40, 19, '#e0a537'], [95, 28, '#5aa6d6'], [150, 26, '#d0662b'], [205, 15, '#e0a537'], [260, 21, '#3f9a6b'], [315, 28, '#5aa6d6'], [365, 21, '#d0662b'], [415, 14, '#e0a537'], [470, 22, '#5aa6d6'], [520, 28, '#3f9a6b'], [570, 21, '#d0662b'], [620, 14, '#e0a537'], [675, 22, '#5aa6d6'], [725, 27, '#d0662b'], [775, 15, '#e0a537']];
@@ -36,10 +39,10 @@ const html = `<!doctype html><html><head><meta charset="utf-8">
   .c svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
 </style></head><body>
 <div class="brand"><svg width="44" height="44" viewBox="0 0 32 32">${MARK}</svg>City Compas</div>
-${AF ? '' : `<svg class="g" viewBox="0 0 800 50" preserveAspectRatio="none"><path d="M0 8 Q100 42 200 14 T400 14 T600 14 T800 8" fill="none" stroke="#9aa9b5" stroke-width="2"/>${bulbs.map(([x, y, c]) => `<ellipse cx="${x}" cy="${y}" rx="4" ry="6" fill="${c}"/>`).join('')}</svg>`}
+${AF || GP ? '' : `<svg class="g" viewBox="0 0 800 50" preserveAspectRatio="none"><path d="M0 8 Q100 42 200 14 T400 14 T600 14 T800 8" fill="none" stroke="#9aa9b5" stroke-width="2"/>${bulbs.map(([x, y, c]) => `<ellipse cx="${x}" cy="${y}" rx="4" ry="6" fill="${c}"/>`).join('')}</svg>`}
 <div class="box">
-  <h1${AF ? '' : ' style="font-size:118px;white-space:nowrap"'}>${AF ? 'Афиша Кипра' : 'Рождество на Кипре'}</h1>
-  <p>${AF ? 'Концерты, спектакли, выставки и детские события на неделю' : 'Парки, рождественские деревни, ярмарки и зажжение огней'}</p>
+  <h1${AF ? '' : ' style="font-size:118px;white-space:nowrap"'}>${GP ? 'Green Points Кипра' : AF ? 'Афиша Кипра' : 'Рождество на Кипре'}</h1>
+  <p>${GP ? 'Где бесплатно сдать мебель, технику, ветки и батарейки' : AF ? 'Концерты, спектакли, выставки и детские события на неделю' : 'Парки, рождественские деревни, ярмарки и зажжение огней'}</p>
   <div class="row">${chips.map(([k, t, c]) => `<span class="c" style="color:${c};border-color:${c}"><svg viewBox="0 0 24 24">${I[k]}</svg>${t}</span>`).join('')}</div>
 </div>
 </body></html>`;
