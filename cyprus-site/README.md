@@ -153,7 +153,7 @@ SITE_URL=https://другой-домен SITE_NAME="Название" node scrip
 главная и `/afisha/` временно (302) ведут на афишу, `/christmas/` — на Рождество, есть иконка, превью для мессенджеров (`og.png`) и страница 404. Почему так — DEC-W39.
 Статьи — `src/content/articles/*.md`, на сайт идут только `status: published`; превью статьи: `node scripts/og-image.cjs static/cyprus/articles/<slug>/og.png text "Заголовок" "Подпись"`.
 
-Страницы, сделанные вручную, лежат в `static/` (например `static/cyprus/green-points/index.html`) и копируются в сайт при сборке.
+Страницы, сделанные вручную, лежат в `static/` (например `static/cyprus/articles/green-points/index.html`) и копируются в сайт при сборке.
 
 Картинки-превью для соцсетей: `node scripts/og-image.cjs standalone/og-afisha.png afisha` и `… standalone/og-christmas.png christmas` (потом снова build-site).
 

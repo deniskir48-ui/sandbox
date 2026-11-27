@@ -1,7 +1,7 @@
 // Картинка-превью для Threads, Telegram и соцсетей (1200×630) в облике «Медь и афишная тумба» (DEC-W51).
 //   node scripts/og-image.cjs standalone/og-afisha.png afisha
 //   node scripts/og-image.cjs standalone/og-christmas.png christmas
-//   node scripts/og-image.cjs static/cyprus/green-points/og.png green-points
+//   node scripts/og-image.cjs static/cyprus/articles/green-points/og.png green-points
 //   node scripts/og-image.cjs <файл>.png text "Заголовок" "Подпись"   — для статей
 // Рендер через Playwright; шрифты — Google Fonts (как на сайте).
 const { chromium } = require('playwright');

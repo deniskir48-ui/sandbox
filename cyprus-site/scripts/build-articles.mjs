@@ -122,7 +122,7 @@ export function buildArticles({ SITE_DIR, SITE_URL, SITE_NAME, MARK, svg, esc, n
     foot: `<footer>
     <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg>${esc(SITE_NAME)}</span>
     <span>${esc(SITE_NAME)} — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>
-    <nav class="fnav" aria-label="Разделы сайта">${nav.map((n) => (n.path === current ? `<span>${esc(n.nav)}</span>` : `<a href="${artifact ? SITE_URL : ''}${n.path}">${esc(n.nav)}</a>`)).join('')}<a href="${artifact ? SITE_URL : ''}/cyprus/green-points/">Green Points</a></nav>
+    <nav class="fnav" aria-label="Разделы сайта">${nav.map((n) => (n.path === current ? `<span>${esc(n.nav)}</span>` : `<a href="${artifact ? SITE_URL : ''}${n.path}">${esc(n.nav)}</a>`)).join('')}</nav>
   </footer>
   <script>(function () { var b = document.querySelector('.topbar'); addEventListener('scroll', function () { b.classList.toggle('stuck', scrollY > 4); }, { passive: true }); })();</script>`,
   });
@@ -169,7 +169,7 @@ ${render(a.body)}
   // Список: опубликованные статьи и полезные страницы сайта (Green Points).
   const items = [
     ...list.map((a) => ({ href: `${IDX}${a.slug}/`, title: a.title, text: a.description, small: `${dateRu(a.published_at)}, читать ${minutes(a.body)} ${plural(minutes(a.body), 'минуту', 'минуты', 'минут')}` })),
-    { href: '/cyprus/green-points/', title: 'Green Points Кипра: карта, часы работы, что принимают', text: 'Где бесплатно сдать старую мебель, технику, ветки, батарейки и краску: все площадки на карте, часы и телефоны.', small: 'Карта' },
+    { href: '/cyprus/articles/green-points/', title: 'Green Points Кипра: карта, часы работы, что принимают', text: 'Где бесплатно сдать старую мебель, технику, ветки, батарейки и краску: все площадки на карте, часы и телефоны.', small: 'Карта' },
   ];
   const idxUrl = `${SITE_URL}${IDX}`, si = shell(IDX, false);
   const index = `${head({ title: 'Полезные статьи о жизни на Кипре', description: 'Инструкции для жизни на Кипре: как купить машину, где сдать мусор и другое.', url: idxUrl, image: `${idxUrl}og.png`, type: 'website' })}

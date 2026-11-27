@@ -642,7 +642,7 @@ ${proto ? PROTO_CSS : ''}  </style>
     <footer>
       <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg>${esc(SITE_NAME)}</span>
       <span>${esc(SITE_NAME)} — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>${artifact ? '' : `
-      <nav class="fnav" aria-label="Разделы сайта">${NAV.map((p) => p === cfg ? `<span>${esc(p.nav)}</span>` : `<a href="${p.path}">${esc(p.nav)}</a>`).join('')}<a href="/cyprus/green-points/">Green Points</a></nav>`}
+      <nav class="fnav" aria-label="Разделы сайта">${NAV.map((p) => p === cfg ? `<span>${esc(p.nav)}</span>` : `<a href="${p.path}">${esc(p.nav)}</a>`).join('')}</nav>`}
     </footer>
   </div>
   
@@ -1081,7 +1081,9 @@ buildArticles({ SITE_DIR, SITE_URL, SITE_NAME, MARK, svg, esc, nav: NAV.map((p) 
 fs.writeFileSync(path.join(SITE_DIR, '_redirects'), [
   `/ ${AFISHA.path} 302`, `/cyprus ${AFISHA.path} 302`, `/cyprus/ ${AFISHA.path} 302`, `/afisha ${AFISHA.path} 302`, `/afisha/ ${AFISHA.path} 302`,
   `/christmas ${XMAS.path} 302`, `/christmas/ ${XMAS.path} 302`,
-  '/green-points /cyprus/green-points/ 302', '/green-points/ /cyprus/green-points/ 302',
+  // Green Points переехали в «Статьи» (DEC-W56): старые адреса пересылают навсегда.
+  '/green-points /cyprus/articles/green-points/ 301', '/green-points/ /cyprus/articles/green-points/ 301',
+  '/cyprus/green-points /cyprus/articles/green-points/ 301', '/cyprus/green-points/ /cyprus/articles/green-points/ 301',
   '/articles /cyprus/articles/ 302', '/articles/ /cyprus/articles/ 302', '',
 ].join('\n'));
 fs.writeFileSync(path.join(SITE_DIR, '404.html'), `<!doctype html>
