@@ -1084,7 +1084,9 @@ fs.writeFileSync(path.join(SITE_DIR, '_redirects'), [
   // Green Points переехали в «Статьи» (DEC-W56): старые адреса пересылают навсегда.
   '/green-points /cyprus/articles/green-points/ 301', '/green-points/ /cyprus/articles/green-points/ 301',
   '/cyprus/green-points /cyprus/articles/green-points/ 301', '/cyprus/green-points/ /cyprus/articles/green-points/ 301',
-  '/articles /cyprus/articles/ 302', '/articles/ /cyprus/articles/ 302', '',
+  '/articles /cyprus/articles/ 302', '/articles/ /cyprus/articles/ 302',
+  // Статья про машину получила короткий адрес buy-used-car (DEC-W57).
+  '/cyprus/articles/kak-kupit-poderzhannuyu-mashinu-na-kipre /cyprus/articles/buy-used-car/ 301', '/cyprus/articles/kak-kupit-poderzhannuyu-mashinu-na-kipre/ /cyprus/articles/buy-used-car/ 301', '',
 ].join('\n'));
 fs.writeFileSync(path.join(SITE_DIR, '404.html'), `<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
