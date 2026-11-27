@@ -101,6 +101,7 @@ const ICONS = {
   mountain: '<path d="M3 19.5 9.5 8.5l4 6.5 2.5-3.8 5 8.3z"/><circle cx="17" cy="5.8" r="1.8"/>',
   calendar: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/>',
   pin: '<path d="M12 21s-6.5-5.6-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.4 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/>',
+  book: '<path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/>',
   search: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/>',
   share: '<path d="M12 3.5v12M7.5 8 12 3.5 16.5 8M5 12.5v6A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5v-6"/>',
   plus: '<rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M12 12.5v5M9.5 15h5"/>',
@@ -222,6 +223,9 @@ const AFISHA = {
   },
 };
 const PAGES = [AFISHA, XMAS];
+// Раздел «Статьи» строит scripts/build-articles.mjs (DEC-W55); здесь — только вкладка и ссылка в подвале.
+const ARTICLES = { nav: 'Статьи', tab: 'Статьи', tabIcon: 'book', path: '/cyprus/articles/', artifactUrl: null };
+const NAV = [...PAGES, ARTICLES];
 // Облик «Медь и афишная тумба» (DEC-W51): поверх основных стилей; proto: false в buildPage вернёт прежний тёмный облик.
 const PROTO_CSS = `
     /* Облик «Медь и афишная тумба» (DEC-W51).
@@ -415,7 +419,7 @@ function buildPage(cfg, { artifact = false, proto = true } = {}) {
     .cal-b { min-width: 34px; padding-inline: 8px; } .cal-b span:empty { display: none; } .cal-b .ic { color: var(--text); }
     .tb-search .ic { width: 18px; height: 18px; color: var(--text); }
     .tb-search[aria-expanded="true"] { background: var(--text); border-color: var(--text); } .tb-search[aria-expanded="true"] .ic { color: var(--night); }
-    @media (max-width: 379px) { .tb-brand span { display: none; } }
+    @media (max-width: 479px) { .tb-brand span { display: none; } }  /* три вкладки: на телефоне от знака остаётся значок */
     .tabs { display: flex; gap: 3px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
     .tabs a { display: inline-flex; align-items: center; gap: 5px; min-height: 34px; box-sizing: border-box; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
     @media (min-width: 640px) { .tabs a { padding: 7px 13px; font-size: .9rem; } }
@@ -593,10 +597,10 @@ ${proto ? PROTO_CSS : ''}  </style>
   
   <div class="wrap" lang="ru">
   <nav class="topbar" aria-label="Разделы">
-    <a class="tb-brand" href="${artifact ? AFISHA.artifactUrl + '" target="_blank" rel="noopener' : AFISHA.path}"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg><span>${esc(SITE_NAME)}</span></a>
-    <div class="tabs">${PAGES.map((p) => p === cfg
+    <a class="tb-brand" aria-label="City Compas" href="${artifact ? AFISHA.artifactUrl + '" target="_blank" rel="noopener' : AFISHA.path}"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg><span>${esc(SITE_NAME)}</span></a>
+    <div class="tabs">${NAV.map((p) => p === cfg
       ? `<a href="#" aria-current="page" data-kind="${p === XMAS ? 'christmas-lights' : ''}">${svg(p.tabIcon)}${esc(p.tab)}</a>`
-      : `<a href="${artifact ? p.artifactUrl + '" target="_blank" rel="noopener' : p.path}" data-kind="${p === XMAS ? 'christmas-lights' : ''}">${svg(p.tabIcon)}${esc(p.tab)}</a>`).join('')}</div>
+      : `<a href="${artifact ? (p.artifactUrl ?? SITE_URL + p.path) + '" target="_blank" rel="noopener' : p.path}" data-kind="${p === XMAS ? 'christmas-lights' : ''}">${svg(p.tabIcon)}${esc(p.tab)}</a>`).join('')}</div>
   </nav>
   <main>
   ${cfg.garland ? GARLAND : ''}  <header>
@@ -638,7 +642,7 @@ ${proto ? PROTO_CSS : ''}  </style>
     <footer>
       <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true">${MARK}</svg>${esc(SITE_NAME)}</span>
       <span>${esc(SITE_NAME)} — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>${artifact ? '' : `
-      <nav class="fnav" aria-label="Разделы сайта">${PAGES.map((p) => p === cfg ? `<span>${esc(p.nav)}</span>` : `<a href="${p.path}">${esc(p.nav)}</a>`).join('')}<a href="/cyprus/green-points/">Green Points</a></nav>`}
+      <nav class="fnav" aria-label="Разделы сайта">${NAV.map((p) => p === cfg ? `<span>${esc(p.nav)}</span>` : `<a href="${p.path}">${esc(p.nav)}</a>`).join('')}<a href="/cyprus/green-points/">Green Points</a></nav>`}
     </footer>
   </div>
   
@@ -1071,10 +1075,14 @@ fs.copyFileSync(path.resolve('public/favicon.svg'), path.join(SITE_DIR, 'favicon
 // 302 — временно: главная потом станет главной основного сайта, а браузеры не запомнят переадресацию навсегда.
 // Страницы, сделанные вручную (static/…, например Green Points — DEC-W54), копируются в папку сайта как есть.
 fs.cpSync(path.resolve('static'), SITE_DIR, { recursive: true });
+// Раздел «Статьи» (DEC-W55): список и страницы статей; превью первой статьи — для артефакта Claude.
+const { buildArticles } = await import('./build-articles.mjs');
+buildArticles({ SITE_DIR, SITE_URL, SITE_NAME, MARK, svg, esc, nav: NAV.map((p) => ({ path: p.path, tab: p.tab, nav: p.nav, icon: p.tabIcon })), artifactOut: path.resolve('standalone/article.html') });
 fs.writeFileSync(path.join(SITE_DIR, '_redirects'), [
   `/ ${AFISHA.path} 302`, `/cyprus ${AFISHA.path} 302`, `/cyprus/ ${AFISHA.path} 302`, `/afisha ${AFISHA.path} 302`, `/afisha/ ${AFISHA.path} 302`,
   `/christmas ${XMAS.path} 302`, `/christmas/ ${XMAS.path} 302`,
-  '/green-points /cyprus/green-points/ 302', '/green-points/ /cyprus/green-points/ 302', '',
+  '/green-points /cyprus/green-points/ 302', '/green-points/ /cyprus/green-points/ 302',
+  '/articles /cyprus/articles/ 302', '/articles/ /cyprus/articles/ 302', '',
 ].join('\n'));
 fs.writeFileSync(path.join(SITE_DIR, '404.html'), `<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">

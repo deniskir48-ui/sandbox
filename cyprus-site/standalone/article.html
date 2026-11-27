@@ -1,0 +1,274 @@
+<title>Как купить подержанную машину на Кипре</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Fira+Sans+Extra+Condensed:wght@600;700&display=swap">
+<style>
+    /* Статьи в облике сайта: известняк, чернила, медь и патина; узкий плакатный шрифт в заголовках, Onest в тексте.
+       Колонка текста ~68 знаков; шаги — крупными медными цифрами. */
+    :root {
+      color-scheme: light;
+      --night: #F3F5F4; --card: #FFFFFF; --line: #D4DDD9; --text: #13263B; --muted: #566675; --copper: #A24F22; --patina: #1B6E62;
+      --gutter: max(16px, env(safe-area-inset-left, 0px));
+      --display: "Fira Sans Extra Condensed", "Onest", system-ui, sans-serif; --body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    html { background: var(--night); }
+    body { margin: 0; background: var(--night); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.6;
+      padding-left: var(--gutter); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
+    .wrap { max-width: 1240px; margin: 0 auto; }
+    .ic { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+    .topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding-block: 10px; background: var(--night); border-bottom: 1px solid transparent; }
+    .topbar.stuck { border-bottom-color: var(--line); }
+    .tb-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text); text-decoration: none; font-weight: 700; font-size: .86rem; white-space: nowrap; }
+    .tb-brand svg { flex: none; }
+    @media (min-width: 640px) { .tb-brand { font-size: .95rem; } }
+    @media (max-width: 479px) { .tb-brand span { display: none; } }
+    .tabs { display: flex; gap: 3px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
+    .tabs a { display: inline-flex; align-items: center; gap: 5px; min-height: 34px; box-sizing: border-box; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
+    @media (min-width: 640px) { .tabs a { padding: 7px 13px; font-size: .9rem; } }
+    .tabs a .ic { color: var(--patina); }
+    @media (max-width: 419px) { .tabs a .ic { display: none; } }
+    .tabs a:hover { color: var(--text); }
+    .tabs a[aria-current] { background: var(--text); color: #fff; } .tabs a[aria-current] .ic { color: inherit; }
+    a:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+
+    .art, .idx { max-width: 720px; margin: 0 auto; padding-top: 14px; }
+    .crumb { font-size: .9rem; } .crumb a { color: var(--patina); text-underline-offset: 3px; }
+    h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.1rem, 7.6vw, 3.3rem); line-height: 1; letter-spacing: -.005em; margin: 8px 0 0; text-wrap: balance; }
+    .meta { margin: 14px 0 0; color: var(--muted); font-size: .9rem; }
+    .body { margin-top: 22px; }
+    .body > p:first-child, .body > p:first-child + p { font-size: 1.08rem; }
+    .body p, .body ul, .body ol { margin: 0 0 14px; }
+    .body h2 { font-family: var(--display); font-weight: 700; font-size: 1.85rem; line-height: 1.05; margin: 40px 0 14px; text-wrap: balance; scroll-margin-top: 70px;
+      display: flex; align-items: baseline; gap: 12px; }
+    .body h2 .n { flex: none; font-size: 2.6rem; color: var(--copper); line-height: .9; font-variant-numeric: tabular-nums; }
+    .body h3 { font-family: var(--display); font-weight: 600; font-size: 1.35rem; margin: 26px 0 8px; scroll-margin-top: 70px; }
+    .body ul, .body ol { padding-left: 1.25em; display: grid; gap: 6px; }
+    .body li::marker { color: var(--copper); }
+    .body strong { font-weight: 650; }
+    .body a { color: var(--patina); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .body a:hover { text-decoration-thickness: 2px; }
+    /* «Коротко: весь путь» — оглавление шагов. */
+    .body #steps + ol { list-style: none; counter-reset: s; padding: 14px 18px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; gap: 2px; }
+    .body #steps + ol li { counter-increment: s; display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: baseline; }
+    .body #steps + ol li::before { content: counter(s); font: 700 1.4rem/1 var(--display); color: var(--copper); }
+    .body #steps + ol a { color: var(--text); text-decoration: none; }
+    .body #steps + ol a:hover { text-decoration: underline; }
+    .tbl { overflow-x: auto; margin: 0 0 14px; }
+    table { border-collapse: collapse; min-width: 280px; font-variant-numeric: tabular-nums; }
+    th, td { text-align: left; padding: 8px 18px 8px 0; border-bottom: 1px solid var(--line); }
+    th { font-size: .82rem; color: var(--muted); font-weight: 600; }
+
+    .list { list-style: none; padding: 0; margin: 22px 0 0; border-top: 1px solid var(--line); }
+    .list li { border-bottom: 1px solid var(--line); }
+    .list a { display: grid; gap: 4px; padding: 18px 0; color: inherit; text-decoration: none; }
+    .list a:hover b { text-decoration: underline; text-underline-offset: 4px; }
+    .list b { font: 700 1.6rem/1.05 var(--display); text-wrap: balance; }
+    .list span { color: var(--muted); }
+    .list small { color: var(--muted); font-size: .85rem; }
+
+    footer { max-width: 720px; margin: 44px auto 0; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
+    footer .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--text); font-weight: 700; }
+    .fnav { display: flex; flex-wrap: wrap; gap: 6px 18px; } .fnav a { color: var(--patina); text-underline-offset: 3px; } .fnav span { color: var(--text); }
+</style>
+<div class="wrap">
+  <nav class="topbar" aria-label="Разделы">
+    <a class="tb-brand" aria-label="City Compas" href="https://citycompas.com/cyprus/afisha/"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#A24F22"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#F3F5F4"/><circle cx="16" cy="13" r="5.8" fill="#A24F22"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#13263B"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#F3F5F4"/></svg><span>City Compas</span></a>
+    <div class="tabs"><a href="https://citycompas.com/cyprus/afisha/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/></svg>Афиша</a><a href="https://citycompas.com/cyprus/christmas/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Рождество</a><a href="https://citycompas.com/cyprus/articles/" aria-current="page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>Статьи</a></div>
+  </nav>
+  <main class="art">
+    <p class="crumb"><a href="https://citycompas.com/cyprus/articles/">Статьи</a></p>
+    <h1>Как купить подержанную машину на Кипре: полная инструкция</h1>
+    <p class="meta">27 ноября 2026, читать 12 минут</p>
+    <div class="body">
+<p>Заказ из Японии дешевле, но машину ждать 3-4 месяца. Если она нужна сейчас, остается вторичный рынок: тут можно уехать хоть сегодня. Только проверять машину придется самому, и на Кипре у этого есть свои особенности.</p>
+<p>Ниже весь путь по шагам: от поиска до первой поездки. А в конце отдельно: как проходить техосмотр (MOT) и платить дорожный налог (road tax). Это придется делать регулярно, пока машина ваша.</p>
+<h2 id="steps">Коротко: весь путь за 7 шагов</h2>
+<ol>
+<li><a href="#search">Ищете машину.</a></li>
+<li><a href="#inspection">Осматриваете ее и делаете диагностику.</a></li>
+<li><a href="#documents">Проверяете документы и отзывы производителя.</a></li>
+<li><a href="#contract">Договариваетесь о цене и подписываете договор.</a></li>
+<li><a href="#insurance">Оформляете страховку на себя.</a></li>
+<li><a href="#transfer">Вместе с продавцом переоформляете машину и платите.</a></li>
+<li><a href="#first-drive">Проверяете, что все действует, и едете.</a></li>
+</ol>
+<p>Теперь подробно.</p>
+<h2 id="search"><span class="n">1</span>Ищете машину</h2>
+<p>Больше всего объявлений на <a href="https://www.bazaraki.com/" target="_blank" rel="noopener">Bazaraki</a>: там продают и частники, и дилеры, можно отфильтровать по марке, году, бюджету и типу коробки передач. Но Bazaraki не участвует в сделке и не гарантирует ни состояние машины, ни добросовестность продавца. Если продавец «сейчас за границей» и предлагает дистанционную сделку с предоплатой, например в крипте, это почти наверняка мошенник.</p>
+<p>Еще есть Facebook Marketplace и местные чаты в телеге.</p>
+<p>Можно поехать к дилерам подержанных машин: там обычно дороже, зато есть гарантия. При покупке у компании действуют права потребителя: продавец отвечает за соответствие машины договору два года, а для подержанной в договоре этот срок можно сократить, но не меньше чем до года. Уточните условия и зафиксируйте их в документах. У частника таких гарантий нет.</p>
+<h2 id="inspection"><span class="n">2</span>Осмотр</h2>
+<p>Обязательно тест-драйв и диагностика на независимом СТО, которое вы выбрали сами. Если продавец не хочет ехать на диагностику, это уже диагностика.</p>
+<p>Перед тест-драйвом спросите, покрывает ли страховка машины вас за рулем. На Кипре полисы часто оформляют на конкретных водителей или с ограничениями по возрасту и стажу. Если вас полис не покрывает, пусть ведет продавец.</p>
+<p>На осмотре одного «заводится и едет» мало. Посмотрите:</p>
+<ul>
+<li><strong>Кузов:</strong> следы ДТП, перекраски, коррозию и качество ремонта.</li>
+<li><strong>Двигатель и коробку:</strong> утечки, посторонние звуки, ошибки.</li>
+<li><strong>Подвеску и тормоза:</strong> износ и будущие расходы на ремонт.</li>
+<li><strong>Электронику:</strong> кондиционер, приборы, датчики.</li>
+<li><strong>Шины:</strong> глубина протектора должна быть не меньше 1,6 мм, иначе машина не пройдет MOT.</li>
+</ul>
+<p>На Кипре отдельно смотрите на то, что делают с машиной местная жизнь и климат:</p>
+<ul>
+<li><strong>Солнце.</strong> Выгоревшая краска на крыше и капоте, трещины на торпеде, пересохшие уплотнители, мутные фары. Шины от солнца тоже стареют: посмотрите год выпуска на боковине и нет ли трещин.</li>
+<li><strong>Жара.</strong> Кондиционер летом работает почти без перерыва, так что проверьте, насколько быстро он охлаждает салон. Аккумулятор от жары тоже изнашивается быстрее, спросите, когда его меняли.</li>
+<li><strong>Соль.</strong> Если машина жила у моря, загляните под днище, на арки, пороги и тормозные трубки: ржавчина там появляется быстрее.</li>
+<li><strong>Тесные парковки.</strong> Царапины и вмятины на бамперах, побитые зеркала, диски, поцарапанные о бордюры. Если повреждения поверхностные, это не страшно, но это повод поторговаться.</li>
+<li><strong>Обслуживание.</strong> Полная сервисная история есть не у каждой машины, а масло часто меняют, когда вспомнят. Попросите сервисную книжку или счета за обслуживание, а если их нет, сразу заложите в бюджет замену масла, фильтров и жидкостей.</li>
+</ul>
+<p>И помните: действующий MOT не означает, что машина полностью исправна. Это периодический техосмотр, подробную диагностику перед покупкой он не заменяет.</p>
+<h2 id="documents"><span class="n">3</span>Проверяете документы</h2>
+<h3>Logbook</h3>
+<p>У машины есть регистрационный документ, его называют logbook. VIN и номер в нем должны совпадать с машиной, а владелец с продавцом. Если машину продает не владелец, выясните, на каком основании он действует от его имени.</p>
+<h3>Пробег и история</h3>
+<p>На Кипре встречаются машины со скрученным пробегом, поэтому его стоит проверить по истории.</p>
+<p>Для части европейских марок это можно сделать по VIN на <a href="https://www.auto-records.com/" target="_blank" rel="noopener">auto-records.com</a>: Audi, BMW, Mini, Mercedes (с 2010 года), Land Rover, Jaguar, Volvo, Opel, Peugeot, Citroen и Volkswagen. Отчет стоит 6,99 евро и показывает показания одометра по записям сервисов.</p>
+<p>Если машину привезли из Японии, попросите у продавца аукционный лист: это отчет о состоянии машины, который составляют на японском аукционе перед продажей. Его можно проверить по номеру кузова в платных сервисах, например <a href="https://otofacts.com/" target="_blank" rel="noopener">OTOFACTS</a>, отчет от 15,99 доллара. Там видно пробег на момент аукциона, ДТП и ремонты. Номер кузова у японских машин короче VIN, 9-12 знаков, он указан в регистрационных документах.</p>
+<p>Если в отчете пробег больше, чем на приборной панели, его скрутили.</p>
+<h3>Отзывы производителя</h3>
+<p>Если производитель находит в модели опасный дефект, он отзывает машины на бесплатный ремонт. Самая массовая история на Кипре: подушки безопасности Takata. Под отзыв попали около 81 000 машин, и с октября 2025 года тем, у кого истек срок обязательной замены подушек, приостанавливают действие MOT: ездить на них до ремонта нельзя. Новые партии отзывают до сих пор, например в ноябре 2026 года.</p>
+<p>VIN можно сразу проверить по спискам на <a href="https://www.gov.cy/mtcw/airbag-recalls/" target="_blank" rel="noopener">странице Road Transport Department (RTD) об отзывах</a> или по телефону 22807000. Но списки не исчерпывающие, поэтому у продавца спросите справку от официального представителя марки, что незакрытых отзывов нет (форма TOM 369). Она все равно понадобится при переоформлении.</p>
+<h3>MOT, road tax и кредит</h3>
+<p>Заодно узнайте:</p>
+<ul>
+<li><strong>До какого числа действует техосмотр (MOT).</strong> Если он заканчивается через месяц, это уже ваши расходы и, возможно, ремонт. Как его пройти, рассказываю <a href="#mot">ниже</a>.</li>
+<li><strong>Оплачен ли дорожный налог (road tax) и до какого числа.</strong> Оплаченный налог остается с машиной, но долги по нему пусть продавец погасит до сделки.</li>
+<li><strong>Нет ли кредита или лизинга.</strong> Если машина в кредите, попросите подтверждение, что он закрыт, или согласие банка на продажу.</li>
+</ul>
+<h2 id="contract"><span class="n">4</span>Договариваетесь о цене и подписываете договор</h2>
+<p>С частником составьте простой письменный договор. В нем должны быть:</p>
+<ul>
+<li>данные покупателя и продавца</li>
+<li>марка, модель, регистрационный номер, VIN и пробег</li>
+<li>цена и способ оплаты</li>
+<li>дата передачи машины</li>
+<li>известные дефекты</li>
+<li>что будет с задатком, если переоформить машину не получится</li>
+</ul>
+<p>Переоформление договор не заменяет, но фиксирует условия сделки.</p>
+<p>У дилера попросите договор, счет или другой документ, подтверждающий продавца, цену и оплату.</p>
+<h2 id="insurance"><span class="n">5</span>Оформляете страховку на себя</h2>
+<p>Страховка продавца на вас не переходит, а без вашей машину не переоформят. Поэтому полис оформляете до поездки в ведомство.</p>
+<p><strong>Где.</strong> Полис продает любая страховая компания или агент, многие считают цену онлайн. Сравните несколько предложений: цена сильно зависит от машины, вашего возраста и стажа.</p>
+<p><strong>Что нужно.</strong> Данные машины из logbook и ваши документы: удостоверение личности и права.</p>
+<p><strong>Какой полис.</strong> Минимум по закону ответственность перед третьими лицами. Дальше по желанию: плюс защита от пожара и угона или полная страховка. Если часто ездите по горам и грунтовкам, уточните, покрывает ли полис такие дороги: многие страховые их исключают.</p>
+<p><strong>Срок.</strong> Сертификат должен действовать еще минимум три месяца после переоформления. Его оригинал возьмите с собой в ведомство.</p>
+<p><strong>Про права.</strong> Европейские права на Кипре признаются. Если у вас права не из ЕС и вы живете на Кипре долго, их нужно обменять на кипрские. Страховая все равно спросит, какие у вас права, так что этот вопрос лучше решить заранее.</p>
+<h2 id="transfer"><span class="n">6</span>Переоформляете машину и платите</h2>
+<p><strong>Где.</strong> Официальная процедура называется transfer of ownership. Сделать ее можно в Road Transport Department, центре обслуживания граждан KEP или почтовом центре KEPO. Подписи покупателя и продавца там заверит сотрудник, если оба пришли с удостоверениями личности, поэтому ехать лучше вдвоем.</p>
+<p>Если ехать не хочется, переоформление можно поручить посреднику по доверенности, об этом <a href="#delegate">в конце</a>.</p>
+<p><strong>Что взять с собой:</strong></p>
+<ul>
+<li>форму TOM 9Γ, подписанную покупателем и продавцом (есть на сайте RTD)</li>
+<li>logbook</li>
+<li>удостоверения личности обоих</li>
+<li>оригинал вашей страховки</li>
+<li>справку об отсутствии незакрытых отзывов (TOM 369)</li>
+<li>8,54 евро на сбор</li>
+</ul>
+<p>Иностранцу вместо удостоверения личности нужен паспорт, документ о ВНЖ (ARC, Yellow Slip или Pink Slip) и подтверждение адреса, например свежий счет за коммуналку.</p>
+<p>Актуальные формы и требования опубликованы на <a href="https://www.gov.cy/mtcw-rtd/documents/rtd-department-genikes-plirofories-eniaia-psifiaki-thyra/rtd-department-eggrafi-metabibasi-akinitopoiisi-adeia-kykloforias/rtd-department-metabibasi/" target="_blank" rel="noopener">сайте Road Transport Department</a>.</p>
+<p><strong>Как платить.</strong> Деньги переводите, когда сотрудник подтвердил, что переоформление проходит, а ключи и документы забирайте, когда все оформлено. Не отдавайте всю сумму незнакомому продавцу в обмен на обещание «переоформим завтра».</p>
+<p>Удобнее всего банковский перевод: остается подтверждение платежа. С октября 2025 года переводы в евро внутри ЕС доходят за секунды, а банк перед отправкой сверяет имя получателя со счетом. Проверьте, что оно совпадает с владельцем в logbook.</p>
+<p>И важно: наличными на Кипре нельзя платить больше 10 000 евро, иначе штраф.</p>
+<p><strong>Здесь есть две ловушки.</strong></p>
+<p>Первая: если справки нет, потому что машину отозвали на ремонт, а ремонт так и не сделали, придется подписать декларацию TOM 372. Оформить машину получится, а уехать нет: MOT приостановят до ремонта.</p>
+<p>Вторая: если MOT просрочен, подписывают декларацию TOM 120A. В ней покупатель подтверждает, что знает об этом, и берет на себя просроченный road tax. Ездить на такой машине до нового техосмотра нельзя.</p>
+<h2 id="first-drive"><span class="n">7</span>Перед первой поездкой</h2>
+<p>Убедитесь, что:</p>
+<ol>
+<li>Машина записана на вас.</li>
+<li>Страховка действует и покрывает вас за рулем.</li>
+<li>MOT действует и не приостановлен.</li>
+<li>Road tax оплачен.</li>
+</ol>
+<p>Заберите регистрационные документы, подтверждение сделки, все комплекты ключей и историю обслуживания. Новый logbook на ваше имя пришлют по почте, а пока храните квитанцию и копию подписанной TOM 9Γ. Все, можно ехать.</p>
+<h2 id="mot">Как пройти MOT</h2>
+<p>MOT это обязательный техосмотр. Без него ездить нельзя: штраф 150 евро, и страховка может не покрыть ДТП. Продлить road tax без действующего MOT тоже не получится.</p>
+<p><strong>Когда.</strong> Новой машине первый MOT нужен через 4 года после регистрации, дальше раз в 2 года. Дату следующего техосмотра смотрите в сертификате прошлого MOT. Если покупаете машину, у которой он скоро заканчивается, лучше пройти его сразу.</p>
+<p><strong>Где.</strong> В частных центрах техосмотра (их называют IKTEO) и государственных центрах. Они есть во всех городах, список на сайте RTD. Записываться обычно не нужно, работает живая очередь. В конце месяца и перед праздниками очереди длинные, так что лучше приехать пораньше.</p>
+<p><strong>Что взять:</strong></p>
+<ul>
+<li>logbook</li>
+<li>удостоверение личности</li>
+<li>действующую страховку</li>
+<li>предыдущий сертификат MOT, если есть</li>
+</ul>
+<p><strong>Сколько стоит.</strong> Цену устанавливает государство. В конце 2025 года парламент поднял ее для легковых машин с 35 до 43 евро в частных центрах и с 40 до 46 евро в государственных. Повторная проверка после отказа дешевле.</p>
+<p><strong>Что проверяют.</strong> Тормоза, рулевое управление, подвеску, свет, ремни безопасности, шины и выхлоп.</p>
+<p><strong>Чаще всего не проходят из-за:</strong></p>
+<ul>
+<li>изношенных тормозов</li>
+<li>неправильно отрегулированных фар</li>
+<li>превышения норм выхлопа</li>
+<li>люфта в рулевом управлении</li>
+<li>шин с протектором меньше 1,6 мм</li>
+</ul>
+<p><strong>Если не прошли.</strong> Вам выдадут список дефектов и дадут 30 дней на ремонт. На повторной проверке смотрят только то, что было не в порядке. Если за 30 дней не успели, техосмотр придется проходить и оплачивать заново. Ездить с непройденным MOT можно только в мастерскую и обратно на проверку.</p>
+<h2 id="road-tax">Как оплатить road tax</h2>
+<p>Road tax это ежегодный дорожный налог. Без него на машине ездить нельзя.</p>
+<p><strong>Сколько.</strong> Для машин, впервые зарегистрированных с 1 января 2014 года, налог зависит от выбросов CO2, для более старых от объема двигателя. Примеры в год по выбросам:</p>
+<div class="tbl"><table>
+<thead>
+<tr>
+<th>Выбросы CO2</th>
+<th>Налог в год</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>90 г/км</td>
+<td>45 евро</td>
+</tr>
+<tr>
+<td>120 г/км</td>
+<td>60 евро</td>
+</tr>
+<tr>
+<td>150 г/км</td>
+<td>150 евро</td>
+</tr>
+<tr>
+<td>180 г/км</td>
+<td>300 евро</td>
+</tr>
+<tr>
+<td>200 г/км</td>
+<td>500 евро</td>
+</tr>
+</tbody>
+</table></div>
+<p>Максимум 1 500 евро в год. Сумму для вашей машины портал покажет перед оплатой.</p>
+<p><strong>Когда.</strong> Налог можно оплатить на 3, 6, 9 или 12 месяцев. Основное продление проходит в начале года: в 2026 году срок был до 11 марта, потом его продлили до 31 марта. За просрочку берут доплату: 10 евро плюс 10% суммы налога за текущий год.</p>
+<p><strong>Что нужно.</strong> Действующий MOT и страховка. Страховая сама передает данные полиса в государственную базу, а с истекшим MOT система оплату не примет.</p>
+<p><strong>Где и как.</strong></p>
+<ul>
+<li><strong>Онлайн</strong> на <a href="https://rtd.mcw.gov.cy/" target="_blank" rel="noopener">портале Road Transport Department</a>: вводите номер машины и данные владельца, выбираете срок и оплачиваете. Продление готово, когда появится экран Print Registration Permit: сохраните или распечатайте разрешение. Регистрироваться не нужно, сайт есть на английском и греческом.</li>
+<li><strong>Лично</strong> на почте или в отделении RTD в любом городе.</li>
+<li><strong>В KEP</strong> помогут заполнить онлайн-форму, если не получается самому.</li>
+</ul>
+<p>Через JCC Smart и в банках road tax больше не принимают.</p>
+<p>Если машиной долго не пользуетесь, ее можно объявить неиспользуемой, тогда налог за этот период платить не нужно. Сделать это надо до срока продления.</p>
+<h2 id="delegate">А можно все это поручить?</h2>
+<p>Можно. Есть посредники, которые берут процесс на себя: ищут машину под ваш бюджет, общаются с продавцами, проводят диагностику и оформляют документы, в том числе переоформление по доверенности. От вас по сути нужно только назвать параметры машины, которую ищете, или скинуть ссылки на конкретные объявления.</p>
+<p>Это удобно, если вы плохо разбираетесь в машинах, не знаете местного рынка или просто не хотите тратить недели на объявления и поездки по продавцам.</p>
+<h2 id="links">Полезные ссылки</h2>
+<ul>
+<li><a href="https://www.bazaraki.com/" target="_blank" rel="noopener">Bazaraki</a>: объявления о продаже автомобилей.</li>
+<li><a href="https://www.gov.cy/mtcw-rtd/documents/rtd-department-genikes-plirofories-eniaia-psifiaki-thyra/rtd-department-eggrafi-metabibasi-akinitopoiisi-adeia-kykloforias/rtd-department-metabibasi/" target="_blank" rel="noopener">Road Transport Department: переоформление автомобиля</a>: официальные формы и документы.</li>
+<li><a href="https://www.gov.cy/mtcw/airbag-recalls/" target="_blank" rel="noopener">Отзывные кампании по подушкам безопасности</a>: списки машин под отзывом.</li>
+<li><a href="https://www.gov.cy/en/service/renewal-of-road-tax/" target="_blank" rel="noopener">Оплата road tax</a>: государственный сервис.</li>
+<li><a href="https://www.auto-records.com/" target="_blank" rel="noopener">auto-records.com</a>: история пробега по VIN для некоторых европейских марок.</li>
+<li><a href="https://otofacts.com/" target="_blank" rel="noopener">OTOFACTS</a>: аукционные листы и история машин из Японии.</li>
+<li>Телефон Road Transport Department: 22807000.</li>
+</ul>
+
+    </div>
+  </main>
+  <footer>
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#A24F22"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#F3F5F4"/><circle cx="16" cy="13" r="5.8" fill="#A24F22"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#13263B"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#F3F5F4"/></svg>City Compas</span>
+    <span>City Compas — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>
+    <nav class="fnav" aria-label="Разделы сайта"><a href="https://citycompas.com/cyprus/afisha/">Афиша</a><a href="https://citycompas.com/cyprus/christmas/">Рождество на Кипре</a><span>Статьи</span><a href="https://citycompas.com/cyprus/green-points/">Green Points</a></nav>
+  </footer>
+  <script>(function () { var b = document.querySelector('.topbar'); addEventListener('scroll', function () { b.classList.toggle('stuck', scrollY > 4); }, { passive: true }); })();</script>
+</div>

@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F3F5F4">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<title>Полезные статьи о жизни на Кипре</title>
+<meta name="description" content="Инструкции для жизни на Кипре: как купить машину, где сдать мусор и другое.">
+<link rel="canonical" href="https://citycompas.com/cyprus/articles/">
+<meta property="og:type" content="website"><meta property="og:locale" content="ru_RU"><meta property="og:site_name" content="City Compas">
+<meta property="og:title" content="Полезные статьи о жизни на Кипре"><meta property="og:description" content="Инструкции для жизни на Кипре: как купить машину, где сдать мусор и другое."><meta property="og:url" content="https://citycompas.com/cyprus/articles/">
+<meta property="og:image" content="https://citycompas.com/cyprus/articles/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&family=Fira+Sans+Extra+Condensed:wght@600;700&display=swap">
+<style>
+    /* Статьи в облике сайта: известняк, чернила, медь и патина; узкий плакатный шрифт в заголовках, Onest в тексте.
+       Колонка текста ~68 знаков; шаги — крупными медными цифрами. */
+    :root {
+      color-scheme: light;
+      --night: #F3F5F4; --card: #FFFFFF; --line: #D4DDD9; --text: #13263B; --muted: #566675; --copper: #A24F22; --patina: #1B6E62;
+      --gutter: max(16px, env(safe-area-inset-left, 0px));
+      --display: "Fira Sans Extra Condensed", "Onest", system-ui, sans-serif; --body: "Onest", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    html { background: var(--night); }
+    body { margin: 0; background: var(--night); color: var(--text); font-family: var(--body); font-size: 17px; line-height: 1.6;
+      padding-left: var(--gutter); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 40px; }
+    .wrap { max-width: 1240px; margin: 0 auto; }
+    .ic { flex: none; width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.9; stroke-linecap: round; stroke-linejoin: round; }
+    .topbar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 12; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+      padding-block: 10px; background: var(--night); border-bottom: 1px solid transparent; }
+    .topbar.stuck { border-bottom-color: var(--line); }
+    .tb-brand { display: inline-flex; align-items: center; gap: 8px; min-width: 0; color: var(--text); text-decoration: none; font-weight: 700; font-size: .86rem; white-space: nowrap; }
+    .tb-brand svg { flex: none; }
+    @media (min-width: 640px) { .tb-brand { font-size: .95rem; } }
+    @media (max-width: 479px) { .tb-brand span { display: none; } }
+    .tabs { display: flex; gap: 3px; padding: 3px; background: var(--card); border: 1px solid var(--line); border-radius: 999px; }
+    .tabs a { display: inline-flex; align-items: center; gap: 5px; min-height: 34px; box-sizing: border-box; padding: 7px 10px; border-radius: 999px; color: var(--muted); font: 600 .86rem var(--body); text-decoration: none; white-space: nowrap; }
+    @media (min-width: 640px) { .tabs a { padding: 7px 13px; font-size: .9rem; } }
+    .tabs a .ic { color: var(--patina); }
+    @media (max-width: 419px) { .tabs a .ic { display: none; } }
+    .tabs a:hover { color: var(--text); }
+    .tabs a[aria-current] { background: var(--text); color: #fff; } .tabs a[aria-current] .ic { color: inherit; }
+    a:focus-visible { outline: 2px solid var(--copper); outline-offset: 2px; }
+
+    .art, .idx { max-width: 720px; margin: 0 auto; padding-top: 14px; }
+    .crumb { font-size: .9rem; } .crumb a { color: var(--patina); text-underline-offset: 3px; }
+    h1 { font-family: var(--display); font-weight: 700; font-size: clamp(2.1rem, 7.6vw, 3.3rem); line-height: 1; letter-spacing: -.005em; margin: 8px 0 0; text-wrap: balance; }
+    .meta { margin: 14px 0 0; color: var(--muted); font-size: .9rem; }
+    .body { margin-top: 22px; }
+    .body > p:first-child, .body > p:first-child + p { font-size: 1.08rem; }
+    .body p, .body ul, .body ol { margin: 0 0 14px; }
+    .body h2 { font-family: var(--display); font-weight: 700; font-size: 1.85rem; line-height: 1.05; margin: 40px 0 14px; text-wrap: balance; scroll-margin-top: 70px;
+      display: flex; align-items: baseline; gap: 12px; }
+    .body h2 .n { flex: none; font-size: 2.6rem; color: var(--copper); line-height: .9; font-variant-numeric: tabular-nums; }
+    .body h3 { font-family: var(--display); font-weight: 600; font-size: 1.35rem; margin: 26px 0 8px; scroll-margin-top: 70px; }
+    .body ul, .body ol { padding-left: 1.25em; display: grid; gap: 6px; }
+    .body li::marker { color: var(--copper); }
+    .body strong { font-weight: 650; }
+    .body a { color: var(--patina); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+    .body a:hover { text-decoration-thickness: 2px; }
+    /* «Коротко: весь путь» — оглавление шагов. */
+    .body #steps + ol { list-style: none; counter-reset: s; padding: 14px 18px; background: var(--card); border: 1px solid var(--line); border-radius: 6px; gap: 2px; }
+    .body #steps + ol li { counter-increment: s; display: grid; grid-template-columns: 30px minmax(0, 1fr); align-items: baseline; }
+    .body #steps + ol li::before { content: counter(s); font: 700 1.4rem/1 var(--display); color: var(--copper); }
+    .body #steps + ol a { color: var(--text); text-decoration: none; }
+    .body #steps + ol a:hover { text-decoration: underline; }
+    .tbl { overflow-x: auto; margin: 0 0 14px; }
+    table { border-collapse: collapse; min-width: 280px; font-variant-numeric: tabular-nums; }
+    th, td { text-align: left; padding: 8px 18px 8px 0; border-bottom: 1px solid var(--line); }
+    th { font-size: .82rem; color: var(--muted); font-weight: 600; }
+
+    .list { list-style: none; padding: 0; margin: 22px 0 0; border-top: 1px solid var(--line); }
+    .list li { border-bottom: 1px solid var(--line); }
+    .list a { display: grid; gap: 4px; padding: 18px 0; color: inherit; text-decoration: none; }
+    .list a:hover b { text-decoration: underline; text-underline-offset: 4px; }
+    .list b { font: 700 1.6rem/1.05 var(--display); text-wrap: balance; }
+    .list span { color: var(--muted); }
+    .list small { color: var(--muted); font-size: .85rem; }
+
+    footer { max-width: 720px; margin: 44px auto 0; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: .9rem; display: grid; gap: 8px; }
+    footer .brand { display: inline-flex; align-items: center; gap: 8px; color: var(--text); font-weight: 700; }
+    .fnav { display: flex; flex-wrap: wrap; gap: 6px 18px; } .fnav a { color: var(--patina); text-underline-offset: 3px; } .fnav span { color: var(--text); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topbar" aria-label="Разделы">
+    <a class="tb-brand" aria-label="City Compas" href="/cyprus/afisha/"><svg width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#A24F22"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#F3F5F4"/><circle cx="16" cy="13" r="5.8" fill="#A24F22"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#13263B"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#F3F5F4"/></svg><span>City Compas</span></a>
+    <div class="tabs"><a href="/cyprus/afisha/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M7.5 14h2M11 14h2M14.5 14h2M7.5 17h2M11 17h2"/></svg>Афиша</a><a href="/cyprus/christmas/"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 7.5 9H10l-4 5.5h3.5L5 20h14l-4.5-5.5H18L14 9h2.5zM12 20v2"/></svg>Рождество</a><a href="/cyprus/articles/" aria-current="page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5z"/></svg>Статьи</a></div>
+  </nav>
+  <main class="idx">
+    <h1>Полезные статьи</h1>
+    <ul class="list">
+      <li><a href="/cyprus/articles/kak-kupit-poderzhannuyu-mashinu-na-kipre/"><b>Как купить подержанную машину на Кипре: полная инструкция</b><span>Весь путь от поиска до первой поездки: осмотр, проверка документов и пробега, страховка, переоформление, а также MOT и road tax.</span><small>27 ноября 2026, читать 12 минут</small></a></li>
+      <li><a href="/cyprus/green-points/"><b>Green Points Кипра: карта, часы работы, что принимают</b><span>Где бесплатно сдать старую мебель, технику, ветки, батарейки и краску: все площадки на карте, часы и телефоны.</span><small>Карта</small></a></li>
+    </ul>
+  </main>
+  <footer>
+    <span class="brand"><svg width="22" height="22" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#A24F22"/><path d="M16 3.6c-5.5 0-9.6 4.1-9.6 9.4 0 6.7 9.6 15.2 9.6 15.2s9.6-8.5 9.6-15.2c0-5.3-4.1-9.4-9.6-9.4z" fill="#F3F5F4"/><circle cx="16" cy="13" r="5.8" fill="#A24F22"/><path d="M19.4 9.6l-2.3 4.5-2.2-2.2z" fill="#13263B"/><path d="M12.6 16.4l2.3-4.5 2.2 2.2z" fill="#F3F5F4"/></svg>City Compas</span>
+    <span>City Compas — гид по Кипру на русском: что происходит, куда сходить и к кому обратиться.</span>
+    <nav class="fnav" aria-label="Разделы сайта"><a href="/cyprus/afisha/">Афиша</a><a href="/cyprus/christmas/">Рождество на Кипре</a><span>Статьи</span><a href="/cyprus/green-points/">Green Points</a></nav>
+  </footer>
+  <script>(function () { var b = document.querySelector('.topbar'); addEventListener('scroll', function () { b.classList.toggle('stuck', scrollY > 4); }, { passive: true }); })();</script>
+</div>
+</body>
+</html>

@@ -24,6 +24,7 @@
 - `scripts/import-digest.py` + `scripts/week-fixes/<понедельник>.json` — импорт недели из полного отбора и правки по проверке.
 - `scripts/enrich-apply.py` — подробности со страниц событий (описание, адрес, цена…).
 - `scripts/og-image.cjs` — картинки-превью для соцсетей.
+- `src/content/articles/*.md` — статьи; на сайт попадают только `status: published` (`scripts/build-articles.mjs`).
 - `static/` — страницы, сделанные вручную (Green Points); копируются в сайт как есть при сборке.
 - `standalone/citycompas-site.zip` — последняя собранная версия сайта, готовая к загрузке.
 - `DECISIONS.md` — все решения по проекту с причинами (DEC-W01…); `README.md` — команды; `research/` — UX-исследование.
