@@ -3,9 +3,14 @@
 
     python3 scripts/import-digest.py import/afisha-digest.xlsx scripts/week-fixes/2026-11-23.json [--dry-run]
 
-Один файл вместо двух (DEC-W46): события, приоритеты и пометки берутся из листа «Все события»
-(Приоритет | Когда | Город / место | Событие | Что будет | Ссылка | В пост? | Проверка | Замечания).
-Рождественские — те, что есть и в листе «Рождество — полный список»: получают метку christmas и вид
+Один файл вместо двух (DEC-W46): события, приоритеты и пометки берутся из листа «Все события».
+Раскладка определяется по строке заголовков (3-я строка):
+  до 23.11: Приоритет | Когда | Город / место | Событие | Что будет | Ссылка | В пост? | Проверка | Замечания;
+  с 30.11:  Приоритет | В пост? | Когда | Город / место | Событие | Что будет | Цена | Тип мероприятия |
+            Для кого / язык | Информация / билеты | Проверка | Примечания (DEC-W58) — отсюда ещё цена,
+            язык и подсказка вида события. Лист «Нужно уточнить» в импорт не входит: это кандидаты,
+            которые сам составитель не включил в основную афишу.
+Рождественские — те, что есть и в листе «Рождество — полный список» (с 30.11 — «Рождество»): получают метку christmas и вид
 (парк, деревня, огни, ярмарка, другое) по правилам scripts/import-christmas.py.
 
 Перед импортом каждое событие сверяется со своей страницей; решения проверки лежат в файле правок
@@ -34,9 +39,36 @@ def load(name):
 week, xmas, afisha = load("import-week"), load("import-christmas"), load("import-afisha")
 q, slugify, link, parse_when = xmas.q, xmas.slugify, xmas.link, xmas.parse_when
 MARK = week.MARK
-SHEET, XMAS_SHEET = "Все события", "Рождество — полный список"
+SHEET, XMAS_SHEETS = "Все события", ("Рождество — полный список", "Рождество")
+# Колонка «Тип мероприятия» (с 30.11) → вид события на сайте; «Детям» решают правила по названию.
+TABLE_TYPES = {"Концерт": "concert", "Театр / шоу": "theatre", "Мастер-класс": "workshop", "Ярмарка / рынок": "festival",
+               "Вечеринка": "party", "Встреча / лекция": "talk", "Кино / встреча": "cinema", "Выставка": "exhibition",
+               "Спорт": "sport", "Стендап": "standup", "Природа / экскурсия": "tour", "Праздник / фестиваль": "festival",
+               "Фестиваль / концерт": "festival", "Еда / дегустация": "festival"}
+LANGS = [("русск", "русский"), ("греч", "греческий"), ("англ", "английский"), ("нидерл", "нидерландский")]
+NO_PRICE = re.compile(r"не опубликован|уточн|по условиям|по афише|^$", re.I)
+
+
+def language_of(who):
+    """«Взрослые · русский» → «русский»; «греч., англ. субтитры» → «греческий, английские субтитры»."""
+    lang = who.rpartition(" · ")[2]
+    if re.search(r"уточн|не указан|несуществ|у организатора", lang, re.I):
+        return None
+    if "субтитр" in lang:
+        main, _, sub = lang.partition(",")
+        names = [n for k, n in LANGS if k in main]
+        return f"{', '.join(names)}, английские субтитры" if names and "англ" in sub else None
+    names = [n for k, n in LANGS if k in lang]
+    return ", ".join(names) or None
+
+
+def layout(sheet):
+    head = [str(c.value or "").strip() for c in sheet[3][:12]]
+    if head[4:5] == ["Событие"]:  # с 30.11
+        return dict(pr=0, when=2, place=3, title=4, what=5, price=6, ttype=7, who=8, link=9, check=10, note=11)
+    return dict(pr=0, when=1, place=2, title=3, what=4, link=5, check=7, note=8)
 # Поля, которые можно задать в правках, в порядке записи в файл (после summary).
-EXTRA = ("open_days", "sessions", "hours", "end_time", "price")
+EXTRA = ("open_days", "sessions", "hours", "end_time", "price", "language")
 
 
 def type_of(title, what):
@@ -53,13 +85,15 @@ def main():
     fixes = json.load(open(args[1], encoding="utf-8"))
     skip, merge, sets = fixes.get("skip", {}), fixes.get("merge", {}), fixes.get("set", {})
     caption = str(wb[SHEET].cell(1, 1).value or "").strip()
-    xmas_titles = {str(r[3].value).strip() for r in wb[XMAS_SHEET].iter_rows(min_row=4) if r[3].value} if XMAS_SHEET in wb.sheetnames else set()
+    L = layout(wb[SHEET])
+    xs = next((wb[n] for n in XMAS_SHEETS if n in wb.sheetnames), None)
+    xmas_titles = {str(r[L["title"]].value).strip() for r in xs.iter_rows(min_row=4) if r[L["title"]].value} if xs else set()
 
     rows = {}
     for row in wb[SHEET].iter_rows(min_row=4):
-        v = [str(c.value or "").strip() for c in row[:9]]
-        if v[3]:
-            rows[str(row[0].row)] = (v, link(row[5]))
+        v = [str(c.value or "").strip() for c in row[:12]] + [""] * 12
+        if v[L["title"]]:
+            rows[str(row[0].row)] = ({k: v[i] for k, i in L.items()}, link(row[L["link"]]))
 
     stats = {"создано": 0, "обновлено": 0, "сведено в другую карточку": 0, "не публикуется": 0, "не тронуто (ручной файл)": 0}
     mapping = {}
@@ -70,19 +104,30 @@ def main():
         if n in merge:
             stats["сведено в другую карточку"] += 1
             continue
-        pr, when, place, title, what, _, _, check, note = v
+        pr, when, place, title, what, check, note = (v[k] for k in ("pr", "when", "place", "title", "what", "check", "note"))
         fix = sets.get(n, {})
         start, end, time = parse_when(when, 2026)
         city, _, venue = place.partition(" · ")
         e = {"title": title, "date": start, "end_date": end if end and end != start else None, "time": time,
-             "city": city, "venue": venue if venue and not re.search(r"уточн", venue, re.I) else None,
+             "city": city, "venue": venue if venue and not re.search(r"уточн|^(Limassol|Nicosia|Larnaca|Paphos|Lemesos)$", venue, re.I) else None,
              "summary": week.clean(what).replace("семейский", "семейный").replace("Семейский", "Семейный"),
-             "priority": int(pr[0]) if pr[:1].isdigit() else 3, "display_title": None, "type": None}
+             "priority": int(pr[0]) if pr[:1].isdigit() else 3, "display_title": None, "type": None,
+             "price": None if NO_PRICE.search(v.get("price", "")) else v.get("price"),
+             "language": language_of(v.get("who", ""))}
+        # «12:00–20:00» в одном дне → время окончания, у многодневных → часы работы (если в «Когда» один отрезок).
+        m = re.search(r"(\d{1,2}:\d{2})\s*[–-]\s*(\d{1,2}:\d{2})", when)
+        if m and ";" not in when and end in (None, start):
+            e["end_time"] = m.group(2).zfill(5)
+        elif m and ";" not in when:
+            e["hours"] = f"{m.group(1).zfill(5)}–{m.group(2).zfill(5)}"
         e.update(fix)
+        url = fix.get("ticket_url") or url  # ссылка из таблицы не открывается — страница, по которой событие подтверждено
         if e["end_date"]:
             e["time"] = e["time"] if fix.get("time") else None  # у долгих событий время — в часах/сеансах
         christmas = title in xmas_titles
         kind, etype = xmas.kind_of(e["title"], what) if christmas else (None, type_of(e["title"], what))
+        if not christmas and etype != "kids" and v.get("ttype") in TABLE_TYPES:
+            etype = TABLE_TYPES[v["ttype"]]
         etype = e["type"] or etype
         slug = f"{slugify(e['title']) or etype}-{e['date']}"
         path = os.path.join(OUT, f"{slug}.yaml")

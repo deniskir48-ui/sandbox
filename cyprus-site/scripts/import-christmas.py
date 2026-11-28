@@ -31,9 +31,10 @@ def slugify(s):
 
 def link(cell):
     v = str(cell.value or "")
-    m = re.search(r'HYPERLINK\("([^"]+)"', v)
+    # Длинные ссылки Google Таблицы склеивает из кусков: HYPERLINK("https://…"&"…"; "Открыть ↗").
+    m = re.search(r'HYPERLINK\(((?:"[^"]*"\s*&\s*)*"[^"]*")', v)
     if m:
-        return m.group(1)
+        return "".join(re.findall(r'"([^"]*)"', m.group(1)))
     if cell.hyperlink and cell.hyperlink.target:
         return cell.hyperlink.target
     return v if v.startswith("http") else None
