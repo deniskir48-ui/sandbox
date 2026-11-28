@@ -1,0 +1,26 @@
+# week-import
+# Строка 227 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "The Christmas Cookie"
+status: published
+type: festival
+priority: 4
+date: "2026-12-06"
+time: "09:00"
+city: "Никосия"
+venue: "Event Hall School, Agiou Meletiou 22"
+summary: "Детская музыкально-двигательная рождественская мастерская."
+sessions: "09:00 — 6 мес.–1,5 года; 10:00 — 1,5–2,5 года; 11:00 — 2,5–4 года; 12:00 — 4–6 лет"
+end_time: "13:00"
+description: "Музыкально-двигательное занятие для детей с родителями: рождественская история, музыкальные игры и сюрпризы, группы по возрасту."
+price: "€14 за ребёнка с родителем"
+address: "Αγίου Μελετίου 22, Αρχάγγελος 2331"
+age: "От 6 месяцев до 6 лет"
+booking: "Нужна запись, мест мало"
+ticket_url: "https://rsrvin.com/events/6ae9cc5e633eca1f194916fd-%CF%84%CE%BF-%CE%BC%CF%80%CE%B9%CF%83%CE%BA%CE%BF%CF%84%CE%AC%CE%BA%CE%B9-%CF%84%CF%89%CE%BD-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%AD%CE%BD%CE%BD%CF%89%CE%BD-%CE%BC%CE%BF%CF%85%CF%83%CE%B9%CE%BA%CE%BF%CE%BA%CE%B9%CE%BD%CE%B7%CF%84%CE%B9%CE%BA%CF%8C-%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CF%84%CE%AE%CF%81%CE%B9-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6ae9cc5e633eca1f194916fd-%CF%84%CE%BF-%CE%BC%CF%80%CE%B9%CF%83%CE%BA%CE%BF%CF%84%CE%AC%CE%BA%CE%B9-%CF%84%CF%89%CE%BD-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%AD%CE%BD%CE%BD%CF%89%CE%BD-%CE%BC%CE%BF%CF%85%CF%83%CE%B9%CE%BA%CE%BF%CE%BA%CE%B9%CE%BD%CE%B7%CF%84%CE%B9%CE%BA%CF%8C-%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CF%84%CE%AE%CF%81%CE%B9-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1"
+  - title: "Страница события"
+    url: "https://rsrvin.com/events/6ae9cc5e633eca1f194916fd"
+tags: [christmas, christmas-other]

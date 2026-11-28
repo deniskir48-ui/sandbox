@@ -1,0 +1,20 @@
+# week-import
+# Строка 139 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Мирела Паху и Адам Царухис"
+status: published
+type: festival
+priority: 3
+date: "2026-12-04"
+city: "Лимассол"
+venue: "Vinylio Wine Etc"
+summary: "Совместное музыкальное выступление в Vinylio Wine Etc."
+language: "греческий"
+description: "Праздничная программа Мирелы Пахоу и Адама Царухиса: любимые песни и рождественские мелодии."
+address: "Αγκύρης 33, Λεμεσός"
+booking: "Бронь: 99 300430"
+ticket_url: "https://www.checkincyprus.com/article/90237/e-mirela-pakhou-sunanta-ton-uperokho-adam-tsaroukhe-ste-lemeso/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90237/e-mirela-pakhou-sunanta-ton-uperokho-adam-tsaroukhe-ste-lemeso/"
+tags: [christmas, christmas-other]

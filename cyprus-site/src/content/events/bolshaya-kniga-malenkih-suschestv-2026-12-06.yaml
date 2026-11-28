@@ -1,0 +1,19 @@
+# week-import
+# Строка 213 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "«Большая книга маленьких существ»"
+status: published
+type: kids
+priority: 4
+date: "2026-12-06"
+time: "11:00"
+city: "Никосия"
+venue: "Dionysos Theatre"
+summary: "Семейный спектакль с песнями и юмором в театре «Дионисос»; на греческом."
+description: "Семейный спектакль театра «Дионисос» о маленьком существе Норе, которое оказывается заперто в коробке вместе с насекомыми; песни и юмор."
+address: "Diagorou 29, Nicosia 1097"
+language: "Греческий"
+ticket_url: "https://cyprusnow.app/event/%CF%84%CE%BF-%CE%BC%CE%B5%CE%B3%CE%AC%CE%BB%CE%BF-%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF-%CF%84%CF%89%CE%BD-%CE%BC%CE%B9%CE%BA%CF%81%CF%8E%CE%BD-%CF%80%CE%BB%CE%B1%CF%83%CE%BC%CE%AC%CF%84%CF%89%CE%BD-2026-12-06"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CF%84%CE%BF-%CE%BC%CE%B5%CE%B3%CE%AC%CE%BB%CE%BF-%CE%B2%CE%B9%CE%B2%CE%BB%CE%AF%CE%BF-%CF%84%CF%89%CE%BD-%CE%BC%CE%B9%CE%BA%CF%81%CF%8E%CE%BD-%CF%80%CE%BB%CE%B1%CF%83%CE%BC%CE%AC%CF%84%CF%89%CE%BD-2026-12-06"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 101 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Официальный сайт / продавец
+title: "4YOU(th): ΜΠΛΕ"
+status: published
+type: concert
+priority: 3
+date: "2026-12-05"
+time: "23:00"
+city: "Никосия"
+venue: "DownTown Live"
+summary: "Греческая рок-группа ΜΠΛΕ, Fuse и Frideriki Tompazou; бесплатный вход по пропуску."
+price: "Бесплатно; нужен пропуск"
+language: "греческий"
+description: "Концерт греческой рок-группы «Μπλε» на фестивале 4YOU(th), на разогреве Fuse и Фредерики Томпазу. Вход с 22:00."
+address: "Emmanouil Roidi 2, Strovolos 1095"
+booking: "Нужен бесплатный билет на more.com"
+ticket_url: "https://downtownnicosia.live/event/mple-4youth-music-festival/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://downtownnicosia.live/event/mple-4youth-music-festival/"

@@ -1,0 +1,18 @@
+# week-import
+# Строка 158 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Рождество в Монагри"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "18:30"
+city: "Монагри"
+venue: "площадь Aristos Kafkaris"
+summary: "Праздничный вечер на площади деревни: огоньки, рождественские песни и семейный досуг."
+description: "Праздник в деревне Монагри по программе Heartland Villages: огоньки, рождественские песни и семейный досуг."
+ticket_url: "https://cyprusnow.app/event/festive-events-2026-12-05"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/festive-events-2026-12-05"
+tags: [christmas, christmas-other]

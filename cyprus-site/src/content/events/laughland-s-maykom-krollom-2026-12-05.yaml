@@ -1,0 +1,20 @@
+# week-import
+# Строка 104 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Laughland с Майком Кроллом"
+status: published
+type: workshop
+priority: 3
+date: "2026-12-05"
+time: "14:00"
+city: "Лимассол"
+venue: "Sto Dromo Bar"
+summary: "Практическая мастерская импровизации и стратегии в Sto Dromo."
+end_time: "17:00"
+price: "€25"
+description: "Интерактивный мастер-класс по импровизации и стратегии с Майком Кроллом от Stantar Kkomety."
+booking: "Нужна запись"
+ticket_url: "https://rsrvin.com/events/6b059d6b53cd6dc031094c44-laughland-an-improv-strategy-workshop-with-mike-kroll"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b059d6b53cd6dc031094c44-laughland-an-improv-strategy-workshop-with-mike-kroll"

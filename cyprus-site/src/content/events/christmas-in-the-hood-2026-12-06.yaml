@@ -1,0 +1,20 @@
+# week-import
+# Строка 165 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Christmas in the Hood"
+status: published
+type: festival
+priority: 3
+date: "2026-12-06"
+time: "15:00"
+city: "Никосия"
+venue: "80-82 Griva Digeni, Kaimakli"
+summary: "Рождественский рынок и творческие активности в Каймакли."
+end_time: "20:00"
+description: "Рождественская встреча местных мастеров и малого бизнеса в Каймакли: ремёсла, еда и глинтвейн."
+address: "Griva Digeni 80-82, 1021 Nicosia"
+ticket_url: "https://allevents.in/event/200031054561225"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031054561225"
+tags: [christmas, christmas-other]

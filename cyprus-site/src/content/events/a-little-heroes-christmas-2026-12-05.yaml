@@ -1,0 +1,20 @@
+# week-import
+# Строка 141 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "A Little Heroes Christmas"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "10:00"
+city: "Лимассол"
+venue: "Hadassah Medical Centre"
+summary: "Благотворительный семейный праздник: поделки, истории, колядки и аквагрим."
+end_time: "14:00"
+price: "Вход бесплатный"
+description: "Благотворительное утро в пользу фонда «Маленькие герои»: аквагрим, украшения, колядки, горячий шоколад и фото с Санта-Клаусом."
+ticket_url: "https://rsrvin.com/events/6b007c9661140b0fc03a588d-a-little-heroes-christmas-charity-morning-in-limassol"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b007c9661140b0fc03a588d-a-little-heroes-christmas-charity-morning-in-limassol"
+tags: [christmas, christmas-lights]

@@ -1,0 +1,19 @@
+# week-import
+# Строка 146 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Little Shops at Yfantourgeio"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "67-73 Lefkonos Str., Phaneromeni, 1011"
+summary: "Рынок небольших местных брендов и праздничных подарков."
+description: "Выходной маркет независимых магазинов, еды, рождественских мастер-классов и напитков в Yfantourgeio."
+address: "67-73 Lefkonos Str., Phaneromeni, 1011 Nicosia"
+ticket_url: "https://allevents.in/event/200030973949553"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030973949553"
+tags: [christmas, christmas-other]

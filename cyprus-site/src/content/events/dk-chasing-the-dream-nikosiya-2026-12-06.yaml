@@ -1,0 +1,21 @@
+# week-import
+# Строка 32 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "DK: Chasing the Dream — Никосия"
+status: published
+type: cinema
+priority: 2
+date: "2026-12-06"
+time: "11:30"
+city: "Никосия"
+venue: "Nicosia Municipal Theatre"
+summary: "Фильм о чемпионе мира по паркуру Димитрисе Кирсанидисе и встреча с ним после показа."
+price: "€30"
+description: "Показ фильма «DK: В погоне за мечтой» (75 минут) о паркурщике Димитрисе Кирсанидисе; после фильма DK выходит к зрителям, раздаёт автографы и фотографируется."
+booking: "Нужны билеты"
+ticket_url: "https://rsrvin.com/events/6ae31f07e25c2452eecb07aa-dk-%CE%BA%CF%85%CE%BD%CE%B7%CE%B3%CF%89%CE%BD%CF%84%CE%B1%CF%82-%CF%84%CE%BF-%CE%BF%CE%BD%CE%B5%CE%B9%CF%81%CE%BF-live-%CF%83%CF%84%CE%B7%CE%BD-%CE%BA%CF%85%CF%80%CF%81%CE%BF-06-12"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6ae31f07e25c2452eecb07aa-dk-%CE%BA%CF%85%CE%BD%CE%B7%CE%B3%CF%89%CE%BD%CF%84%CE%B1%CF%82-%CF%84%CE%BF-%CE%BF%CE%BD%CE%B5%CE%B9%CF%81%CE%BF-live-%CF%83%CF%84%CE%B7%CE%BD-%CE%BA%CF%85%CF%80%CF%81%CE%BF-06-12"
+  - title: "Страница события"
+    url: "https://rsrvin.com/events/6ae31f07e25c2452eecb07aa"

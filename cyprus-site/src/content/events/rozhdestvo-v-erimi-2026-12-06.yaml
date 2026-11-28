@@ -1,0 +1,19 @@
+# week-import
+# Строка 75 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Рождество в Эрими"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "11:00"
+city: "Эрими"
+venue: "St John the Baptist Square"
+summary: "Семейный деревенский праздник в воскресенье утром."
+end_time: "14:00"
+description: "Рождественский праздник на площади Святого Иоанна Крестителя; организуют родительские ассоциации школы и детского сада Эрими при поддержке муниципалитета Курион."
+ticket_url: "https://www.limassoltourism.com/events/christmas-celebrations-in-erimi-6-december-2026/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.limassoltourism.com/events/christmas-celebrations-in-erimi-6-december-2026/"
+tags: [christmas, christmas-other]

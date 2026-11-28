@@ -1,0 +1,20 @@
+# week-import
+# Строка 38 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша; маршрут уточнить
+title: "Рождественский грузовик Coca-Cola — Ларнака"
+status: published
+type: festival
+priority: 2
+date: "2026-12-04"
+time: "16:30"
+city: "Ларнака"
+venue: "Metropolis Mall и TGI Fridays, Финикудес"
+summary: "Встреча с Сантой у Metropolis Mall и на Финикудес; остановки по расписанию."
+sessions: "16:30–18:30 у Metropolis Mall, 19:00–20:00 у TGI Fridays на Финикудес"
+end_time: "20:00"
+description: "Рождественский грузовик Coca-Cola с Санта-Клаусом: с 16:30 до 18:30 у Metropolis Mall, с 19:00 до 20:00 у TGI Fridays на Финикудес. Организатор может изменить время."
+ticket_url: "https://info.cy/ru/afisha/coca-cola-truck-2026-12-04"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://info.cy/ru/afisha/coca-cola-truck-2026-12-04"
+tags: [christmas, christmas-other]

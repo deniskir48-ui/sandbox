@@ -1,0 +1,22 @@
+# week-import
+# Строка 34 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Ipsonas Christmas Wonderland"
+status: published
+type: festival
+priority: 2
+date: "2026-12-02"
+end_date: "2026-12-06"
+city: "Ипсонас"
+venue: "площадь мэрии Куриона"
+summary: "Санта, сценическая программа, мастерские и семейные развлечения на площади мэрии."
+open_days: ["2026-12-02", "2026-12-04", "2026-12-05", "2026-12-06"]
+sessions: "2 декабря и 4–6 декабря"
+price: "Вход бесплатный; покупки отдельно"
+description: "Рождественский праздник в Ипсонасе: представления, танцы, песни, мастерские и фото с Санта-Клаусом."
+address: "Πλατεία Δημαρχείου Κουρίου"
+ticket_url: "https://rsrvin.com/events/6b007a4461140b0fc03a57e8-ipsonas-christmas-wonderland-2026-27-11"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b007a4461140b0fc03a57e8-ipsonas-christmas-wonderland-2026-27-11"
+tags: [christmas, christmas-other]

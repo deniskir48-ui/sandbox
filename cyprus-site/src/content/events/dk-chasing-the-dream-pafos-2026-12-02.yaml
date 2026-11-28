@@ -1,0 +1,23 @@
+# week-import
+# Строка 17 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "DK: Chasing the Dream — Пафос"
+status: published
+type: cinema
+priority: 2
+date: "2026-12-02"
+time: "19:00"
+city: "Пафос"
+venue: "Markideio Theatre"
+summary: "Фильм о чемпионе мира по паркуру Димитрисе Кирсанидисе и встреча с ним после показа."
+price: "€30"
+language: "греческий"
+description: "Показ фильма «DK: В погоне за мечтой» (75 минут), после фильма чемпион мира по паркуру Димитрис Кирсанидис выходит к зрителям для общения и фото."
+age: "Для всех возрастов"
+booking: "Нужна бронь"
+ticket_url: "https://rsrvin.com/events/6ae31f03e25c2452eecb0798-dk-%CE%BA%CF%85%CE%BD%CE%B7%CE%B3%CF%89%CE%BD%CF%84%CE%B1%CF%82-%CF%84%CE%BF-%CE%BF%CE%BD%CE%B5%CE%B9%CF%81%CE%BF-live-%CF%83%CF%84%CE%B7%CE%BD-%CE%BA%CF%85%CF%80%CF%81%CE%BF-02-12"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6ae31f03e25c2452eecb0798-dk-%CE%BA%CF%85%CE%BD%CE%B7%CE%B3%CF%89%CE%BD%CF%84%CE%B1%CF%82-%CF%84%CE%BF-%CE%BF%CE%BD%CE%B5%CE%B9%CF%81%CE%BF-live-%CF%83%CF%84%CE%B7%CE%BD-%CE%BA%CF%85%CF%80%CF%81%CE%BF-02-12"
+  - title: "Страница события"
+    url: "https://rsrvin.com/events/6ae31f03e25c2452eecb0798"

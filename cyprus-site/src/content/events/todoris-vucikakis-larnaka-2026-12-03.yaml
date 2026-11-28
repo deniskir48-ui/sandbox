@@ -1,0 +1,20 @@
+# week-import
+# Строка 135 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Тодорис Вуцикакис: «Τώρα» — Ларнака"
+status: published
+type: festival
+priority: 3
+date: "2026-12-03"
+time: "20:30"
+city: "Ларнака"
+venue: "Georghios Lykourgos Municipal Theatre Of Larnaka"
+summary: "Тодорис Вуцикакис поёт песни Костаса Какоянниса на стихи Памбоса Кузалиса."
+price: "€20"
+language: "греческий"
+description: "Тодорис Вуцикакис поёт песни Костаса Какоянниса на стихи Пампоса Кузалиса; с ним Мариам Венизелу и Георгия Неоклеус с ансамблем."
+ticket_url: "https://www.checkincyprus.com/article/90015/o-thodores-boutsikakes-erkhetai-sten-kupro-gia-3-mousikes-bradies-me-titlo-tora/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90015/o-thodores-boutsikakes-erkhetai-sten-kupro-gia-3-mousikes-bradies-me-titlo-tora/"
+tags: [christmas, christmas-other]

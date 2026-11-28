@@ -1,0 +1,19 @@
+# week-import
+# Строка 26 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Pilates under the Stars"
+status: published
+type: sport
+priority: 2
+date: "2026-12-05"
+time: "17:30"
+city: "Никосия"
+venue: "Cyprus Planetarium"
+summary: "Пилатес, программа в куполе планетария, вино и закуски; нужна запись."
+price: "€80; ранняя цена €70 закончилась"
+description: "Пилатес от Vellum Boutique Studio, затем программа в купольном зале Кипрского планетария; вино, лёгкие закуски и сувенир."
+booking: "Запись через Instagram @vellumboutiquestudio_"
+ticket_url: "https://cyprus-mail.com/2026/11/17/pilates-under-the-stars"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprus-mail.com/2026/11/17/pilates-under-the-stars"

@@ -1,0 +1,22 @@
+# week-import
+# Строка 133 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Chara Miller Duo: Christmas Jazz"
+status: published
+type: festival
+priority: 3
+date: "2026-12-02"
+time: "20:30"
+city: "Ларнака"
+venue: "The Tudor Inn"
+summary: "Джаз, свинг и рождественские песни в Tudor Inn; вокал и гитара."
+price: "€7 музыкальный сбор + заказ"
+language: "греческий, английский"
+description: "Джазовый вечер: Хара Миллер (вокал) и Эмилиос Пацалидес (гитара) — стандарты, греческие песни в джазовой аранжировке и рождественские мелодии."
+address: "Lala Mustapha Pasha 28A, Larnaca"
+booking: "Бронь: 99 744082"
+ticket_url: "https://allevents.in/event/200031122901231"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031122901231"
+tags: [christmas, christmas-other]

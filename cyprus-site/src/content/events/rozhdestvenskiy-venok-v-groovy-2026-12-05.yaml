@@ -1,0 +1,23 @@
+# week-import
+# Строка 157 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+# Замечание редактора: Исправлено смешение двух мастерских. Запись Athena Morphi: 99 728745.
+title: "Рождественский венок в GROOVY"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "11:00"
+city: "Никосия"
+venue: "GROOVY The Store, 51 Larnakos Avenue"
+summary: "Создание венка из искусственных цветов и праздничного декора; все материалы включены."
+end_time: "13:00"
+price: "€50"
+description: "Мастер-класс: рождественский венок из искусственных цветов и праздничного декора, все материалы включены."
+address: "51 Larnakos Avenue, 1046 Nicosia"
+booking: "Нужна запись: 99 728745"
+ticket_url: "https://allevents.in/event/200030982346807"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030982346807"
+tags: [christmas, christmas-other]

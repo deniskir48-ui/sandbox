@@ -1,0 +1,18 @@
+# week-import
+# Строка 123 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Treladiko: 3 года"
+status: published
+type: party
+priority: 3
+date: "2026-12-06"
+time: "18:00"
+city: "Никосия"
+venue: "Stoa Papadopoulou 181"
+summary: "Уличная вечеринка ко дню рождения заведения с DJ Pietro."
+description: "Уличная вечеринка к трёхлетию бара Treladiko: диджей Pietro и праздничные подарки."
+address: "Stoa Papadopoulou 181, Nicosia"
+ticket_url: "https://eventor.com.cy/events/nicosia/treladiko-3rd-anniversary-street-party-in-nicosia-13792"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/treladiko-3rd-anniversary-street-party-in-nicosia-13792"

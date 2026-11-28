@@ -1,0 +1,19 @@
+# week-import
+# Строка 99 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Who Owns the Pedestals"
+display_title: "Открытие выставки в NiMAC"
+status: published
+type: exhibition
+priority: 3
+date: "2026-12-04"
+time: "19:00"
+city: "Никосия"
+venue: "NiMAC"
+summary: "Открытие групповой выставки куратора Елены Стилиану; выставка продлится до 30 мая 2027 года."
+description: "Открытие групповой выставки «Who Owns the Pedestals» (куратор — доктор Елена Стилиану); выставка работает с 4 декабря 2026 по 30 мая 2027 года."
+address: "19, Palias Ilektrikis, 1016 Nicosia"
+ticket_url: "https://nimac.org.cy/who-owns-the-pedestals/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://nimac.org.cy/who-owns-the-pedestals/"

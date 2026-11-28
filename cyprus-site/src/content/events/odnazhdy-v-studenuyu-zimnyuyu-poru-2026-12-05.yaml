@@ -1,0 +1,20 @@
+# week-import
+# Строка 49 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: В детский билет включён новогодний подарок.
+title: "«Однажды в студёную зимнюю пору»"
+status: published
+type: kids
+priority: 2
+date: "2026-12-05"
+time: "11:30"
+city: "Лимассол"
+venue: "Ypsonas Municipal Theatre"
+summary: "Русскоязычный семейный спектакль в муниципальном театре Ипсонаса."
+language: "русский"
+description: "Новогодняя сказка по пьесе В. Илюхова: лесные звери и сказочные герои спасают праздник, пока Баба-Яга крадёт посох Деда Мороза. После спектакля — фото с актёрами; в детский билет входит подарок."
+ticket_url: "https://rsrvin.com/events/6acb7624ad6fdbadb544eab4-once-on-a-cold-winter-s-time"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6acb7624ad6fdbadb544eab4-once-on-a-cold-winter-s-time"
+tags: [christmas, christmas-other]

@@ -1,0 +1,20 @@
+# week-import
+# Строка 136 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "A True Heart Christmas Weekend"
+status: published
+type: festival
+priority: 3
+date: "2026-12-04"
+end_date: "2026-12-05"
+city: "Никосия"
+venue: "True Heart Cafe"
+summary: "Ярмарка мастеров, украшение ёлки, пение, детский хор и поделки в True Heart Cafe."
+sessions: "4 декабря 16:00–21:00, 5 декабря 09:30–20:00"
+description: "Рождественские выходные в True Heart Cafe с Voice for Autism: ярмарка мастеров, еда и напитки, украшение ёлки, детский хор и поделки."
+address: "Γιάννου Κρανιδιώτη 10, 1065 Λευκωσία"
+ticket_url: "https://allevents.in/event/200031153244629"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031153244629"
+tags: [christmas, christmas-lights]

@@ -1,0 +1,20 @@
+# week-import
+# Строка 210 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Димитрис Бакулис"
+status: published
+type: concert
+priority: 4
+date: "2026-12-05"
+time: "21:30"
+city: "Никосия"
+venue: "Karanti Bar"
+summary: "Акустическое выступление в Karanti Bar."
+price: "минимальный заказ €15"
+language: "греческий"
+description: "Акустический концерт Димитриса Бакулиса: хиты и каверы греческого репертуара; гитара — Костас Платаниас, бас — Вангелис Карапетрос. Вход с 20:30."
+booking: "Бронь на rsrvin, мест мало"
+ticket_url: "https://rsrvin.com/en/events/6afb07b3228c5aa316feabe4"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/en/events/6afb07b3228c5aa316feabe4"

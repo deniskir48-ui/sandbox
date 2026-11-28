@@ -1,0 +1,22 @@
+# week-import
+# Строка 167 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Детское Рождество PASYKAF — Пафос"
+status: published
+type: festival
+priority: 3
+date: "2026-12-06"
+time: "15:00"
+city: "Пафос"
+venue: "Annabelle"
+summary: "Благотворительное семейное событие в отеле Annabelle."
+price: "€10, детям до 8 лет бесплатно"
+description: "Детский рождественский праздник PASYKAF в отеле Annabelle: аквагрим, поделки, фото с Сантой, музыкальные и танцевальные номера, ярмарка поделок и домашних сладостей."
+address: "Poseidonos Ave 10, Paphos 8041"
+ticket_url: "https://allevents.in/event/200031073023859"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031073023859"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/children-s-christmas-event/"
+tags: [christmas, christmas-other]

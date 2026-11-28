@@ -1,0 +1,20 @@
+# week-import
+# Строка 84 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Marios Toumbas Jazz Trio"
+status: published
+type: concert
+priority: 3
+date: "2026-12-02"
+time: "21:00"
+city: "Никосия"
+venue: "Sarah's Jazz Club"
+summary: "Джазовое трио в Sarah’s Jazz Club."
+end_time: "23:30"
+price: "€13–15"
+description: "Трио пианиста Мариоса Тумбаса (контрабас — Иренеос Кулурас, ударные — Яннис Вафеас): джазовые стандарты и собственные композиции."
+address: "Faneromenis 63, Nicosia 1011"
+ticket_url: "https://cyprusnow.app/event/the-marios-toumbas-jazz-trio-live-at-sarah-s-jazz-club-2026-12-02"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/the-marios-toumbas-jazz-trio-live-at-sarah-s-jazz-club-2026-12-02"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 100 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Два выступления объединены в одну строку гастрольной программы; питание отдельно.
+title: "Костас Турнас и Дионисис Цакнис"
+status: published
+type: concert
+priority: 3
+date: "2026-12-04"
+end_date: "2026-12-05"
+city: "Пафос"
+venue: "Falcon Ball Room, Leonardo Cypria Bay"
+summary: "Программа «Греческий рок» с группой музыкантов и вокалисток."
+sessions: "4 декабря в 21:30 — Пафос, Leonardo Cypria Bay; 5 декабря в 21:30 — Лимассол, Ktima Dimosthenous"
+language: "греческий"
+description: "Концерт «Греческий рок» Костаса Турнаса и Дионисиса Цакниса: на сцене 10 артистов, три вокалистки и пять музыкантов."
+booking: "Билеты на ticketingcy.eu"
+ticket_url: "https://www.checkincyprus.com/article/90038/kostas-tournas-kai-dionuses-tsaknes-phernoun-to-rok-to-elleniko-se-papho-kai-lemeso/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90038/kostas-tournas-kai-dionuses-tsaknes-phernoun-to-rok-to-elleniko-se-papho-kai-lemeso/"

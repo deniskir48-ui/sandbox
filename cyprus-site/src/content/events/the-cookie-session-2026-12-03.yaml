@@ -1,0 +1,19 @@
+# week-import
+# Строка 92 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "The Cookie Session"
+status: published
+type: workshop
+priority: 3
+date: "2026-12-03"
+time: "19:30"
+city: "Лимассол"
+venue: "The Melting Pot"
+summary: "Печём печенье с матчей, убе и пеканом с кондитером Аверкиосом Лиссандру."
+description: "Мастер-класс кондитера Аверкиоса Лиссандру: печенье с матчей, убе и пеканом, которое забираете домой; кофе и закуски включены."
+address: "Ελευθερίας 133, 3042 Λεμεσός"
+booking: "Запись: 99 766749"
+ticket_url: "https://allevents.in/event/200031101422856"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031101422856"

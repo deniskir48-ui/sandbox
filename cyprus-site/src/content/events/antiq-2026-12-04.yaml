@@ -1,0 +1,23 @@
+# week-import
+# Строка 193 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Antiqαιροί"
+status: published
+type: concert
+priority: 4
+date: "2026-12-04"
+time: "20:30"
+city: "Лимассол"
+venue: "Athinon 72"
+summary: "Авторская песня, греческий и зарубежный рок в камерном составе."
+end_time: "22:30"
+language: "греческий, английский"
+description: "Авторская песня вперемешку с греческим и зарубежным роком: Кристина Папатзиаку (фортепиано, вокал), Иоанна Димитриу (вокал, кахон), Костас Пикулас (гитара, вокал)."
+address: "Athinon 72, Lemesos 3036"
+booking: "Лучше бронировать заранее"
+ticket_url: "https://allevents.in/event/200031029353721"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031029353721"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/art-song/"

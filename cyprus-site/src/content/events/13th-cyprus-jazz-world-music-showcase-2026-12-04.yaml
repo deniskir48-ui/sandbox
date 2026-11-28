@@ -1,0 +1,20 @@
+# week-import
+# Строка 5 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Официальная программа Rialto
+# Замечание редактора: В агрегаторах ошибочно 12:00 на выходных; организатор подтверждает 19:30 во все три дня.
+title: "13th Cyprus Jazz & World Music Showcase"
+status: published
+type: festival
+priority: 1
+date: "2026-12-04"
+end_date: "2026-12-06"
+city: "Лимассол"
+venue: "Rialto Theatre"
+summary: "Восемь музыкальных проектов за три вечера; после концертов джемы в ART Studio 55."
+price: "€10; льготный €8; 3 дня €20"
+description: "13-й Cyprus Jazz & World Music Showcase. 4 декабря — The Gandalfinis и Alexandros Adam Group; 5 декабря — Ermis Michail Quartet, Chunky Funky и Fuzz Bus; 6 декабря — The Charis Ioannou Quartet, Christos Yerolatsitis' Unity и Macumba. После концертов — джем-сессии в ART Studio 55."
+address: "Andrea Drousioti 19, Platia Iroon, 3040 Limassol"
+ticket_url: "https://rialto.interticket.com/program/cyprus-jazz-and-world-music-showcase-2026-3541"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rialto.interticket.com/program/cyprus-jazz-and-world-music-showcase-2026-3541"

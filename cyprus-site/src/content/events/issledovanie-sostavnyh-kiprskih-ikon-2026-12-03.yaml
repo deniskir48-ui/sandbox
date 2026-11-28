@@ -1,0 +1,19 @@
+# week-import
+# Строка 189 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Исследование составных кипрских икон"
+status: published
+type: talk
+priority: 4
+date: "2026-12-03"
+time: "19:00"
+city: "Никосия"
+venue: "CAARI"
+summary: "Открытая научная лекция в CAARI о методах изучения икон."
+end_time: "21:00"
+description: "Лекция Дороты Запшальской (Институт истории искусства Ягеллонского университета) о неинвазивном анализе составных кипрских икон."
+address: "Andrea Dimitriou 11, Nicosia"
+ticket_url: "https://cyprusnow.app/event/non-invasive-analysis-of-cypriot-composite-icons-methods-and-results-2026-12-03"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/non-invasive-analysis-of-cypriot-composite-icons-methods-and-results-2026-12-03"

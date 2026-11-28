@@ -1,0 +1,23 @@
+# week-import
+# Строка 22 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "DK: Chasing the Dream — Лимассол"
+status: published
+type: cinema
+priority: 2
+date: "2026-12-04"
+end_date: "2026-12-05"
+city: "Лимассол"
+venue: "K-Cineplex"
+summary: "Фильм о чемпионе мира по паркуру Димитрисе Кирсанидисе и встреча с ним после показа."
+sessions: "4 декабря в 20:30, 5 декабря в 17:00"
+price: "€30"
+language: "греческий"
+description: "Показ фильма «DK: В погоне за мечтой» в K-Cineplex Лимассола, после фильма Димитрис Кирсанидис выходит к зрителям."
+booking: "Нужна бронь"
+ticket_url: "https://rsrvin.com/events/6ae31f05e25c2452eecb07a2-dk-%CE%BA%CF%85%CE%BD%CE%B7%CE%B3%CF%89%CE%BD%CF%84%CE%B1%CF%82-%CF%84%CE%BF-%CE%BF%CE%BD%CE%B5%CE%B9%CF%81%CE%BF-live-%CF%83%CF%84%CE%B7%CE%BD-%CE%BA%CF%85%CF%80%CF%81%CE%BF-04-12"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6ae31f05e25c2452eecb07a2-dk-%CE%BA%CF%85%CE%BD%CE%B7%CE%B3%CF%89%CE%BD%CF%84%CE%B1%CF%82-%CF%84%CE%BF-%CE%BF%CE%BD%CE%B5%CE%B9%CF%81%CE%BF-live-%CF%83%CF%84%CE%B7%CE%BD-%CE%BA%CF%85%CF%80%CF%81%CE%BF-04-12"
+  - title: "Страница события"
+    url: "https://rsrvin.com/events/6ae31f05e25c2452eecb07a2"

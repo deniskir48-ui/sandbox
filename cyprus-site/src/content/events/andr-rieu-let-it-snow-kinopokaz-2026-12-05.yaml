@@ -1,0 +1,22 @@
+# week-import
+# Строка 40 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+# Замечание редактора: В технических полях сайта 17:00, в основном описании 17:30; перед покупкой подтвердить сеанс.
+title: "André Rieu: Let It Snow — кинопоказ"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+time: "17:30"
+city: "Никосия"
+venue: "Pantheon Theatre"
+summary: "Экранная версия рождественского концерта 2026 года; артист лично не выступает."
+price: "€10"
+language: "английский, нидерландский, английские субтитры"
+description: "Кинопоказ рождественского концерта Андре Рьё 2026 года: оркестр Иоганна Штрауса, сопрано и мужской хор; около 3 часов."
+address: "29 Diagoras Street, Nicosia 1097"
+ticket_url: "https://www.pantheon-theatre.com/product/andre-rieus-2026-christmas-concert-let-it-snow-december-5th/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.pantheon-theatre.com/product/andre-rieus-2026-christmas-concert-let-it-snow-december-5th/"
+tags: [christmas, christmas-other]

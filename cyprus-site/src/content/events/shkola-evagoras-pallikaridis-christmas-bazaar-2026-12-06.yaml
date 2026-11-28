@@ -1,0 +1,22 @@
+# week-import
+# Строка 229 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Школа Evagoras Pallikaridis: Christmas Bazaar"
+status: published
+type: festival
+priority: 4
+date: "2026-12-06"
+time: "11:00"
+city: "Пафос"
+venue: "Neapoleos 109"
+summary: "Рождественский школьный базар в Пафосе."
+end_time: "14:00"
+description: "Рождественский базар начальной школы «Эвагорас Палликаридис», открыт для всех."
+address: "Neapoleos 109, Paphos"
+ticket_url: "https://allevents.in/event/200031136676510"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031136676510"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/christmas-bazaar-of-primary-school-evagoras-pallikaridis/"
+tags: [christmas, christmas-markets]

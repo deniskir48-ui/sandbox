@@ -1,0 +1,20 @@
+# week-import
+# Строка 129 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "A Very Sisters Christmas"
+status: published
+type: festival
+priority: 3
+date: "2026-12-01"
+time: "17:00"
+city: "Пафос"
+venue: "Elysium Hotel"
+summary: "Праздничное чаепитие Sisters Society в Elysium Hotel; запись и предоплата."
+price: "€39; нужна предоплата"
+description: "Праздничный чай в отеле Elysium от сообщества Sisters Society, подарочный пакет каждой гостье."
+booking: "Бронь и предоплата"
+ticket_url: "https://allevents.in/event/200030968816724"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030968816724"
+tags: [christmas, christmas-other]

@@ -1,0 +1,19 @@
+# week-import
+# Строка 201 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Coffee Date for Singles"
+status: published
+type: talk
+priority: 4
+date: "2026-12-05"
+time: "18:30"
+city: "Ларнака"
+venue: "место сообщат за день"
+summary: "Кофейная встреча для одиноких: 5 мужчин и 5 женщин; место сообщают за день."
+price: "€50"
+description: "Встреча за кофе для одиноких: 5 мужчин и 5 женщин, организатор True Match Events; место сообщают владельцам билетов за день."
+booking: "Билет — после одобрения анкеты"
+ticket_url: "https://allevents.in/event/200030882653752"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030882653752"

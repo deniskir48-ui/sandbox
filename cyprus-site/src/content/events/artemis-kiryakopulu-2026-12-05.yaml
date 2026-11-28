@@ -1,0 +1,20 @@
+# week-import
+# Строка 208 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Артемис Кирьякопулу"
+status: published
+type: concert
+priority: 4
+date: "2026-12-05"
+time: "21:00"
+city: "Никосия"
+venue: "Ella Music House"
+summary: "Джазовые каверы и авторские песни на греческом и английском под фортепиано."
+language: "греческий, английский"
+description: "Артемис Кириакопулу из Афин поёт на греческом и английском в джазовом настроении, за роялем Джордж Мозес. Вход с 20:00, музыка с 21:00."
+address: "Λυκούργου 7-9, 1010 Λευκωσία"
+booking: "Бронь через zenchef или Instagram"
+ticket_url: "https://www.checkincyprus.com/article/90026/e-artemes-kuriakopoulou-erkhetai-sto-ella-music-house/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90026/e-artemes-kuriakopoulou-erkhetai-sto-ella-music-house/"

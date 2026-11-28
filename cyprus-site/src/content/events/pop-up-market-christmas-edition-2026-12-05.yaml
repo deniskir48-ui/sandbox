@@ -1,0 +1,20 @@
+# week-import
+# Строка 151 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Pop Up Market: Christmas Edition"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "42Multi-Space"
+summary: "Праздничный рынок местных мастеров в 42Multi-Space."
+hours: "11:00–19:00"
+description: "Рождественская ярмарка El Khalili Agora: винтаж, секонд-хенд, украшения, сумки, свечи, книги и новая одежда."
+address: "Hippocratous 42, Nicosia"
+ticket_url: "https://eventor.com.cy/events/nicosia/pop-up-market-x-mas-edition-in-nicosia-13892"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/pop-up-market-x-mas-edition-in-nicosia-13892"
+tags: [christmas, christmas-markets]

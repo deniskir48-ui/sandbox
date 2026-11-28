@@ -1,0 +1,19 @@
+# week-import
+# Строка 185 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "ROUA MAT"
+status: published
+type: party
+priority: 4
+date: "2026-12-03"
+time: "20:00"
+city: "Никосия"
+venue: "Kerasi Bar"
+summary: "Театральная вечеринка с комедией и импровизацией в Kerasi Bar."
+language: "греческий"
+description: "Новый выпуск театрального шоу-вечеринки «ΡΟΥΑ ΜΑΤ»: театр, юмор и неожиданные повороты."
+booking: "Бронь: 96 264081, 99 264566"
+ticket_url: "https://eventor.com.cy/events/nicosia/%CF%81%CE%BF%CF%85%CE%B1-%CE%BC%CE%B1%CF%84-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-14076"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/%CF%81%CE%BF%CF%85%CE%B1-%CE%BC%CE%B1%CF%84-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-14076"

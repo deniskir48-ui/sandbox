@@ -1,0 +1,20 @@
+# week-import
+# Строка 30 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Начало серии — 6 декабря. Точное наличие дневного и вечернего сеанса уточнить у Stage One, Эмба.
+title: "Camelot & the Knights of the Desks"
+status: published
+type: kids
+priority: 2
+date: "2026-12-06"
+time: "15:00"
+city: "Пафос"
+venue: "Stage One Theatre"
+summary: "Семейная пантомима на английском с участием зрителей в Stage One Theatre."
+price: "€8–15"
+language: "английский"
+description: "Рождественская пантомима на английском (автор и режиссёр Sian M Williams) в театре Stage One в Эмбе; показы 6–12 декабря."
+ticket_url: "https://cyprus-mail.com/2026/11/25/almost-time-for-pantomime"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprus-mail.com/2026/11/25/almost-time-for-pantomime"

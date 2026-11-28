@@ -1,0 +1,18 @@
+# week-import
+# Строка 222 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Рождественское утро в PAWS"
+status: published
+type: festival
+priority: 4
+date: "2026-12-05"
+time: "09:30"
+city: "Пафос"
+venue: "Paws Dog Shelter"
+summary: "Кофе и праздничная встреча в поддержку собачьего приюта."
+description: "Рождественское утро с кофе в приюте для собак PAWS."
+ticket_url: "https://allevents.in/event/200031136676110"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031136676110"
+tags: [christmas, christmas-other]

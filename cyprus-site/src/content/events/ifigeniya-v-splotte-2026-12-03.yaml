@@ -1,0 +1,23 @@
+# week-import
+# Строка 93 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "«Ифигения в Сплотте»"
+status: published
+type: theatre
+priority: 3
+date: "2026-12-03"
+time: "20:00"
+city: "Эпископи (Лимассол)"
+venue: "CINEMA APOLLON"
+summary: "Современная пьеса Гэри Оуэна с Мариной Макри; площадка Cinema Apollon в Эпископи."
+end_time: "21:15"
+price: "€12-15"
+language: "греческий"
+description: "Пьеса Гэри Оуэна «Ифигения в Сплотте» в постановке Михалиса Аристиду, в главной роли Марина Макри; 75 минут. Следующие показы — 8 и 15 декабря."
+address: "Agiou Mamantos 1, Episkopi 4620"
+ticket_url: "https://www.philenews.com/events/ifigenia-en-splott-i-sigchroni-tragodia-tou-gkari-oouen-erchete-stin-kipro/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/ifigenia-en-splott-i-sigchroni-tragodia-tou-gkari-oouen-erchete-stin-kipro/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/iphigenia-in-splott/"

@@ -1,0 +1,20 @@
+# week-import
+# Строка 105 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "M’ Akous? / Beni Duyan?"
+status: published
+type: theatre
+priority: 3
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "Pallas Theatre"
+summary: "Шесть греков-киприотов и шесть турок-киприотов в танцевальной работе против насилия."
+sessions: "5 и 6 декабря в 20:00"
+description: "Танцевальный спектакль Йоргоса Димопулоса о насилии над женщинами: шесть греческих и шесть турецких киприоток."
+address: "Ρηγαίνης και Αρσινόης, Πύλη Πάφου, Παλαιά Λευκωσία"
+booking: "Билеты на SoldOut Tickets"
+ticket_url: "https://www.checkincyprus.com/article/90523/m-akous-beni-duyan-exi-ellenokupries-kai-exi-tourkokupries-khoreutries-enonoun-tis-dunameis-tous-enantia-ste-bia-kata-ton-gunaikon/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90523/m-akous-beni-duyan-exi-ellenokupries-kai-exi-tourkokupries-khoreutries-enonoun-tis-dunameis-tous-enantia-ste-bia-kata-ton-gunaikon/"

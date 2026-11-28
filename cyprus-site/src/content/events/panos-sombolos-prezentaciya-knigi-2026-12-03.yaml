@@ -1,0 +1,22 @@
+# week-import
+# Строка 190 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Панос Сомболос: презентация книги"
+status: published
+type: talk
+priority: 4
+date: "2026-12-03"
+time: "19:00"
+city: "Строволос"
+venue: "Soloneion Book Centre"
+summary: "Встреча с журналистом и обсуждение книги о преступлениях против женщин."
+end_time: "21:00"
+language: "греческий"
+description: "Журналист Панос Сомболос представляет новую книгу о реальных случаях убийств женщин в Греции; выступают журналисты Димитра Георгиу, Иульета Михаил и Катя Савва."
+address: "Vyzantiou 24, Strovolos 2064"
+ticket_url: "https://www.philenews.com/events/ginekoktonies-pou-sigklonisan-to-panellinio-o-panos-sompolos-parousiazi-to-neo-vivlio-tou-sti-lefkosia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/ginekoktonies-pou-sigklonisan-to-panellinio-o-panos-sompolos-parousiazi-to-neo-vivlio-tou-sti-lefkosia/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/femicide-cases-that-shocked-all-of-greece-panos-sompolos/"

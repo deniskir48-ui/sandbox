@@ -1,0 +1,16 @@
+# week-import
+# Строка 173 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Beyond the Visible"
+status: published
+type: exhibition
+priority: 4
+date: "2026-11-30"
+city: "Никосия"
+venue: "Isnotgallery"
+summary: "Последний день выставки редких работ Стелиоса Воциса разных десятилетий из частной коллекции его сына."
+description: "Выставка редких работ Стелиоса Воциса 1950–70-х годов и позднего периода из коллекции его сына; идёт с 18 по 30 ноября."
+ticket_url: "https://cyprus-mail.com/2026/11/14/beyond-the-visible-exhibition-dedicated-to-stelios-votsis"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprus-mail.com/2026/11/14/beyond-the-visible-exhibition-dedicated-to-stelios-votsis"

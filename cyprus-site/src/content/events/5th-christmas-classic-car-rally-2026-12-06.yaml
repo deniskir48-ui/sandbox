@@ -1,0 +1,20 @@
+# week-import
+# Строка 63 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+# Замечание редактора: Дата и направление подтверждены календарём LESPA-FIPA. Условия участия и точное время старта уточнить.
+title: "5th Christmas Classic Car Rally"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "10:00"
+city: "Никосия"
+venue: "Acropolis Park → Калопанайотис"
+summary: "Ралли исторических автомобилей из Никосии в Калопанайотис."
+price: "Бесплатно"
+description: "5-е рождественское ралли классических автомобилей: старт в 10:00 от парка Акрополис в Никосии, финиш около 13:00 у церкви Агиос Иоаннис Лампадистис в Калопанайотисе."
+ticket_url: "https://cyprusnow.app/event/5%CE%BF-christmas-classic-car-rally-2026-12-06"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/5%CE%BF-christmas-classic-car-rally-2026-12-06"
+tags: [christmas, christmas-other]

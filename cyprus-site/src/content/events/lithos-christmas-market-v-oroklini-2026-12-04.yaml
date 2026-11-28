@@ -1,0 +1,18 @@
+# week-import
+# Строка 35 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Lithos Christmas Market в Ороклини"
+status: published
+type: festival
+priority: 2
+date: "2026-12-04"
+end_date: "2026-12-05"
+city: "Ороклини, Ларнака"
+venue: "рядом с Lithos Bar & Grill"
+summary: "Более 80 киосков, местные продукты, подарки, еда и бесплатные детские развлечения."
+description: "Рождественский рынок Lithos: более 80 прилавков с изделиями мастеров, местными продуктами, едой и напитками, музыка; для детей бесплатно аквагрим, встреча с Санта-Клаусом, ростовые куклы и ходулист."
+ticket_url: "https://www.checkincyprus.com/article/90348/khristougenniatike-agora-me-pano-apo-80-pagkous-sten-orokline/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90348/khristougenniatike-agora-me-pano-apo-80-pagkous-sten-orokline/"
+tags: [christmas, christmas-markets]

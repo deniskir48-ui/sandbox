@@ -1,0 +1,21 @@
+# week-import
+# Строка 72 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+# Замечание редактора: С 14:30 творческие занятия; джаз-оркестр 15:00–16:00; далее танцы и зумба. Уличная музыка / поезд с 11:00 по муниципальной программе.
+title: "Рождественское воскресенье Лимассола"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "14:30"
+city: "Лимассол"
+venue: "площадь Григориса Афксентиу"
+summary: "На площади Григориса Афксентиу выступают танцевальные студии, музыкальные школы и хоры; с 15:00 — детская мастерская; бесплатно."
+end_time: "19:00"
+price: "Бесплатно"
+description: "Муниципальная рождественская программа: с 14:30 до 19:00 на площади Григориса Афксентиу выступают танцевальные студии, музыкальные школы и хоры, с 15:00 до 19:00 там же детская мастерская рисования и поделок. Вход бесплатный."
+ticket_url: "https://www.limassol.org.cy/el/event/%CF%80%CF%81%CF%8C%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B1-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CF%89%CE%BD-%CE%B5%CE%BA%CE%B4%CE%B7%CE%BB%CF%8E%CF%83%CE%B5%CF%89%CE%BD-%CE%B4%CE%AE%CE%BC%CE%BF%CF%85-%CE%BB%CE%B5%CE%BC%CE%B5%CF%83%CE%BF%CF%8D-1"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.limassol.org.cy/el/event/%CF%80%CF%81%CF%8C%CE%B3%CF%81%CE%B1%CE%BC%CE%BC%CE%B1-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CF%89%CE%BD-%CE%B5%CE%BA%CE%B4%CE%B7%CE%BB%CF%8E%CF%83%CE%B5%CF%89%CE%BD-%CE%B4%CE%AE%CE%BC%CE%BF%CF%85-%CE%BB%CE%B5%CE%BC%CE%B5%CF%83%CE%BF%CF%8D-1"
+tags: [christmas, christmas-other]

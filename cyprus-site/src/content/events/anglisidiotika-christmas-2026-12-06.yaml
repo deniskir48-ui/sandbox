@@ -1,0 +1,19 @@
+# week-import
+# Строка 162 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Anglisidiotika Christmas"
+status: published
+type: festival
+priority: 3
+date: "2026-12-06"
+time: "14:00"
+city: "Англисидес"
+venue: "центральная улица"
+summary: "Деревенский праздник с живой музыкой и бесплатными детскими занятиями."
+description: "Рождественская ярмарка на центральной улице Англисидеса: детский театр, аквагрим, надувные горки, поделки, танцы, живая музыка Alaloum Band и приезд Святого Василия; детские развлечения бесплатно."
+price: "Детские развлечения бесплатно"
+ticket_url: "https://www.checkincyprus.com/article/90478/agglisidiotika-khristougenna-me-dorean-paidikes-drasteriotetes-kai-live-mousike/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90478/agglisidiotika-khristougenna-me-dorean-paidikes-drasteriotetes-kai-live-mousike/"
+tags: [christmas, christmas-other]

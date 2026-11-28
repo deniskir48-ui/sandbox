@@ -1,0 +1,22 @@
+# week-import
+# Строка 95 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Ламброс Фисфис — Лимассол"
+status: published
+type: standup
+priority: 3
+date: "2026-12-03"
+time: "19:00"
+city: "Лимассол"
+venue: "Opus Events Venue"
+summary: "Стендап «Сейчас гораздо лучше» в Opus; на греческом."
+price: "от €20"
+language: "греческий"
+description: "Стендап Ламброса Фисфиса «Сейчас гораздо лучше» о повседневной жизни, отношениях, родительстве и сорокалетии; около 1,5 часа."
+address: "Eleftherias 132, Limassol 3042"
+ticket_url: "https://www.more.com/cy-el/tickets/standupcomedy/lampros-fisfis-poly-kalytera-tora-kypros/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.more.com/cy-el/tickets/standupcomedy/lampros-fisfis-poly-kalytera-tora-kypros/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/much-better-now/"

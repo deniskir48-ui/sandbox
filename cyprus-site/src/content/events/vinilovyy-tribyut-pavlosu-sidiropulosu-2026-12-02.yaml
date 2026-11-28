@@ -1,0 +1,21 @@
+# week-import
+# Строка 181 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Виниловый трибьют Павлосу Сидиропулосу"
+status: published
+type: concert
+priority: 4
+date: "2026-12-02"
+time: "20:00"
+city: "Никосия"
+venue: "Neverland Rock Bar"
+summary: "Музыка греческого рок-исполнителя, записи интервью и концертное видео."
+price: "Вход бесплатный"
+description: "Вечер памяти Павлоса Сидиропулоса: диджей Charitos ставит его песни только с винила, на экранах — интервью и концертные записи."
+address: "Nikiforou Foka 1, 1016 Nicosia"
+ticket_url: "https://allevents.in/event/200031131246334"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031131246334"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/tribute-to-pavlos-sidiropoulos/"

@@ -1,0 +1,19 @@
+# week-import
+# Строка 125 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: В анонсе маршрут 6 км, набор высоты около 200 м.
+title: "Горный поход в районе Махераса"
+status: published
+type: tour
+priority: 3
+date: "2026-12-06"
+time: "09:00"
+city: "Махерас"
+venue: "зона отдыха Киония"
+summary: "Групповая прогулка со стартом у зоны отдыха Киония."
+description: "Лёгкий поход Mountain Junkies по маршруту Дио Муттес — Павлиадес (6 км, набор 200 м) с подъёмом на вершину Какокефалос; сбор в 09:00 в зоне отдыха Киония."
+booking: "Запись: 96 844497, 96 784058"
+ticket_url: "https://eventor.com.cy/events/nicosia/mountain-hiking-in-nicosia-14087"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/mountain-hiking-in-nicosia-14087"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 85 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Pyx Lax и The Grammar School"
+status: published
+type: concert
+priority: 3
+date: "2026-12-02"
+end_date: "2026-12-03"
+time: "20:00"
+city: "Строволос, Никосия"
+venue: "Strovolos Municipal Theatre"
+summary: "Бабис Стокас и Филиппос Плиацикас выступают вместе с учениками школы."
+sessions: "2 и 3 декабря в 20:00"
+price: "от €20"
+language: "греческий"
+description: "Бабис Стокас и Филиппос Плиацикас из Pyx Lax исполняют песни группы вместе с учениками The Grammar School Nicosia; около 1 ч 30 мин без антракта."
+ticket_url: "https://eventor.com.cy/events/nicosia/%CF%80%CF%85%CE%BE-%CE%BB%CE%B1%CE%BE-%CF%84%CE%B1%CE%BE%CE%AF%CE%B4%CE%B9-%CF%83%CF%84%CE%B7-%CE%BC%CE%BF%CF%85%CF%83%CE%B9%CE%BA%CE%AE-%CF%84%CE%BF%CF%85%CF%82-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-13988"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/%CF%80%CF%85%CE%BE-%CE%BB%CE%B1%CE%BE-%CF%84%CE%B1%CE%BE%CE%AF%CE%B4%CE%B9-%CF%83%CF%84%CE%B7-%CE%BC%CE%BF%CF%85%CF%83%CE%B9%CE%BA%CE%AE-%CF%84%CE%BF%CF%85%CF%82-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-13988"

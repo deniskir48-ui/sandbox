@@ -1,0 +1,21 @@
+# week-import
+# Строка 51 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+# Замечание редактора: В агрегаторе ошибочно 08:00; использован текст муниципального анонса.
+title: "Дромолаксия: ёлка и грузовик Coca-Cola"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+time: "17:00"
+city: "Дромолаксия"
+venue: "круговая развязка"
+summary: "В 17:00 детские мастерские, в 18:00 зажжение ёлки, в 18:30 приезжает грузовик Coca-Cola с Санта-Клаусом."
+description: "Праздник у кругового перекрёстка Дромолаксии: в 17:00 детские мастерские, в 18:00 зажжение ёлки, в 18:30 приезд грузовика Coca-Cola с Санта-Клаусом; музыка, танцы, угощения."
+ticket_url: "https://www.cyprushighlights.com/more-event/%cf%86%cf%89%cf%84%ce%b1%ce%b3%cf%8e%ce%b3%ce%b7%cf%83%ce%b7-%cf%87%cf%81%ce%b9%cf%83%cf%84%ce%bf%cf%85%ce%b3%ce%b5%ce%bd%ce%bd%ce%b9%ce%ac%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%ce%b4%ce%ad%ce%bd%cf%84%cf%81/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.cyprushighlights.com/more-event/%cf%86%cf%89%cf%84%ce%b1%ce%b3%cf%8e%ce%b3%ce%b7%cf%83%ce%b7-%cf%87%cf%81%ce%b9%cf%83%cf%84%ce%bf%cf%85%ce%b3%ce%b5%ce%bd%ce%bd%ce%b9%ce%ac%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%ce%b4%ce%ad%ce%bd%cf%84%cf%81/"
+  - title: "Страница события"
+    url: "https://www.cyprushighlights.com/more-event/%cf%86%cf%89%cf%84%ce%b1%ce%b3%cf%8e%ce%b3%ce%b7%cf%83%ce%b7-%cf%87%cf%81%ce%b9%cf%83%cf%84%ce%bf%cf%85%ce%b3%ce%b5%ce%bd%ce%bd%ce%b9%ce%ac%cf%84%ce%b9%ce%ba%ce%bf%cf%85-%ce%b4%ce%ad%ce%bd%cf%84%cf%81%ce%bf/"
+tags: [christmas, christmas-lights]

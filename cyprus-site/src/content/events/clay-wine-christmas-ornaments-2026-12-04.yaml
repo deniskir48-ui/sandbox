@@ -1,0 +1,20 @@
+# week-import
+# Строка 137 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Clay & Wine: Christmas Ornaments"
+status: published
+type: festival
+priority: 3
+date: "2026-12-04"
+time: "18:00"
+city: "Никосия"
+venue: "Meltemi Creative"
+summary: "Керамические рождественские украшения и вино в Meltemi Creative."
+end_time: "20:00"
+description: "Двухчасовой мастер-класс лепки рождественских украшений из глины с бокалом вина; материалы включены, опыт не нужен, изделия готовы через 3–4 недели."
+booking: "Запись: 25 251155"
+ticket_url: "https://cyprusnow.app/event/clay-wine-christmas-ornaments-2026-12-04"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/clay-wine-christmas-ornaments-2026-12-04"
+tags: [christmas, christmas-other]

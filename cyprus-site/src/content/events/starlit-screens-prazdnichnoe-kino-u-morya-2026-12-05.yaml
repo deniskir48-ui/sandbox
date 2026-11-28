@@ -1,0 +1,22 @@
+# week-import
+# Строка 46 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+# Замечание редактора: 5/12: The Little Prince 17:00, The Holiday 19:15. 6/12: Klaus 17:00, How the Grinch Stole Christmas 19:45. Цена и язык — у Starlit Screens.
+title: "Starlit Screens: праздничное кино у моря"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+end_date: "2026-12-06"
+time: "17:00"
+city: "Айя-Напа"
+venue: "Marina"
+summary: "Открытые рождественские кинопоказы в Ayia Napa Marina."
+sessions: "5 декабря в 17:00 («Маленький принц») и 19:15 («Отпуск по обмену»); 6 декабря в 17:00 («Клаус») и 19:45 («Гринч — похититель Рождества»)"
+description: "Кино под открытым небом в марине Айя-Напы: каждый вечер семейный сеанс и вечерний сеанс для взрослых."
+address: "52 Ayia Thekla Avenue, 5330 Ayia Napa"
+ticket_url: "https://cyprusnow.app/event/starlit-screens-goes-festive-outdoor-cinema-in-ayia-napa-2026-12-05"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/starlit-screens-goes-festive-outdoor-cinema-in-ayia-napa-2026-12-05"
+tags: [christmas, christmas-other]

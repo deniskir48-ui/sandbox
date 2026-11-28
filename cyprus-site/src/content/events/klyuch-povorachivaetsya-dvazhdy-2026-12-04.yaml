@@ -1,0 +1,22 @@
+# week-import
+# Строка 194 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "«Ключ поворачивается дважды»"
+status: published
+type: talk
+priority: 4
+date: "2026-12-04"
+time: "19:30"
+city: "Лимассол"
+venue: "Limassol Municipal University Library"
+summary: "Презентация книги Марии Пиериду-Мораити: чтения, музыка и обсуждение."
+end_time: "21:30"
+language: "греческий"
+description: "Презентация книги Марии Пиериду-Мораити: чтения, музыка, инсценировка и обсуждение."
+address: "Agiou Andreou 269, Lemesos 3032"
+ticket_url: "https://allevents.in/event/200031136682321"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031136682321"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/book-presentation-to-kleidi-gyrnaei-dyo-fores/"

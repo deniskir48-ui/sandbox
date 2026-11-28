@@ -1,0 +1,21 @@
+# week-import
+# Строка 124 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "«Серьги мадам де…»"
+status: published
+type: cinema
+priority: 3
+date: "2026-12-06"
+time: "17:30"
+city: "Никосия"
+venue: "Pantheon Theatre Cinema"
+summary: "Классический фильм Макса Офюльса в воскресной программе Pantheon."
+end_time: "19:30"
+price: "€5"
+description: "Фильм Макса Офюльса «Серьги мадам де…» (1953) в программе STYX «Burning Desires»"
+address: "Diagorou 29, Nicosia 1097"
+language: "Английские и греческие субтитры"
+ticket_url: "https://styxfilmencounters.com/event/the-earrings-of-madame-de/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://styxfilmencounters.com/event/the-earrings-of-madame-de/"

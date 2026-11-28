@@ -1,0 +1,23 @@
+# week-import
+# Строка 128 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: 30/11 — Home Alone; 2/12 — The Night Before; 3/12 — Lilo & Stitch; программу 4/12 уточнить у UNIC.
+title: "UNIC Christmas Movie Nights"
+status: published
+type: festival
+priority: 3
+date: "2026-11-30"
+end_date: "2026-12-04"
+city: "Никосия"
+venue: "UNIC Discovery Hall"
+summary: "Бесплатные показы рождественских фильмов в Discovery Hall Университета Никосии."
+open_days: ["2026-11-30", "2026-12-02", "2026-12-03", "2026-12-04"]
+sessions: "в 19:00: 30 ноября «Один дома», 2 декабря «Ночь перед Рождеством», 3 декабря «Лило и Стич», 4 декабря «The Christmas Carols»"
+price: "Бесплатно"
+language: "английский"
+description: "Бесплатные семейные показы рождественских фильмов в Discovery Hall Университета Никосии в рамках UNIC Christmas Spirit."
+ticket_url: "https://rsrvin.com/events/6afb0a10228c5aa316feacca-christmas-movie-night-home-alone-30-11"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6afb0a10228c5aa316feacca-christmas-movie-night-home-alone-30-11"
+tags: [christmas, christmas-other]

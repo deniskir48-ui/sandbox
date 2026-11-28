@@ -1,0 +1,20 @@
+# week-import
+# Строка 20 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "DK: Chasing the Dream — Ларнака"
+status: published
+type: cinema
+priority: 2
+date: "2026-12-03"
+time: "20:30"
+city: "Ларнака"
+venue: "K-Cineplex"
+summary: "Фильм о чемпионе мира по паркуру Димитрисе Кирсанидисе и встреча с ним после показа."
+price: "€30"
+language: "греческий"
+description: "Показ фильма «DK: В погоне за мечтой» в K-Cineplex Ларнаки, после фильма Димитрис Кирсанидис выходит к зрителям."
+booking: "Нужна бронь"
+ticket_url: "https://rsrvin.com/en/events/6ae31f05e25c2452eecb079d"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/en/events/6ae31f05e25c2452eecb079d"

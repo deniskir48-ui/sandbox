@@ -1,0 +1,23 @@
+# week-import
+# Строка 164 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Christmas Youth Chess Festival"
+status: published
+type: festival
+priority: 3
+date: "2026-12-06"
+time: "10:00"
+city: "Никосия"
+venue: "Semeli Hotel"
+summary: "Детский и юношеский шахматный фестиваль в Semeli Hotel."
+end_time: "14:30"
+price: "€15"
+description: "Юношеский шахматный фестиваль: 7 туров по швейцарской системе, 10 минут + 3 секунды, четыре турнира по возрастам до 18 лет."
+address: "Petraki Giallourou 10, Nicosia 1077"
+age: "До 18 лет"
+booking: "Нужна регистрация на сайте"
+ticket_url: "https://thechesshub.com.cy/event/christmas-youth-chess-festival-2026/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://thechesshub.com.cy/event/christmas-youth-chess-festival-2026/"
+tags: [christmas, christmas-other]

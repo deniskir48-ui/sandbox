@@ -1,0 +1,21 @@
+# week-import
+# Строка 77 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Movie Mondays: We Believe You"
+status: published
+type: cinema
+priority: 3
+date: "2026-11-30"
+time: "20:00"
+city: "Ларнака"
+venue: "Georghios Lykourgos Municipal Theatre Of Larnaka"
+summary: "Кинопоказ «Мы вам верим» в муниципальном театре Ларнаки."
+language: "греческий"
+description: "Показ фильма «Мы вам верим» в рамках «Киношных понедельников» в муниципальном театре Ларнаки."
+age: "18+"
+ticket_url: "https://allevents.in/event/200031152021502"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031152021502"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/november/"

@@ -1,0 +1,18 @@
+# week-import
+# Строка 70 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Омодос: ёлка и рождественский рынок"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "16:30"
+city: "Омодос"
+venue: "площадь Timios Stavros"
+summary: "Зажжение огней и открытие праздничного рынка в деревне."
+description: "В 16:30 открытие рождественской ярмарки в конгресс-центре Омодоса, затем зажжение ёлки на площади Тимиу Ставру."
+ticket_url: "https://www.checkincyprus.com/article/90514/to-omodos-anabei-to-khristougenniatiko-dentro-tou-kai-egkainiazei-te-giortine-agora-tou/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90514/to-omodos-anabei-to-khristougenniatiko-dentro-tou-kai-egkainiazei-te-giortine-agora-tou/"
+tags: [christmas, christmas-lights]

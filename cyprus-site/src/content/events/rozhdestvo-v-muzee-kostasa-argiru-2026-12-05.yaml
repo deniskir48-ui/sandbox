@@ -1,0 +1,24 @@
+# week-import
+# Строка 159 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Рождество в музее Костаса Аргиру"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "10:30"
+city: "Мазотос"
+venue: "музей Костаса Аргиру"
+summary: "Театральное занятие «Статуи, которые шепчут» для детей 7–12 лет в музее Костаса Аргиру; бесплатно."
+end_time: "11:30"
+description: "Театральное занятие для детей 7–12 лет «Статуи, которые шепчут» с театральным педагогом."
+price: "Бесплатно"
+address: "Kostas Argyrou 7, 7577 Mazotos"
+language: "Греческий"
+age: "7–12 лет"
+booking: "+357 24 433335, info@costasargyroumuseum.org"
+ticket_url: "https://cyprusnow.app/event/%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%8D%CE%B3%CE%B5%CE%BD%CE%BD%CE%B1-%CF%83%CF%84%CE%BF-%CE%BC%CE%BF%CF%85%CF%83%CE%B5%CE%AF%CE%BF-%CE%BA%CF%8E%CF%83%CF%84%CE%B1-%CE%B1%CF%81%CE%B3%CF%85%CF%81%CE%BF%CF%8D-2026-12-05"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%8D%CE%B3%CE%B5%CE%BD%CE%BD%CE%B1-%CF%83%CF%84%CE%BF-%CE%BC%CE%BF%CF%85%CF%83%CE%B5%CE%AF%CE%BF-%CE%BA%CF%8E%CF%83%CF%84%CE%B1-%CE%B1%CF%81%CE%B3%CF%85%CF%81%CE%BF%CF%8D-2026-12-05"
+tags: [christmas, christmas-other]

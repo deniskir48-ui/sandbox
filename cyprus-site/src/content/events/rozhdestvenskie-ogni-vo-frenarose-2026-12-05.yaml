@@ -1,0 +1,19 @@
+# week-import
+# Строка 57 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Рождественские огни во Френаросе"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+time: "17:00"
+city: "Френарос"
+venue: "центральная площадь"
+summary: "Сценическая программа, зажжение огней и DJ Nikolas Varvaresos."
+end_time: "21:30"
+description: "В 17:00 приходит Санта-Клаус с подарками, затем танцы, зажжение огней, фокусник, музыка и детское кино; в 22:00 молодёжная вечеринка с DJ Nikolas Varvaresos."
+ticket_url: "https://events.visitfamagusta.com.cy/events/%cf%87%cf%81%ce%b9%cf%83%cf%84%ce%bf%cf%85%ce%b3%ce%b5%ce%bd%ce%bd%ce%b9%ce%ac%cf%84%ce%b9%ce%ba%ce%b7-%cf%86%cf%89%cf%84%ce%b1%ce%b3%cf%8e%ce%b3%ce%b7%cf%83%ce%b7-%cf%83%cf%84%ce%bf-%cf%86%cf%81/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://events.visitfamagusta.com.cy/events/%cf%87%cf%81%ce%b9%cf%83%cf%84%ce%bf%cf%85%ce%b3%ce%b5%ce%bd%ce%bd%ce%b9%ce%ac%cf%84%ce%b9%ce%ba%ce%b7-%cf%86%cf%89%cf%84%ce%b1%ce%b3%cf%8e%ce%b3%ce%b7%cf%83%ce%b7-%cf%83%cf%84%ce%bf-%cf%86%cf%81/"
+tags: [christmas, christmas-lights]

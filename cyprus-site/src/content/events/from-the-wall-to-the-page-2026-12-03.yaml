@@ -1,0 +1,20 @@
+# week-import
+# Строка 183 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "From the Wall to the Page"
+status: published
+type: talk
+priority: 4
+date: "2026-12-03"
+time: "19:30"
+city: "Никосия"
+venue: "Pentadaktylou 16, 1016"
+summary: "Презентация художественного проекта Василиса Василиадиса."
+description: "Василис Василиадис представляет портфолио художника и онлайн-коллекцию «Only Space Remembers…»"
+address: "Pentadaktylou 16, 1016 Nicosia"
+ticket_url: "https://allevents.in/event/200031112397305"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031112397305"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/from-the-wall-to-the-page-from-the-page-to-the-screen/"

@@ -1,0 +1,18 @@
+# week-import
+# Строка 184 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Larnaca Writers: Meet & Greet"
+status: published
+type: talk
+priority: 4
+date: "2026-12-03"
+time: "20:00"
+city: "Ларнака"
+venue: "StArt Café"
+summary: "Встреча местных авторов и запуск сайта литературного сообщества."
+end_time: "21:00"
+description: "Встреча пишущих людей Ларнаки и презентация сайта Larnaca Writers: конкурсы, открытые микрофоны, поэзия; бокал вина и закуски."
+ticket_url: "https://allevents.in/event/200031142839024"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031142839024"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 81 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Ламброс Фисфис: «Сейчас гораздо лучше»"
+status: published
+type: standup
+priority: 3
+date: "2026-12-01"
+time: "21:30"
+city: "Никосия"
+venue: "Nicosia Municipal Theatre"
+summary: "Грекоязычный стендап об отношениях, родительстве и повседневной жизни."
+price: "от €20"
+language: "греческий"
+description: "Стендап Ламброса Фисфиса «Сейчас гораздо лучше» в муниципальном театре Никосии."
+ticket_url: "https://www.more.com/cy-el/tickets/standupcomedy/lampros-fisfis-poly-kalytera-tora-kypros/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.more.com/cy-el/tickets/standupcomedy/lampros-fisfis-poly-kalytera-tora-kypros/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/december/"

@@ -1,0 +1,19 @@
+# week-import
+# Строка 56 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Рождественская площадь Агиос Иоаннис Пицилиас"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Агиос Иоаннис Пицилиас"
+venue: "центральная площадь"
+summary: "В субботу зажжение ёлки; в воскресенье целый день рынка и праздничных активностей."
+sessions: "5 декабря в 18:00 — зажжение ёлки; 6 декабря с 11:00 до 21:00 — праздник"
+description: "5 декабря в 18:00 зажжение ёлки на площади; 6 декабря с 11:00 до 21:00 праздник с ремёслами, местными продуктами, подарками, едой и напитками."
+ticket_url: "https://cyprusnow.app/event/%CF%80%CE%BB%CE%B1%CF%84%CE%B5%CE%AF%CE%B1-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%AD%CE%BD%CE%BD%CF%89%CE%BD-%CE%B1%CE%B3%CE%AF%CE%BF%CF%85-%CE%B9%CF%89%CE%AC%CE%BD%CE%BD%CE%B7-%CF%80%CE%B9%CF%84%CF%83%CE%B9%CE%BB%CE%B9%CE%AC%CF%82-2026-2026-12-05"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CF%80%CE%BB%CE%B1%CF%84%CE%B5%CE%AF%CE%B1-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%AD%CE%BD%CE%BD%CF%89%CE%BD-%CE%B1%CE%B3%CE%AF%CE%BF%CF%85-%CE%B9%CF%89%CE%AC%CE%BD%CE%BD%CE%B7-%CF%80%CE%B9%CF%84%CF%83%CE%B9%CE%BB%CE%B9%CE%AC%CF%82-2026-2026-12-05"
+tags: [christmas, christmas-lights]

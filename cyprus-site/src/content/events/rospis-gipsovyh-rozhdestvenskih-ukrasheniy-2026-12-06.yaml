@@ -1,0 +1,23 @@
+# week-import
+# Строка 228 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Роспись гипсовых рождественских украшений"
+status: published
+type: festival
+priority: 4
+date: "2026-12-06"
+time: "12:00"
+city: "Лимассол"
+venue: "Liberty Buro, Makariou III 212"
+summary: "Двухчасовая роспись гипсовых рождественских украшений."
+end_time: "14:00"
+price: "€65 с человека"
+language: "русский, английский"
+description: "Двухчасовой мастер-класс: роспись гипсовых рождественских украшений для праздничного стола."
+address: "Arch. Makarios III Avenue 212, Limassol 3030"
+booking: "Онлайн, предоплата 50%"
+ticket_url: "https://libertyburo.com/events/paint-your-own-christmas-ornaments"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://libertyburo.com/events/paint-your-own-christmas-ornaments"
+tags: [christmas, christmas-other]

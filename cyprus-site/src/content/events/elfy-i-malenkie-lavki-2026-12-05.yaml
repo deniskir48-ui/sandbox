@@ -1,0 +1,21 @@
+# week-import
+# Строка 161 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Эльфы и маленькие лавки"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "14:00"
+city: "Никосия"
+venue: "Parko Pavlou Isou (Grisha’s Park)"
+summary: "Праздничный базар, музыка, поделки и аквагрим в парке Pavlou Iisou."
+end_time: "16:00"
+description: "Рождественский базар в парке Павлоса Иисуса в Энгоми: поделки, книги, украшения, свечи, секонд-хенд, мастер-классы, аквагрим, еда и музыка."
+price: "Поделки €5, аквагрим €3"
+address: "Aftokratorous Ioustinianou 2, Egkomi 2413"
+ticket_url: "https://cypruseventsmap.com/events/the-elves-are-coming-with-their-little-shops/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/the-elves-are-coming-with-their-little-shops/"
+tags: [christmas, christmas-lights]

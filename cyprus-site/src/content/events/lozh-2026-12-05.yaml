@@ -1,0 +1,21 @@
+# week-import
+# Строка 206 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+title: "«Ложь»"
+status: published
+type: theatre
+priority: 4
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "Satiriko Theatre"
+summary: "Театральная комедия в Satiriko; на греческом."
+sessions: "5 декабря в 20:00, 6 декабря в 18:30; по субботам и воскресеньям до 20 декабря"
+price: "€16; льготный €13"
+language: "греческий"
+description: "Комедия Флориана Зеллера «Ложь» в постановке Марианны Кафкариду на Центральной сцене Сатирического театра: две пары друзей, ужин и тайна. 90 минут с антрактом."
+address: "Βλαδίμηρου Καυκαρίδη 11-15, 2102 Αγλαντζιά"
+ticket_url: "https://ticket.satirikotheatro.com/events/kentriki-skini-meiomeno-kai-kanoniko-2026-11-28-2000/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://ticket.satirikotheatro.com/events/kentriki-skini-meiomeno-kai-kanoniko-2026-11-28-2000/"

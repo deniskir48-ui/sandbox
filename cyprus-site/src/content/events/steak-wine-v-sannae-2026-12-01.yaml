@@ -1,0 +1,19 @@
+# week-import
+# Строка 80 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Steak & Wine в SANNAE"
+status: published
+type: festival
+priority: 3
+date: "2026-12-01"
+time: "20:00"
+city: "Никосия"
+venue: "SANNAE"
+summary: "Ужин с мясом на робате и подбором греческих вин; шеф Caesar Sidorencu."
+price: "€80"
+description: "Винный ужин в ресторане SANNAE: стейки на гриле робата от шефа Цезаря Сидоренку и греческие вина, которые подбирает сомелье Мария Масура."
+booking: "Нужна запись: 22 255258"
+ticket_url: "https://www.checkincyprus.com/article/90585/ena-uperokho-event-gia-tous-latreis-ton-steaks-se-ena-xekhoristo-estiatorio-ste-leukosia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90585/ena-uperokho-event-gia-tous-latreis-ton-steaks-se-ena-xekhoristo-estiatorio-ste-leukosia/"

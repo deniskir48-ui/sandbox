@@ -1,0 +1,22 @@
+# week-import
+# Строка 187 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "«Записки сумасшедшего»"
+status: published
+type: theatre
+priority: 4
+date: "2026-12-02"
+end_date: "2026-12-04"
+city: "Никосия"
+venue: "Common Room"
+summary: "Гоголь в современной постановке Мариоса Иоанну, с использованием кипрского диалекта."
+sessions: "2, 3 и 4 декабря в 20:30"
+price: "€12"
+language: "греческий"
+description: "«Записки сумасшедшего» по Гоголю с Марио Иоанну; на кипрском диалекте, 50 минут."
+address: "Μέδοντος 3Α, Λευκωσία"
+booking: "Бронь: 99 655796, билеты в баре Prozak и на входе"
+ticket_url: "https://www.checkincyprus.com/article/90430/to-emerologio-enos-trelou-me-ton-mario-ioannou-epistrephei-ste-leukosia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90430/to-emerologio-enos-trelou-me-ton-mario-ioannou-epistrephei-ste-leukosia/"

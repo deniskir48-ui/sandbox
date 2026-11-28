@@ -1,0 +1,21 @@
+# week-import
+# Строка 212 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "«Ακόμα πέφτω»"
+status: published
+type: theatre
+priority: 4
+date: "2026-12-06"
+city: "Никосия"
+venue: "ARTos House"
+summary: "Театрально-музыкальная постановка в ARTos House."
+sessions: "премьера 6 декабря; время на странице указано по-разному — 19:00 и 21:00, уточняйте в ARTos"
+price: "€15"
+language: "греческий"
+description: "Музыкальный моноспектакль по реальным событиям о героине по имени Анна, с живым лупингом; текст и постановка Панайотиса Ларку, песни выбрала Анна Хрисанфу. 80 минут."
+address: "Λεωφόρος Αγ. Ομολογητών 64, Λευκωσία"
+booking: "Бронь: 99 144809, 22 445455"
+ticket_url: "https://www.artoshouse.org/events/%CE%B1%CE%BA%CE%BF%CE%BC%CE%B1-%CF%80%CE%B5%CF%86%CF%84%CF%89"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.artoshouse.org/events/%CE%B1%CE%BA%CE%BF%CE%BC%CE%B1-%CF%80%CE%B5%CF%86%CF%84%CF%89"

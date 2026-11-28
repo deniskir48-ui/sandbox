@@ -1,0 +1,20 @@
+# week-import
+# Строка 113 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Рания Костаки в Lush"
+status: published
+type: party
+priority: 3
+date: "2026-12-05"
+time: "21:00"
+city: "Ларнака"
+venue: "Lush Beach Bar Resto"
+summary: "Концерт Рании Костаки к 15-летию Lush Beach Bar."
+language: "греческий"
+description: "Концерт Рании Костаки к 15-летию Lush Beach Bar."
+age: "21+"
+booking: "Бронь: 7000 8089"
+ticket_url: "https://rsrvin.com/events/6af61b9f4621c631d089827d-rania-kostaki-live-at-lush-beach-bar"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6af61b9f4621c631d089827d-rania-kostaki-live-at-lush-beach-bar"

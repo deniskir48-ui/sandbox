@@ -1,0 +1,19 @@
+# week-import
+# Строка 66 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "«Деревня ангелов» — Кити"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "17:00"
+city: "Кити"
+venue: "церковь Панагии Ангелоктисти"
+summary: "В 17:00 праздничное шествие, в 18:00 зажжение рождественской ёлки у церкви Панагии Ангелоктисти."
+description: "Праздник «Деревня ангелов»: в 17:00 шествие, в 18:00 зажжение ёлки у церкви Панагии Ангелоктисти. Организуют община Дромолаксия-Менеу и культурный клуб «Архангелос» Кити."
+address: "Archbishop Kyprianou 2, Kiti, Larnaca 7550"
+ticket_url: "https://cypruseventsmap.com/events/christmas-celebration-to-chorio-ton-angelon/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cypruseventsmap.com/events/christmas-celebration-to-chorio-ton-angelon/"
+tags: [christmas, christmas-other]

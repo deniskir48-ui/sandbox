@@ -1,0 +1,17 @@
+# week-import
+# Строка 114 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "ὕBRΙΣ / Tempus Tribus"
+status: published
+type: party
+priority: 3
+date: "2026-12-05"
+time: "22:00"
+city: "Никосия"
+venue: "Κτήμα Camelot"
+summary: "Ночная псайтранс-вечеринка в Ktima Camelot."
+description: "Пситранс-вечеринка Tempus Tribus: Balu, Kuetzara, Obscurious, Curoto, Komfuzius, BHANGRA и WEIRDBASS, визуалы Fractal Magus, звук Funktion-One."
+ticket_url: "https://www.cyprusunderground.com.cy/event/ybris-by-tempus-tribus"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.cyprusunderground.com.cy/event/ybris-by-tempus-tribus"

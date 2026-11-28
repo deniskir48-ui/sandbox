@@ -1,0 +1,19 @@
+# week-import
+# Строка 106 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: Ночное событие переходит на 6 декабря; главный гость J Gadget.
+title: "Sound Republic: AfroTonic"
+status: published
+type: party
+priority: 3
+date: "2026-12-05"
+time: "23:00"
+city: "Лимассол"
+venue: "Maze Venue"
+summary: "Ночь афробита и амапиано в Maze, хедлайнер J Gadget."
+description: "Вечеринка AfroTonic: афробит, амапиано, гком; хедлайнер J Gadget (Великобритания), также Adele Moon, MC Stan, Ricoblaq и Benita."
+address: "Kanari 22, Limassol"
+ticket_url: "https://eventor.com.cy/events/limassol/sound-republic-afrotonic-in-limassol-13765"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/limassol/sound-republic-afrotonic-in-limassol-13765"

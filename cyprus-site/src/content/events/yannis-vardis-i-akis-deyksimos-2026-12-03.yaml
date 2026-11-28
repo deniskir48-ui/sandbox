@@ -1,0 +1,19 @@
+# week-import
+# Строка 191 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Яннис Вардис и Акис Дейксимос"
+status: published
+type: concert
+priority: 4
+date: "2026-12-03"
+time: "20:00"
+city: "Лимассол"
+venue: "музыкальная сцена «Киклос»"
+summary: "Вечер живой греческой музыки в Kyklos Music Stage."
+language: "греческий"
+description: "Концерт Янниса Вардиса и Акиса Дейксимоса с известными песнями; организатор DEST1NY Productions."
+booking: "Бронь: 25 107230, 97 575857"
+ticket_url: "https://rsrvin.com/en/events/6af61bb04621c631d08982cd"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/en/events/6af61bb04621c631d08982cd"

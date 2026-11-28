@@ -1,0 +1,21 @@
+# week-import
+# Строка 119 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: Условия women only опубликованы организатором.
+title: "Nowhere to Wear This"
+status: published
+type: party
+priority: 3
+date: "2026-12-06"
+time: "17:00"
+city: "Лимассол"
+venue: "Lab Bar & Restaurant"
+summary: "Вечеринка для девушек в Lab Bar & Restaurant."
+end_time: "22:00"
+price: "от €24"
+description: "Вечеринка только для девушек от Rave Angels и Girls Meet Limassol: женский диджей-сет, дресс-код — яркие наряды."
+age: "18+"
+ticket_url: "https://rsrvin.com/events/6af32dc8960f324a425e1585-no-where-to-wear-this-girls-only-party"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6af32dc8960f324a425e1585-no-where-to-wear-this-girls-only-party"

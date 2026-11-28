@@ -1,0 +1,19 @@
+# week-import
+# Строка 182 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Эви Кулкувини в Olio"
+status: published
+type: concert
+priority: 4
+date: "2026-12-02"
+time: "20:00"
+city: "Никосия"
+venue: "Olio Experience"
+summary: "Эви Кулкувини поёт в ресторане Olio за ужином."
+language: "греческий"
+description: "Эви Кулкувини поёт в ресторане Olio; ужин с 20:00."
+booking: "Бронь: 99 997700"
+ticket_url: "https://eventor.com.cy/events/nicosia/evi-koulkouvini-live-at-olio-13871"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/evi-koulkouvini-live-at-olio-13871"

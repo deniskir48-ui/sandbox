@@ -1,0 +1,22 @@
+# week-import
+# Строка 6 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: Точные часы и текущую категорию билета выбрать у организатора.
+title: "Boiler House: Winter Music Festival"
+status: published
+type: festival
+priority: 1
+date: "2026-12-04"
+end_date: "2026-12-05"
+city: "Айя-Напа"
+venue: "The Castle Club"
+summary: "Двухдневный фестиваль электронной музыки в Castle Club с международными артистами."
+sessions: "4 и 5 декабря с 20:00 до 04:00"
+hours: "с 20:00 до 04:00"
+description: "Двухдневный фестиваль электронной музыки от Boiler House в The Castle Club, шесть международных артистов."
+price: "От €50 за два дня"
+age: "20+"
+ticket_url: "https://eventor.com.cy/events/famagusta/winter-music-festival-two-day-electronic-event-in-ayia-napa-13280"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/famagusta/winter-music-festival-two-day-electronic-event-in-ayia-napa-13280"

@@ -1,0 +1,20 @@
+# week-import
+# Строка 163 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Christmas Sip & Paint — Айя-Напа"
+status: published
+type: festival
+priority: 3
+date: "2026-12-06"
+time: "17:00"
+city: "Айя-Напа"
+venue: "Marina, Nomad Studio"
+summary: "Двухчасовой рождественский вечер живописи в марине Айя-Напы."
+end_time: "19:00"
+description: "Двухчасовой рождественский вечер живописи в The Nomad Studio в марине Айя-Напы, для любого уровня."
+booking: "Билеты через Instagram The Nomad Studio"
+ticket_url: "https://rsrvin.com/events/6b007c9761140b0fc03a58a7-christmas-sip-paint-in-ayia-napa-06-12"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b007c9761140b0fc03a58a7-christmas-sip-paint-in-ayia-napa-06-12"
+tags: [christmas, christmas-other]

@@ -1,0 +1,21 @@
+# week-import
+# Строка 62 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+# Замечание редактора: Детская мастерская: 11:00–13:00 или 15:00–17:00. €15 — за занятие, не за вход на рынок.
+title: "12-я рождественская ярмарка Technopolis 20"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "10:00"
+city: "Пафос"
+venue: "Technopolis 20"
+summary: "Подарки ручной работы, местные изделия, кофе и детская рождественская мастерская."
+end_time: "17:00"
+description: "12-я рождественская арт-ярмарка: украшения, керамика, свечи, открытки ручной работы, кофе и домашние торты; для детей — рождественская мастерская с Мириам Макконнон."
+address: "Nikolaou I. Nikolaidi Avenue 18, Paphos 8010"
+ticket_url: "https://www.technopolis20.com/event-details/12th-annual-technopolis-20-christmas-market"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.technopolis20.com/event-details/12th-annual-technopolis-20-christmas-market"
+tags: [christmas, christmas-markets]

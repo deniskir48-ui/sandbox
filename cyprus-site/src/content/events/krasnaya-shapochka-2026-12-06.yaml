@@ -1,0 +1,20 @@
+# week-import
+# Строка 214 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+title: "«Красная Шапочка»"
+status: published
+type: kids
+priority: 4
+date: "2026-12-06"
+time: "10:30"
+city: "Никосия"
+venue: "THOC Theatre, Evis Gabrielides Auditorium"
+summary: "Детский спектакль THOC на греческом языке."
+price: "€6"
+language: "греческий"
+description: "Детский спектакль THOC «Красная Шапочка», 65 минут; по воскресеньям в 10:30 до 27 декабря."
+booking: "Онлайн на tickets.thoc.org.cy, касса +357 77 772717"
+ticket_url: "https://tickets.thoc.org.cy/event/thoc-i-kokkinoskoufitsa/?lang=el"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tickets.thoc.org.cy/event/thoc-i-kokkinoskoufitsa/?lang=el"

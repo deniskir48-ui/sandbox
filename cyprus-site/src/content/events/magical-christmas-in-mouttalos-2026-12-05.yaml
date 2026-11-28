@@ -1,0 +1,20 @@
+# week-import
+# Строка 44 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Муниципальный анонс
+title: "Magical Christmas in Mouttalos"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+time: "11:00"
+city: "Пафос"
+venue: "Mouttalos Square"
+summary: "Рождественский праздник муниципалитета Пафоса на площади Муталос."
+description: "Рождественский праздник муниципалитета Пафоса на площади Муталос."
+ticket_url: "https://pafos.org.cy/events/%ce%bc%ce%b1%ce%b3%ce%b9%ce%ba%ce%b1-%cf%87%cf%81%ce%b9%cf%83%cf%84%ce%bf%cf%85%ce%b3%ce%b5%ce%bd%ce%bd%ce%b1-%cf%83%cf%84%ce%bf%ce%bd-%ce%bc%ce%bf%cf%85%cf%84%cf%84%ce%b1%ce%bb%ce%bf/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://pafos.org.cy/events/%ce%bc%ce%b1%ce%b3%ce%b9%ce%ba%ce%b1-%cf%87%cf%81%ce%b9%cf%83%cf%84%ce%bf%cf%85%ce%b3%ce%b5%ce%bd%ce%bd%ce%b1-%cf%83%cf%84%ce%bf%ce%bd-%ce%bc%ce%bf%cf%85%cf%84%cf%84%ce%b1%ce%bb%ce%bf/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/magical-christmas-in-mouttalos/"
+tags: [christmas, christmas-other]

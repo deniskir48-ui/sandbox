@@ -1,0 +1,20 @@
+# week-import
+# Строка 68 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Детский рождественский фестиваль Ахериту"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "16:00"
+city: "Ахериту / Врисуллес"
+venue: "центральная площадь"
+summary: "Игры, музыка, Санта и семейные активности на центральной площади."
+end_time: "20:30"
+description: "Детский рождественский фестиваль на центральной площади: диджей, фокусник, народные танцы, в 18:15 зажжение ёлки с Санта-Клаусом, живая музыка Костаса Флуренцу и Рафаэллы Московиа."
+price: "Бесплатно"
+ticket_url: "https://rsrvin.com/events/6b007c9761140b0fc03a58a3-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CE%BF-%CF%86%CE%B5%CF%83%CF%84%CE%B9%CE%B2%CE%AC%CE%BB-%CF%80%CE%B1%CE%B9%CE%B4%CE%B9%CE%BF%CF%8D-%CF%83%CF%84%CE%BF%CE%BD-%CE%B1%CF%87%CE%B5%CF%81%CE%AF%CF%84%CE%BF%CF%85-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b007c9761140b0fc03a58a3-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CE%BF-%CF%86%CE%B5%CF%83%CF%84%CE%B9%CE%B2%CE%AC%CE%BB-%CF%80%CE%B1%CE%B9%CE%B4%CE%B9%CE%BF%CF%8D-%CF%83%CF%84%CE%BF%CE%BD-%CE%B1%CF%87%CE%B5%CF%81%CE%AF%CF%84%CE%BF%CF%85-2026"
+tags: [christmas, christmas-other]

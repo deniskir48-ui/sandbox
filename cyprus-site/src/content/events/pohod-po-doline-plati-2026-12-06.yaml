@@ -1,0 +1,19 @@
+# week-import
+# Строка 126 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Поход по долине Плати"
+status: published
+type: tour
+priority: 3
+date: "2026-12-06"
+time: "10:00"
+city: "Лимассол"
+venue: "Kaminaria"
+summary: "Круговой поход около 18 км по долине Плати со сбором в Каминариа."
+description: "Кольцевой поход по долине Плати из Каминарии: 18 км, около 6 часов, для среднего и опытного уровня; можно увидеть муфлонов."
+price: "€3, предоплата"
+booking: "Нужна запись"
+ticket_url: "https://rsrvin.com/events/6b007c9761140b0fc03a589a-platy-valley-hike-in-limassol"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b007c9761140b0fc03a589a-platy-valley-hike-in-limassol"

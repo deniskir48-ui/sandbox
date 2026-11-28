@@ -1,0 +1,20 @@
+# week-import
+# Строка 112 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Манолис Андрулидакис: гитарный мастер-класс"
+status: published
+type: workshop
+priority: 3
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "AMusEd Lab"
+summary: "Семинар и мастер-класс о гитаре как оркестре в греческой музыке."
+sessions: "5 декабря 12:00–18:00 и 6 декабря 10:00–16:00 — мастер-класс; 6 декабря — сольный концерт"
+language: "греческий"
+description: "Гитарист и композитор Манолис Андрулидакис проводит мастер-класс по исполнению греческой музыки на гитаре и 6 декабря даёт сольный концерт."
+booking: "Регистрация участников; билеты на концерт — на more.com"
+ticket_url: "https://www.checkincyprus.com/article/90549/o-manoles-androulidakes-sten-kupro-gia-ena-xekhoristo-diemero-mousikes-demiourgias-kai-ekpaideuses/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90549/o-manoles-androulidakes-sten-kupro-gia-ena-xekhoristo-diemero-mousikes-demiourgias-kai-ekpaideuses/"

@@ -1,0 +1,20 @@
+# week-import
+# Строка 91 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Pigs of War: трибьют Black Sabbath"
+status: published
+type: concert
+priority: 3
+date: "2026-12-03"
+time: "21:00"
+city: "Никосия"
+venue: "New Division"
+summary: "Трибьют Black Sabbath от группы Pigs of War; вход бесплатный."
+language: "английский"
+description: "Трибьют Black Sabbath от Pigs of War: Джимми Мавромматис (вокал), Эвангелос Варнава (ударные), Майк Ангастиниотис (гитара), Алекс Иоанну (бас)."
+price: "Вход бесплатный"
+address: "Βασιλίσσης Φρειδερίκης 4, 1066 Λευκωσία"
+ticket_url: "https://allevents.in/event/200030951960341"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030951960341"

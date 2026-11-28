@@ -1,0 +1,24 @@
+# week-import
+# Строка 178 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Время по расписанию постановки; билеты на выбранный день уточнить.
+title: "«Гедда Габлер»"
+status: published
+type: theatre
+priority: 4
+date: "2026-12-02"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "Theatro Ena"
+summary: "Драма Генрика Ибсена на сцене Theatro Ena; спектакль на греческом."
+open_days: ["2026-12-02", "2026-12-04", "2026-12-05", "2026-12-06"]
+sessions: "2, 4 и 5 декабря в 20:30, 6 декабря в 19:00"
+language: "греческий"
+description: "Драма Ибсена «Гедда Габлер» в театре «Эна»"
+address: "Athinas 4, 1016 Nicosia"
+ticket_url: "https://www.philenews.com/events/enta-gkampler-i-iroida-tou-ipsen-sto-theatro-ena-antimetopi-me-ta-oria-tis-eleftherias/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/enta-gkampler-i-iroida-tou-ipsen-sto-theatro-ena-antimetopi-me-ta-oria-tis-eleftherias/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/hedda-gabler/"

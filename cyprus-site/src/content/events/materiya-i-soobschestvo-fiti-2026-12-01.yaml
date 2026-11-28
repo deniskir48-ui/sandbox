@@ -1,0 +1,19 @@
+# week-import
+# Строка 176 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "«Материя и сообщество» — Фити"
+status: published
+type: exhibition
+priority: 4
+date: "2026-12-01"
+time: "10:00"
+city: "Фити"
+venue: "площадь деревни"
+summary: "Выставка, прогулки и ремесленные занятия в деревне Фити."
+end_time: "17:00"
+price: "Бесплатно"
+description: "Программа Замминистерства культуры: выставка, прогулки и мастер-классы — современное искусство в диалоге с наследием деревень Ласа и Фити."
+ticket_url: "https://cyprusnow.app/event/%CF%8D%CE%BB%CE%B7-%CE%BA%CE%B1%CE%B9-%CE%BA%CE%BF%CE%B9%CE%BD%CF%8C%CF%84%CE%B7%CF%84%CE%B1-%CE%AD%CE%BA%CE%B8%CE%B5%CF%83%CE%B7-%CF%80%CE%B5%CF%81%CE%AF%CF%80%CE%B1%CF%84%CE%BF%CE%B9-%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CF%84%CE%AE%CF%81%CE%B9%CE%B1-%CF%83%CF%84%CE%B7-%CF%86%CF%8D%CF%84%CE%B7-2026-10-21"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CF%8D%CE%BB%CE%B7-%CE%BA%CE%B1%CE%B9-%CE%BA%CE%BF%CE%B9%CE%BD%CF%8C%CF%84%CE%B7%CF%84%CE%B1-%CE%AD%CE%BA%CE%B8%CE%B5%CF%83%CE%B7-%CF%80%CE%B5%CF%81%CE%AF%CF%80%CE%B1%CF%84%CE%BF%CE%B9-%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CF%84%CE%AE%CF%81%CE%B9%CE%B1-%CF%83%CF%84%CE%B7-%CF%86%CF%8D%CF%84%CE%B7-2026-10-21"

@@ -1,0 +1,24 @@
+# week-import
+# Строка 160 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Украшение из чеканного металла"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "15:00"
+city: "Никосия"
+venue: "Metochiou 38E, Agios Andreas, 1101"
+summary: "Творческая мастерская для взрослых в Никосии."
+end_time: "17:00"
+language: "греческий, английский"
+description: "Двухчасовой мастер-класс по чеканке по металлу для взрослых: рождественское украшение на ёлку, материалы включены, опыт не нужен."
+price: "€40"
+address: "Metochiou 38E, Agios Andreas, 1101 Nicosia"
+age: "Для взрослых"
+booking: "Предоплата: 96 586535"
+ticket_url: "https://allevents.in/event/200031136687527"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031136687527"
+tags: [christmas, christmas-other]

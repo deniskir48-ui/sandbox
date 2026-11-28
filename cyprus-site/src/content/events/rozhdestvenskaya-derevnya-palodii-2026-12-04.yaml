@@ -1,0 +1,21 @@
+# week-import
+# Строка 55 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Рождественская деревня Палодии"
+status: published
+type: festival
+priority: 2
+date: "2026-12-04"
+end_date: "2026-12-06"
+city: "Палодия"
+venue: "Alonia"
+summary: "Трёхдневная праздничная программа в Alonia: музыка, киоски и семейный досуг."
+hours: "с 16:00; Санта-Клаус — с 18:00 до 20:00"
+description: "Рождественская деревня в Алонии: песни, театр, театр теней, танцевальные коллективы, аквагрим, ярмарка и глинтвейн; Санта-Клаус приходит каждый день с 18:00 до 20:00."
+price: "Бесплатно"
+address: "Αλώνια, Παλωδία"
+ticket_url: "https://eventor.com.cy/events/limassol/%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CE%BF-%CF%87%CF%89%CF%81%CE%B9%CF%8C-%CF%83%CF%84%CE%B7%CE%BD-%CF%80%CE%B1%CE%BB%CF%89%CE%B4%CE%AF%CE%B1-2026-13897"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/limassol/%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CE%BF-%CF%87%CF%89%CF%81%CE%B9%CF%8C-%CF%83%CF%84%CE%B7%CE%BD-%CF%80%CE%B1%CE%BB%CF%89%CE%B4%CE%AF%CE%B1-2026-13897"
+tags: [christmas, christmas-villages]

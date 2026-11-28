@@ -1,0 +1,20 @@
+# week-import
+# Строка 37 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Рождественская деревня Пано Кивидес"
+status: published
+type: festival
+priority: 2
+date: "2026-12-04"
+end_date: "2026-12-06"
+city: "Пано Кивидес"
+venue: "общественный парк"
+summary: "Музыка, танцы, игры и встреча с Сантой в общественном парке деревни."
+sessions: "5 декабря в 19:00 — концерт Маврикиоса Маврикиу и Элены Андреу"
+language: "греческий"
+description: "Рождественская деревня в общественном парке: музыка, танцы, детские игры, сладости и визит Санта-Клауса; 5 декабря в 19:00 концерт Маврикиоса Маврикиу и Элены Андреу."
+ticket_url: "https://www.checkincyprus.com/article/90151/oi-kubides-etoimazoun-kai-phetos-khristougenniatiko-khorio/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90151/oi-kubides-etoimazoun-kai-phetos-khristougenniatiko-khorio/"
+tags: [christmas, christmas-villages]

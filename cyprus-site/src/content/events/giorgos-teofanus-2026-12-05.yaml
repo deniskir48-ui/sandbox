@@ -1,0 +1,21 @@
+# week-import
+# Строка 110 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Гиоргос Теофанус"
+status: published
+type: concert
+priority: 3
+date: "2026-12-05"
+time: "21:00"
+city: "Лимассол"
+venue: "Opus Events Venue"
+summary: "Вечер греческой музыки с ужином: Гиоргос Теофанус и другие исполнители."
+language: "греческий"
+description: "Вечер греческой музыки с ужином: Гиоргос Теофанус, Микаэлла Хадзиэфраим, Ольга Венецианоу, Продромос Цолиас и Николас Димас."
+booking: "Бронь: 7000 0021"
+ticket_url: "https://rsrvin.com/events/6ae9cc5d633eca1f194916f8-%CE%B3%CE%B9%CF%8E%CF%81%CE%B3%CE%BF%CF%82-%CE%B8%CE%B5%CE%BF%CF%86%CE%AC%CE%BD%CE%BF%CF%85%CF%82-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CE%BC%CE%B5%CF%83%CF%8C"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6ae9cc5d633eca1f194916f8-%CE%B3%CE%B9%CF%8E%CF%81%CE%B3%CE%BF%CF%82-%CE%B8%CE%B5%CE%BF%CF%86%CE%AC%CE%BD%CE%BF%CF%85%CF%82-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CE%BC%CE%B5%CF%83%CF%8C"
+  - title: "Страница события"
+    url: "https://rsrvin.com/events/6ae9cc5d633eca1f194916f8"

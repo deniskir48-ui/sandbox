@@ -1,0 +1,22 @@
+# week-import
+# Строка 226 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Loved Again by Eliza — воскресенье"
+status: published
+type: festival
+priority: 4
+date: "2026-12-06"
+time: "11:00"
+city: "Никосия"
+venue: "Parko Pavlou Isou (Grisha’s Park)"
+summary: "Праздничный базар винтажных вещей в парке Pavlou Iisou."
+end_time: "18:30"
+description: "Третий рождественский базар Loved Again by Eliza: украшения, винтажные и б/у аксессуары, дикий орегано от организаторов."
+address: "Aftokratorous Ioustinianou 2, Egkomi 2413"
+ticket_url: "https://allevents.in/event/200031147263716"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031147263716"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/christmas-shopping-little-treasures/"
+tags: [christmas, christmas-other]

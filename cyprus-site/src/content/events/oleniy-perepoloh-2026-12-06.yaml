@@ -1,0 +1,20 @@
+# week-import
+# Строка 67 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "«Олений переполох»"
+status: published
+type: kids
+priority: 2
+date: "2026-12-06"
+time: "14:30"
+city: "Лимассол"
+venue: "Theatro Versus - Theatre ENA"
+summary: "Русскоязычный интерактивный новогодний спектакль для детей."
+language: "русский"
+description: "Интерактивный новогодний спектакль для детей, продолжение «Пятого элемента»: олени Деда Мороза перепутали подарки, Эльза и Дедушка Мороз ищут выход. После — встреча с Дедом Морозом."
+age: "2+"
+ticket_url: "https://rsrvin.com/events/6af61b234621c631d0898075-reindeer-troubles-06-12-14-30"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6af61b234621c631d0898075-reindeer-troubles-06-12-14-30"
+tags: [christmas, christmas-other]

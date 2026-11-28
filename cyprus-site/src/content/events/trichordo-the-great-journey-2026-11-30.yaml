@@ -1,0 +1,19 @@
+# week-import
+# Строка 78 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Trichordo: The Great Journey"
+status: published
+type: concert
+priority: 3
+date: "2026-11-30"
+time: "20:30"
+city: "Лимассол"
+venue: "Pattihio Theatre"
+summary: "Димитрис Басис, София Папазоглу, народный оркестр и хор: история греческой музыки."
+language: "греческий"
+description: "Музыкальный спектакль о связи византийских песнопений и ребетико с народной музыкой. Выступают Димитрис Басис и София Папазоглу с народным оркестром из 10 музыкантов и хором византийских певчих Архиепископии Кипра."
+age: "Дети до 16 лет — со взрослыми"
+ticket_url: "https://www.pattihio.com.cy/class/trichordo-the-great-journey/?wcs_timestamp=1796070600"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.pattihio.com.cy/class/trichordo-the-great-journey/?wcs_timestamp=1796070600"

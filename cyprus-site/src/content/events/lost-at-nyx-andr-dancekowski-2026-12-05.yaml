@@ -1,0 +1,19 @@
+# week-import
+# Строка 25 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+# Замечание редактора: Подтверждён билетный сервис Ticket Tailor. В другой афише ошибочно указано 04:00.
+title: "LOST at NYX: André Dancekowski"
+status: published
+type: party
+priority: 2
+date: "2026-12-05"
+time: "16:00"
+city: "Лимассол"
+venue: "Nyx Hotel"
+summary: "Виниловые хаус-сеты на крыше NYX Hotel."
+end_time: "23:45"
+description: "Виниловый сет André Dancekowski (Мюнхен) на крыше у бассейна отеля NYX; разогрев — резиденты LOST Markus Eden и Sully."
+ticket_url: "https://www.tickettailor.com/events/lostpmpromotions/2484363"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.tickettailor.com/events/lostpmpromotions/2484363"

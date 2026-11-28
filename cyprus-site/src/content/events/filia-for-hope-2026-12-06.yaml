@@ -1,0 +1,20 @@
+# week-import
+# Строка 116 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "FILIA for Hope"
+status: published
+type: sport
+priority: 3
+date: "2026-12-06"
+city: "Лимассол"
+venue: "NAIS Sports Club"
+summary: "Благотворительный турнир по паделу и мини-футболу; средства направляются фонду помощи людям с онкологией."
+language: "русский"
+description: "Благотворительный турнир по паделу и мини-футболу в поддержку онкологических пациентов, около 200 участников; пожертвования идут в PASYKAF."
+address: "Agias Paraskevis 12, 4045 Germasogeia"
+ticket_url: "https://dom.cy/filiaforhope"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://dom.cy/filiaforhope"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/filia-for-hope/"

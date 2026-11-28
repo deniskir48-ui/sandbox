@@ -1,0 +1,19 @@
+# week-import
+# Строка 175 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Presence of Absence"
+status: published
+type: exhibition
+priority: 4
+date: "2026-11-30"
+city: "Никосия"
+venue: "Alpha C.K. Art Gallery"
+summary: "Последний день выставки керамики и скульптуры Васо Франгу."
+description: "Выставка керамики и скульптуры Васо Франгу: органические формы и скульптурные группы; идёт с 20 по 30 ноября."
+address: "Makariou Ave & Papanikoli, 1077 Nicosia"
+ticket_url: "https://www.philenews.com/events/presence-of-absence-i-keramistria-vaso-fragkou-ektheti-sti-lefkosia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/presence-of-absence-i-keramistria-vaso-fragkou-ektheti-sti-lefkosia/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/presence-of-absence/"

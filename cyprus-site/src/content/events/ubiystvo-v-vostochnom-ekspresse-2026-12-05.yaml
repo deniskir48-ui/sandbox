@@ -1,0 +1,21 @@
+# week-import
+# Строка 109 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+# Замечание редактора: Ссылка на страницу постановки, а не на старый ноябрьский сеанс.
+title: "«Убийство в Восточном экспрессе»"
+status: published
+type: theatre
+priority: 3
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "THOC Theatre, Evis Gabrielides Auditorium"
+summary: "Сценическая версия детектива Агаты Кристи в THOC; на греческом."
+sessions: "5 декабря в 20:00, 6 декабря в 18:00"
+price: "€15; льготы от €6"
+language: "греческий"
+description: "Спектакль THOC по пьесе Кена Людвига на основе романа Агаты Кристи; 2 ч 15 мин с антрактом."
+ticket_url: "https://tickets.thoc.org.cy/event/thoc-murder-on-the-orient-express/?lang=el"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tickets.thoc.org.cy/event/thoc-murder-on-the-orient-express/?lang=el"

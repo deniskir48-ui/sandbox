@@ -1,0 +1,20 @@
+# week-import
+# Строка 48 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Winter Wonderland at Kthma Hadjikosta"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Астромеритис"
+venue: "усадьба Хаджикоста"
+summary: "Праздничные выходные в усадьбе Hadjikosta."
+hours: "11:00–20:00"
+description: "Рождественский городок в усадьбе Хаджикоста по выходным: рынок, еда, музыка, детские мастерские, встречи с Санта-Клаусом и снежная зона."
+address: "Новая дорога Астромеритис — Эврыху"
+ticket_url: "https://cyprusnow.app/event/winter-wonderland-at-kthma-hadjikosta-2026-2026-12-05"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/winter-wonderland-at-kthma-hadjikosta-2026-2026-12-05"
+tags: [christmas, christmas-other]

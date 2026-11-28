@@ -1,0 +1,21 @@
+# week-import
+# Строка 166 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Grinchmas — Никосия"
+status: published
+type: kids
+priority: 3
+date: "2026-12-06"
+time: "10:30"
+city: "Строволос"
+venue: "муниципальный театр Строволоса"
+summary: "Детский рождественский спектакль о Гринче; на греческом."
+price: "€12"
+language: "греческий"
+description: "Детский спектакль театра «Вестиарио» о Гринче с живой музыкой, для детей от 2 лет и всей семьи."
+age: "2+"
+ticket_url: "https://eventor.com.cy/events/larnaca/grinchmas-childrens-christmas-theatre-show-across-cyprus-12858"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/larnaca/grinchmas-childrens-christmas-theatre-show-across-cyprus-12858"
+tags: [christmas, christmas-other]

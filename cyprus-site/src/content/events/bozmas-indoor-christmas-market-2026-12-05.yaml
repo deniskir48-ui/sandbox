@@ -1,0 +1,22 @@
+# week-import
+# Строка 142 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+# Замечание редактора: Рынок повторяется по субботам; проверить конкретных участников 5 декабря.
+title: "Bozmas Indoor Christmas Market"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "10:00"
+city: "Ларнака"
+venue: "Bozart Creative Space"
+summary: "Крытый рынок ремесленных подарков и мини-мастерские в Bozart Creative Space."
+end_time: "14:00"
+price: "Бесплатно"
+description: "Рождественский маркет мастеров и художников под крышей: украшения, подарки, выпечка (есть безглютеновая и веганская), мини-мастер-классы."
+address: "10 Golgon St., Larnaca"
+ticket_url: "https://allevents.in/event/200031106476618"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031106476618"
+tags: [christmas, christmas-markets]

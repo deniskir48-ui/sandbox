@@ -1,0 +1,22 @@
+# week-import
+# Строка 216 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+title: "Захариас Заннетту: «Возвраты не принимаются»"
+status: published
+type: standup
+priority: 4
+date: "2026-12-06"
+time: "21:00"
+city: "Строволос, Никосия"
+venue: "Black Brick"
+summary: "Стендап на греческом в Black Brick."
+end_time: "23:00"
+description: "Вторая сольная стендап-программа Захариаса Заннетту: бытовой абсурд, отношения и кипрская жизнь."
+language: "Греческий"
+booking: "Билеты онлайн, без обмена и возврата"
+ticket_url: "https://www.tickettailor.com/events/motioncomedy/2471556?utm_source=cyprusnow.app&utm_medium=referral"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.tickettailor.com/events/motioncomedy/2471556?utm_source=cyprusnow.app&utm_medium=referral"
+  - title: "Страница события"
+    url: "https://www.tickettailor.com/events/motioncomedy/2471556"

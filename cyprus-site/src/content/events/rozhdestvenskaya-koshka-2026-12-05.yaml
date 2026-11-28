@@ -1,0 +1,22 @@
+# week-import
+# Строка 221 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "«Рождественская кошка»"
+status: published
+type: festival
+priority: 4
+date: "2026-12-05"
+time: "15:30"
+city: "Кити"
+venue: "библиотека Dandelion"
+summary: "Интерактивная презентация детской книги в библиотеке Dandelion."
+language: "греческий"
+description: "Интерактивная презентация детской книги Георгии Аристиду Фемистоклеус «Рождественская кошка» для детей и взрослых, которые читают с ними."
+address: "25 Kitiou Avenue, 1st floor, Kiti"
+ticket_url: "https://allevents.in/event/200030960041718"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030960041718"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/interactive-presentation-of-the-children-s-book-i-gata/"
+tags: [christmas, christmas-other]

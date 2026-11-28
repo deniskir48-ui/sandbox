@@ -1,0 +1,21 @@
+# week-import
+# Строка 89 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Мара Константину: «Другая ночь»"
+status: published
+type: concert
+priority: 3
+date: "2026-12-02"
+time: "20:00"
+city: "Никосия"
+venue: "DownTown Live"
+summary: "Греческие песни от ребетико до современной музыки с элементами театра и импровизации."
+language: "греческий"
+description: "Музыкальный спектакль Мары Константину «Другая ночь»: песни от ребетико до современных греческих; с ней Константинос Зорбас (фортепиано), Антонис Пафиос (кларнет, саксофон) и Николас Пантехис (аккордеон)."
+booking: "Бронь: 99 810011"
+ticket_url: "https://www.checkincyprus.com/article/90287/mia-nukhta-allios-me-te-mara-konstantinou-sto-downtown-live/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90287/mia-nukhta-allios-me-te-mara-konstantinou-sto-downtown-live/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/december/"

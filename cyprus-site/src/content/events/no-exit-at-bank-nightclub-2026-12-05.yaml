@@ -1,0 +1,21 @@
+# week-import
+# Строка 118 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Афиши по-разному относят начало к субботе или воскресенью; час входа уточнить у Bank Nightclub.
+title: "No Exit at Bank Nightclub"
+status: published
+type: party
+priority: 3
+date: "2026-12-05"
+time: "22:00"
+city: "Пафос"
+venue: "Bank Nightclub"
+summary: "Клубная ночь в Bank Nightclub, Пафос."
+end_time: "04:30"
+description: "Ночь техно и пситранса: хедлайнер Plea5urePul5e (Штутгарт), а также DREUS, SC1NCE и SKORPINA. Вход с 22:00 до 01:00, музыка до 04:30."
+age: "18+"
+booking: "Билеты только онлайн на cytec.app"
+ticket_url: "https://www.cyprusunderground.com.cy/event/no-exit"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.cyprusunderground.com.cy/event/no-exit"

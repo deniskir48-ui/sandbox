@@ -1,0 +1,21 @@
+# week-import
+# Строка 207 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "«Мια Κύπρος παραμύθκια»"
+status: published
+type: kids
+priority: 4
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "Pantheon Theatre"
+summary: "Семейная театральная программа с кипрскими сказками; на греческом."
+sessions: "5 декабря в 15:30, 6 декабря в 11:00"
+price: "€12"
+language: "греческий"
+description: "Детский спектакль театра Piccolo по трём кипрским сказкам по тексту Мариоса Стилиану; 60 минут, все показы с переводом на кипрский жестовый язык."
+address: "29 Diagoras Street, Nicosia 1097"
+ticket_url: "https://www.pantheon-theatre.com/product/mia-kipros-paramithkia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.pantheon-theatre.com/product/mia-kipros-paramithkia/"

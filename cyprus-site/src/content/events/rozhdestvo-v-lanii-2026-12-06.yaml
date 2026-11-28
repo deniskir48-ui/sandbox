@@ -1,0 +1,21 @@
+# week-import
+# Строка 73 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Официальный сайт / продавец
+# Замечание редактора: Зажжение огней 17:40 по официальной программе.
+title: "Рождество в Лании"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "10:00"
+city: "Лания"
+venue: "деревенская площадь"
+summary: "Целый день музыки, рынка, детских занятий, шоу и встречи с Сантой."
+end_time: "18:15"
+price: "Вход бесплатный; покупки отдельно"
+address: "Lania Village Square"
+ticket_url: "https://www.visitcyprus.com/event/christmas-in-lania-6-12-2026/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.visitcyprus.com/event/christmas-in-lania-6-12-2026/"
+tags: [christmas, christmas-other]

@@ -1,0 +1,21 @@
+# week-import
+# Строка 12 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Официальный сайт / продавец
+# Замечание редактора: В билет входит дегустационный бокал. Актуальная цена подтверждена продавцом.
+title: "Cyprus Wine Expo — Oenognosia"
+status: published
+type: festival
+priority: 1
+date: "2026-12-06"
+time: "12:00"
+city: "Лакатамия, Никосия"
+venue: "Pavilion Hall"
+summary: "Дегустации кипрских и зарубежных вин, встречи с виноделами и мастер-классы."
+end_time: "20:00"
+price: "€15; early bird €12 распродан"
+description: "Выставка вин Cyprus Wine Expo – Oenognosia: дегустации, встречи с производителями и мастер-классы."
+address: "2, Avraam Antoniou, Lakatamia, Nicosia 2330"
+ticket_url: "https://oenoticket.com/events/cyprus-wine-expo-nicosia-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://oenoticket.com/events/cyprus-wine-expo-nicosia-2026"

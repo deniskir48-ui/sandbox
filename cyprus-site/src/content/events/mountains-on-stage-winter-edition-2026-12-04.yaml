@@ -1,0 +1,20 @@
+# week-import
+# Строка 23 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+# Замечание редактора: В некоторых афишах 19:00. В текущем анонсе Mountains on Stage на AllEvents указано 19:30.
+title: "Mountains on Stage: Winter Edition"
+status: published
+type: cinema
+priority: 2
+date: "2026-12-04"
+time: "19:30"
+city: "Никосия"
+venue: "Pantheon Theatre"
+summary: "Три фильма об альпинизме, трейлраннинге и лыжах; английские субтитры."
+end_time: "23:00"
+language: "английский"
+description: "Три фильма программы Mountains on Stage Winter Edition о трейлраннинге, альпинизме и лыжах."
+ticket_url: "https://allevents.in/event/200030776292801"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030776292801"

@@ -1,0 +1,22 @@
+# week-import
+# Строка 198 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Марафон театральных чтений THOC"
+status: published
+type: theatre
+priority: 4
+date: "2026-12-04"
+time: "19:00"
+city: "Никосия"
+venue: "Κεντρική Σκηνή ΘΟΚ «Εύης Γαβριηλίδης»"
+summary: "Чтения новых кипрских пьес, посвящённые Алексии Папалазару."
+price: "Вход бесплатный"
+language: "греческий"
+description: "Марафон театральных чтений: за четыре вечера звучат двенадцать новых кипрских пьес, посвящённых Алексии Папалазару."
+address: "Grigori Afxentiou 9, Nicosia"
+ticket_url: "https://www.philenews.com/events/dodeka-nea-kipriaka-theatrika-erga-se-tesseris-vradies-afieromenes-stin-alexia-papalazarou/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/dodeka-nea-kipriaka-theatrika-erga-se-tesseris-vradies-afieromenes-stin-alexia-papalazarou/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/twelve-new-cypriot-theatrical-works-dedicated-to-alexia/"

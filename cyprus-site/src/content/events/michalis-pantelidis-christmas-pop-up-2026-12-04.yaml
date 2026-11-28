@@ -1,0 +1,19 @@
+# week-import
+# Строка 218 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Michalis Pantelidis Christmas Pop-Up"
+status: published
+type: festival
+priority: 4
+date: "2026-12-04"
+time: "19:00"
+city: "Никосия"
+venue: "Afternoon Project"
+summary: "Шёлковые аксессуары и рождественские коллекции кипрского дизайнера."
+description: "Открытие рождественского поп-ап магазина Михалиса Пантелидиса: шёлковые платки и галстуки с кипрскими мотивами, новый рождественский дизайн тиражом 24 штуки."
+address: "Perikleous 1, Nicosia 1010"
+ticket_url: "https://allevents.in/event/200031151775652"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031151775652"
+tags: [christmas, christmas-lights]

@@ -1,0 +1,20 @@
+# week-import
+# Строка 131 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Рождественская выпечка Georges Alain"
+status: published
+type: festival
+priority: 3
+date: "2026-12-01"
+city: "Ларнака"
+summary: "Мастер-класс рождественской выпечки: пряничный домик или французский десерт на выбор."
+price: "€60"
+description: "Мастер-класс рождественской выпечки: пряничный домик или один из четырёх французских праздничных десертов на выбор."
+booking: "Нужна запись"
+ticket_url: "https://shop.georgesalain.com/service-page/christmas-workshops"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://shop.georgesalain.com/service-page/christmas-workshops"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/christmas-baking-gingerbread-houses-and-french-festive-cakes/"
+tags: [christmas, christmas-other]

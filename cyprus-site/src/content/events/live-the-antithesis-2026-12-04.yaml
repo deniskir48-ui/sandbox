@@ -1,0 +1,19 @@
+# week-import
+# Строка 96 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Live the Antithesis"
+status: published
+type: party
+priority: 3
+date: "2026-12-04"
+time: "21:00"
+city: "Лимассол"
+venue: "Giraffe Experience"
+summary: "Греческая клубная ночь с DJ Alex S в Giraffe Experience."
+price: "€10"
+description: "Вечеринка греческой музыки с DJ Alex S от Antithesis CY."
+age: "23+"
+ticket_url: "https://eventor.com.cy/events/limassol/live-the-antithesis-in-limassol-14086"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/limassol/live-the-antithesis-in-limassol-14086"

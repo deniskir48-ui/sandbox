@@ -1,0 +1,20 @@
+# week-import
+# Строка 138 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Cocktail Workshop"
+status: published
+type: workshop
+priority: 3
+date: "2026-12-04"
+time: "18:00"
+city: "Никосия"
+venue: "Workshoplab.cy"
+summary: "Тематический мастер-класс по коктейлям в Workshoplab."
+end_time: "20:00"
+description: "Мастер-класс праздничных коктейлей в Workshoplab.cy."
+booking: "Заявки до 1 декабря"
+ticket_url: "https://cyprusnow.app/event/%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CF%84%CE%AE%CF%81%CE%B9-cocktails-%CE%B8%CE%B5%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CF%8C-2026-12-04"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CE%B5%CF%81%CE%B3%CE%B1%CF%83%CF%84%CE%AE%CF%81%CE%B9-cocktails-%CE%B8%CE%B5%CE%BC%CE%B1%CF%84%CE%B9%CE%BA%CF%8C-2026-12-04"
+tags: [christmas, christmas-other]

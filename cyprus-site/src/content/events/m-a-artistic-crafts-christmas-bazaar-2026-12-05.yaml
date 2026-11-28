@@ -1,0 +1,20 @@
+# week-import
+# Строка 147 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "M.A Artistic Crafts: Christmas Bazaar"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Лимассол"
+venue: "M.A Artistic Crafts & Gifts"
+summary: "Рождественский рынок авторских изделий и подарков ручной работы."
+hours: "с 10:00; 6 декабря до 19:00"
+description: "Ежегодный рождественский базар ремёсел и подарков в мастерской M.A Artistic Crafts & Gifts (Марина Аристиду)."
+address: "67B Franklinou Roosevelt, Limassol"
+ticket_url: "https://allevents.in/event/200030953717630"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030953717630"
+tags: [christmas, christmas-markets]

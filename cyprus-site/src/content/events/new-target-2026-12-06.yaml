@@ -1,0 +1,19 @@
+# week-import
+# Строка 211 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+title: "New Target"
+status: published
+type: theatre
+priority: 4
+date: "2026-12-06"
+time: "20:00"
+city: "Энгоми, Никосия"
+venue: "Egomio Performing Arts Centre"
+summary: "Две постановки современного танца: «Control Room» и «S-EAT-YOURSELF»."
+price: "€12–14"
+description: "Две 20-минутные постановки современного танца: «Control Room» (Анна Николау и Майк Деметриу) и «S-EAT-YOURSELF» (хореограф Яннис Экономидес, танцуют Элина Каракоста и Аполлонас Анастасиадис)."
+age: "12+"
+ticket_url: "https://www.myticketcy.com/product/new-target-dec-6/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.myticketcy.com/product/new-target-dec-6/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 122 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Sound Landscapes"
+status: published
+type: tour
+priority: 3
+date: "2026-12-06"
+time: "16:00"
+city: "Никосия"
+venue: "Museum of Modern and Contemporary Art, SPEL Building"
+summary: "Звуковая прогулка и разговор с живописью в музее SPEL."
+description: "Музыканты Кипрского камерного оркестра играют сочинения по картинам Государственной коллекции, тексты читает художница Леда Фанаса; можно сидеть или ходить по залу."
+language: "Греческий"
+age: "10+"
+ticket_url: "https://rsrvin.com/events/6af61b204621c631d089806d-%CF%84%CE%BF%CF%80%CE%AF%CE%B1-%CE%AE%CF%87%CE%BF%CF%85-%CF%83%CF%85%CE%BD%CE%BF%CE%BC%CE%B9%CE%BB%CE%AF%CE%B1-%CE%BC%CE%B5-%CF%84%CE%BF%CF%85%CF%82-%CF%80%CE%AF%CE%BD%CE%B1%CE%BA%CE%B5%CF%82-06-12-16-00"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6af61b204621c631d089806d-%CF%84%CE%BF%CF%80%CE%AF%CE%B1-%CE%AE%CF%87%CE%BF%CF%85-%CF%83%CF%85%CE%BD%CE%BF%CE%BC%CE%B9%CE%BB%CE%AF%CE%B1-%CE%BC%CE%B5-%CF%84%CE%BF%CF%85%CF%82-%CF%80%CE%AF%CE%BD%CE%B1%CE%BA%CE%B5%CF%82-06-12-16-00"
+  - title: "Страница события"
+    url: "https://rsrvin.com/events/6af61b204621c631d089806d"

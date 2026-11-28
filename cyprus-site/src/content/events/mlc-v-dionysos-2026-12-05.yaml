@@ -1,0 +1,19 @@
+# week-import
+# Строка 202 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "MLC в Dionysos"
+status: published
+type: concert
+priority: 4
+date: "2026-12-05"
+time: "20:00"
+city: "Пейя"
+venue: "Dionysos Cocktails Sports Bar, Корал-Бэй"
+summary: "Живое музыкальное выступление в Dionysos Cocktail Sports Bar."
+description: "Кавер-группа из Пафоса MLC (Mid-Life Crisis) играет рок-хиты с 70-х до наших дней."
+address: "Coral Bay Ave 63, 8560 Peyia"
+booking: "Бронь: 26 343500"
+ticket_url: "https://allevents.in/event/200030953776637"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200030953776637"

@@ -1,0 +1,18 @@
+# week-import
+# Строка 186 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Sonica Band в Zebra"
+status: published
+type: concert
+priority: 4
+date: "2026-12-03"
+time: "19:00"
+city: "Лимассол"
+venue: "Zebra"
+summary: "Живая музыка Sonica Band в Zebra Beer Garden."
+description: "Живая музыка Sonica Band в Zebra Beer Garden: огонь под открытым небом и пиво; вход с 19:00."
+address: "Ειρήνης 27, Λεμεσός"
+ticket_url: "https://rsrvin.com/events/6b007c9661140b0fc03a5888-sonica-band-live-music-in-limassol"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b007c9661140b0fc03a5888-sonica-band-live-music-in-limassol"

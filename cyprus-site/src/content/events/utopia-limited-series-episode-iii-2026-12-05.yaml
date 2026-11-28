@@ -1,0 +1,20 @@
+# week-import
+# Строка 28 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+# Замечание редактора: Одна ночная вечеринка, а не два отдельных события. Категорию и цену билета проверить у продавца.
+title: "UTOPIA limited.series: Episode III"
+status: published
+type: party
+priority: 2
+date: "2026-12-05"
+time: "22:00"
+city: "Никосия"
+venue: "Zena Palace Theatre"
+summary: "Электронная ночь в кинотеатре Zena Palace; ночное событие 5–6 декабря."
+end_time: "03:00"
+description: "Ночь электронной музыки в кинотеатре Zena Palace: сеты ALEJJOS и ANDREA и их совместный B2B."
+address: "Theofanous Theodotou 18, 1065 Nicosia"
+ticket_url: "https://shop.tixify.live/event/limitedseries-3j9olr"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://shop.tixify.live/event/limitedseries-3j9olr"

@@ -1,0 +1,20 @@
+# week-import
+# Строка 43 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: Санта, подарки и праздничная программа. В заголовках некоторых афиш время сдвинуто.
+title: "Festive Saturdays at Limassol Marina"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+time: "16:00"
+city: "Лимассол"
+venue: "Limassol Marina"
+summary: "Санта-Клаус раздаёт подарки детям в Limassol Marina."
+end_time: "19:00"
+description: "Праздничные субботы в Limassol Marina: 5 декабря с 16:00 до 19:00 Санта-Клаус раздаёт подарки детям."
+ticket_url: "https://eventor.com.cy/events/limassol/festive-saturdays-at-limassol-marina-2026-13806"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/limassol/festive-saturdays-at-limassol-marina-2026-13806"
+tags: [christmas, christmas-other]

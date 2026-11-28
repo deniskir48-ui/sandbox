@@ -1,0 +1,20 @@
+# week-import
+# Строка 197 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Древнегреческая мифология"
+status: published
+type: exhibition
+priority: 4
+date: "2026-11-20"
+end_date: "2026-12-04"
+city: "Никосия"
+venue: "Γκαλερί Γκλόρια"
+summary: "Выставка живописи на темы древнегреческой мифологии в галерее «Глория»."
+description: "Выставка «Древнегреческая мифология» в галерее «Глория»"
+address: "Agiou Andreou, Nicosia 1037"
+ticket_url: "https://www.philenews.com/events/archeoelliniki-mithologia-o-andreas-karousios-epistrefi-me-nea-ekthesi-zografikis/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/archeoelliniki-mithologia-o-andreas-karousios-epistrefi-me-nea-ekthesi-zografikis/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/ancient-greek-mythology/"

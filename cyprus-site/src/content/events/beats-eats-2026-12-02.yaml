@@ -1,0 +1,19 @@
+# week-import
+# Строка 82 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Beats & Eats"
+status: published
+type: festival
+priority: 3
+date: "2026-12-02"
+time: "19:00"
+city: "Ларнака"
+venue: "Sunmoon Creative Space"
+summary: "Четыре варианта меню для совместного ужина от шефа Ставроса Георгиу и музыка с винила."
+price: "€33–40 с человека; напитки отдельно"
+description: "Вечер в Sunmoon Creative Space: виниловый диджей и сет-меню кипрского бистро из 4 блюд на компанию; напитки отдельно."
+booking: "Только по записи: +357 96 594080"
+ticket_url: "https://eventor.com.cy/events/larnaca/beats--eats-in-larnaca-13999"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/larnaca/beats--eats-in-larnaca-13999"

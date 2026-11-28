@@ -1,0 +1,20 @@
+# week-import
+# Строка 140 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Рождественский рынок Paidiki Gonia"
+status: published
+type: festival
+priority: 3
+date: "2026-12-04"
+time: "13:00"
+city: "Ларнака"
+venue: "Eleftherias 10"
+summary: "Местные продукты, поделки, еда, детские мастерские и фотографии."
+end_time: "17:30"
+description: "Рождественский маркет в детском саду Paidiki Gonia: местные товары и рукоделие, еда, детские мастер-классы и фотозона."
+address: "Λεωφόρος Ελευθερίας 10, 6030 Λάρνακα"
+ticket_url: "https://allevents.in/event/200031115798915"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031115798915"
+tags: [christmas, christmas-lights]

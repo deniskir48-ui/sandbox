@@ -1,0 +1,20 @@
+# week-import
+# Строка 18 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Телефон организатора: 22 746745. Скидки до 70% — заявление организатора.
+title: "MPM Bazaar"
+status: published
+type: festival
+priority: 2
+date: "2026-12-02"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "State Fair, Hall A"
+summary: "Ярмарка косметики, парфюмерии и подарков в State Fair; заявлены скидки до 70%."
+hours: "2–5 декабря 10:00–20:00, 6 декабря 11:00–19:00"
+description: "Распродажа косметики, парфюмерии, средств для макияжа, багажа и подарков известных марок со скидками до 70%."
+address: "Κρατική Έκθεση Κύπρου, Hall A, Γ. Σεφέρη, Έγκωμη"
+ticket_url: "https://www.checkincyprus.com/article/90579/to-demophiles-mpm-bazaar-epistrephei-me-eponuma-kalluntika-aromata-kai-ekptoseis-eos-70/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90579/to-demophiles-mpm-bazaar-epistrephei-me-eponuma-kalluntika-aromata-kai-ekptoseis-eos-70/"

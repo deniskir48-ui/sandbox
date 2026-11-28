@@ -1,0 +1,28 @@
+# week-import
+# Строка 225 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: 09:30 и 10:30 — 1–3 года; 11:30 — 4+. Запись: 99 563695.
+title: "«Ξωτικομπελάδες»: рождественская музыкальная мастерская"
+display_title: "Рождественская музыкальная мастерская"
+status: published
+type: festival
+priority: 4
+date: "2026-12-06"
+time: "09:30"
+city: "Строволос, Никосия"
+venue: "Strovolos Cultural Centre"
+summary: "Рождественские песни, игры и танцы для детей 1–4+ лет; сеансы по возрасту."
+sessions: "в 09:30 и 10:30 — для 1–3 лет, в 11:30 — с 4 лет"
+end_time: "12:15"
+price: "€14 с ребёнка"
+language: "греческий"
+description: "Рождественская музыкальная мастерская для детей: мелодии, игры, пение и танцы с музыкальными педагогами."
+age: "1–3 года и с 4 лет"
+booking: "Бронь: 99 563695"
+ticket_url: "https://rsrvin.com/events/6b007c9661140b0fc03a5891-%CE%BE%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CE%BC%CF%80%CE%B5%CE%BB%CE%AC%CE%B4%CE%B5%CF%82-jingle-and-play-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CE%BF-%CE%BC%CE%BF%CF%85%CF%83%CE%B9%CE%BA%CF%8C-workshop-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b007c9661140b0fc03a5891-%CE%BE%CF%89%CF%84%CE%B9%CE%BA%CE%BF%CE%BC%CF%80%CE%B5%CE%BB%CE%AC%CE%B4%CE%B5%CF%82-jingle-and-play-%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CE%BF-%CE%BC%CE%BF%CF%85%CF%83%CE%B9%CE%BA%CF%8C-workshop-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1"
+  - title: "Страница события"
+    url: "https://rsrvin.com/events/6b007c9661140b0fc03a5891"
+tags: [christmas, christmas-other]

@@ -1,0 +1,24 @@
+# week-import
+# Строка 47 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+title: "The Nutcracker Suite"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+time: "18:00"
+city: "Лимассол"
+venue: "Pattihio Theatre"
+summary: "Балет на музыку Чайковского с приглашёнными артистами и Imperial Russian Academy."
+end_time: "19:15"
+price: "от €20"
+description: "Балет на музыку Чайковского с приглашёнными солистами и Imperial Russian Academy."
+address: "Agias Zonis 4, Limassol 3027"
+age: "Для всех возрастов"
+ticket_url: "https://www.soldoutticketbox.com/en/event/the-nutcracker-suite-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.soldoutticketbox.com/en/event/the-nutcracker-suite-2026"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-nutcracker-suite/"
+tags: [christmas, christmas-other]

@@ -1,0 +1,22 @@
+# week-import
+# Строка 111 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Конная прогулка в Литродонтасе"
+status: published
+type: tour
+priority: 3
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Литродонтас"
+venue: "точка встречи у организатора"
+summary: "Прогулка по зимней сельской местности; запись на конкретный сеанс."
+sessions: "5 декабря в 13:00, 6 декабря в 14:00"
+price: "€30–35"
+description: "Конная прогулка по зелёным окрестностям Литродонтаса; организатор Salonica View."
+booking: "Нужна запись"
+ticket_url: "https://www.salonicaview.com/events-cyprus/horseback-riding-green-countryside-lythrodontas-05122026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.salonicaview.com/events-cyprus/horseback-riding-green-countryside-lythrodontas-05122026"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/horseback-riding-in-the-green-countryside-of-lythrodontas/"

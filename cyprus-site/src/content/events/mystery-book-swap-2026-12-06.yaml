@@ -1,0 +1,18 @@
+# week-import
+# Строка 117 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Mystery Book Swap"
+status: published
+type: talk
+priority: 3
+date: "2026-12-06"
+time: "16:00"
+city: "Лимассол"
+venue: "Biblioteka"
+summary: "Обмен книгами-сюрпризами в Biblioteka, Лимассол."
+description: "Обмен книгами вслепую: приносите любимую книгу для разговора и книгу для обмена — на месте книги лежат в обёртке без названий."
+booking: "Запись в Instagram @urioeditlimassol"
+ticket_url: "https://cyprusnow.app/event/mystery-book-swap-in-limassol-2026-12-06"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/mystery-book-swap-in-limassol-2026-12-06"

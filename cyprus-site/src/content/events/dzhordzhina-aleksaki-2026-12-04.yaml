@@ -1,0 +1,20 @@
+# week-import
+# Строка 196 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Джорджина Алексаки"
+status: published
+type: concert
+priority: 4
+date: "2026-12-04"
+time: "20:30"
+city: "Лимассол"
+venue: "Chill Out Burger Bar"
+summary: "Джорджина Алексаки (вокал) и Антонис Ботонакис (клавишные) с Крита."
+language: "греческий"
+description: "Джорджина Алексаки (вокал) и Антонис Ботонакис (клавишные) с Крита исполняют известные песни."
+address: "Площадь Средневекового замка, Лимассол"
+booking: "Вход по брони: 7000 8391"
+ticket_url: "https://eventor.com.cy/events/limassol/%CF%84%CE%B6%CF%89%CF%81%CF%84%CE%B6%CE%AF%CE%BD%CE%B1-%CE%B1%CE%BB%CE%B5%CE%BE%CE%AC%CE%BA%CE%B7-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CE%BC%CE%B5%CF%83%CF%8C-13790"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/limassol/%CF%84%CE%B6%CF%89%CF%81%CF%84%CE%B6%CE%AF%CE%BD%CE%B1-%CE%B1%CE%BB%CE%B5%CE%BE%CE%AC%CE%BA%CE%B7-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CE%BC%CE%B5%CF%83%CF%8C-13790"

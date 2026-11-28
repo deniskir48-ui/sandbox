@@ -1,0 +1,20 @@
+# week-import
+# Строка 33 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Профильная афиша; время уточнить
+# Замечание редактора: Источники дают 20:00 и 21:00. Дата и площадка совпадают; точное начало подтвердить у DownTown Live: 99 810011.
+title: "Monolord: What The Fuzz"
+status: published
+type: concert
+priority: 2
+date: "2026-12-06"
+time: "21:00"
+city: "Никосия"
+venue: "DownTown Live"
+summary: "Первый концерт шведской дум-метал-группы Monolord на Кипре."
+price: "ранний билет €20, предпродажа €25"
+language: "английский"
+description: "Первый концерт шведской дум-метал-группы Monolord на Кипре в рамках What The Fuzz."
+ticket_url: "https://stonusband.com/what-the-fuzz-festival-monolord"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://stonusband.com/what-the-fuzz-festival-monolord"

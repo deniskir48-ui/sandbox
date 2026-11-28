@@ -1,0 +1,17 @@
+# week-import
+# Строка 121 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Run for Kyrenia"
+status: published
+type: sport
+priority: 3
+date: "2026-12-06"
+time: "09:00"
+city: "Никосия"
+venue: "муниципалитет Кирении, ул. Марку Дракоу"
+summary: "Забеги на 10, 5 и 1 км со стартом у муниципалитета Кирении в Никосии."
+description: "Забеги на 10 км, 5 км и 1 км со стартом и финишем у муниципалитета Кирении; организатор Running In Cyprus."
+ticket_url: "https://cyprusnow.app/event/%CF%84%CF%81%CE%AD%CF%87%CF%89-%CE%B3%CE%B9%CE%B1-%CF%84%CE%B7%CE%BD-%CE%BA%CE%B5%CF%81%CF%8D%CE%BD%CE%B5%CE%B9%CE%B1-2026-12-06"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CF%84%CF%81%CE%AD%CF%87%CF%89-%CE%B3%CE%B9%CE%B1-%CF%84%CE%B7%CE%BD-%CE%BA%CE%B5%CF%81%CF%8D%CE%BD%CE%B5%CE%B9%CE%B1-2026-12-06"

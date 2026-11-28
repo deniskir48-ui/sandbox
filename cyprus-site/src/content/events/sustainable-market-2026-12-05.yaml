@@ -1,0 +1,18 @@
+# week-import
+# Строка 107 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Sustainable Market"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "10:00"
+city: "Никосия"
+venue: "New Division"
+summary: "Маркет винтажной и секонд-хенд одежды и аксессуаров."
+end_time: "18:00"
+description: "Маркет винтажной и секонд-хенд одежды и аксессуаров от Ariam."
+ticket_url: "https://eventor.com.cy/events/nicosia/sustainable-market-in-nicosia-14011"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/sustainable-market-in-nicosia-14011"

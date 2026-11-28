@@ -1,0 +1,21 @@
+# week-import
+# Строка 171 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Рождественский фонарь: декупаж"
+status: published
+type: festival
+priority: 3
+date: "2026-12-06"
+time: "10:00"
+city: "Никосия"
+venue: "Archangelos"
+summary: "Творческая мастерская в Архангелосе, Никосия."
+end_time: "12:00"
+price: "€25 по ранней цене, обычная €30"
+description: "Мастер-класс декупажа The Event Stories by Anna: стеклянные банки превращаются в праздничные фонари; кофе, чай и материалы включены."
+booking: "Бронь в Instagram организатора, мест мало"
+ticket_url: "https://cyprusnow.app/event/decoupage-christmas-lantern-workshop-in-nicosia-2026-12-06"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/decoupage-christmas-lantern-workshop-in-nicosia-2026-12-06"
+tags: [christmas, christmas-other]

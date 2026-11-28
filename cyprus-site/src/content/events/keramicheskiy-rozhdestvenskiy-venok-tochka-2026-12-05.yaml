@@ -1,0 +1,25 @@
+# week-import
+# Строка 154 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт организатора
+# Замечание редактора: На момент проверки у организатора показано 1 доступное место; доступность меняется.
+title: "Керамический рождественский венок Tochka"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "14:00"
+city: "Никосия"
+venue: "Tochka Ceramics"
+summary: "Мастер-класс для начинающих: керамический рождественский венок."
+end_time: "16:00"
+price: "€40"
+language: "греческий, английский"
+description: "Мастер-класс для начинающих: керамический рождественский венок из пласта глины и роспись; изделие готово через 2 недели."
+address: "Konstantinou Palaiologou 44, Nicosia 1015"
+age: "8+"
+booking: "Нужна запись"
+ticket_url: "https://tochkaceramics.com/event/wreath/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tochkaceramics.com/event/wreath/"
+tags: [christmas, christmas-other]

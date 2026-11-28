@@ -1,0 +1,18 @@
+# week-import
+# Строка 14 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница Atria
+title: "«Маленький принц» на льду — Лимассол"
+status: published
+type: kids
+priority: 1
+date: "2026-12-06"
+time: "18:30"
+city: "Лимассол"
+venue: "Pattihio Theatre"
+summary: "Семейное ледовое шоу по мотивам Сент-Экзюпери."
+price: "от €49; детям до 12 лет −30%"
+address: "4, Agias Zonis, Limassol"
+ticket_url: "https://tickets.atriamusic.com/en/liittle-prince-on-ice-06-dec-2026/eid/391"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tickets.atriamusic.com/en/liittle-prince-on-ice-06-dec-2026/eid/391"

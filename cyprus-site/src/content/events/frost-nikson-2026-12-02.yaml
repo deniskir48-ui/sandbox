@@ -1,0 +1,23 @@
+# week-import
+# Строка 87 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Сверить доступность конкретного сеанса на сайте THOC.
+title: "«Фрост/Никсон»"
+status: published
+type: theatre
+priority: 3
+date: "2026-12-02"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "Cyprus Theatre Organisation"
+summary: "Пьеса Питера Моргана о знаменитом интервью после Уотергейта; постановка THOC."
+open_days: ["2026-12-02", "2026-12-04", "2026-12-05", "2026-12-06"]
+sessions: "2, 4 и 5 декабря в 20:00, 6 декабря в 18:00"
+price: "€15; льготы от €6"
+language: "греческий"
+description: "Пьеса Питера Моргана о телеинтервью 1977 года, в котором Дэвид Фрост расспрашивает Ричарда Никсона; постановка Андреаса Аравузоса на Новой сцене THOC."
+address: "Γρηγόρη Αυξεντίου 9, Λευκωσία"
+ticket_url: "https://www.checkincyprus.com/article/89904/phrostnixon-mia-sunenteuxe-pou-egrapse-istoria-ginetai-theatrike-monomakhia-ston-thok/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/89904/phrostnixon-mia-sunenteuxe-pou-egrapse-istoria-ginetai-theatrike-monomakhia-ston-thok/"

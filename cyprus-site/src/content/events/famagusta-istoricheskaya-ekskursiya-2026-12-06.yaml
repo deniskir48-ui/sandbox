@@ -1,0 +1,22 @@
+# week-import
+# Строка 127 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Фамагуста: историческая экскурсия"
+status: published
+type: tour
+priority: 3
+date: "2026-12-06"
+time: "07:30"
+city: "Строволос"
+venue: "сбор у церкви Святого Стилиана"
+summary: "Поездка к старому городу и Вароше со сбором в Строволосе."
+end_time: "18:30"
+price: "€25"
+description: "Экскурсия по старому городу Фамагусты и Вароше. Сбор в 07:30 у церкви Святого Стилиана в Строволосе, вторая посадка в Ларнаке; возвращение около 18:30."
+booking: "Нужна запись (Salonica View)"
+ticket_url: "https://www.salonicaview.com/events-cyprus/historical-cultural-tour-famagusta-%E2%80%93-walled-city-ghost-town-06-december"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.salonicaview.com/events-cyprus/historical-cultural-tour-famagusta-%E2%80%93-walled-city-ghost-town-06-december"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/historical-cultural-tour-of-famagusta-the-walled-city/"

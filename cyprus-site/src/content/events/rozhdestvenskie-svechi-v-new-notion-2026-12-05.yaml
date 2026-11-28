@@ -1,0 +1,23 @@
+# week-import
+# Строка 156 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: Часы занятия выбирать при регистрации; не считать непрерывным двухдневным мастер-классом.
+title: "Рождественские свечи в New Notion"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "New Notion Concept Store"
+summary: "Мастер-класс по изготовлению свечей; в анонсе также напитки и угощения."
+sessions: "5 и 6 декабря: 10:00–14:00 и 15:00–19:00"
+description: "Мастер-класс Pixie Flames Candles: две рождественские свечи с нуля, опыт не нужен, материалы включены; 4 часа, закуски, вино и горячий шоколад."
+address: "Medontos 5A, Nicosia 1060"
+language: "Английский"
+booking: "Запись и предоплата через Instagram Pixie Flames Candles"
+ticket_url: "https://eventor.com.cy/events/nicosia/christmas-candle-making-workshop-in-nicosia-13878"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/christmas-candle-making-workshop-in-nicosia-13878"
+tags: [christmas, christmas-other]

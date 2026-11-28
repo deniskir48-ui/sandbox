@@ -1,0 +1,22 @@
+# week-import
+# Строка 97 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Агрегатор ошибочно указывает Лимассол; декабрьское выступление — Ларнака.
+title: "The Very Normal Comedy Show"
+status: published
+type: standup
+priority: 3
+date: "2026-12-04"
+time: "20:00"
+city: "Ларнака"
+venue: "TGI Fridays, Финикудес"
+summary: "Стендап Марилены Зодиату о семье, отношениях и представлениях о нормальности."
+price: "€12"
+language: "греческий"
+description: "Стендап Марилены Зодиату о том, что считается нормальным в семье и обществе; после шоу встреча со зрителями. Еда и напитки не входят в билет."
+age: "15+"
+booking: "Билеты на more.com"
+ticket_url: "https://www.checkincyprus.com/article/89476/e-marilena-zodiatou-phernei-to-the-very-normal-comedy-show-se-treis-poleis/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/89476/e-marilena-zodiatou-phernei-to-the-very-normal-comedy-show-se-treis-poleis/"

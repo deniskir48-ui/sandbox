@@ -1,0 +1,20 @@
+# week-import
+# Строка 172 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Рождество в Spondi Honey, Пера-Педи"
+status: published
+type: festival
+priority: 3
+date: "2026-12-06"
+time: "11:30"
+city: "Пера-Педи"
+venue: "Spondi Honey Shop"
+summary: "Рождественский день в магазине мёда Spondi: мастера, мёд, пицца, напитки и музыка."
+end_time: "17:00"
+price: "Вход свободный"
+description: "Рождественский день в магазине мёда Spondi: местные мастера, свежий мёд, масла и косметика Liven Cyprus, изделия из дерева Lovenlight, пицца Karozzeria, напитки и музыка."
+ticket_url: "https://eventor.com.cy/events/limassol/christmas-event-at-spondi-honey-shop-pera-pedi-14077"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/limassol/christmas-event-at-spondi-honey-shop-pera-pedi-14077"
+tags: [christmas, christmas-other]

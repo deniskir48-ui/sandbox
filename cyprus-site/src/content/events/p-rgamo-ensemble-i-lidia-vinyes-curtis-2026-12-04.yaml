@@ -1,0 +1,19 @@
+# week-import
+# Строка 24 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Pérgamo Ensemble и Lidia Vinyes-Curtis"
+status: published
+type: concert
+priority: 2
+date: "2026-12-04"
+time: "20:30"
+city: "Никосия"
+venue: "The Shoe Factory"
+summary: "Испанское барокко XVIII века: меццо-сопрано, барочная виолончель и клавесин."
+end_time: "22:00"
+description: "Первый концерт на Кипре ансамбля Pérgamo Ensemble и меццо-сопрано Лидии Виньес-Куртис: испанское барокко XVIII века, часть сочинений ансамбль восстановил сам."
+booking: "Билеты через SoldOut Tickets"
+ticket_url: "https://pharosartsfoundation.org/event/concert-pergamo-ensemble-lidia-vinyes-curtis-mezzo-soprano/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://pharosartsfoundation.org/event/concert-pergamo-ensemble-lidia-vinyes-curtis-mezzo-soprano/"

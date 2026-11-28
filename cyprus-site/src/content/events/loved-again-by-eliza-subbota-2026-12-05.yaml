@@ -1,0 +1,19 @@
+# week-import
+# Строка 220 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Loved Again by Eliza — суббота"
+status: published
+type: festival
+priority: 4
+date: "2026-12-05"
+time: "11:00"
+city: "Никосия"
+summary: "Встреча с винтажными и подержанными вещами перед Рождеством."
+description: "Рождественская встреча Loved Again by Eliza: винтаж, секонд-хенд, новые вещи, украшения и подарки."
+ticket_url: "https://allevents.in/event/200031147260738"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031147260738"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/christmas-with-loved-again-by-eliza-5-special-meetings-full/"
+tags: [christmas, christmas-other]

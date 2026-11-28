@@ -1,0 +1,23 @@
+# week-import
+# Строка 4 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+title: "«Одни во Вселенной»"
+status: published
+type: theatre
+priority: 1
+date: "2026-12-02"
+time: "20:00"
+city: "Лимассол"
+venue: "Pattihio Theatre"
+summary: "Премьера спектакля на русском о любви, одиночестве, браке и дружбе; театр для взрослых."
+price: "от €49"
+language: "русский"
+description: "Премьера спектакля «Одни во Вселенной» в театре Паттихио: история о любви, одиночестве, браке и дружбе."
+address: "Agias Zonis 4, Limassol 3027"
+age: "Для взрослых"
+ticket_url: "https://www.soldoutticketbox.com/ru/event/alone-in-the-universe-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.soldoutticketbox.com/ru/event/alone-in-the-universe-2026"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/alone-in-the-universe/"

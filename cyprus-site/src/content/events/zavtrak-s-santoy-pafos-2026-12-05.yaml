@@ -1,0 +1,21 @@
+# week-import
+# Строка 153 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Завтрак с Сантой — Пафос"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "09:00"
+city: "Пафос"
+venue: "Apostolou Pavlou Ave 65, Kato"
+summary: "Завтрак, поделки, письмо Санте и подарок ребёнку; предварительная запись."
+price: "€15 по анонсу; бронирование"
+description: "Праздничный завтрак, творческая мастерская, письмо Санте и визит Санты с подарком каждому ребёнку. Организатор — Begonia Garden Centre."
+address: "Apostolou Pavlou 65, Kato Paphos, 8040"
+booking: "Нужна запись: 26 942232"
+ticket_url: "https://allevents.in/event/200031106823807"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031106823807"
+tags: [christmas, christmas-lights]

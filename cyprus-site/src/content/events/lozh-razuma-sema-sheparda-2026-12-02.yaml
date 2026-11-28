@@ -1,0 +1,24 @@
+# week-import
+# Строка 179 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Замечание редактора: Расписание по афише; конкретный сеанс выбрать у театра.
+title: "«Ложь разума» Сэма Шепарда"
+status: published
+type: theatre
+priority: 4
+date: "2026-12-02"
+end_date: "2026-12-06"
+city: "Никосия"
+venue: "Theatro Dionysos"
+summary: "Кипрская премьера пьесы Сэма Шепарда «Ложь разума»."
+open_days: ["2026-12-02", "2026-12-04", "2026-12-05", "2026-12-06"]
+sessions: "2, 4 и 5 декабря в 20:30, 6 декабря в 18:30"
+price: "€15, льготный €12"
+language: "греческий"
+description: "Кипрская премьера пьесы Сэма Шепарда (1985) в постановке Эмилиоса Хараламбидиса; 110 минут."
+address: "Diagorou 29, 1097 Nicosia"
+booking: "Soldoutticketbox и магазины Stephanis, 22 818999"
+ticket_url: "https://eventor.com.cy/events/nicosia/%CE%AD%CE%BD%CE%B1-%CF%88%CE%AD%CE%BC%CE%B1-%CF%84%CE%BF%CF%85-%CE%BC%CF%85%CE%B1%CE%BB%CE%BF%CF%8D-%CE%B8%CE%B5%CE%B1%CF%84%CF%81%CE%B9%CE%BA%CE%AE-%CF%80%CE%B1%CF%81%CE%AC%CF%83%CF%84%CE%B1%CF%83%CE%B7-2026-13880"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/%CE%AD%CE%BD%CE%B1-%CF%88%CE%AD%CE%BC%CE%B1-%CF%84%CE%BF%CF%85-%CE%BC%CF%85%CE%B1%CE%BB%CE%BF%CF%8D-%CE%B8%CE%B5%CE%B1%CF%84%CF%81%CE%B9%CE%BA%CE%AE-%CF%80%CE%B1%CF%81%CE%AC%CF%83%CF%84%CE%B1%CF%83%CE%B7-2026-13880"

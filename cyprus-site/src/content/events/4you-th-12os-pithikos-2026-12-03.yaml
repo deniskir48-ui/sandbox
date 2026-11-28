@@ -1,0 +1,21 @@
+# week-import
+# Строка 90 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Официальный сайт / продавец
+title: "4YOU(th): 12os Pithikos"
+status: published
+type: concert
+priority: 3
+date: "2026-12-03"
+time: "22:00"
+city: "Никосия"
+venue: "DownTown Live"
+summary: "Хип-хоп-вечер с 12os Pithikos и Agrafos Vivlos; входной пропуск оформить заранее."
+price: "Бесплатно; нужен пропуск"
+language: "греческий"
+description: "Концерт греческого хип-хоп исполнителя 12ος Πίθηκος на фестивале 4YOU(th), на разогреве — Άγραφος Βίβλος. Вход с 21:00."
+address: "Emmanouil Roidi 2, Strovolos 1095"
+booking: "Нужен бесплатный билет на more.com"
+ticket_url: "https://downtownnicosia.live/event/12os-pithikos-4youth-music-festival/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://downtownnicosia.live/event/12os-pithikos-4youth-music-festival/"

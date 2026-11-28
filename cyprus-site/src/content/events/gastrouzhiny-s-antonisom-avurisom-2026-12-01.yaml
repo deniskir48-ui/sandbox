@@ -1,0 +1,18 @@
+# week-import
+# Строка 16 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Гастроужины с Антонисом Авурисом"
+status: published
+type: festival
+priority: 2
+date: "2026-12-01"
+end_date: "2026-12-02"
+city: "Лимассол"
+venue: "Alley"
+summary: "Гостевые ужины в Alley с обладателем звания Best Young Chef of France 2024–25."
+description: "Гастрономический ужин в Alley: два шефа готовят совместное меню, в центре — Антонис Авурис, лучший молодой шеф Франции 2024–25."
+booking: "Нужна запись, мест мало: 99 402221"
+ticket_url: "https://www.checkincyprus.com/article/90604/o-kaluteros-neos-seph-tes-gallias-2024-25-epistrephei-ste-lemeso/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90604/o-kaluteros-neos-seph-tes-gallias-2024-25-epistrephei-ste-lemeso/"

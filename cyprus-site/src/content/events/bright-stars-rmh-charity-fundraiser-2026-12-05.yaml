@@ -1,0 +1,18 @@
+# week-import
+# Строка 200 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Bright Stars RMH Charity Fundraiser"
+status: published
+type: festival
+priority: 4
+date: "2026-12-05"
+time: "15:00"
+city: "Пафос"
+venue: "Bright Stars Kato"
+summary: "Благотворительная праздничная встреча в Bright Stars Nursery."
+description: "Благотворительный сбор в пользу Ronald McDonald House; организатор Jaynie Laws."
+address: "Pandoras 6, 8049 Paphos"
+ticket_url: "https://allevents.in/event/200031112481202"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031112481202"

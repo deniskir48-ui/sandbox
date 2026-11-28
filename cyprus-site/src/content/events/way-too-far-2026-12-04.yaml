@@ -1,0 +1,17 @@
+# week-import
+# Строка 98 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "WAY TOO FAR"
+status: published
+type: party
+priority: 3
+date: "2026-12-04"
+time: "22:00"
+city: "Лимассол"
+venue: "Mason Bar"
+summary: "Хаус и тех-хаус дуэта из Тель-Авива в Mason Bar."
+description: "Сет тель-авивского дуэта WAY TOO FAR: тек-хаус и хаус."
+ticket_url: "https://www.cyprusunderground.com.cy/event/way-too-far"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.cyprusunderground.com.cy/event/way-too-far"

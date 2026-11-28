@@ -1,0 +1,21 @@
+# week-import
+# Строка 215 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "«Пещера Амвросии»"
+status: published
+type: kids
+priority: 4
+date: "2026-12-06"
+time: "11:30"
+city: "Никосия"
+venue: "Old Town Hall of Agios Dometios – Kostas Montis Hall"
+summary: "Семейная постановка академии кукольного театра и пантомимы в Агиос Дометиос."
+price: "€12"
+language: "греческий"
+description: "Кукольный спектакль CAPA: четыре зверька защищают пчёл от войны и разрушения природы; 55 минут."
+age: "5–12 лет"
+booking: "99 408761"
+ticket_url: "https://eventor.com.cy/events/nicosia/%CE%B7-%CF%83%CF%80%CE%B7%CE%BB%CE%B9%CE%AC-%CF%84%CE%B7%CF%82-%CE%B1%CE%BC%CE%B2%CF%81%CE%BF%CF%83%CE%AF%CE%B1%CF%82-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-13785"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/%CE%B7-%CF%83%CF%80%CE%B7%CE%BB%CE%B9%CE%AC-%CF%84%CE%B7%CF%82-%CE%B1%CE%BC%CE%B2%CF%81%CE%BF%CF%83%CE%AF%CE%B1%CF%82-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-13785"

@@ -1,0 +1,26 @@
+# week-import
+# Строка 29 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Выступления 4–6 декабря и детские работы 5–6 декабря; на разные события отдельные условия.
+title: "Beyond DisDance"
+status: published
+type: kids
+priority: 2
+date: "2026-12-04"
+end_date: "2026-12-06"
+city: "Лимассол"
+venue: "Synergeio"
+summary: "Фестиваль танца и доступности: спектакли, семейные показы и инклюзивный танцевальный мастер-класс."
+sessions: "4–6 декабря — спектакли; 5 декабря в 17:00 и 6 декабря в 11:00 — семейные спектакли; 6 декабря в 14:30 — инклюзивный танцевальный мастер-класс"
+price: "семейные спектакли €10"
+description: "Фестиваль Beyond DisDance: спектакли, два семейных спектакля (танцевальный почти без слов и сенсорный по Жюлю Верну) и инклюзивный танцевальный мастер-класс."
+ticket_url: "https://www.philenews.com/events/5o-beyond-disdance-to-festival-pou-dievrini-ta-oria-tis-technis-ke-tis-prosvasimotitas/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/5o-beyond-disdance-to-festival-pou-dievrini-ta-oria-tis-technis-ke-tis-prosvasimotitas/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/beyond-disdance-performances/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/family-shows-at-beyond-disdance/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/inclusive-dance-workshop-beyond-disdance/"

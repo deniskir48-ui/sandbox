@@ -1,0 +1,19 @@
+# week-import
+# Строка 41 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "CSI Christmas Village — Никосия"
+status: published
+type: festival
+priority: 2
+date: "2026-12-05"
+time: "15:00"
+city: "Никосия"
+venue: "Eleftheria Square"
+summary: "Местные мастера, подарки и семейная программа на площади Eleftheria."
+price: "Вход бесплатный"
+description: "Рождественская деревня Центра социальных инноваций (CSI) на площади Элефтерии: местные мастера, подарки, еда, напитки и занятия для всех возрастов."
+ticket_url: "https://eventor.com.cy/events/nicosia/christmas-village-2026-in-nicosia-13788"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/christmas-village-2026-in-nicosia-13788"
+tags: [christmas, christmas-villages]

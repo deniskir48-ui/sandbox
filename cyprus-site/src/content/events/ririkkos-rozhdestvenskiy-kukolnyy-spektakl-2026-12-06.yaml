@@ -1,0 +1,22 @@
+# week-import
+# Строка 169 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Ририккос: рождественский кукольный спектакль"
+status: published
+type: kids
+priority: 3
+date: "2026-12-06"
+time: "11:00"
+city: "Лимбия, район Никосии"
+venue: "Acropol Cinema"
+summary: "Рождественский кукольный спектакль на кипрском диалекте для детей 2–12 лет."
+price: "€7"
+language: "греческий"
+description: "Рождественский кукольный спектакль по песне-сказке Костаса Какоянниса: ослик Ририккос мечтает помочь Санте. 50 минут."
+age: "2–12 лет"
+booking: "Касса кинотеатра: 99 010252"
+ticket_url: "https://eventor.com.cy/events/nicosia/ririkkos-christmas-puppet-show-at-acropol-cinema-nicosia-13501"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://eventor.com.cy/events/nicosia/ririkkos-christmas-puppet-show-at-acropol-cinema-nicosia-13501"
+tags: [christmas, christmas-other]

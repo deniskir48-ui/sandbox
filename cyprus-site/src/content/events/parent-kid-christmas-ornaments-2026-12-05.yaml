@@ -1,0 +1,24 @@
+# week-import
+# Строка 149 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Parent & Kid: Christmas Ornaments"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "17:00"
+city: "Никосия"
+venue: "Tochka Ceramics"
+summary: "Совместная мастерская рождественских украшений для ребёнка и родителя."
+end_time: "18:30"
+description: "Керамический мастер-класс для родителя с ребёнком 4–10 лет: вместе лепят и расписывают рождественские украшения; изделия забирают через 10 дней."
+price: "Родитель с ребёнком €50, ребёнок €30"
+address: "Konstantinou Palaiologou 44, Nicosia 1015"
+language: "Английский, греческий"
+age: "Дети 4–10 лет"
+booking: "Мест нет (Sold Out)"
+ticket_url: "https://tochkaceramics.com/event/parent-kid-workshop-8/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tochkaceramics.com/event/parent-kid-workshop-8/"
+tags: [christmas, christmas-other]

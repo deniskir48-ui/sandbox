@@ -1,0 +1,21 @@
+# week-import
+# Строка 74 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "Рождество в Пера-Хорио и Нису"
+status: published
+type: festival
+priority: 2
+date: "2026-12-06"
+time: "17:00"
+city: "Пера-Хорио и Нису"
+venue: "площадь улицы Eleftherias"
+summary: "Семейная сценическая программа на площади у улицы Eleftherias."
+end_time: "20:30"
+price: "Бесплатно"
+description: "Рождественская программа муниципалитета Южной Никосии–Идалиона: мастерская Святого Василия для детей, хоры и танцы с 18:00, ярмарочные киоски, в 20:30 зажжение ёлки."
+address: "Площадь улицы Элефтериас, Пера-Хорио"
+ticket_url: "https://cyprusnow.app/event/%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CE%B7-%CE%B5%CE%BA%CE%B4%CE%AE%CE%BB%CF%89%CF%83%CE%B7-%CF%83%CF%84%CE%BF-%CF%80%CE%AD%CF%81%CE%B1-%CF%87%CF%89%CF%81%CE%AF%CE%BF-%CE%BA%CE%B1%CE%B9-%CE%BD%CE%AE%CF%83%CE%BF%CF%85-2026-2026-12-06"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CF%87%CF%81%CE%B9%CF%83%CF%84%CE%BF%CF%85%CE%B3%CE%B5%CE%BD%CE%BD%CE%B9%CE%AC%CF%84%CE%B9%CE%BA%CE%B7-%CE%B5%CE%BA%CE%B4%CE%AE%CE%BB%CF%89%CF%83%CE%B7-%CF%83%CF%84%CE%BF-%CF%80%CE%AD%CF%81%CE%B1-%CF%87%CF%89%CF%81%CE%AF%CE%BF-%CE%BA%CE%B1%CE%B9-%CE%BD%CE%AE%CF%83%CE%BF%CF%85-2026-2026-12-06"
+tags: [christmas, christmas-other]

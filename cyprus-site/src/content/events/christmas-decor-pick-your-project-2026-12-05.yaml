@@ -1,0 +1,24 @@
+# week-import
+# Строка 143 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Christmas Decor: Pick Your Project"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "10:30"
+city: "Никосия"
+venue: "Tochka Ceramics"
+summary: "Создание собственной рождественской декорации из глины; от 8 лет."
+end_time: "12:30"
+price: "€40"
+description: "Двухчасовой мастер-класс: рождественские украшения из 1 кг глины с росписью; изделия готовы через 2 недели."
+address: "Konstantinou Palaiologou 44, Nicosia 1015"
+language: "Английский, греческий"
+age: "8+"
+booking: "Нужна запись"
+ticket_url: "https://tochkaceramics.com/event/christmas-decor-pick-your-project/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tochkaceramics.com/event/christmas-decor-pick-your-project/"
+tags: [christmas, christmas-other]

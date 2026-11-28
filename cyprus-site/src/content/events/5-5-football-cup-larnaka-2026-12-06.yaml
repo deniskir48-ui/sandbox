@@ -1,0 +1,17 @@
+# week-import
+# Строка 115 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "5×5 Football Cup — Ларнака"
+status: published
+type: sport
+priority: 3
+date: "2026-12-06"
+time: "10:00"
+city: "Ларнака"
+venue: "Futsal Musits"
+summary: "Футбольный турнир 5×5 в Futsal Musits."
+description: "Футбольный турнир 5×5."
+ticket_url: "https://allevents.in/event/200031004582626"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031004582626"

@@ -1,0 +1,20 @@
+# week-import
+# Строка 203 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "Metamorphoses"
+status: published
+type: exhibition
+priority: 4
+date: "2026-11-14"
+end_date: "2026-12-05"
+city: "Никосия"
+venue: "Γκαλερί Stand In Line"
+summary: "Выставка «Метаморфозы» в галерее Stand In Line."
+description: "Выставка «Метаморфозы» в галерее Stand In Line."
+address: "Metochiou 26A, 1101 Λευκωσία"
+ticket_url: "https://www.philenews.com/events/metaplasis-o-nikos-kourousis-dierevna-tis-dinatotites-metamorfosis-tis-ilis/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/metaplasis-o-nikos-kourousis-dierevna-tis-dinatotites-metamorfosis-tis-ilis/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/metamorphoses/"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 83 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс на AllEvents
+title: "Cinematic Sips: The Menu"
+status: published
+type: cinema
+priority: 3
+date: "2026-12-02"
+time: "20:00"
+city: "Лимассол"
+venue: "The Melting Pot"
+summary: "Показ фильма «Меню» с ужином и вином в The Melting Pot; нужна бронь."
+end_time: "23:00"
+language: "английский"
+description: "Киновечер Cinematic Sips: показ фильма «Меню» (2022) с ужином и вином."
+address: "133 Eleftherias street, 3042 Limassol"
+booking: "Нужна запись, мест мало"
+ticket_url: "https://allevents.in/event/200031082840633"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://allevents.in/event/200031082840633"

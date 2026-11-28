@@ -1,0 +1,20 @@
+# week-import
+# Строка 27 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+title: "Stantar Comedy Show"
+status: published
+type: standup
+priority: 2
+date: "2026-12-05"
+time: "20:00"
+city: "Лимассол"
+venue: "Da Vinci"
+summary: "Стендап на английском: Mike Kroll, Yorkos Kyriakou и Fabian Vansant."
+price: "€13 онлайн + сбор; €15 на входе"
+language: "английский"
+description: "Ежемесячный стендап на английском в ресторане Da Vinci: ведущий Mike Kroll, хедлайнер Yorkos Kyriakou, также Fabian Vansant."
+age: "16+"
+ticket_url: "https://rsrvin.com/events/6b0080db3880ba19130c83a5-monthly-stantar-comedy-show-in-limassol-with-yorkos-kyriakou"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://rsrvin.com/events/6b0080db3880ba19130c83a5-monthly-stantar-comedy-show-in-limassol-with-yorkos-kyriakou"

@@ -1,0 +1,21 @@
+# week-import
+# Строка 94 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "«Элевсинская трилогия»"
+status: published
+type: cinema
+priority: 3
+date: "2026-12-03"
+time: "19:30"
+city: "Никосия"
+venue: "Φωτοδός"
+summary: "Вечер трёх фильмов Такиса Бардакоса «Элевсинская трилогия»; вход бесплатный."
+price: "Бесплатно"
+description: "Вечер трёх фильмов Такиса Бардакоса «Элевсинская трилогия»"
+address: "Stasinou 25B, Nicosia 1060"
+ticket_url: "https://www.philenews.com/events/i-trilogia-tis-elefsinas-tris-tenies-tou-taki-bardakou-se-mia-kinimatografiki-vradia-sti-fotodo/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/i-trilogia-tis-elefsinas-tris-tenies-tou-taki-bardakou-se-mia-kinimatografiki-vradia-sti-fotodo/"
+  - title: "Страница события"
+    url: "https://cypruseventsmap.com/events/the-elefsina-trilogy/"

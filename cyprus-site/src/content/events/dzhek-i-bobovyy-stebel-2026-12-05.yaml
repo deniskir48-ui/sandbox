@@ -1,0 +1,21 @@
+# week-import
+# Строка 108 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Вторичная афиша
+title: "«Джек и бобовый стебель»"
+status: published
+type: kids
+priority: 3
+date: "2026-12-05"
+time: "11:00"
+city: "Никосия"
+venue: "Latsia Municipal Theatre"
+summary: "Детский спектакль в муниципальном театре Латсии; на греческом."
+sessions: "5 декабря в 11:00 и 15:00"
+description: "Детский спектакль Pirasmos Productions в постановке Лориса Лоизидиса: музыка, юмор и цифровая графика, с которой взаимодействуют актёры."
+address: "Αρχιεπισκόπου Κυπριανού, Latsia 2230"
+language: "Греческий"
+booking: "Билеты на SoldOut Tickets и в магазинах Stephanis"
+ticket_url: "https://cyprusnow.app/event/%CE%BF-%CF%84%CE%B6%CE%B1%CE%BA-%CE%BA%CE%B1%CE%B9-%CE%B7-%CF%86%CE%B1%CF%83%CE%BF%CE%BB%CE%B9%CE%AC-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-2026-12-05"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://cyprusnow.app/event/%CE%BF-%CF%84%CE%B6%CE%B1%CE%BA-%CE%BA%CE%B1%CE%B9-%CE%B7-%CF%86%CE%B1%CF%83%CE%BF%CE%BB%CE%B9%CE%AC-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-2026-12-05"

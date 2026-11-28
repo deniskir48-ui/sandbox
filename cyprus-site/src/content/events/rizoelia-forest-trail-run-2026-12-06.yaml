@@ -1,0 +1,20 @@
+# week-import
+# Строка 120 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Билетная страница
+# Замечание редактора: 21 км: 08:30 (€30, Full); 10 км: 09:00 (€25); 5 км: 09:30 (€20); детский 1 км €5. Доступность меняется.
+title: "Rizoelia Forest Trail Run"
+status: published
+type: sport
+priority: 3
+date: "2026-12-06"
+time: "08:30"
+city: "Ларнака"
+summary: "Забег по лесу Ризоэлия и детский километр."
+price: "€5–30; 21 км — мест нет"
+description: "Забеги Rizoelia Run: детский 1 км, 5 км (старт 09:30), 10 км (09:00) и полумарафон 21 км (08:30)."
+age: "С 13 лет (кроме детского забега)"
+booking: "Регистрация онлайн"
+ticket_url: "https://getyourtickets.eu/event/rizoeliarun2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://getyourtickets.eu/event/rizoeliarun2026"

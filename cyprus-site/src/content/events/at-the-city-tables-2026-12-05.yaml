@@ -1,0 +1,24 @@
+# week-import
+# Строка 199 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Анонс СМИ / профильной афиши
+title: "At the City Tables"
+display_title: "«За городским столом»: мастер-класс"
+status: published
+type: workshop
+priority: 4
+date: "2026-12-05"
+time: "11:00"
+city: "Никосия"
+venue: "Культурный фонд Банка Кипра"
+summary: "Мастер-класс для взрослых о том, как ели в кипрских городах в британский период, с угощениями той эпохи."
+end_time: "13:00"
+price: "Бесплатно, мест мало"
+language: "греческий"
+description: "Двухчасовой мастер-класс для взрослых о пищевых привычках кипрских горожан в британский период, с угощениями той эпохи; проект FoodCultCy и Музей кипрской еды."
+address: "Φανερωμένης 86-90, 1011 Λευκωσία"
+age: "Для взрослых"
+booking: "Обязательна запись: +357 22 128263"
+ticket_url: "https://www.checkincyprus.com/article/90631/sta-trapezia-tes-poles-diatrophika-topia-astikes-tautotetes-kai-neoterikoteta/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.checkincyprus.com/article/90631/sta-trapezia-tes-poles-diatrophika-topia-astikes-tautotetes-kai-neoterikoteta/"

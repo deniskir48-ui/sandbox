@@ -1,0 +1,24 @@
+# week-import
+# Строка 150 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Сайт площадки / организатора
+title: "Peekaboo Mug: Christmas Edition"
+status: published
+type: festival
+priority: 3
+date: "2026-12-05"
+time: "11:00"
+city: "Никосия"
+venue: "Tochka Ceramics"
+summary: "Керамическая кружка с маленькой рождественской фигуркой внутри; от 8 лет."
+end_time: "13:00"
+price: "€40"
+description: "Лепка кружки из глины с маленькой рождественской фигуркой внутри и роспись; изделие готово через 3 недели."
+address: "Konstantinou Palaiologou 44, Nicosia 1015"
+language: "Английский, греческий"
+age: "8+"
+booking: "Мест нет (Sold Out)"
+ticket_url: "https://tochkaceramics.com/event/christmas-mug/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://tochkaceramics.com/event/christmas-mug/"
+tags: [christmas, christmas-other]
