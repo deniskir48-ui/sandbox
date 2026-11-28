@@ -33,11 +33,9 @@ def link(cell):
     v = str(cell.value or "")
     # Длинные ссылки Google Таблицы склеивает из кусков: HYPERLINK("https://…"&"…"; "Открыть ↗").
     m = re.search(r'HYPERLINK\(((?:"[^"]*"\s*&\s*)*"[^"]*")', v)
-    if m:
-        return "".join(re.findall(r'"([^"]*)"', m.group(1)))
-    if cell.hyperlink and cell.hyperlink.target:
-        return cell.hyperlink.target
-    return v if v.startswith("http") else None
+    url = "".join(re.findall(r'"([^"]*)"', m.group(1))) if m else cell.hyperlink.target if cell.hyperlink and cell.hyperlink.target else v if v.startswith("http") else None
+    # метки рекламных кампаний (utm_source=chatgpt.com и т. п.) на сайт не переносим
+    return re.sub(r"[?&]$", "", re.sub(r"(?<=[?&])utm_[^&#]*&?", "", url)) if url else None
 
 
 def ymd(y, m, d):
