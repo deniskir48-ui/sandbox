@@ -1,19 +1,23 @@
 # week-import
 # Строка 86 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
-# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Проверка в таблице: Сайт организатора Tablecloth
+# Замечание редактора: Tablecloth подтверждает 2 декабря, 20:00–22:00 и €35. EventOr отображает 18:00.
 title: "Women in Wine #3"
 status: published
 type: festival
 priority: 3
 date: "2026-12-02"
-time: "18:00"
+time: "20:00"
 city: "Никосия"
 venue: "Space Available"
 summary: "Дегустация и встреча с женщинами, работающими в кипрском виноделии."
+end_time: "22:00"
 price: "€35"
 description: "Беседа и винный вечер с тремя женщинами кипрского виноделия: Мария Масура (DipWSET), Мария Димитриу (Vlassides Winery) и Константина Николау (Tsiakkas Winery)."
 address: "Aischylou 29-A, Nicosia 1011"
-ticket_url: "https://eventor.com.cy/events/nicosia/women-in-wine-3-in-nicosia-14050"
+ticket_url: "https://www.tableclothcy.com/event-details/women-in-wine-3"
 sources:
   - title: "Источник из таблицы афиши"
+    url: "https://www.tableclothcy.com/event-details/women-in-wine-3"
+  - title: "Страница события"
     url: "https://eventor.com.cy/events/nicosia/women-in-wine-3-in-nicosia-14050"

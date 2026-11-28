@@ -1,18 +1,19 @@
 # week-import
 # Строка 144 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
 # Проверка в таблице: Анонс на AllEvents
+# Замечание редактора: €25 — стоимость ужина из трёх блюд, а не подтверждённая цена отдельного входного билета. Ужин с 19:00. Бронь: 26 962415.
 title: "Christmas Magic: Teodoro DeCastillo"
 status: published
-type: festival
+type: concert
 priority: 3
 date: "2026-12-05"
 time: "19:00"
 city: "Пафос"
-venue: "ресторан Colosseum"
+venue: "Colosseum Restaurant, Danaes Avenue 20"
 summary: "Рождественский концерт тенора Теодоро Де Кастильо с ужином в ресторане Colosseum."
 end_time: "23:30"
+price: "Ужин из трёх блюд €25; можно прийти на напитки"
 description: "Тенор Теодоро Де Кастильо исполняет оперу, кроссовер и рождественские песни; ужин из трёх блюд."
-price: "€25 за ужин из трёх блюд"
 address: "Danaes Avenue 20, Olympia Complex, 8042 Kato Paphos"
 booking: "Бронь: 26 962415"
 ticket_url: "https://allevents.in/event/200031005589303"

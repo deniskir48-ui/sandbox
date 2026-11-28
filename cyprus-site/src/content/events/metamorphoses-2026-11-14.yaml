@@ -1,6 +1,7 @@
 # week-import
 # Строка 203 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
 # Проверка в таблице: Анонс СМИ / профильной афиши
+# Замечание редактора: Выставка открылась 14 ноября и продлится до 5 декабря. Вт–пт 16:30–19:00, сб 11:00–13:00. Понедельник 30 ноября не включён: в опубликованном расписании его нет.
 title: "Metamorphoses"
 status: published
 type: exhibition
@@ -10,6 +11,7 @@ end_date: "2026-12-05"
 city: "Никосия"
 venue: "Γκαλερί Stand In Line"
 summary: "Выставка «Метаморфозы» в галерее Stand In Line."
+hours: "вт–пт 16:30–19:00, сб 11:00–13:00"
 description: "Выставка «Метаморфозы» в галерее Stand In Line."
 address: "Metochiou 26A, 1101 Λευκωσία"
 ticket_url: "https://www.philenews.com/events/metaplasis-o-nikos-kourousis-dierevna-tis-dinatotites-metamorfosis-tis-ilis/"

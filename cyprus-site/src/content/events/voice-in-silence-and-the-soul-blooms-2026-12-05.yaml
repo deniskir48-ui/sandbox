@@ -1,19 +1,22 @@
 # week-import
 # Строка 152 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
-# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Проверка в таблице: Сайт организатора Sistema Cyprus
+# Замечание редактора: Организатор подтверждает 5 декабря в 19:00 и билеты от €10. EventOr отображает 17:00.
 title: "Voice in Silence and the Soul Blooms"
 status: published
 type: festival
 priority: 3
 date: "2026-12-05"
-time: "17:00"
+time: "19:00"
 city: "Строволос, Никосия"
 venue: "Strovolos Municipal Theatre"
 summary: "Благотворительный концерт Красного Креста и Sistema Cyprus в Строволосе."
-price: "€10"
+price: "от €10"
 description: "Концерт классической музыки симфонического оркестра Sistema Cyprus под управлением Сантьяго Осы Альсате; выручка пойдёт на рождественские наборы Красного Креста."
-ticket_url: "https://eventor.com.cy/events/nicosia/%CF%86%CF%89%CE%BD%CE%AE-%CF%83%CF%84%CE%B7-%CF%83%CE%B9%CF%89%CF%80%CE%AE-%CE%BA%CE%B9-%CE%B1%CE%BD%CE%B8%CE%AF%CE%B6%CE%B5%CE%B9-%CE%B7-%CF%88%CF%85%CF%87%CE%AE-%CF%83%CF%85%CE%BD%CE%B1%CF%85%CE%BB%CE%AF%CE%B1-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-13755"
+ticket_url: "https://www.sistemacyprus.com/%CF%86%CF%89%CE%BD%CE%B7-%CF%83%CF%84%CE%B7-%CF%83%CE%B9%CF%89%CF%80%CE%B7-%CE%BA%CE%B9-%CE%B1%CE%BD%CE%B8%CE%B9%CE%B6%CE%B5%CE%B9-%CE%B7-%CF%88%CF%85%CF%87%CE%B7-a-special-concert-with-the-cyprus/"
 sources:
   - title: "Источник из таблицы афиши"
+    url: "https://www.sistemacyprus.com/%CF%86%CF%89%CE%BD%CE%B7-%CF%83%CF%84%CE%B7-%CF%83%CE%B9%CF%89%CF%80%CE%B7-%CE%BA%CE%B9-%CE%B1%CE%BD%CE%B8%CE%B9%CE%B6%CE%B5%CE%B9-%CE%B7-%CF%88%CF%85%CF%87%CE%B7-a-special-concert-with-the-cyprus/"
+  - title: "Страница события"
     url: "https://eventor.com.cy/events/nicosia/%CF%86%CF%89%CE%BD%CE%AE-%CF%83%CF%84%CE%B7-%CF%83%CE%B9%CF%89%CF%80%CE%AE-%CE%BA%CE%B9-%CE%B1%CE%BD%CE%B8%CE%AF%CE%B6%CE%B5%CE%B9-%CE%B7-%CF%88%CF%85%CF%87%CE%AE-%CF%83%CF%85%CE%BD%CE%B1%CF%85%CE%BB%CE%AF%CE%B1-%CF%83%CF%84%CE%B7-%CE%BB%CE%B5%CF%85%CE%BA%CF%89%CF%83%CE%AF%CE%B1-13755"
 tags: [christmas, christmas-other]

@@ -1,6 +1,7 @@
 # week-import
 # Строка 98 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
-# Проверка в таблице: Анонс СМИ / профильной афиши
+# Проверка в таблице: Страница продавца Resident Advisor
+# Замечание редактора: RA указывает Cost €15–20 и 21+. Итог со сборами отдельно не подтверждён.
 title: "WAY TOO FAR"
 status: published
 type: party
@@ -10,8 +11,12 @@ time: "22:00"
 city: "Лимассол"
 venue: "Mason Bar"
 summary: "Хаус и тех-хаус дуэта из Тель-Авива в Mason Bar."
+end_time: "03:00"
+price: "€15–20"
 description: "Сет тель-авивского дуэта WAY TOO FAR: тек-хаус и хаус."
-ticket_url: "https://www.cyprusunderground.com.cy/event/way-too-far"
+ticket_url: "https://ra.co/events/2579639"
 sources:
   - title: "Источник из таблицы афиши"
+    url: "https://ra.co/events/2579639"
+  - title: "Страница события"
     url: "https://www.cyprusunderground.com.cy/event/way-too-far"

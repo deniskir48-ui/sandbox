@@ -1,15 +1,15 @@
 # week-import
 # Строка 209 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
 # Проверка в таблице: Анонс на AllEvents
-title: "Встреча жителей и друзей Ялусы"
+title: "Общинная встреча выходцев из Ялусы"
 status: published
-type: kids
+type: talk
 priority: 4
 date: "2026-12-05"
 time: "11:00"
 city: "Ларнака"
-venue: "Enosi Ektopismenon Koinotiton Ammochostou"
-summary: "Встреча жителей и друзей Ялусы о настоящем и будущем посёлка; после — кофе и закуски."
+venue: "Enosi Ektopismenon Koinotiton Ammochostou, Piale Pasha 46"
+summary: "Обсуждение жизни и будущего общины Ялусы: обмен мнениями и координация действий."
 end_time: "12:30"
 language: "греческий"
 description: "Встреча жителей и друзей Ялусы о настоящем и будущем посёлка; после — кофе и закуски."

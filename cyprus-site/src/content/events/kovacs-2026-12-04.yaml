@@ -1,0 +1,19 @@
+# week-import
+# Строка 7 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: SoldOut: дата подтверждена; продажа обновляется
+# Замечание редактора: Повторная проверка: SoldOut открывается, указывает 4 декабря 2026, 20:00, Monte Caputo и от €39. Статус TICKETS UPDATING; наличие билетов не подтверждено.
+title: "Kovacs"
+status: published
+type: concert
+priority: 1
+date: "2026-12-04"
+time: "20:00"
+city: "Пиргос, Лимассол"
+venue: "Monte Caputo"
+summary: "Концерт нидерландской соул-певицы Шэрон Ковакс; перенесён с октября."
+price: "от €39"
+language: "английский"
+ticket_url: "https://soldout.com.cy/en/event/kovacs-monte-caputo-oct-2026"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://soldout.com.cy/en/event/kovacs-monte-caputo-oct-2026"

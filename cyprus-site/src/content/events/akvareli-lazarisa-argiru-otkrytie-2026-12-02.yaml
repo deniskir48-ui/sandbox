@@ -1,0 +1,19 @@
+# week-import
+# Строка 180 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Philenews: открытие подтверждено
+# Замечание редактора: Страница Philenews открывается. Открытие 2 декабря в 19:00, выставка в To Erma продлится до 19 декабря; часы последующих дней не указаны.
+title: "Акварели Лазариса Аргиру — открытие"
+status: published
+type: exhibition
+priority: 4
+date: "2026-12-02"
+end_date: "2026-12-19"
+time: "19:00"
+city: "Никосия"
+venue: "To Erma"
+summary: "Работы о дожде и природе в To Erma."
+sessions: "открытие 2 декабря в 19:00"
+ticket_url: "https://www.philenews.com/events/akouareles-tis-vrochis-ke-tis-fisis-o-lazaris-argirou-parousiazi-erga-tis-telefteas-dietias-sti-lefkosia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/akouareles-tis-vrochis-ke-tis-fisis-o-lazaris-argirou-parousiazi-erga-tis-telefteas-dietias-sti-lefkosia/"

@@ -1,0 +1,20 @@
+# week-import
+# Строка 188 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Philenews: даты и часы опубликованы
+# Замечание редактора: Страница Philenews открывается. Открытие 3 декабря в 18:00; затем будни и субботы 16:00–19:00 до 15 декабря. Воскресенье 6 декабря в расписании не указано.
+title: "Благотворительная выставка в Omikron"
+status: published
+type: exhibition
+priority: 4
+date: "2026-12-03"
+end_date: "2026-12-15"
+time: "18:00"
+city: "Никосия"
+venue: "Omikron Gallery"
+summary: "Более 40 художников объединились для помощи детям на Кипре и в Кении."
+sessions: "открытие 3 декабря в 18:00"
+hours: "будни и суббота 16:00–19:00"
+ticket_url: "https://www.philenews.com/events/art_act-perissoteri-apo-40-kallitechnes-enonoun-tis-dinamis-tous-gia-ta-pedia-stin-kipro-ke-tin-kenia/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/art_act-perissoteri-apo-40-kallitechnes-enonoun-tis-dinamis-tous-gia-ta-pedia-stin-kipro-ke-tin-kenia/"

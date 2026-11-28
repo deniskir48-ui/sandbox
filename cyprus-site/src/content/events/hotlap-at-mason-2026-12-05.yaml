@@ -1,6 +1,7 @@
 # week-import
 # Строка 103 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
-# Проверка в таблице: Анонс СМИ / профильной афиши
+# Проверка в таблице: Страница продавца Resident Advisor
+# Замечание редактора: На странице RA подтверждены дата, время и 21+, но цена в доступном тексте не указана. Прежняя сумма €11.30 не используется.
 title: "HotLap at Mason"
 status: published
 type: party
@@ -10,8 +11,11 @@ time: "21:30"
 city: "Лимассол"
 venue: "Mason Bar"
 summary: "Музыкальная ночь HotLap в Mason Bar."
+end_time: "03:00"
 description: "Сет дуэта HotLab: мелодик, афрохаус, берлинский минимал и техно."
-ticket_url: "https://www.cyprusunderground.com.cy/event/hotlab-at-mason"
+ticket_url: "https://ra.co/events/2555338"
 sources:
   - title: "Источник из таблицы афиши"
+    url: "https://ra.co/events/2555338"
+  - title: "Страница события"
     url: "https://www.cyprusunderground.com.cy/event/hotlab-at-mason"

@@ -1,15 +1,16 @@
 # week-import
-# Строка 224 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
-# Проверка в таблице: Анонс организатора в EventOr / RSRVIN
+# Строка 222 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Время требует подтверждения организатора
+# Замечание редактора: EventOr отображает 12:00 и startDate 12:00Z; Cyprus Now, lima.events и CyprusEventsMap — 14:00. Первичный анонс с однозначным местным временем не найден. Не публиковать точное начало без подтверждения.
 title: "Endless Breaking Studio Christmas Party"
 status: published
 type: festival
 priority: 4
 date: "2026-12-06"
-time: "12:00"
 city: "Ларнака"
 venue: "Demotiko Agiou Lazarou"
 summary: "Танцевальная рождественская вечеринка в Ларнаке."
+sessions: "начало в 12:00 или 14:00 — источники расходятся, уточняйте у организатора"
 price: "€5 с семьи"
 description: "Рождественская вечеринка студии брейк-данса Endless Breaking: музыка, танцы, сайфер и баттл, еда и напитки; для всех возрастов."
 ticket_url: "https://eventor.com.cy/events/larnaca/christmas-party-by-endless-breaking-studio-in-larnaca-13758"

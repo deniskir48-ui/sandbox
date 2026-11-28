@@ -1,0 +1,18 @@
+# week-import
+# Строка 177 листа «Все события» таблицы «АФИША КИПРА · 30 НОЯБРЯ – 6 ДЕКАБРЯ 2026».
+# Проверка в таблице: Philenews: даты и часы опубликованы
+# Замечание редактора: Страница Philenews открывается. В Ларнаке выставка с 25 ноября до 2 декабря, пн–пт 09:30–12:30 и 15:00–17:30. Показ в Лимассоле 20–22 ноября уже завершён.
+title: "Ceramic Forms 2026"
+status: published
+type: exhibition
+priority: 4
+date: "2026-11-25"
+end_date: "2026-12-02"
+city: "Ларнака"
+venue: "Δημοτική Πινακοθήκη Λάρνακας"
+summary: "Выставка керамики в муниципальной галерее Ларнаки; последние дни показа."
+hours: "пн–пт 09:30–12:30 и 15:00–17:30"
+ticket_url: "https://www.philenews.com/events/ceramic-forms-2026-24-kallitechnes-apo-kipro-malta-ke-ellada-sinantonte-mesa-apo-ton-pilo/"
+sources:
+  - title: "Источник из таблицы афиши"
+    url: "https://www.philenews.com/events/ceramic-forms-2026-24-kallitechnes-apo-kipro-malta-ke-ellada-sinantonte-mesa-apo-ton-pilo/"

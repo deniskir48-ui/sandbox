@@ -6,16 +6,18 @@ status: published
 type: exhibition
 priority: 3
 date: "2026-11-27"
-end_date: "2026-12-03"
+end_date: "2026-12-06"
 city: "Пафос"
+venue: "Palia Ilektriki"
 summary: "Фотографический проект в Пафосе; бесплатно."
-hours: "27 ноября 18:00–19:00; 28–29 ноября 11:00–19:00; 30 ноября – 3 декабря 16:00–19:00"
+hours: "будни 16:00–19:00; суббота и воскресенье 11:00–19:00"
 description: "Групповая фотовыставка: несколько авторов по-своему интерпретируют миф о Кинире и Мирре."
 price: "Бесплатно"
-more_dates: "28–29 ноября 11:00–19:00; 30 ноября – 3 декабря 16:00–19:00"
-ticket_url: "https://cypruseventsmap.com/events/november/"
+ticket_url: "https://cpspafos.com/2026/11/11/%CE%BC%CF%85%CE%B8%CE%BF%CE%B3%CF%81%CE%B1%CF%86%CE%AF%CE%B1-mythographia/"
 sources:
   - title: "Источник из таблицы афиши"
     url: "https://cypruseventsmap.com/events/november/"
   - title: "Страница события"
     url: "https://cypruseventsmap.com/events/mythographia-photography-exhibition/"
+  - title: "Организатор: до 6 декабря (проверка владельца 28.11.2026)"
+    url: "https://cpspafos.com/2026/11/11/%CE%BC%CF%85%CE%B8%CE%BF%CE%B3%CF%81%CE%B1%CF%86%CE%AF%CE%B1-mythographia/"
